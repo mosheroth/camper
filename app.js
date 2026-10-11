@@ -51,6 +51,7 @@ function formatHours(trail) {
 }
 
 function formatKm(trail) {
+  if (!window.CamperPlan.lengthIsUsable(trail)) return null;
   if (trail.kmMax == null) return null;
   if (trail.kmMin === trail.kmMax) return `${trimNum(trail.kmMax)} ק״מ`;
   return `${trimNum(trail.kmMin)}–${trimNum(trail.kmMax)} ק״מ`;

@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, planUrl } = require("../plan.js");
+const { buildPlans, nearbyChoices, planUrl, lengthIsUsable } = require("../plan.js");
 
 const trails = [
   {
@@ -124,5 +124,20 @@ familyEasy.forEach((plan) => {
 });
 
 assert.strictEqual(planUrl(10, [1, 2]), "trip.html?camp=10&trails=1%2C2");
+
+const choices = nearbyChoices(
+  { nearby: [{ id: 2, km: 5 }, { id: 1, km: 1.2 }, { id: 9, km: 3 }] },
+  trails,
+);
+assert.deepStrictEqual(choices.map((item) => item.trail.id), [1, 2]);
+assert.strictEqual(choices[0].km, 1.2);
+
+const castel = liveCamps.find((camp) => camp.id === 14987);
+const aroundCastel = nearbyChoices(castel, liveTrails).filter((item) => item.km != null && item.km <= 20);
+assert.ok(aroundCastel.length >= 10, "Castel should have many trails within 20 km");
+assert.strictEqual(lengthIsUsable({ kmMax: 40, hoursMax: 1.5 }), false);
+assert.strictEqual(lengthIsUsable({ kmMax: 800, hoursMax: 2 }), false);
+assert.strictEqual(lengthIsUsable({ kmMax: 6, hoursMax: 3 }), true);
+assert.strictEqual(lengthIsUsable({ kmMin: 2, kmMax: 4 }), true);
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

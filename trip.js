@@ -7,6 +7,12 @@ const legend = document.querySelector("#legend");
 const mapNote = document.querySelector("#map-note");
 const dossier = document.querySelector("#dossier");
 
+function escapeHtml(text) {
+  return String(text).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[char]));
+}
+
 function el(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -190,10 +196,14 @@ function trailFacts(trail) {
   if (trail.circular === true) bits.push("מעגלי");
   else if (trail.circular === "partial") bits.push("מעגלי חלקית");
   else if (trail.circular === false) bits.push("קווי");
-  if (trail.hoursMin && trail.hoursMax && trail.hoursMin !== trail.hoursMax) bits.push(`${trail.hoursMin}–${trail.hoursMax} שעות`);
-  else if (trail.hoursMax) bits.push(`כ־${trail.hoursMax} שעות`);
-  if (trail.kmMin && trail.kmMax && trail.kmMin !== trail.kmMax) bits.push(`${trail.kmMin}–${trail.kmMax} ק״מ`);
-  else if (trail.kmMax || trail.kmMin) bits.push(`כ־${trail.kmMax || trail.kmMin} ק״מ`);
+  if (trail.hoursMax && trail.hoursMax <= 16) {
+    if (trail.hoursMin && trail.hoursMin !== trail.hoursMax) bits.push(`${trail.hoursMin}–${trail.hoursMax} שעות`);
+    else bits.push(`כ־${trail.hoursMax} שעות`);
+  }
+  if (window.CamperPlan.lengthIsUsable(trail)) {
+    if (trail.kmMin && trail.kmMax && trail.kmMin !== trail.kmMax) bits.push(`${trail.kmMin}–${trail.kmMax} ק״מ`);
+    else bits.push(`כ־${trail.kmMax || trail.kmMin} ק״מ`);
+  }
   if (trail.family) bits.push("למשפחות");
   if (trail.accessible) bits.push("מונגש");
   (trail.areaNames || []).slice(0, 1).forEach((name) => bits.push(name));
@@ -233,16 +243,26 @@ function trailSheet(trail) {
   });
 }
 
-function drawMap(camp, trails) {
+let sharedMap = null;
+let overlay = null;
+
+function drawMap(camp, trails, extras, onAdd) {
   if (typeof window.L === "undefined") {
     mapNote.textContent = "המפה לא נטענה. אפשר עדיין לקרוא את הפירוט ולפתוח את העמודים הרשמיים.";
-    return;
+    return null;
   }
-  const map = window.L.map("map", { scrollWheelZoom: false });
-  window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 17,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }).addTo(map);
+  if (!sharedMap) {
+    sharedMap = window.L.map("map", { scrollWheelZoom: false });
+    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 17,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(sharedMap);
+    overlay = window.L.layerGroup().addTo(sharedMap);
+  }
+  sharedMap.stop();
+  overlay.clearLayers();
+  legend.replaceChildren();
+  const map = sharedMap;
   const bounds = [];
 
   if (camp.lat != null) {
@@ -265,11 +285,8 @@ function drawMap(camp, trails) {
       zIndexOffset: 800,
       title: camp.name,
       alt: `חניון ${camp.name}`,
-    }).addTo(map);
-    const safeName = String(camp.name).replace(/[&<>"']/g, (char) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-    }[char]));
-    marker.bindPopup(`<strong>חניון</strong><br>${safeName}`);
+    }).addTo(overlay);
+    marker.bindPopup(`<strong>חניון</strong><br>${escapeHtml(camp.name)}`);
     bounds.push([camp.lat, camp.lng]);
     const item = el("li", "key", `חניון · ${camp.name}`);
     const dot = el("i", "swatch camp-swatch");
@@ -297,7 +314,7 @@ function drawMap(camp, trails) {
         weight: 2,
         fillColor: color,
         fillOpacity: 0.9,
-      }).addTo(map).bindPopup(trail.name);
+      }).addTo(overlay).bindPopup(trail.name);
       bounds.push([trail.lat, trail.lng]);
       const item = el("li", "key", "נקודת התחלה");
       item.title = trail.name;
@@ -310,7 +327,7 @@ function drawMap(camp, trails) {
     routes.forEach((route) => {
       const color = COLORS[colorIndex % COLORS.length];
       colorIndex += 1;
-      const group = window.L.layerGroup().addTo(map);
+      const group = window.L.layerGroup().addTo(overlay);
       (route.lines || []).forEach((line) => {
         window.L.polyline(line, { color, weight: 5, opacity: 0.9 }).addTo(group);
         bounds.push(...line);
@@ -326,25 +343,48 @@ function drawMap(camp, trails) {
       item.setAttribute("role", "button");
       item.addEventListener("click", () => {
         const visible = item.classList.toggle("off");
-        if (visible) map.removeLayer(group);
-        else group.addTo(map);
+        if (visible) overlay.removeLayer(group);
+        else group.addTo(overlay);
       });
       legend.append(item);
     });
   });
 
-  if (bounds.length) {
+  (extras || []).forEach((item) => {
+    if (item.trail.lat == null) return;
+    const marker = window.L.circleMarker([item.trail.lat, item.trail.lng], {
+      radius: 6,
+      color: "#6d6256",
+      weight: 2,
+      fillColor: "#fffaf3",
+      fillOpacity: 1,
+    }).addTo(overlay);
+    const distance = item.km == null ? "" : `<br>כ־${item.km} ק״מ מהחניון`;
+    marker.bindPopup(`${escapeHtml(item.trail.name)}${distance}`);
+    marker.on("click", () => onAdd(item.trail.id));
+  });
+
+  const view = { animate: false };
+  if (bounds.length > 1) {
     map.fitBounds(bounds, {
       paddingTopLeft: [48, 72],
       paddingBottomRight: [48, 36],
-      maxZoom: 15,
+      maxZoom: 14,
+      ...view,
     });
+  } else if (camp.lat != null) {
+    map.setView([camp.lat, camp.lng], 11, view);
   } else {
-    map.setView([31.4, 34.9], 7);
+    map.setView([31.4, 34.9], 7, view);
   }
-  mapNote.textContent = drewLine
-    ? "הסיכה עם הכיתוב חניון היא אתר הקמפינג. כל קו הוא מסלול אחר. לחיצה על שורה במקרא מסתירה את הקו."
-    : "החניון מסומן. למסלולים בעמוד הזה אין עדיין קו שביל תואם, אז מסומנת נקודת ההתחלה.";
+  const pickedNote = drewLine
+    ? "הסיכה עם הכיתוב חניון היא אתר הקמפינג. כל קו צבעוני הוא מסלול שנבחר."
+    : "החניון מסומן. למסלולים שנבחרו אין עדיין קו שביל תואם.";
+  const extraNote = extras && extras.length
+    ? " הנקודות הקטנות הן מסלולים בסביבה, ולחיצה עליהן מוסיפה אותם לסופ״ש."
+    : "";
+  mapNote.textContent = pickedNote + extraNote;
+  return map;
 }
 
 Promise.all([
@@ -354,20 +394,121 @@ Promise.all([
   .then(([camps, trails]) => {
     const { campId, trailIds } = params();
     const camp = camps.find((item) => item.id === campId);
-    const wanted = trailIds.length
-      ? trailIds.map((id) => trails.find((item) => item.id === id)).filter(Boolean)
-      : [];
-    if (!camp || !wanted.length) {
+    if (!camp) {
       title.textContent = "הסופ״ש לא נמצא";
       lead.textContent = "אפשר לחזור לרשימה ולבחור הצעה אחרת.";
       return;
     }
+    const byId = new Map(trails.map((trail) => [trail.id, trail]));
+    const selected = trailIds.filter((id) => byId.has(id));
+    const choices = window.CamperPlan.nearbyChoices(camp, trails);
+    let radius = 20;
+    let expanded = false;
+    const maxPicks = 4;
+    const around = document.querySelector("#around");
+    const picked = el("div", "picked");
+
     document.title = `${camp.name} — סופ״ש בטבע`;
     title.textContent = camp.name;
-    lead.textContent = wanted.map((trail) => trail.name).join(" · ");
-    drawMap(camp, wanted);
     dossier.append(campSheet(camp));
-    wanted.forEach((trail) => dossier.append(trailSheet(trail)));
+    dossier.append(picked);
+
+    function chosenTrails() {
+      return selected.map((id) => byId.get(id)).filter(Boolean);
+    }
+
+    function remember() {
+      const url = new URL(window.location.href);
+      url.searchParams.set("camp", String(camp.id));
+      url.searchParams.set("trails", selected.join(","));
+      window.history.replaceState(null, "", url);
+    }
+
+    function addTrail(id) {
+      if (selected.includes(id) || selected.length >= maxPicks || !byId.has(id)) return;
+      selected.push(id);
+      window.setTimeout(render, 0);
+    }
+
+    function removeTrail(id) {
+      const index = selected.indexOf(id);
+      if (index < 0) return;
+      selected.splice(index, 1);
+      window.setTimeout(render, 0);
+    }
+
+    function renderAround() {
+      const pool = choices.filter((item) => item.km == null || item.km <= radius);
+      const shown = expanded ? pool : pool.slice(0, 8);
+      around.hidden = false;
+      around.replaceChildren();
+      around.append(el("h2", null, "להרכיב את הסופ״ש"));
+      const nearCount = choices.filter((item) => item.km != null && item.km <= radius).length;
+      around.append(el("p", "around-lead", nearCount
+        ? `${nearCount} מסלולים במרחק של עד ${radius} ק״מ מהחניון. מה שמסומן עולה למפה.`
+        : "אין מסלולים בטווח הזה. אפשר להרחיב את המרחק."));
+      const radii = el("div", "radius");
+      [20, 40].forEach((value) => {
+        const button = el("button", "chip-btn", value === 20 ? "עד 20 ק״מ" : "עד 40 ק״מ");
+        button.type = "button";
+        button.setAttribute("aria-pressed", value === radius ? "true" : "false");
+        button.addEventListener("click", () => {
+          radius = value;
+          expanded = false;
+          render();
+        });
+        radii.append(button);
+      });
+      around.append(radii);
+      if (selected.length >= maxPicks) {
+        around.append(el("p", "fine", "אפשר עד ארבעה מסלולים במפה. הסירו אחד כדי להוסיף אחר."));
+      }
+      const ordered = [
+        ...selected.map((id) => choices.find((item) => item.trail.id === id) || { trail: byId.get(id), km: null }).filter((item) => item.trail),
+        ...shown.filter((item) => !selected.includes(item.trail.id)),
+      ];
+      ordered.forEach((item) => {
+        const on = selected.includes(item.trail.id);
+        const row = el("article", on ? "choice on" : "choice");
+        const heading = el("h3", null, item.trail.name);
+        const facts = [item.km == null ? "" : `כ־${item.km} ק״מ מהחניון`, trailFacts(item.trail)].filter(Boolean).join(" · ");
+        row.append(heading, el("p", "meta", facts));
+        const button = el("button", on ? "remove" : null, on ? "הסרה" : "להוסיף");
+        button.type = "button";
+        button.disabled = !on && selected.length >= maxPicks;
+        button.addEventListener("click", () => (on ? removeTrail(item.trail.id) : addTrail(item.trail.id)));
+        row.append(button);
+        around.append(row);
+      });
+      if (!expanded && pool.length > shown.length) {
+        const more = el("button", "chip-btn more-around", `עוד ${pool.length - shown.length} מסלולים בסביבה`);
+        more.type = "button";
+        more.addEventListener("click", () => {
+          expanded = true;
+          render();
+        });
+        around.append(more);
+      }
+    }
+
+    function render() {
+      const chosen = chosenTrails();
+      lead.textContent = chosen.length
+        ? chosen.map((trail) => trail.name).join(" · ")
+        : "בחרו מסלולים מסביב לחניון והם יופיעו במפה.";
+      picked.replaceChildren();
+      chosen.forEach((trail) => picked.append(trailSheet(trail)));
+      renderAround();
+      remember();
+      const extras = choices.filter((item) => !selected.includes(item.trail.id) && item.trail.lat != null && (item.km == null || item.km <= radius));
+      try {
+        drawMap(camp, chosen, extras, addTrail);
+      } catch (error) {
+        mapNote.textContent = "המפה לא התעדכנה. רשימת המסלולים כן.";
+      }
+    }
+
+    render();
   })
   .catch(() => {
     title.textContent = "לא הצלחנו לטעון את הפירוט";

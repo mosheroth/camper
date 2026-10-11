@@ -294,6 +294,44 @@ button {
   box-shadow: 0 1px 4px rgba(35, 28, 22, 0.28);
 }
 .map-note { color: var(--muted); margin: 8px 0 0; }
+.around {
+  margin-top: 16px;
+  padding: 16px 18px 8px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.around h2 {
+  margin: 0 0 6px;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 1.7rem;
+}
+.around-lead { margin: 0 0 12px; color: var(--muted); }
+.radius { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 4px; }
+.chip-btn {
+  background: var(--sand);
+  color: var(--ink);
+  padding: 6px 12px;
+}
+.chip-btn[aria-pressed="true"] { background: var(--green); color: #fff; }
+.choice {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.choice h3 { margin: 0; font-size: 1.15rem; }
+.choice .meta { grid-column: 1; color: var(--muted); font-size: 0.9rem; }
+.choice button { grid-column: 2; grid-row: 1 / span 2; }
+.choice button.remove {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+}
+.choice button:disabled { opacity: 0.4; cursor: default; }
+.more-around { margin: 4px 0 12px; }
 .dossier {
   display: grid;
   gap: 14px;

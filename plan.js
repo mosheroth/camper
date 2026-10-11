@@ -82,5 +82,27 @@
     return `trip.html?camp=${encodeURIComponent(campId)}&trails=${encodeURIComponent(trails)}`;
   }
 
-  return { buildPlans, trailMatches, timeMatches, campMatches, planUrl };
+  function lengthIsUsable(trail) {
+    const max = trail && (trail.kmMax == null ? trail.kmMin : trail.kmMax);
+    if (max == null) return false;
+    // Elevation in meters and drive times were sometimes read as kilometers.
+    if (max > 25) return false;
+    const hours = trail.hoursMax;
+    if (hours && hours <= 16 && max / hours > 12) return false;
+    return true;
+  }
+
+  function nearbyChoices(camp, trails) {
+    const byId = new Map((trails || []).map((trail) => [trail.id, trail]));
+    return (camp.nearby || [])
+      .map((near) => ({ trail: byId.get(near.id), km: near.km }))
+      .filter((item) => item.trail)
+      .sort((left, right) => {
+        const leftKm = left.km == null ? 999 : left.km;
+        const rightKm = right.km == null ? 999 : right.km;
+        return leftKm - rightKm;
+      });
+  }
+
+  return { buildPlans, trailMatches, timeMatches, campMatches, planUrl, nearbyChoices, lengthIsUsable };
 });
