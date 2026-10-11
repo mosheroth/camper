@@ -19,28 +19,40 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="trip-page">
     <header class="mast trip-mast">
-      <p class="eyebrow"><a href="index.html">סופ״ש בטבע</a> · חזרה לרשימה</p>
-      <h1 id="title">טוען את הסופ״ש…</h1>
-      <p id="lead" class="lead"></p>
+      <p class="eyebrow"><a href="index.html">חזרה לרשימה</a></p>
+      <div class="trip-head">
+        <h1 id="title">טוען את הסופ״ש…</h1>
+        <p id="lead" class="lead"></p>
+      </div>
     </header>
-    <main>
-      <div id="map" class="trip-map" role="region" aria-label="מפת החניון והמסלולים"></div>
-      <ul id="legend" class="legend"></ul>
-      <p id="map-note" class="map-note"></p>
-      <section id="around" class="around" hidden></section>
-      <div id="dossier" class="dossier"></div>
+    <main class="workspace">
+      <aside class="panel" aria-label="הרכבת הסופ״ש">
+        <div class="panel-tabs" role="tablist">
+          <button type="button" class="tab" id="tab-routes" role="tab" aria-selected="true" aria-controls="around">מסלולים</button>
+          <button type="button" class="tab" id="tab-camp" role="tab" aria-selected="false" aria-controls="dossier">חניון</button>
+          <button type="button" class="tab" id="tab-detail" role="tab" aria-selected="false" aria-controls="picked">פירוט</button>
+        </div>
+        <div class="panel-body" id="panel-body">
+          <p id="map-note" class="map-note"></p>
+          <section id="around" class="around" role="tabpanel"></section>
+          <div id="dossier" class="dossier" role="tabpanel" hidden></div>
+        </div>
+      </aside>
+      <section class="stage">
+        <div id="map" class="trip-map" role="region" aria-label="מפת החניון והמסלולים"></div>
+        <ul id="legend" class="legend"></ul>
+      </section>
     </main>
     <footer class="colophon">
       <p>
-        פירוט החניון והמסלול נאסף מאתר
+        הפירוט מאתר
         <a href="https://www.parks.org.il/">רשות הטבע והגנים</a>.
-        קו המסלול, כשיש כזה, מגיע ממפת השבילים הפתוחה של
+        קו המסלול, כשיש, הוא מנתוני
         <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
-        ורק כששם השביל תואם לשם הטיול. זה לא סימון רשמי של רט״ג.
+        ואינו סימון רשמי. לפני יציאה יש לבדוק שהמסלול פתוח, שהחניון פנוי, ומה המחיר העדכני.
       </p>
-      <p>לפני יציאה יש לבדוק באתר הרשמי שהמסלול פתוח, שהחניון פנוי, ומה המחיר העדכני.</p>
     </footer>
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

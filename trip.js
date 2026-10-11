@@ -186,7 +186,13 @@ function campSheet(camp) {
     }
     node.append(links);
   });
+  block.classList.add("camp-sheet");
   return block;
+}
+
+function shortName(name) {
+  const cut = String(name).split(/\s+[–—-]\s+/)[0].trim();
+  return cut.length > 34 ? `${cut.slice(0, 32)}…` : cut;
 }
 
 function trailFacts(trail) {
@@ -246,6 +252,10 @@ function trailSheet(trail) {
 let sharedMap = null;
 let overlay = null;
 
+window.addEventListener("resize", () => {
+  if (sharedMap) sharedMap.invalidateSize({ animate: false });
+});
+
 function drawMap(camp, trails, extras, onAdd) {
   if (typeof window.L === "undefined") {
     mapNote.textContent = "המפה לא נטענה. אפשר עדיין לקרוא את הפירוט ולפתוח את העמודים הרשמיים.";
@@ -262,6 +272,7 @@ function drawMap(camp, trails, extras, onAdd) {
   sharedMap.stop();
   overlay.clearLayers();
   legend.replaceChildren();
+  sharedMap.invalidateSize({ animate: false });
   const map = sharedMap;
   const bounds = [];
 
@@ -367,8 +378,8 @@ function drawMap(camp, trails, extras, onAdd) {
   const view = { animate: false };
   if (bounds.length > 1) {
     map.fitBounds(bounds, {
-      paddingTopLeft: [48, 72],
-      paddingBottomRight: [48, 36],
+      paddingTopLeft: [48, 28],
+      paddingBottomRight: [48, 96],
       maxZoom: 14,
       ...view,
     });
@@ -378,10 +389,10 @@ function drawMap(camp, trails, extras, onAdd) {
     map.setView([31.4, 34.9], 7, view);
   }
   const pickedNote = drewLine
-    ? "הסיכה עם הכיתוב חניון היא אתר הקמפינג. כל קו צבעוני הוא מסלול שנבחר."
-    : "החניון מסומן. למסלולים שנבחרו אין עדיין קו שביל תואם.";
+    ? "קו צבעוני הוא מסלול שנבחר."
+    : "למסלול שנבחר אין עדיין קו שביל, אז מוצגת נקודת ההתחלה.";
   const extraNote = extras && extras.length
-    ? " הנקודות הקטנות הן מסלולים בסביבה, ולחיצה עליהן מוסיפה אותם לסופ״ש."
+    ? " נקודה קטנה היא מסלול בסביבה, ולחיצה עליה מוסיפה אותו."
     : "";
   mapNote.textContent = pickedNote + extraNote;
   return map;
@@ -404,17 +415,31 @@ Promise.all([
     const choices = window.CamperPlan.nearbyChoices(camp, trails);
     let radius = 20;
     let expanded = false;
+    let panelMode = "routes";
+    let focusId = selected[0] || null;
     const maxPicks = 4;
     const around = document.querySelector("#around");
+    const panelBody = document.querySelector("#panel-body");
+    const tabRoutes = document.querySelector("#tab-routes");
+    const tabCamp = document.querySelector("#tab-camp");
+    const tabDetail = document.querySelector("#tab-detail");
     const picked = el("div", "picked");
+    picked.id = "picked";
 
     document.title = `${camp.name} — סופ״ש בטבע`;
     title.textContent = camp.name;
     dossier.append(campSheet(camp));
     dossier.append(picked);
+    tabRoutes.addEventListener("click", () => setPanel("routes"));
+    tabCamp.addEventListener("click", () => setPanel("camp"));
+    tabDetail.addEventListener("click", () => setPanel("detail"));
 
     function chosenTrails() {
       return selected.map((id) => byId.get(id)).filter(Boolean);
+    }
+
+    function choiceFor(id) {
+      return choices.find((item) => item.trail.id === id) || { trail: byId.get(id), km: null };
     }
 
     function remember() {
@@ -427,6 +452,7 @@ Promise.all([
     function addTrail(id) {
       if (selected.includes(id) || selected.length >= maxPicks || !byId.has(id)) return;
       selected.push(id);
+      focusId = id;
       window.setTimeout(render, 0);
     }
 
@@ -434,18 +460,49 @@ Promise.all([
       const index = selected.indexOf(id);
       if (index < 0) return;
       selected.splice(index, 1);
+      if (focusId === id) focusId = selected[0] || null;
       window.setTimeout(render, 0);
+    }
+
+    function setPanel(mode) {
+      panelMode = mode;
+      if (mode === "detail" && focusId == null) focusId = selected[0] || null;
+      panelBody.scrollTop = 0;
+      render();
+    }
+
+    function applyPanel() {
+      const routes = panelMode === "routes";
+      const campTab = panelMode === "camp";
+      const detail = panelMode === "detail";
+      around.hidden = !routes;
+      mapNote.hidden = !routes;
+      dossier.hidden = routes;
+      const campNode = dossier.querySelector(".camp-sheet");
+      if (campNode) campNode.hidden = !campTab;
+      picked.hidden = !detail;
+      tabRoutes.setAttribute("aria-selected", routes ? "true" : "false");
+      tabCamp.setAttribute("aria-selected", campTab ? "true" : "false");
+      tabDetail.setAttribute("aria-selected", detail ? "true" : "false");
+      tabRoutes.textContent = selected.length ? `מסלולים · ${selected.length}` : "מסלולים";
+    }
+
+    function openTrail(id) {
+      focusId = id;
+      panelMode = "detail";
+      panelBody.scrollTop = 0;
+      render();
     }
 
     function renderAround() {
       const pool = choices.filter((item) => item.km == null || item.km <= radius);
-      const shown = expanded ? pool : pool.slice(0, 8);
-      around.hidden = false;
+      const available = pool.filter((item) => !selected.includes(item.trail.id));
+      const shown = expanded ? available : available.slice(0, 8);
       around.replaceChildren();
-      around.append(el("h2", null, "להרכיב את הסופ״ש"));
+      const tools = el("div", "around-tools");
       const nearCount = choices.filter((item) => item.km != null && item.km <= radius).length;
-      around.append(el("p", "around-lead", nearCount
-        ? `${nearCount} מסלולים במרחק של עד ${radius} ק״מ מהחניון. מה שמסומן עולה למפה.`
+      tools.append(el("p", "around-lead", nearCount
+        ? `${nearCount} מסלולים עד ${radius} ק״מ. לחיצה על השם פותחת פירוט.`
         : "אין מסלולים בטווח הזה. אפשר להרחיב את המרחק."));
       const radii = el("div", "radius");
       [20, 40].forEach((value) => {
@@ -459,29 +516,52 @@ Promise.all([
         });
         radii.append(button);
       });
-      around.append(radii);
-      if (selected.length >= maxPicks) {
-        around.append(el("p", "fine", "אפשר עד ארבעה מסלולים במפה. הסירו אחד כדי להוסיף אחר."));
+      tools.append(radii);
+      const strip = el("div", "picked-strip");
+      if (!selected.length) {
+        strip.append(el("p", "fine", "עדיין לא נבחרו מסלולים. מה שתוסיפו יופיע במפה."));
       }
-      const ordered = [
-        ...selected.map((id) => choices.find((item) => item.trail.id === id) || { trail: byId.get(id), km: null }).filter((item) => item.trail),
-        ...shown.filter((item) => !selected.includes(item.trail.id)),
-      ];
-      ordered.forEach((item) => {
-        const on = selected.includes(item.trail.id);
-        const row = el("article", on ? "choice on" : "choice");
-        const heading = el("h3", null, item.trail.name);
+      selected.forEach((id, index) => {
+        const item = choiceFor(id);
+        if (!item.trail) return;
+        const chip = el("span", "pick");
+        const swatch = el("i", "swatch");
+        swatch.style.background = COLORS[index % COLORS.length];
+        const name = el("button", null, shortName(item.trail.name));
+        name.type = "button";
+        name.title = item.trail.name;
+        name.addEventListener("click", () => openTrail(id));
+        const remove = el("button", "x", "×");
+        remove.type = "button";
+        remove.setAttribute("aria-label", `הסרת ${item.trail.name}`);
+        remove.addEventListener("click", () => removeTrail(id));
+        chip.append(swatch, name, remove);
+        strip.append(chip);
+      });
+      tools.append(strip);
+      if (selected.length >= maxPicks) {
+        tools.append(el("p", "fine", "אפשר עד ארבעה מסלולים במפה. הסירו אחד כדי להוסיף אחר."));
+      }
+      around.append(tools);
+      shown.forEach((item) => {
+        const row = el("article", "choice");
+        const heading = el("button", "choice-name", item.trail.name);
+        heading.type = "button";
+        heading.addEventListener("click", () => openTrail(item.trail.id));
         const facts = [item.km == null ? "" : `כ־${item.km} ק״מ מהחניון`, trailFacts(item.trail)].filter(Boolean).join(" · ");
         row.append(heading, el("p", "meta", facts));
-        const button = el("button", on ? "remove" : null, on ? "הסרה" : "להוסיף");
+        const button = el("button", "add", "להוסיף");
         button.type = "button";
-        button.disabled = !on && selected.length >= maxPicks;
-        button.addEventListener("click", () => (on ? removeTrail(item.trail.id) : addTrail(item.trail.id)));
+        button.disabled = selected.length >= maxPicks;
+        button.addEventListener("click", () => addTrail(item.trail.id));
         row.append(button);
         around.append(row);
       });
-      if (!expanded && pool.length > shown.length) {
-        const more = el("button", "chip-btn more-around", `עוד ${pool.length - shown.length} מסלולים בסביבה`);
+      if (!shown.length) {
+        around.append(el("p", "fine", "כל המסלולים בטווח הזה כבר במפה."));
+      }
+      if (!expanded && available.length > shown.length) {
+        const more = el("button", "chip-btn more-around", `עוד ${available.length - shown.length} מסלולים בסביבה`);
         more.type = "button";
         more.addEventListener("click", () => {
           expanded = true;
@@ -491,14 +571,51 @@ Promise.all([
       }
     }
 
+    function renderDetail() {
+      picked.replaceChildren();
+      const focus = focusId != null ? byId.get(focusId) : null;
+      if (!focus) {
+        picked.append(el("p", "around-lead", "לחצו על שם של מסלול כדי לקרוא עליו בלי לעזוב את המפה."));
+        return;
+      }
+      const bar = el("div", "detail-bar");
+      const on = selected.includes(focus.id);
+      selected.forEach((id) => {
+        const trail = byId.get(id);
+        if (!trail) return;
+        const chip = el("button", "chip-btn", shortName(trail.name));
+        chip.type = "button";
+        chip.title = trail.name;
+        chip.setAttribute("aria-pressed", id === focus.id ? "true" : "false");
+        chip.addEventListener("click", () => openTrail(id));
+        bar.append(chip);
+      });
+      if (!on) {
+        const chip = el("button", "chip-btn", shortName(focus.name));
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "true");
+        bar.append(chip);
+      }
+      const action = el("button", on ? "remove" : "add", on ? "הסרה מהסופ״ש" : "להוסיף לסופ״ש");
+      action.type = "button";
+      action.disabled = !on && selected.length >= maxPicks;
+      action.addEventListener("click", () => (on ? removeTrail(focus.id) : addTrail(focus.id)));
+      bar.append(action);
+      picked.append(bar, trailSheet(focus));
+    }
+
     function render() {
       const chosen = chosenTrails();
-      lead.textContent = chosen.length
-        ? chosen.map((trail) => trail.name).join(" · ")
-        : "בחרו מסלולים מסביב לחניון והם יופיעו במפה.";
-      picked.replaceChildren();
-      chosen.forEach((trail) => picked.append(trailSheet(trail)));
+      const keptScroll = panelMode === "routes" ? panelBody.scrollTop : 0;
+      lead.textContent = chosen.length === 1
+        ? "מסלול אחד במפה"
+        : chosen.length
+          ? `${chosen.length} מסלולים במפה`
+          : "בלי מסלול במפה";
       renderAround();
+      renderDetail();
+      applyPanel();
+      if (panelMode === "routes") panelBody.scrollTop = keptScroll;
       remember();
       const extras = choices.filter((item) => !selected.includes(item.trail.id) && item.trail.lat != null && (item.km == null || item.km <= radius));
       try {
