@@ -46,20 +46,97 @@ function addList(parent, items) {
   parent.append(list);
 }
 
-function photo(parent, src) {
-  if (!src) return;
+function gallery(parent, record) {
+  const frames = (record.photos || []).filter((item) => item && item.src);
+  if (!frames.length && record.image) frames.push({ src: record.image, credit: "" });
+  if (!frames.length) return;
+
+  const block = el("figure", "gallery");
+  const stage = el("div", "gallery-stage");
   const image = document.createElement("img");
-  image.className = "sheet-photo";
-  image.src = src;
-  image.alt = "";
-  image.addEventListener("error", () => image.remove());
-  parent.append(image);
+  const meta = el("div", "gallery-meta");
+  const credit = el("span", null, "");
+  const count = el("span", "count", "");
+  meta.append(credit, count);
+  stage.append(image);
+  block.append(stage, meta);
+
+  let index = 0;
+  const thumbButtons = [];
+
+  function show(nextIndex) {
+    const alive = frames.filter((item) => !item.failed);
+    if (!alive.length) {
+      block.remove();
+      return;
+    }
+    index = (nextIndex + frames.length) % frames.length;
+    if (frames[index].failed) {
+      show(nextIndex + 1);
+      return;
+    }
+    const frame = frames[index];
+    image.src = frame.src;
+    image.alt = frame.credit || "תמונה מהשטח";
+    credit.textContent = frame.credit || "";
+    const position = alive.indexOf(frame) + 1;
+    count.textContent = alive.length > 1 ? `${position} מתוך ${alive.length}` : "";
+    meta.hidden = !credit.textContent && !count.textContent;
+    thumbButtons.forEach((button, buttonIndex) => {
+      button.hidden = Boolean(frames[buttonIndex].failed);
+      button.setAttribute("aria-current", buttonIndex === index ? "true" : "false");
+    });
+  }
+
+  image.addEventListener("error", () => {
+    if (frames[index]) frames[index].failed = true;
+    show(index + 1);
+  });
+
+  if (frames.length > 1) {
+    const previous = el("button", "gallery-nav prev", "‹");
+    previous.type = "button";
+    previous.setAttribute("aria-label", "התמונה הקודמת");
+    const next = el("button", "gallery-nav next", "›");
+    next.type = "button";
+    next.setAttribute("aria-label", "התמונה הבאה");
+    previous.addEventListener("click", () => show(index - 1));
+    next.addEventListener("click", () => show(index + 1));
+    image.addEventListener("click", () => show(index + 1));
+    stage.tabIndex = 0;
+    stage.setAttribute("aria-label", "גלריית תמונות מהשטח");
+    stage.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") show(index + 1);
+      if (event.key === "ArrowRight") show(index - 1);
+    });
+    stage.append(previous, next);
+    block.classList.add("has-nav");
+
+    const thumbs = el("div", "thumbs");
+    frames.forEach((frame, frameIndex) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("aria-label", frame.credit || `תמונה ${frameIndex + 1}`);
+      const thumb = document.createElement("img");
+      thumb.src = frame.src;
+      thumb.alt = "";
+      thumb.addEventListener("error", () => button.remove());
+      button.append(thumb);
+      button.addEventListener("click", () => show(frameIndex));
+      thumbs.append(button);
+      thumbButtons.push(button);
+    });
+    block.append(thumbs);
+  }
+
+  parent.append(block);
+  show(0);
 }
 
 function campSheet(camp) {
   const details = camp.details || {};
   const block = section(camp.name, (node) => {
-    photo(node, camp.image);
+    gallery(node, camp);
     const regions = (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ");
     const areas = (camp.areaNames || []).slice(0, 2).join(" · ");
     node.append(el("p", "kicker", [camp.paid ? "חניון בתשלום" : "חניון בלי תשלום", regions, areas].filter(Boolean).join(" · ")));
@@ -126,7 +203,7 @@ function trailFacts(trail) {
 function trailSheet(trail) {
   const details = trail.details || {};
   return section(trail.name, (node) => {
-    photo(node, trail.image);
+    gallery(node, trail);
     const facts = trailFacts(trail);
     node.append(el("p", "kicker", facts ? `מסלול הליכה · ${facts}` : "מסלול הליכה"));
     if (details.summary) node.append(el("p", null, details.summary));

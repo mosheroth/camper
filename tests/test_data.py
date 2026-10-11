@@ -73,6 +73,16 @@ class CatalogTests(unittest.TestCase):
         self.assertGreater(len(described), 80)
         self.assertTrue(all(trail.get("details") for trail in self.trails))
 
+    def test_field_photos_cover_camps_and_trails(self):
+        camps_with_several = sum(len(camp.get("photos") or []) >= 2 for camp in self.camps)
+        trails_with_photos = sum(bool(trail.get("photos")) for trail in self.trails)
+        self.assertGreater(camps_with_several, 40)
+        self.assertGreater(trails_with_photos, 200)
+        for row in self.camps + self.trails:
+            for photo in row.get("photos") or []:
+                self.assertTrue(photo["src"].startswith("https://www.parks.org.il/"))
+                self.assertNotIn("מפת", photo["src"])
+
     def test_family_signal_is_not_the_default_tag(self):
         family = sum(1 for trail in self.trails if trail["family"])
         self.assertGreater(family, 20)

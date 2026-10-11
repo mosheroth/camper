@@ -39,6 +39,13 @@ from scripts.details import (  # noqa: E402
 )
 from scripts.match import nearby_trails  # noqa: E402
 from scripts.osm_routes import attach_routes  # noqa: E402
+from scripts.photos import (  # noqa: E402
+    merge_photos,
+    photos_from_html,
+    photos_from_media,
+    photos_from_paid,
+    photos_from_trail,
+)
 
 API = "https://www.parks.org.il/wp-json/wp/v2"
 UA = (
@@ -343,6 +350,7 @@ def normalize_paid(item, areas):
         tabs = acf.get("rp_tab")
         if isinstance(tabs, list) and tabs:
             blurb = (tabs[0] or {}).get("content") or ""
+    photos = photos_from_paid(acf)
     return {
         "id": item["id"],
         "name": title_of(item),
@@ -359,7 +367,8 @@ def normalize_paid(item, areas):
         "priceFrom": price_from(paid_prices(acf)),
         "prices": paid_prices(acf)[:8],
         "blurb": clip(blurb),
-        "image": first_image(acf),
+        "image": (photos[0]["src"] if photos else first_image(acf)),
+        "photos": photos,
         "details": {
             "sections": camp_sections(acf),
             "hours": hours_text(acf),
@@ -377,6 +386,7 @@ def normalize_free(item, areas):
     arrival = arrival_text(acf)
     if arrival:
         details["arrival"] = arrival
+    photos = photos_from_html(content)
     return {
         "id": item["id"],
         "name": title_of(item),
@@ -393,7 +403,8 @@ def normalize_free(item, areas):
         "priceFrom": 0,
         "prices": [],
         "blurb": clip(acf.get("map_description") or acf.get("arrival_instructions") or ""),
-        "image": first_image(acf) or content_image(content),
+        "image": (photos[0]["src"] if photos else first_image(acf) or content_image(content)),
+        "photos": photos,
         "details": details,
     }
 
@@ -423,6 +434,7 @@ def normalize_trail(item, areas):
     length = parse_km(facts)
     lat, lng = coords_from_acf(acf)
     ids = area_ids(item, acf)
+    photos = photos_from_trail(acf)
     return {
         "id": item["id"],
         "name": title,
@@ -443,11 +455,33 @@ def normalize_trail(item, areas):
         "family": is_family(item.get("tags") or [], family_text),
         "accessible": is_accessible(facts, flags),
         "blurb": clip(acf.get("intro_text") or ""),
-        "image": first_image(acf),
+        "image": (photos[0]["src"] if photos else first_image(acf)),
+        "photos": photos,
         "waze": plain_text(acf.get("waze_adress") or "") or None,
         "details": trail_details(acf, (item.get("content") or {}).get("rendered") or ""),
         "routes": [],
     }
+
+
+def enrich_photos(records):
+    """Add attached field photos when the page itself has only a few."""
+    for index, record in enumerate(records, start=1):
+        current = record.get("photos") or []
+        if len(current) < 4:
+            url = (
+                f"{API}/media?parent={record['id']}&per_page=12"
+                "&_fields=source_url,alt_text,caption,mime_type,media_details"
+            )
+            try:
+                payload, _headers = fetch_json(url)
+            except RuntimeError:
+                payload = []
+            record["photos"] = merge_photos(current, photos_from_media(payload))
+            time.sleep(0.12)
+        if record.get("photos"):
+            record["image"] = record["photos"][0]["src"]
+        if index % 40 == 0 or index == len(records):
+            print(f"photos {index}/{len(records)}")
 
 
 def main():
@@ -468,6 +502,9 @@ def main():
     camps = [normalize_paid(item, areas) for item in paid_raw]
     camps.extend(normalize_free(item, areas) for item in free_raw)
     trails = [trail for trail in (normalize_trail(item, areas) for item in trail_raw) if trail]
+    print("collecting field photos…")
+    enrich_photos(camps)
+    enrich_photos(trails)
     print("matching trail lines…")
     with_line = attach_routes(trails, cache_path=ROOT / "data" / ".osm-cache.json")
     print("trails with a mapped line:", with_line)

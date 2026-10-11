@@ -44,7 +44,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/St-George-17-_11-768x584.jpg",
+        "credit": "צילום: איל שפירא"
+      }
+    ]
   },
   {
     "id": 425949,
@@ -842,7 +848,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2026/06/Ovdat_26_17-Large-768x580.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2026/06/Ovdat_26_38-Large-768x576.jpg",
+        "credit": "צילום: איל שפירא"
+      }
+    ]
   },
   {
     "id": 415392,
@@ -2800,6 +2816,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/יחמור-בשמורת-טבע-חי-בר-כרמל-דותן-רותם-רשות-הטבע-והגנים-768x512.jpg",
+        "credit": "דותן רותם, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2026/01/WhatsApp-Image-2025-11-26-at-12.16.37-2-768x413.jpg",
+        "credit": "צילום: מאיה חכמון קדוש, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2026/01/20251126_102034-1-768x293.jpg",
+        "credit": "צילום: מאיה חכמון קדוש, רשות הטבע והגנים"
+      }
     ]
   },
   {
@@ -2847,7 +2877,21 @@
         "תצפיות נוף"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/09/נחל-ערוגות-1-איל-שפירא-1-768x576.jpg",
+        "credit": "איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/09/נחל-ערוגות-3-איל-שפירא-1-768x576.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/09/נחל-ערוגות-2-איל-שפירא-1-768x576.jpg",
+        "credit": "צילום: איל שפירא"
+      }
+    ]
   },
   {
     "id": 406111,
@@ -2892,7 +2936,21 @@
         "המקדש הכלקוליתי – שרידי מקדש קדום סמוך למעיין עין גדי, מיוחס לתקופה הכלקוליתית (לפני יותר מ-5,000 שנה)."
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/09/מערת-דודים-רינת-רוסו-2-768x576.jpeg",
+        "credit": "רינת רוסו, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/09/מערת-דודים-רינת-רוסו-1-768x576.jpeg",
+        "credit": "צילום: רינת רוסו, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/09/יעל-שמורת-טבע-עין-גדי-נחל-דוד-יניב-כהן-רשות-הטבע-והגנים-768x512.jpeg",
+        "credit": "צילום: יניב כהן, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 393260,
@@ -2927,7 +2985,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Karney-Ramon-_032-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Karney-Ramon-_018-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Karney-Ramon-_008-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      }
+    ]
   },
   {
     "id": 393247,
@@ -3997,7 +4069,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Borot-Lotz-Rosh-Elot-_051-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Borot-Lotz-Rosh-Elot-_024-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Borot-Lotz-Rosh-Elot-_040-768x577.jpg",
+        "credit": "צילם איל שפירא"
+      }
+    ]
   },
   {
     "id": 393199,
@@ -4039,7 +4125,33 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Nachal-Abuv-_033-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Nachal-Abuv-_032-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Nachal-Abuv-_012-768x577.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Borot-Lotz-Rosh-Elot-_051-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Borot-Lotz-Rosh-Elot-_024-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/Borot-Lotz-Rosh-Elot-_040-768x577.jpg",
+        "credit": "צילם איל שפירא"
+      }
+    ]
   },
   {
     "id": 390987,
@@ -5720,7 +5832,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/צילום-מיכל-גלברד.png",
+        "credit": "צילום מיכל גלברד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/05/צפית-צילום-מיכל-גלברד-768x432.jpg",
+        "credit": "צילום מיכל גלברד"
+      }
+    ]
   },
   {
     "id": 139604,
@@ -5766,7 +5888,25 @@
         "טנק סורי הפוך"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/nachal-chermon-768x576.jpg",
+        "credit": "נחל חרמון (בניאס) - צילם חגי דביר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/banyas-768x432.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/06/5d022f7d61caa-768x513.jpg",
+        "credit": "מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/05/5ce3e43b3109b-768x296.jpg",
+        "credit": "מפל הבניאס - צילם מנו גרינשפיין"
+      }
+    ]
   },
   {
     "id": 386568,
@@ -5801,7 +5941,13 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/04/מצד-עטרת-צילום-נעם-רווח-768x575.jpg",
+        "credit": "צילום נעם רווח"
+      }
+    ]
   },
   {
     "id": 386557,
@@ -7072,7 +7218,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/04/מצד-עטרת-צילום-נעם-רווח-768x575.jpg",
+        "credit": "צילום נעם רווח"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/04/מצד-עטרת-צילום-נעם-רווח-1.jpg",
+        "credit": "צילום נעם רווח"
+      }
+    ]
   },
   {
     "id": 385092,
@@ -7199,7 +7355,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/03/הר-אבנון-גמיל-אלטרש-11-768x432.jpg",
+        "credit": "צילום: גמיל אלטרש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/03/הר-אבנון-גמיל-אלטרש-1-768x432.jpg",
+        "credit": "צילום: גמיל אלטרש"
+      }
+    ]
   },
   {
     "id": 381423,
@@ -7325,6 +7491,12 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Iris-haynei-איריס-הגלבוע-768x513.jpg",
+        "credit": "צילום: ד\"ר אורי פרגמן - ספיר"
+      }
     ]
   },
   {
@@ -7368,7 +7540,17 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Scilla-hyacinthoides-בן-חצב-יקינתוני.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Scilla-hyacinthoides-בן-חצב-יקינתוני-1-e1740382378472.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      }
+    ]
   },
   {
     "id": 381411,
@@ -7410,7 +7592,17 @@
       "character": "דרגת קושי: קל",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Orchis-tridentata-סחלב-שלוש-השיניים-768x1151.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Orchis-tridentata-סחלב-שלוש-השיניים-1-e1740381869808-768x704.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      }
+    ]
   },
   {
     "id": 381399,
@@ -7453,7 +7645,17 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Hyacinthus-orientalis-יקינתון-מזרחי-768x1148.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Hyacinthus-orientalis-יקינתון-מזרחי-1-e1740382170260-768x486.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      }
+    ]
   },
   {
     "id": 381382,
@@ -7496,7 +7698,13 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Centaurea-cyanoides-דרדר-כחול-768x512.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      }
+    ]
   },
   {
     "id": 380287,
@@ -7539,7 +7747,41 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Narcissus-tazetta-נרקיס-מצוי-768x1006.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Narcissus-tazetta-נרקיס-מצוי-1-e1740304728252-768x515.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן - ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Scilla-hyacinthoides-בן-חצב-יקינתוני.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן – ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Pancratium-sickenbergeri-חבצלת-הנגב-768x529.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן – ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Orchis-tridentata-סחלב-שלוש-השיניים-768x1151.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן – ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Michauxia-campanuloides-מישויה-פעמונית-768x1152.jpg",
+        "credit": "צילם ד\"ר אורי פרגמן – ספיר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Iris-mariae-איריס-הנגב-768x513.jpg",
+        "credit": "S Israel, W Negev near Ze'elim"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/02/Iris-haynei-איריס-הגלבוע-768x513.jpg",
+        "credit": "צילום: ד\"ר אורי פרגמן – ספיר"
+      }
+    ]
   },
   {
     "id": 4939,
@@ -7581,7 +7823,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/01/מצפה-השלום-נעמה-טוכפלד-768x433.jpeg",
+        "credit": "נעמה טוכפלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-08-at-17.01.09-768x432.jpeg",
+        "credit": "צילמה נעמה טוכפלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2025/01/שלט-במצפה-השלום-נעמה-טוכפלד-768x1365.jpeg",
+        "credit": "צילמה נעמה טוכפלד"
+      }
+    ]
   },
   {
     "id": 255308,
@@ -7889,6 +8145,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/Karta-14-57-768x576.jpg",
+        "credit": "שמורת חורבת קרתא - צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/Karta-14-99-768x576.jpg",
+        "credit": "שמורת חורבת קרתא - צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/Karta-14-51-768x576.jpg",
+        "credit": "שמורת חורבת קרתא - צילם איל שפירא"
+      }
     ]
   },
   {
@@ -7937,7 +8207,21 @@
         "מהמגדל המערבי וממרפסת משטרת הרוכבים יש תצפית יפה על שרידי ממשית ועל נחל ממשית"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c28c20432b06-768x512.jpg",
+        "credit": "ממשית. צילום: אבי בהרי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/03/18--e1522327668869.jpg",
+        "credit": "שער העיר ממשית"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_4837-768x482.jpg",
+        "credit": "גן לאומי ממשית. צילום: מנו גרינשפן"
+      }
+    ]
   },
   {
     "id": 63386,
@@ -7979,7 +8263,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c991f4c977fc-768x501.jpg",
+        "credit": "נחל עין תינה. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c991f3dafc4c-768x497.jpg",
+        "credit": "עין תינה. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 367163,
@@ -8374,7 +8668,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/04/גן_לאומי_נבי_סמואל_-_דורון_ניסים_רשות_הטבע_והגנים-768x512.jpg",
+        "credit": "דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/07/WhatsApp-Image-2020-07-13-at-11.54.44-2-768x576.jpeg",
+        "credit": "עמוס טל"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/01/גן_המקלט_בגן_הלאומי_נבי_סמואל_צילום_דר_מרגרטה_וולצאק_רשות_הטבע_והגנים_3-768x576.jpeg",
+        "credit": "צילמה: דר' מרגריטה וולצאק"
+      }
+    ]
   },
   {
     "id": 367152,
@@ -8545,7 +8853,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/מצדה-יובל-דקס-2-768x432.jpg",
+        "credit": "צילם יובל דקס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/05/5ce528a610541-768x456.jpg",
+        "credit": "מצדה, צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/מצדה.-נועה-גורדון-768x535.jpg",
+        "credit": "צילמה נועה גורדון"
+      }
+    ]
   },
   {
     "id": 366930,
@@ -8588,7 +8910,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2030/10/שמורת-הטבע-עין-אפק-תמר-עבדת-רשות-הטבע-והגנים-768x576.jpeg",
+        "credit": "תמר עבדת"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/10/עין-אפק-צילום-פאדי-דעבוס-2-768x576.jpeg",
+        "credit": "צילום פאדי דעבוס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/עין-אפק-תמר-עבדת-768x576.jpg",
+        "credit": "תמר עבדת"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/צילם-חסין-גדיר-768x576.jpeg",
+        "credit": "צילם חסין גדיר"
+      }
+    ]
   },
   {
     "id": 366887,
@@ -8631,7 +8971,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/02/שאלה_18._הגשר_בשמורת_האלמוגים._אסף_זבולוני-768x576.jpg",
+        "credit": "צילם אסף זבולוני"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/שמורת-האלמוגים-באילת.-צילום_-חן-טופיקיאן.jpg",
+        "credit": "צילום: חן טופיקיאן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/WhatsApp-Image-2022-01-12-at-12.21.04-768x511.jpeg",
+        "credit": "צילום: עומרי יוסף עומסי, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/09/הגשר-בשמורת-האלמוגים-אסף-זבולוני-768x502.jpg",
+        "credit": "צילם אסף זבולוני"
+      }
+    ]
   },
   {
     "id": 366870,
@@ -8674,7 +9032,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/20140512_095722-768x576.jpg",
+        "credit": "צילום: יהודה כרמי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/20140512_104331-768x576.jpg",
+        "credit": "צילום: יהודה כרמי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/גן-לאומי-גן-השלושה-הסחנה-יניב-כהן-רשות-הטבע-והגנים-4-Medium-768x512.jpeg",
+        "credit": "צילום: יניב כהן, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 366849,
@@ -9226,7 +9598,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/11/קומראן-צילם-דן-פרקש-768x576.jpeg",
+        "credit": "דן פרקש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/07/מערות-קומראן-צילום-שי-הלוי-רשות-העתיקות.jpg",
+        "credit": "מערות קומראן - צילום שי הלוי רשות העתיקות"
+      }
+    ]
   },
   {
     "id": 366738,
@@ -9269,7 +9651,17 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/קיסריה-צילום-עגור-ניווט-768x530.jpeg",
+        "credit": "צילום עגור ניווט"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/07/-העוגנים-3-e1594881868111-768x468.jpg",
+        "credit": "צילום: עידן יצחקיאן"
+      }
+    ]
   },
   {
     "id": 366509,
@@ -9312,7 +9704,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/מרכז-מבקרים-עינות-צוקים.-צילום-רינת-רוסו.-2.4-768x576.jpg",
+        "credit": "צילמה רינת רוסו"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-07-at-17.44.10-1-768x576.jpeg",
+        "credit": "צילמה מיכל משיח"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/מרכז-מבקרים-עינות-צוקים.-צילום-רינת-רוסו-768x576.jpg",
+        "credit": "צילום רינת רוסו"
+      }
+    ]
   },
   {
     "id": 366499,
@@ -9355,7 +9761,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/20181211_133324-768x576.jpg",
+        "credit": "צילמה יעל דניאלי להב"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/20150309_105239-768x576.jpg",
+        "credit": "יעל דניאלי להב"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/20181211_133429-768x576.jpg",
+        "credit": "צילמה יעל דניאלי להב"
+      }
+    ]
   },
   {
     "id": 353820,
@@ -9397,7 +9817,21 @@
       "character": "דרגת קושי ואופי המסלול: קלה, קווי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/Yarden-Ateret-to-G-K-HaNasi-24-28-768x576.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/Yarden-Ateret-to-G-K-HaNasi-24-20-768x577.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/Yarden-Ateret-to-G-K-HaNasi-24-11-768x577.jpg",
+        "credit": "צילום איל שפירא"
+      }
+    ]
   },
   {
     "id": 353812,
@@ -9439,7 +9873,21 @@
       "character": "דרגת קושי ואופי המסלול: קלה, קווי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/פארק-הירדן-מגשר-הדודות-לגשר-אריק-צילום-איל-שפירא-2-768x577.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/פארק-הירדן-מגשר-הדודות-לגשר-אריק-צילום-איל-שפירא-3-768x576.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/פארק-הירדן-מגשר-הדודות-לגשר-אריק-צילום-איל-שפירא-768x577.jpg",
+        "credit": "צילום איל שפירא"
+      }
+    ]
   },
   {
     "id": 351918,
@@ -9481,7 +9929,33 @@
       "character": "דרגת קושי ואופי המסלול: בינונית, קווי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/מצפה-שמיר-צילום-נעמה-מנספלד-5-768x576.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/מצפה-שמיר-צילום-נעמה-מנספלד-3-768x576.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/מצפה-שמיר-צילום-נעמה-מנספלד-4-768x576.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/מצפה-שמיר-צילום-נעמה-מנספלד-768x576.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/מצפה-שמיר-צילום-נעמה-מנספלד-2-768x1024.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/מצפה-שמיר-צילום-נעמה-מנספלד-6-768x768.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      }
+    ]
   },
   {
     "id": 351843,
@@ -9523,7 +9997,29 @@
       "character": "דרגת קושי ואופי המסלול: קלה, קווי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/עין-אמפי-צילום-נעמה-מנספלד-2-e1713342731504-768x607.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/עין-אמפי-צילום-נעמה-מנספלד-5-e1713342780952-768x323.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/עין-אמפי-צילום-נעמה-מנספלד-3-e1713342816109-768x351.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/עין-אמפי-צילום-נעמה-מנספלד-768x1024.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/עין-אמפי-צילום-נעמה-מנספלד-4-768x1024.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      }
+    ]
   },
   {
     "id": 350961,
@@ -9691,6 +10187,40 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/מטיילים-צופים-במפל-עיט-צילום-מזי-מוסקוביץ-רשות-הטבע-והגנים-e1712818994455-768x580.jpeg",
+        "credit": "צילמה מזי מגנאג'י, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/סימון-שביל-בנחל-עיט-צילום-נעמה-מנספלד-e1712819129949-768x358.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/נחל-עיט-צילום-נעמה-מנספלד-4-e1712819048965-768x497.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/נחל-עיט-צילום-נעמה-מנספלד-7-768x1024.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/שלט-בנחל-עיט-צילום-נעמה-מנספלד-e1712819028155-768x452.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/נחל-עיט-צילום-נעמה-מנספלד-6-768x576.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/נחל-עיט-צילום-נעמה-מנספלד-5-768x1024.jpeg",
+        "credit": "צילום נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/נחל-עיט-צילום-נעמה-מנספלד-3-768x1024.jpeg",
+        "credit": "צילום נעמה מנספלד"
       }
     ]
   },
@@ -9999,6 +10529,24 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/WhatsApp-Image-2024-04-02-at-11.42.43-AM-1-768x576.jpeg",
+        "credit": "צילום ענבר חשמונאי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/צילום-ענבר-חשמונאי-5-768x576.jpeg",
+        "credit": "צילום ענבר חשמונאי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/צילום-ענבר-חשמונאי-2-768x576.jpeg",
+        "credit": "צילום ענבר חשמונאי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/04/WhatsApp-Image-2024-04-02-at-11.42.42-AM-768x576.jpeg",
+        "credit": "דרך האש – מסלול טיול לימודי בפארק כרמל"
+      }
     ]
   },
   {
@@ -10045,7 +10593,21 @@
         "אירוס הגלבוע"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/מסלול-גלבוע-ממלכשוע-לחורבת-נר-ונחל-נר-3-768x346.jpeg",
+        "credit": "צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/מסלול-גלבוע-ממלכשוע-לחורבת-נר-ונחל-נר-2-768x346.jpeg",
+        "credit": "צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/מסלול-גלבוע-ממלכשוע-לחורבת-נר-ונחל-נר-768x1705.jpeg",
+        "credit": "צילמה רחל אשכול"
+      }
+    ]
   },
   {
     "id": 348912,
@@ -10093,7 +10655,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/עין-מודע-צילום-אשחר-בצר-768x576.jpeg",
+        "credit": "צילום אשחר בצר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/אשחר-בצל-עין-מודע-768x576.jpeg",
+        "credit": "צילום אשחר בצר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/נחל-צביה-צילום-ניר-נדיבי-1-768x576.jpeg",
+        "credit": "צילום ניר נדיבי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/נחל-צביה-צילום-ניר-נדיבי-768x576.jpeg",
+        "credit": "צילום ניר נדיבי"
+      }
+    ]
   },
   {
     "id": 348867,
@@ -10433,6 +11013,24 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-03-at-11.28.54-1-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/שביל-סובב-כנרת-צילום-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/שביל-סובב-כנרת-צילום-רחל-אשכול-1-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/מעין-איוב-לחוף-כפר-נחום-שביל-סובה-כנרת-צילום-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
       }
     ]
   },
@@ -10776,6 +11374,24 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/המזח-בכפר-נחום-צילום-עמוס-גופר-768x576.jpeg",
+        "credit": "צילום עמוס גופר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/הכנסיה-היוונית-צילום-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/חוף-כפר-נחום-צילום-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/03/מצפה-יורי-שטרן-צילום-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      }
     ]
   },
   {
@@ -10818,7 +11434,25 @@
       "character": "דרגת קושי ואופי המסלול: מסלול קווי הלוך ושוב, לכל המשפחה",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/01/מסלול-בור-המים-במצדה-צילמה-טל-חיוט-3-768x1024.jpeg",
+        "credit": "צילמה טל חיוט"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/01/בור-המים-במצדה-צילמה-טל-חיוט-768x512.jpeg",
+        "credit": "צילמה טל חיוט"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/01/מסלול-בור-המים-במצדה-צילמה-טל-חיוט-768x576.jpeg",
+        "credit": "צילמה טל חיוט"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/01/בור-המים-במצדה-צילום-טל-חיוט-768x511.jpeg",
+        "credit": "צילום טל חיוט"
+      }
+    ]
   },
   {
     "id": 323623,
@@ -10855,7 +11489,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/06/Har-Kfir-768x576.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/06/Har-Kfir-1-768x576.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/06/Har-Kfir2-768x576.jpg",
+        "credit": "צילום איל שפירא"
+      }
+    ]
   },
   {
     "id": 307931,
@@ -10892,7 +11540,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/Nachal-Yizrach-Rom-23-17_-Medium-768x576.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/Nachal-Yizrach-Rom-23-9_-Medium-768x576.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/Nachal-Yizrach-Rom-23-35_-Medium-768x576.jpg",
+        "credit": "צילום איל שפירא"
+      }
+    ]
   },
   {
     "id": 307910,
@@ -10927,7 +11589,41 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/-מיודפת-להר-עצמון-רחל-אשכול-e1685866409226-768x358.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/מעינות-אבליים-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/תצפית-מהר-עצמון-לבקעת-נטופה-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/תצפית-מהר-עצמון-ליודפת-העתיקה-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/תצפית-מהר-עצמון-רחל-אשכול-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/מעינות-אבליים-רחל-אשכול-3-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/מעינות-אבליים-רחל-אשכול-2-768x346.jpeg",
+        "credit": "צילום רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/השביל-העולה-להר-עצמון-רחל-אשכול-461x1024.jpeg",
+        "credit": "צילום רחל אשכול"
+      }
+    ]
   },
   {
     "id": 306171,
@@ -10965,7 +11661,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/WhatsApp-Image-2023-01-13-at-09.57.47-1.jpeg",
+        "credit": "צילום: אופיר עלווה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/WhatsApp-Image-2023-01-13-at-09.57.42.jpeg",
+        "credit": "צילום: אופיר עלווה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/מעיינות-גיבתון-צילם-איל-מיטרני-4-1-768x576.jpeg",
+        "credit": "צילום: איל מיטרני"
+      }
+    ]
   },
   {
     "id": 305082,
@@ -12148,6 +12858,28 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/עין-כרם-צילום-איל-שפירא-1-768x544.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/עין-כרם-צילום-איל-שפירא-768x573.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/עץ-שקד-פורח-בעין-כרם-צילום-איל-שפירא-768x571.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/מטיילים-מתחת-לעץ-שקד-צילום-דורון-ניסים-768x768.jpeg",
+        "credit": "צילום: דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/עץ-שקד-צילום-דורון-ניסים-768x964.jpeg",
+        "credit": "צילום דורון ניסים"
+      }
     ]
   },
   {
@@ -12190,7 +12922,21 @@
       "character": "דרגת קושי ואופי המסלול: מיטיבי לכת, קווי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20180305_094452-רחל-אשכול-נחל-אדמי-768x576.jpg",
+        "credit": "צילום: רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/20211213_090824-רחל-אשכול-נחל-אדמי-768x576.jpg",
+        "credit": "צילום: רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/20211213_092205-רחל-אשכול-נחל-אדמי-768x576.jpg",
+        "credit": "צילום: רחל אשכול"
+      }
+    ]
   },
   {
     "id": 303797,
@@ -12228,7 +12974,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/Nachal-Alon-and-Oren-23-39_-Medium-768x576.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/Nachal-Alon-and-Oren-23-24_-Medium-768x576.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/Nachal-Alon-and-Oren-23-13_-Medium-768x576.jpg",
+        "credit": "צילום: איל שפירא"
+      }
+    ]
   },
   {
     "id": 303635,
@@ -12271,7 +13031,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/20211116_115543-נחל-ברק-בן-אבינועם-רחל-אשכול-Medium-rotated.jpg",
+        "credit": "צילום: רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/20170326_091625-אירוס-נצרתי-רחל-אשכול-768x432.jpg",
+        "credit": "צילום: רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6d69270f29a-e1552474547322-768x424.jpg",
+        "credit": "צילום: מרגרטה וולצ'ק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/20211116_115543-נחל-ברק-בן-אבינועם-רחל-אשכול-Medium.jpg",
+        "credit": "צילום: רחל אשכול"
+      }
+    ]
   },
   {
     "id": 303342,
@@ -12308,7 +13086,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/תחילת-מסלול-שיטה-מלבינה-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/6-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/שיטה-מלבינה-האבקה-3-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/01/צב-יבשה-2-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      }
+    ]
   },
   {
     "id": 302559,
@@ -12345,7 +13141,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/כניסה-לשמורת-אלוני-קדימה-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/מסלולא-אלוני-קדימה-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/בלוטים-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/מסלול-בשמורה-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      }
+    ]
   },
   {
     "id": 302423,
@@ -12382,7 +13196,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/חוף-השרון-דק-שלישי-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/הדק-בחוף-השרון-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/חוף-השרון-עקבות-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/חוף-השרון-כניסה-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      }
+    ]
   },
   {
     "id": 302406,
@@ -12419,7 +13251,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/6-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/עקבות-צבי-3-Medium.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/בולבולים-חופש-768x734.jpg",
+        "credit": "צילום: אתי נפרין"
+      }
+    ]
   },
   {
     "id": 302372,
@@ -12456,7 +13302,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/טבלאות-Large-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/צב-ים-שקיעה-Large-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/סלעים-Large-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/צב-ים-Large-768x513.jpg",
+        "credit": "צילום: אתי נפרין"
+      }
+    ]
   },
   {
     "id": 302362,
@@ -12707,6 +13571,20 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/3-Large-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/2-Large-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/4-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
       }
     ]
   },
@@ -13014,7 +13892,13 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/11/כרמל-חניון-האגם-768x432.jpg",
+        "credit": "צילום: מחו\"ה כרמל"
+      }
+    ]
   },
   {
     "id": 294864,
@@ -13268,6 +14152,28 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/קניון-שחורת-2-768x768.jpg",
+        "credit": "קניון שחורת צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/גבי-מים-קניון-שחורת-1-768x768.jpg",
+        "credit": "גבי מים בקניון שחורת. צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/עמודי-עמרם-768x768.jpg",
+        "credit": "עמודי עמרם - צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/נחל-גשרון-תצפית-2-768x766.jpg",
+        "credit": "נחל גשרון תצפית. צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/נחל-גשרון-תצפית-1-768x766.jpg",
+        "credit": "נחל גשרון תצפית. צילמה יעל לרנר"
       }
     ]
   },
@@ -14050,6 +14956,28 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/הר-צפחות-תצפית-4-Large-768x576.jpg",
+        "credit": "הר צפחות תצפית - צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/הר-צפחות-תצפית-1-Large-768x576.jpg",
+        "credit": "הר צפחות תצפית - צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/הר-צפחות-תצפית-3-Large-768x576.jpg",
+        "credit": "הר צפחות תצפית - צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/הר-צפחות-תצפית-5JPG-Large-768x1024.jpg",
+        "credit": "הר צפחות תצפית – צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/10/הר-צפחות-תצפית-2-Large-768x1024.jpg",
+        "credit": ""
+      }
     ]
   },
   {
@@ -14090,7 +15018,21 @@
       "character": "דרגת קושי ואופי המסלול: קלה, מעגלי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/WhatsApp-Image-2022-07-19-at-15.49.07-3-Small-2.jpeg",
+        "credit": "אלוני יצחק. צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/ALON1-Small.jpg",
+        "credit": "צילום איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/WhatsApp-Image-2022-07-19-at-15.49.07-2-Small-2.jpeg",
+        "credit": "אלוני יצחק. צילום איל שפירא"
+      }
+    ]
   },
   {
     "id": 280906,
@@ -14132,7 +15074,21 @@
       "character": "דרגת קושי ואופי המסלול: בינונית, קווי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/06/WhatsApp-Image-2022-06-07-at-18.50.26-1-768x576.jpeg",
+        "credit": "נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/06/WhatsApp-Image-2022-06-07-at-18.50.25-768x576.jpeg",
+        "credit": "הבניאס. צילמה: נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/06/מבניאס-לשאר-ישוב-768x297.jpg",
+        "credit": "מבניאס לשאר ישוב - צילמה שחר וייס פלד"
+      }
+    ]
   },
   {
     "id": 280832,
@@ -14592,7 +15548,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/שניר-שרית-768x576.jpeg",
+        "credit": "גשר בנחל שניר. צילמה שרית פלצ'י מיארה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/שניר-יניב-כהן-768x458.jpg",
+        "credit": "נחל שניר - צילם יניב כהן"
+      }
+    ]
   },
   {
     "id": 280596,
@@ -15774,6 +16740,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b5ef7b05ac-768x512.jpg",
+        "credit": "חלקות שלחין בסטף. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b5ee57e25c-768x512.jpg",
+        "credit": "סטף. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/08/5b7bdbfa62fda-e1534844034821-768x297.jpg",
+        "credit": "עין כרם - צילום גל בן זאב"
+      }
     ]
   },
   {
@@ -15811,7 +16791,41 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/שמורת-כרמיה.-צילום-רחפן-עידן-בר-לב-Small.jpg",
+        "credit": "שמורת כרמיה. צילום רחפן עידן בר לב"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/שמורת-כרמיה.-צילום-רחל-עברון-Small-768x432.jpg",
+        "credit": "שמורת כרמיה. צילום רחל עברון"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/נחל-שקמה.-צילום-דליה-דותן-768x576.jpg",
+        "credit": "צילום דליה דותן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/אבקועים-של-צב-ים-בחוף-זיקים.-צילום-הילה-גלילי-768x576.jpg",
+        "credit": "אבקועים של צב ים בחוף זיקים. צילום הילה גלילי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/שמורת-כרמיה.-צילום-אדר-סטולרו-מליחי-Small-768x345.jpg",
+        "credit": "צילום אדר סטולרו מליחי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/רותם-המדבר.-צילום-שירה-בלוך-Small.jpg",
+        "credit": "צילום שירה בלוך"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/מאגר-שקמה.-צילום-שירה-בלוך-Small.jpg",
+        "credit": "צילום שירה בלוך"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/07/חולות-זיקים.-צילום-רחל-עברון-Small.jpg",
+        "credit": "צילום רחל עברון"
+      }
+    ]
   },
   {
     "id": 274063,
@@ -15852,7 +16866,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/טיול-ארבל-768x576.jpeg",
+        "credit": "עין ארבל. צילמה: אטי קוריאט"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-31-at-14.35.33-768x576.jpeg",
+        "credit": "עין ארבל. צילמה: אטי קוריאט"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-31-at-14.35.33-1-768x576.jpeg",
+        "credit": "עין ארבל. צילמה: אטי קוריאט"
+      }
+    ]
   },
   {
     "id": 270660,
@@ -15894,7 +16922,29 @@
       "character": "רמת קושי: למיטיבי לכת",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-10-at-13.19.15-3-768x576.jpeg",
+        "credit": "קרן עין גב - צילמה נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-10-at-13.19.12-1-768x1024.jpeg",
+        "credit": "קרן עין גב - צילמה נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-10-at-13.19.15-1-768x1024.jpeg",
+        "credit": "קרן עין גב - צילמה נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-10-at-13.19.13-3-768x1024.jpeg",
+        "credit": "קרן עין גב – צילמה נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-10-at-13.19.11-768x576.jpeg",
+        "credit": "קרן עין גב – צילמה נעמה מנספלד"
+      }
+    ]
   },
   {
     "id": 265785,
@@ -15931,7 +16981,41 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/תל-דור-צילם-איל-שפירא-768x484.jpg",
+        "credit": "אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/03/תל-דור-צילם-איל-שפירא-2-768x534.jpg",
+        "credit": "אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/תל-דור-צילם-איל-שפירא-768x484.jpg",
+        "credit": "תל דור- צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/דף-צביעה-רעשן-פורים-שמח-1-780x1024-1-768x1008.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/תל-דור-צילם-איל-שפירא-2-1-768x534.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/תל-דור-צילם-איל-שפירא-3-768x484.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/תל-דור-צילם-איל-שפירא-2-768x534.jpg",
+        "credit": "תל דור. צילם: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/תל-דור-צילם-איל-שפירא-1-768x517.jpg",
+        "credit": "איל שפירא"
+      }
+    ]
   },
   {
     "id": 265777,
@@ -15973,7 +17057,37 @@
       "character": "דרגת קושי ואופי המסלול: קל",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/12/שמורת-טוף-כרם-מהרל-איל-שפירא-768x504.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/12/שמורת-טוף-כרם-מהרלצילם-איל-שפירא-768x526.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/12/שמורת-טוף-כרם-מהרל-צילם-איל-שפירא-2-768x572.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/שמורת-טוף-כרם-מהרל-צילם-איל-שפירא-2-768x504.jpg",
+        "credit": "שמורת טוף כרם מהרל- צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/שמורת-טוף-כרם-מהרל-איל-שפירא-768x504.jpg",
+        "credit": "שמורת טוף כרם מהרל- צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/שמורת-טוף-כרם-מהרל-צילם-איל-שפירא-1-768x572.jpg",
+        "credit": "שמורת טוף כרם מהרל- צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/שמורת-טוף-כרם-מהרל-צילם-איל-שפירא-768x558.jpg",
+        "credit": "שמורת טוף כרם מהרל- צילם איל שפירא"
+      }
+    ]
   },
   {
     "id": 265738,
@@ -16015,7 +17129,21 @@
       "character": "דרגת קושי ואופי המסלול: קלה, מעגלי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/תל-שקמונה-איל-שפירא-2-768x529.jpg",
+        "credit": "תל שקמונה- צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/תל-שקמונה-איל-שפירא-1-768x570.jpg",
+        "credit": "תל שקמונה- צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/04/תל-שקמונה-איל-שפירא-768x525.jpg",
+        "credit": "תל שקמונה- צילם איל שפירא"
+      }
+    ]
   },
   {
     "id": 262551,
@@ -16488,6 +17616,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/הרי-אילת-ומפרץ-אילת-צילם-דורון-ניסים-768x512.jpeg",
+        "credit": "הרי אילת ומפרץ אילת - צילם דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/הר-יהורם-דורון-ניסים-768x768.jpeg",
+        "credit": ""
+      }
     ]
   },
   {
@@ -16798,6 +17936,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/הר-גמל-איל-שפירא-768x576.jpg",
+        "credit": "הר גמל - צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/הר-גמל-איל-שפירא-1-768x576.jpg",
+        "credit": "הר גמל - צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/הר-גמל-איל-שפירא-2-768x576.jpg",
+        "credit": "הר גמל - צילם איל שפירא"
+      }
     ]
   },
   {
@@ -16840,7 +17992,25 @@
       "character": "דרגת קושי ואופי המסלול: מטיבי לכת, קווי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/נחל-קדש-צילם-איל-שפירא-2-768x576.jpg",
+        "credit": "נחל קדש - צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/נחל-קדש-צילם-איל-שפירא-1-768x576.jpg",
+        "credit": "נחל קדש - צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/נחל-קדש-צילם-אייל-שפירא-768x576.jpg",
+        "credit": "נחל קדש - צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/נחל-קדש-צילם-איל-שפירא-768x576.jpg",
+        "credit": "נחל קדש – צילם איל שפירא"
+      }
+    ]
   },
   {
     "id": 262414,
@@ -16882,7 +18052,21 @@
       "character": "דרגת קושי ואופי המסלול: קלה, מעגלי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/תל-קדש-צילם-איל-שפירא-1-768x576.jpg",
+        "credit": "צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/תל-קדש-צילם-איל-שפירא-768x576.jpg",
+        "credit": "איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/תל-קדש-איל-שפירא-768x576.jpg",
+        "credit": "איל שפירא"
+      }
+    ]
   },
   {
     "id": 261835,
@@ -17583,7 +18767,33 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/נחל-תבור-בחורף-מצפור-אורן-לפשיץ-צילום-חגי-עוז-2-768x576.jpg",
+        "credit": "נחל תבור בחורף מצפור אורן לפשיץ צילום חגי עוז"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/חרדלים-ותורמוסים-בנחל-תבור-צילום-חגי-עוז-768x576.jpg",
+        "credit": "צילום: חגי עוז"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/נחל-תבור-קניון-הבזלת-צילום-עומרי-גואלמן-768x432.jpg",
+        "credit": "צילם עומרי גואלמן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/נחל-תבור-מטייל-בשביל-בפריחה-צילום-עומרי-גואלמן-768x1365.jpg",
+        "credit": "צילום עומרי גואלמן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/נחל-תבור-בחורף-מצפור-אורן-לפשיץ-צילום-חגי-עוז-768x576.jpg",
+        "credit": "צילום חגי עוז"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/חרדלים-ותורמוסים-ברקע-בנחל-תבור-צילום-חגי-עוז-768x576.jpg",
+        "credit": "צילום חגי עוז"
+      }
+    ]
   },
   {
     "id": 261826,
@@ -17855,6 +19065,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/הגשר-הקטוע-בנחל-חרוד-צילמה-רחל-אשכול-768x434.jpg",
+        "credit": "הגשר הקטוע בנחל חרוד - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/הגשר-הקטוע-בנחל-חרוד-צילמה-רחל-אשכול-1-768x434.jpg",
+        "credit": "הגשר הקטוע בנחל חרוד - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/הגשר-הקטוע-בנחל-חרוד-רחל-אשכול-768x428.jpg",
+        "credit": "הגשר הקטוע בנחל חרוד - צילמה רחל אשכול"
+      }
     ]
   },
   {
@@ -17897,7 +19121,25 @@
       "character": "דרגת קושי ואופי המסלול: קלה, מתאים למשפחות כולל מנשאים. ורוב הדרך גם עגלות, יש מדרגות בתחילת המסלול.",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/20170326_091625-אירוס-נצרתי-רחל-אשכול-768x432.jpg",
+        "credit": "צילום: רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6d69270f29a-e1552474547322-768x424.jpg",
+        "credit": "צילום: מרגרטה וולצ'ק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/אירוס-נצרתי-צילמה-רחל-אשכול-1-768x432.jpeg",
+        "credit": "צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/אירוס-נצרתי-צילמה-רחל-אשכול-768x1365.jpeg",
+        "credit": "צילמה רחל אשכול"
+      }
+    ]
   },
   {
     "id": 259736,
@@ -17934,7 +19176,41 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/WhatsApp-Image-2022-03-17-at-09.16.19-1-768x432.jpeg",
+        "credit": "הר תבור - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/WhatsApp-Image-2022-03-17-at-09.16.16-768x432.jpeg",
+        "credit": "הר תבור - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/WhatsApp-Image-2022-03-17-at-09.16.20-768x432.jpeg",
+        "credit": "הר תבור - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/WhatsApp-Image-2022-03-17-at-09.16.20-1-768x432.jpeg",
+        "credit": "הר תבור – צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/WhatsApp-Image-2022-03-17-at-09.16.19-768x1365.jpeg",
+        "credit": "הר תבור – צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/WhatsApp-Image-2022-03-17-at-09.16.19-4-768x432.jpeg",
+        "credit": "הר תבור – צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/WhatsApp-Image-2022-03-17-at-09.16.19-3-768x1365.jpeg",
+        "credit": "הר תבור – צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/WhatsApp-Image-2022-03-17-at-09.16.19-2-768x432.jpeg",
+        "credit": "רחל אשכול"
+      }
+    ]
   },
   {
     "id": 259732,
@@ -17971,7 +19247,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5ca331c19d1a7-768x296.jpg",
+        "credit": "נחל תבור קניון הבזלת"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2024/05/נחל-תבור-וקניון-הבזלת-יעקב-שקולניק-768x512.jpg",
+        "credit": "צילם יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/panorama-ar-tavor.jpg",
+        "credit": "פנורמה הר תבור צילם מוחמד מסאלחה - אבו רמזי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5ca331cba8eb9-768x296.jpg",
+        "credit": "נחל תבור"
+      }
+    ]
   },
   {
     "id": 259723,
@@ -18013,7 +19307,25 @@
       "character": "דרגת קושי ואופי המסלול: בינוני (קווי)",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/רחל-אשכול-קרני-חיטין-20220217_150445-768x432.jpg",
+        "credit": "קרני חיטין - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/20220217_151613-רחל-אשכול-קרני-חיטין-768x432.jpg",
+        "credit": "קרני חיטין - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/רחל-אשכול-קרני-חיטין-20220217_151404-768x432.jpg",
+        "credit": "רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/רחל-אשכול-קרני-חיטין20220217_151521-768x432.jpg",
+        "credit": "צילמה רחל אשכול"
+      }
+    ]
   },
   {
     "id": 259719,
@@ -18053,7 +19365,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/20220104_140226-רחל-אשכול-נחל-בארה-768x576.jpg",
+        "credit": "נחל בארה - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/20220104_140105-רחל-אשכול-נחל-בארה-768x576.jpg",
+        "credit": "נחל בארה - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/20220104_134911-רחל-אשכול-נחל-בארה-768x576.jpg",
+        "credit": "נחל בארה - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c977d6c151dd-768x512.jpg",
+        "credit": "נחל הקיבוצים בפארק המעיינות. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 256872,
@@ -18284,7 +19614,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220111_115120-רחל-אשכול-נחל-יבנאל-768x576.jpg",
+        "credit": "נחל יבנאל - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220111_101216-רחל-אשכול-נחל-יבנאל-768x576.jpg",
+        "credit": "נחל יבנאל - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220111_095632-רחל-אשכול-נחל-יבנאל-768x576.jpg",
+        "credit": "נחל יבנאל - צילמה רחל אשכול"
+      }
+    ]
   },
   {
     "id": 256818,
@@ -18328,7 +19672,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/maayan-charud-e1512568896154-768x298.jpg",
+        "credit": "צילום: רקפת שלו"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c24cdbf042d1-768x512.jpg",
+        "credit": "צילום: אבי בהרי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c24cddaed618-768x512.jpg",
+        "credit": "צילום: אבי בהרי"
+      }
+    ]
   },
   {
     "id": 256801,
@@ -18371,7 +19729,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220113_154113-רחל-אשכול-שביל-נוף-כוכב-הירדן-768x576.jpg",
+        "credit": "רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220113_094108-רחל-אשכול-שביל-נוף-כוכב-הירדן-768x576.jpg",
+        "credit": "שביל נוף בכוכב הירדן. צילמה: רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220113_154728-רחל-אשכול-שביל-נוף-כוכב-הירדן-768x576.jpg",
+        "credit": "שביל נוף בכוכב הירדן - צילמה רחל אשכול"
+      }
+    ]
   },
   {
     "id": 256766,
@@ -19070,7 +20442,25 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220104_083408-נחל-דנה-רחל-אשכול-768x576.jpg",
+        "credit": "נחל דנה - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220104_091833-נחל-חמוד-רחל-אשכול-768x576.jpg",
+        "credit": "נחל חמוד - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220104_090338-נחל-דנה-רחל-אשכול-768x576.jpg",
+        "credit": "נחל דנה - צילמה רחל אשכול רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20220104_094630-נחל-חמוד-רחל-אשכול-768x576.jpg",
+        "credit": "נחל חמוד – צילמה רחל אשכול"
+      }
+    ]
   },
   {
     "id": 256757,
@@ -19112,7 +20502,37 @@
       "character": "דרגת קושי ואופי המסלול: קל (מעגלי)",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/רחל-אשכול-קרני-חיטין-20220217_151404-768x432.jpg",
+        "credit": "רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/רחל-אשכול-קרני-חיטין20220217_151521-768x432.jpg",
+        "credit": "צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/03/רחל-אשכול-קרני-חיטין-20220217_150445-768x432.jpg",
+        "credit": "קרני חיטין - צילמה רחל אשכול"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20210728_075224-רחל-אשכול-קרני-חיטין-768x346.jpg",
+        "credit": "קרני חיטין, צילמה: רחל אשכול, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20210728_065910-רחל-אשכול-קרני-חיטין-768x1142.jpg",
+        "credit": "אנדרטה בקרני חיטין – צילמה רחל אשכול, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20210728_070007-רחל-אשכול-קרני-חיטין-768x940.jpg",
+        "credit": "אנדרטה בקרני חיטין – צילמה רחל אשכול, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/20210728_065029-רחל-אשכול-שלט-קרני-חיטין-768x1042.jpg",
+        "credit": "שלט בקרני חיטין – צילמה רחל אשכול, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 256387,
@@ -19149,7 +20569,29 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/טרק-ארבלי-צילום-ניר-נדיבי-5-768x576.jpg",
+        "credit": "צילום ניר נדיבי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/טרק-ארבלי-צילום-ניר-נדיבי-4-768x576.jpg",
+        "credit": "צילום ניר נדיבי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/טרק-ארבלי-צילום-ניר-נדיבי-1-768x576.jpg",
+        "credit": "צילום ניר נדיבי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/טרק-ארבלי-צילום-ניר-נדיבי-3-768x576.jpg",
+        "credit": "צילום ניר נדיבי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/02/טרק-ארבלי-צילום-ניר-נדיבי-2-768x576.jpg",
+        "credit": "צילום: ניר נדיבי"
+      }
+    ]
   },
   {
     "id": 255340,
@@ -20279,6 +21721,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9fced20e3-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9fe6b3b5c-768x512.jpg",
+        "credit": "סלע מלח בהר סדום. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -20323,7 +21775,21 @@
         "הדיונה הגדולה"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/04/gazel3_251017-768x512.jpg",
+        "credit": "צבי ארץ-ישראלי בשמורת טבע חולות ניצנים- צילום אורי פרו"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/7-768x576.jpg",
+        "credit": "טביעות ידיים בחולות ניצנים. צילום: אייל ברטוב"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5bb60dcae6b26-768x576.jpg",
+        "credit": "צילום: אייל ברטוב"
+      }
+    ]
   },
   {
     "id": 255300,
@@ -20365,7 +21831,17 @@
       "character": "רמת קושי: קלה מסלול קווי.",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/Ein-Plutit-14-08-768x576.jpg",
+        "credit": "עין פלוטית - צילם איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/01/Ein-Plutit-14-02-768x576.jpg",
+        "credit": "עין פלוטית - צילם איל שפירא"
+      }
+    ]
   },
   {
     "id": 251530,
@@ -20405,7 +21881,29 @@
       "character": "דרגת קושי ואופי המסלול: קל, מסלול קווי",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Ein-Mokesh-15_5-768x576.jpg",
+        "credit": "עין מוקש - צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Hurbat-Farej_20-7-768x576.jpg",
+        "credit": "חורבת פרג' - צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Hurbat-Farej_20-37-768x576.jpg",
+        "credit": "חורבת פרג' - צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Hurbat-Farej_20-29-768x576.jpg",
+        "credit": "חורבת פרג' – צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Ein-Mokesh-15_7-768x576.jpg",
+        "credit": "עין מוקש – צילם אייל שפירא"
+      }
+    ]
   },
   {
     "id": 251513,
@@ -21078,6 +22576,24 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Sfunim-16-_27-768x576.jpg",
+        "credit": "מערת ספונים - צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Sfunim-16-_34-768x576.jpg",
+        "credit": "מערת ספונים - צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Sfunim-16-_37-768x576.jpg",
+        "credit": "מערת ספונים - צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/12/Sfunim-16-_41-768x576.jpg",
+        "credit": "מערת ספונים – צילם אייל שפירא"
+      }
     ]
   },
   {
@@ -21120,7 +22636,17 @@
       "character": "דרגת קושי ואופי המסלול: קל, מסלול קווי עונה מומלצת: אביב, חורף וסתיו",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/5e1b2e0e64bb5-768x362.jpg",
+        "credit": "רכס בשנית - חרמון, צילם דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c16aadb8c7e3-768x576.jpg",
+        "credit": "שמורת טבע רכס בשנית בגולן. צלמת: נעמה מנספלד, רשות הטבע והגנים.jpg"
+      }
+    ]
   },
   {
     "id": 234830,
@@ -21158,7 +22684,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/08/IMG_1988-768x431.jpg",
+        "credit": "צילום: רן פרץ"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/08/IMG_2024-768x431.jpg",
+        "credit": "נחל אורן -צילם רן פרץ"
+      }
+    ]
   },
   {
     "id": 227186,
@@ -23114,6 +24650,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/07/נחל-אשלים-אלה-גבאי-768x432.png",
+        "credit": "נחל אשלים - צילמה אלה גבאי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/07/נחל-אשלים-אלה-גבאי-1-768x432.png",
+        "credit": "נחל אשלים - צילמה אלה גבאי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2021/07/נחל-אשלים-צילמה-אלה-גבאי-768x432.jpg",
+        "credit": "נחל אשלים - צילמה אלה גבאי"
+      }
     ]
   },
   {
@@ -23153,7 +24703,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/עין-עמשא-ותצפית-לשכם-מגריזים-2-768x576.jpg",
+        "credit": "עין עמשא - אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/עין-עמשא-ותצפית-לשכם-מגריזים-3-768x576.jpg",
+        "credit": "עין עמשא ותצפית לשכם מגריזים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/עין-עמשא-ותצפית-לשכם-מגריזים-1-768x576.jpg",
+        "credit": "עין עמשא - אייל שפירא"
+      }
+    ]
   },
   {
     "id": 160750,
@@ -23199,7 +24763,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/6-768x512.jpg",
+        "credit": "צילום: משלחת חפירות סוסיתא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/10-768x512.jpg",
+        "credit": "צילום: משלחת חפירות סוסיתא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/1-768x511.jpg",
+        "credit": "צילום: משלחת חפירות סוסיתא"
+      }
+    ]
   },
   {
     "id": 160715,
@@ -23239,7 +24817,37 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/Einot-Telem-20-31-768x576.jpg",
+        "credit": "גן המשחקים בעיינות תלם - אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/Einot-Telem-20-18-768x576.jpg",
+        "credit": "גן המשחקים בעיינות תלם"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/Einot-Telem-15_12-768x576.jpg",
+        "credit": "עיינות תלם"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Einot-Telem-20-18-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Einot-Telem-15_2-768x576.jpg",
+        "credit": "עיינות תלם – צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Einot-Telem-20-29-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Einot-Telem-20-17-768x576.jpg",
+        "credit": "גן המשחקים בעיינות תלם"
+      }
+    ]
   },
   {
     "id": 160631,
@@ -23630,7 +25238,41 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Nebi-Samuel-17-_13-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Nebi-Samuel-17-_45-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Nebi-Samuel-17-_27-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Nebi-Samuel-17-_21-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Nebi-Samuel-17-_19-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Nebi-Samuel-17-_15-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Nebi-Samuel-17-_11-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Nebi-Samuel-19-23-768x576.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 160611,
@@ -25129,6 +26771,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/Mikdash-HaMeara-19-16-2-768x531.jpg",
+        "credit": "המקדש בנחל כזיב - אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/Mikdash-HaMeara-19-19-1-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Mikdash-HaMeara-19-11-768x576.jpg",
+        "credit": "צילום: אייל שפירא"
+      }
     ]
   },
   {
@@ -25172,7 +26828,41 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/מעין-ליפתא-Medium-768x576.jpg",
+        "credit": "צילום אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/ליפתא-6-Medium-768x576.jpg",
+        "credit": "צילום אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/כרכום-חורפי-768x970.jpg",
+        "credit": "צילום אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/חיננית-הבתה-768x576.jpg",
+        "credit": "צילום אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Lifta-17-_8-768x576.jpg",
+        "credit": "בית בליפתא – אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Lifta-17-_6-768x576.jpg",
+        "credit": "ואדי ליפתא – אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Lifta-17-_4-768x576.jpg",
+        "credit": "בית נטוש בליפתא – אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Lifta-17-_10-768x576.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 160241,
@@ -25354,6 +27044,24 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/חולות-סמר-צילם-דורון-ניסים-768x512.jpg",
+        "credit": "חולות סמר - צילם דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/דיונות-שמורת-טבע-חולות-סמר-עודד-סהר-רשות-הטבע-והגנים-1-768x428.jpg",
+        "credit": "דיונות שמורת טבע חולות סמר - עודד סהר רשות הטבע והגנים. צילום: עודד סהר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/דיונות-שמורת-טבע-חולות-סמר-עודד-סהר-רשות-הטבע-והגנים-768x379.jpg",
+        "credit": "צילם עודד סהר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Samar-2013-8-768x576.jpg",
+        "credit": "מעיפים עפיפון בחולות סמר"
       }
     ]
   },
@@ -25677,7 +27385,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/הצניר-בנחל-כלח_20-1-768x576.jpg",
+        "credit": "צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/הצניר-בנחל-כלח_20-4-768x576.jpg",
+        "credit": "צילם אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/הצניר-בנחל-כלח_20-6-768x576.jpg",
+        "credit": "צילם אייל שפירא"
+      }
+    ]
   },
   {
     "id": 160170,
@@ -25717,7 +27439,25 @@
       "character": "דרגת קושי ואופי הטיול: דרגת קושי קלה, מתאים למשפחות",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/07/Ein-Tina-16-_46-768x576.jpg",
+        "credit": "אייל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/07/Ein-Tina-16-_38-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/07/Ein-Tina-16-_35-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/08/Ein-Tina-16-_8-768x576.jpg",
+        "credit": "משכשכים בעין תינה, צילם אייל שפירא"
+      }
+    ]
   },
   {
     "id": 139733,
@@ -25764,7 +27504,13 @@
         "זרימות חורף"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/05/3-22.2.03.jpg",
+        "credit": "סכר הירמוך"
+      }
+    ]
   },
   {
     "id": 139722,
@@ -25813,7 +27559,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/2-גילבון-אוריה-וזאנה-768x432.jpeg",
+        "credit": "אוריה וזאנה"
+      }
+    ]
   },
   {
     "id": 139441,
@@ -25864,7 +27616,17 @@
         "בולדרים"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/שפך-נחל-עורבים-לעמק-החולה-גיא-שחר-768x579.jpg",
+        "credit": "שפך נחל עורבים לעמק החולה, צילם גיא שחר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/צילם-גיא-שחר-מפל-עורבים.jpg",
+        "credit": "מפל עורבים, צילם גיא שחר"
+      }
+    ]
   },
   {
     "id": 139437,
@@ -25916,7 +27678,17 @@
         "שפני סלע"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/צילם-גיא-שחר-מפל-עורבים.jpg",
+        "credit": "מפל עורבים, צילם גיא שחר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/שפך-נחל-עורבים-לעמק-החולה-גיא-שחר-768x579.jpg",
+        "credit": "שפך נחל עורבים לעמק החולה, צילם גיא שחר"
+      }
+    ]
   },
   {
     "id": 139155,
@@ -25964,7 +27736,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/-סער-נעמה-מנספלד-2-e1591170335951-768x825.jpeg",
+        "credit": "נעמה מנספלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/10/5e04887cc6eb6-e1591166323722-768x681.jpeg",
+        "credit": "מדחת דעבוס"
+      }
+    ]
   },
   {
     "id": 139143,
@@ -26008,7 +27790,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/4c41cd66-0621-44b4-b8bf-dbc9d97ccdc8-768x576.jpg",
+        "credit": "המפל הלבן בשמורת טבע נחל אל על, צילום מזי מגנאגיי מוסקביץ"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c97496e714f0-768x512.jpg",
+        "credit": "נחל אל על, המפל הלבן. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 139099,
@@ -26051,7 +27843,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/06/המפל-השחור-בנחל-אל-על-צילום-טיולי-מנגו-768x1024.jpeg",
+        "credit": "המפל השחור בנחל אל על, צילום טיולי מנגו"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/01/5c5983e066298-768x576.jpg",
+        "credit": "תחנת מידע והסברה נחל אל על , חניון המפלים אבני איתן צילום מיכל שחיבר"
+      }
+    ]
   },
   {
     "id": 123723,
@@ -27042,7 +28844,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/תמונת-רחפן-מפל-דודו-פילס-768x576.jpg",
+        "credit": "דודו פילס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/תמונת-גשר-דודו-פילס.jpg",
+        "credit": "גשר גמלא - דודו פילס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/חיטה-נועה-מורד-768x576.jpg",
+        "credit": "חיטה- צילום נועה מורד"
+      }
+    ]
   },
   {
     "id": 123215,
@@ -28034,7 +29850,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/צילום-השביל-בחורף-נועה-מורד-768x576.jpg",
+        "credit": "שביל הנשרים בגמלא בחורף - צילום נועה מורד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/נשר-פורש-כנפיים-על-כלוב-אקלום-אבירם-שני-768x513.jpg",
+        "credit": "נשר פורש כנפיים על כלוב אקלום- אבירם שני"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/חלבלול-מגובשש-נועה-מורד-768x576.jpg",
+        "credit": "חלבלול מגובשש - צילום נועה מורד"
+      }
+    ]
   },
   {
     "id": 116560,
@@ -28300,6 +30130,12 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b76cb2cb21-768x512.jpg",
+        "credit": "מצפה מכוור בנחל דרגה. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -28346,7 +30182,13 @@
         "פריחה עונתית בחודש פברואר"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/IMG-20191219-WA0012-768x373.jpg",
+        "credit": "עין עוג'א צילם שחר כפיר - פקח רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 116521,
@@ -29276,6 +31118,12 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/הר-כביר-צילם-דורון-ניסים-768x442.jpg",
+        "credit": "הר כביר צילם דורון ניסים"
+      }
     ]
   },
   {
@@ -29324,7 +31172,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/IMG-20191219-WA0010-768x373.jpg",
+        "credit": "עין עוג'א צילם שחר כפיר - פקח רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e033b6fb2038-768x373.jpg",
+        "credit": "עין עוג'א צילם שחר כפיר - פקח רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/IMG-20191219-WA0012-768x373.jpg",
+        "credit": "עין עוג'א צילם שחר כפיר - פקח רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 116146,
@@ -29370,7 +31232,13 @@
         "הליכה אתגרית באפיק הנחל"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e03476d4a717-scaled-e1577348141497-768x786.jpg",
+        "credit": "צילם מרדכי לאש"
+      }
+    ]
   },
   {
     "id": 115949,
@@ -29415,7 +31283,13 @@
         "שרידי מבצר ומאגרי מים עתיקים בפסגת ההר ובמדרונותיו"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/-2003-12-e1580040145996-768x409.jpg",
+        "credit": "סרטבה - צילם אמנון נחמיאס"
+      }
+    ]
   },
   {
     "id": 115941,
@@ -29458,7 +31332,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/gan-leumi-arodion-doron-nisim-compressed-768x512.jpg",
+        "credit": "הרודיון, צילום: דורון ניסים"
+      }
+    ]
   },
   {
     "id": 114420,
@@ -29501,7 +31381,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/tel-chazor-galit-rozen-2-compressed-768x512.jpg",
+        "credit": "גלית רוזן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/tel-chazor-galit-rozen-compressed-768x512.jpg",
+        "credit": "תל חצור. צילום: גלית רוזן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/tel-chazor-doron-nisim-compressed-768x512.jpg",
+        "credit": "דמות הלוחם בתל חצור. צילום: דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/02/הגן_הלאומי_תל_חצור_-_צילום_עידו_שקד_רשות_הטבע_והגנים_7-768x512.jpeg",
+        "credit": "עידו שקד"
+      }
+    ]
   },
   {
     "id": 113840,
@@ -29543,7 +31441,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/01/baram.jpg",
+        "credit": "צילום: דורון ניסים"
+      }
+    ]
   },
   {
     "id": 113513,
@@ -29585,7 +31489,13 @@
         "חניון יום עם שולחנות פיקניק בקרחת היער"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/יער-ריחן-צילום-מתן-מורד-פקח-מערב-השומרון-768x432.jpg",
+        "credit": "יער ריחן - צילום מתן מורד פקח מערב השומרון"
+      }
+    ]
   },
   {
     "id": 113485,
@@ -29958,7 +31868,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/5e14805f82447-768x1024.jpg",
+        "credit": "נחל קנה. צילום: מרדכי לאש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/5e148068c0a1e-768x461.jpg",
+        "credit": "צילם: מרדכי לאש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/5e14805ac93c7-768x432.jpg",
+        "credit": "צילם: מרדכי לאש"
+      }
+    ]
   },
   {
     "id": 113447,
@@ -30352,7 +32276,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/5e1465eac25ad-scaled-e1578395193680-768x441.jpg",
+        "credit": "עמק גבעון - נבי סמואל, צילם מרדכי לאש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/5e14667f6f6e3-768x576.jpg",
+        "credit": "צילם מרדכי לאש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/5e1466877f391-768x576.jpg",
+        "credit": "צילם מרדכי לאש"
+      }
+    ]
   },
   {
     "id": 113435,
@@ -32610,7 +34548,13 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7f7bd534a64-e1578391227160-768x453.jpg",
+        "credit": "עין מבוע. צילום: קובי הלפגוט, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 113403,
@@ -32653,7 +34597,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/01/5e144b6b6205e-768x576.jpg",
+        "credit": "אלה אטלנטית עתיקה בנבי איסמעיל. צילם מרדכי לאש"
+      }
+    ]
   },
   {
     "id": 112501,
@@ -32875,6 +34825,12 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e0880e2efa33-768x576.jpg",
+        "credit": "מרדכי לאש"
+      }
     ]
   },
   {
@@ -32915,7 +34871,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e08659022a08-768x576.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 112476,
@@ -32955,7 +34917,13 @@
         "בית יערן מנדטורי"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e0861d6c025e-768x576.jpg",
+        "credit": "מרדכי לאש"
+      }
+    ]
   },
   {
     "id": 112403,
@@ -33002,7 +34970,17 @@
         "תצפית אל פרסת נחל שילה"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e04c674ea7c3-768x576.jpg",
+        "credit": "מרדכי לאש, רט\"ג"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e04c66f57d2b-768x461.jpg",
+        "credit": "מערה מעל נחל שילה עילי. ברקע בית אריה. צילם מרדכי לאש, רט\"ג"
+      }
+    ]
   },
   {
     "id": 111954,
@@ -33048,7 +35026,13 @@
         "בחודש מרץ פריחת איריס שחום"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e0349c771205-768x576.jpg",
+        "credit": "צילם מרדכי לאש"
+      }
+    ]
   },
   {
     "id": 111842,
@@ -33094,7 +35078,13 @@
         "שיח סלבדורה פרסית גדול"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e031e1a434a9-768x461.jpg",
+        "credit": "צילם מרדכי לאש"
+      }
+    ]
   },
   {
     "id": 111547,
@@ -33137,7 +35127,25 @@
         "אמת מים בשיפוע – \"מגלשה\" באורך כ-350 מטרים – הגלישה מסוכנת ואסורה!"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e008fb957ecb-768x373.jpg",
+        "credit": "עין עוג'א צילם שחר כפיר - פקח רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/IMG-20191219-WA0012-768x373.jpg",
+        "credit": "עין עוג'א צילם שחר כפיר - פקח רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/IMG-20191219-WA0010-768x373.jpg",
+        "credit": "עין עוג'א צילם שחר כפיר - פקח רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e033b6fb2038-768x373.jpg",
+        "credit": "עין עוג'א צילם שחר כפיר – פקח רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 64463,
@@ -33185,7 +35193,13 @@
         "דרכי רכב 4×4 בנחלים הגדולים בנגב"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/IMG-20160831-WA0021-2-e1560776240465.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 83670,
@@ -33830,6 +35844,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9ce4263e81b-768x512.jpg",
+        "credit": "נחל גוב. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9ce45acb0f6-768x1152.jpg",
+        "credit": "נחל גוב. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -34063,6 +36087,24 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cf7f2c4662-768x512.jpg",
+        "credit": "כיפת עשת. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5ca35ea2842ab-768x297.jpg",
+        "credit": "כיפת עשת. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cf79fd527a-768x512.jpg",
+        "credit": "כיפת עשת. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cf7c3a138f-768x512.jpg",
+        "credit": "כיפת אשת. צילום: יעקב שקולניק"
       }
     ]
   },
@@ -35277,6 +37319,24 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cf7d243938-768x502.jpg",
+        "credit": "נחל אוביל. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cf7f2c4662-768x512.jpg",
+        "credit": "כיפת עשת. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cf7c3a138f-768x512.jpg",
+        "credit": "כיפת אשת. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cf79fd527a-768x512.jpg",
+        "credit": "כיפת עשת. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -36432,6 +38492,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c991b9743621-768x512.jpg",
+        "credit": "מטיילים בנחל זוויתן עילי. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c991b785aa68-768x508.jpg",
+        "credit": "נחל זוויתן עילי. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -36475,7 +38545,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c977d6c151dd-768x512.jpg",
+        "credit": "נחל הקיבוצים בפארק המעיינות. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5ca334bce2a4c-768x297.jpg",
+        "credit": "פארק המעיינות. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/28-768x512.jpg",
+        "credit": "עין שוקק. צילום: יובל מורן"
+      }
+    ]
   },
   {
     "id": 58580,
@@ -36778,6 +38862,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c990ced28fb3-768x524.jpg",
+        "credit": "מחניון זיתים לעין טמיר. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cade308e8cc6.jpg",
+        "credit": "בריכת הדלבים בנחל כזיב"
+      }
     ]
   },
   {
@@ -37032,6 +39126,16 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c8bd2d2604-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c8bad3572f-768x512.jpg",
+        "credit": "קניון שחורת. צילום: יעקב שקולניק"
       }
     ]
   },
@@ -37339,6 +39443,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c99100e7ab-768x491.jpg",
+        "credit": "הר אמיר, המסלול הארוך. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c990360f48-768x525.jpg",
+        "credit": "הר אמיר, המסלול הקצר. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c991b3ee22-768x485.jpg",
+        "credit": "הר אמיר, המסלול הארוך. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -37538,7 +39656,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5dee4e143a367-768x576.jpg",
+        "credit": "מצוק בחורשת הארבעים. צילום: גל קראוס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5dee4e569c92d.jpg",
+        "credit": "צניר במסלול חורשת הארבעים. צילום: גל קראוס"
+      }
+    ]
   },
   {
     "id": 58588,
@@ -37854,7 +39982,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c98d8401bb3c-768x472.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c98d8552aea7-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c98d839b8cec-768x501.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 10476,
@@ -38019,7 +40161,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/שיקום-יער-הכרמל-לאחר-השריפה-אלי-סלייפצביץ-רשות-הטבע-והגנים-shokef-2-768x576.jpg",
+        "credit": "הר שוקף, שיקום יער הכרמל לאחר השריפה. צילום: אלי סלייפצביץ, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/maad-carmel-archion-768x576.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 64043,
@@ -38264,6 +40416,12 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c0da7f2004-e1553731026188-768x419.jpg",
+        "credit": "מצלעות רכס חתירה במכתש הגדול. צילום: יעקב שקולניק"
       }
     ]
   },
@@ -38600,6 +40758,36 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/גב-ימין-צילום-ארז-דגן.jpeg",
+        "credit": "צילום: ארז דגן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/גב-ימין-צילום-ארז-דגן-5.jpeg",
+        "credit": "צילום: ארז דגן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/גב-ימין-צילום-ארז-דגן-2.jpeg",
+        "credit": "צילום: ארז דגן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/גב-ימין-צילום-ארז-דגן-4.jpeg",
+        "credit": "צילום: ארז דגן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/גב-ימין-צילום-ארז-דגן-3.jpeg",
+        "credit": "צילום: ארז דגן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79e82f03b7a-768x373.jpg",
+        "credit": "גב ימין. צילום: אברהם לינקולן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79e81fae944-768x373.jpg",
+        "credit": "גמלים בגב ימין. צילום: אברהם לינקולן"
+      }
     ]
   },
   {
@@ -38777,6 +40965,36 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/עין-ירקעם-רמי-שני-768x576.jpeg",
+        "credit": "עין ירקעם, צילם רמי שני רט\"ג"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/מטיילים-בעין-ירקעם-בועז-פריפלד-768x373.jpeg",
+        "credit": "מטיילים בעין ירקעם, בועז פריפלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/עין-ירקעם-בועז-פריפלד-768x373.jpeg",
+        "credit": "רוחצים בעין ירקעם, בועז פריפלד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/08/רוחצים-בעין-ירקעם-בועז-פריפלד-768x373.jpeg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c7ba7e25b6-768x505.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c7b86185ae-768x512.jpg",
+        "credit": "עין ירקעם. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c7b627cdd4-768x511.jpg",
+        "credit": "עין ירקעם. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -38824,7 +41042,13 @@
         "דיונה להשתוללות"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cbf741f63b-768x512.jpg",
+        "credit": "גבעת חצבה. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64020,
@@ -39069,6 +41293,24 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c0a0121265-768x512.jpg",
+        "credit": "הסנפיר הקטן וחולות צבעוניים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c0a136d60e-768x512.jpg",
+        "credit": "אתר האבנים המבורזלות במכתש הגדול. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c09da12a31-768x512.jpg",
+        "credit": "הסנפיר הקטן, חניון האקליפטוסים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c098314a6e-768x527.jpg",
+        "credit": "יעקב שקולניק"
       }
     ]
   },
@@ -39774,7 +42016,29 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a0fe5672d9-768x512.jpg",
+        "credit": "קניון הבזלת - צילם יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/tormosim-bear-tavor-e1574426755276.jpg",
+        "credit": "תורמוס ההרים, הר תבור. צילום: מוחמד מסאלחה (אבו רמזי)"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a0fccad8ac-768x512.jpg",
+        "credit": "נחל תבור וקניון הבזלת - צילם יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a100a2e1da-768x512.jpg",
+        "credit": "טיול בנחל טבור: מעין בארה לעינות שחל. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a0ff7e11f7-768x512.jpg",
+        "credit": "מעין בארה לעינות שחל. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64325,
@@ -40561,6 +42825,28 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cbb52c2fc7-768x512.jpg",
+        "credit": "מטיילים בראש הר מסור. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cbb2e4554b-768x512.jpg",
+        "credit": "מבט מראש הר מסור על נחל מסור. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cbb7bcc32f-768x512.jpg",
+        "credit": "נחל מסור באביב. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cbb0baf9ec-768x512.jpg",
+        "credit": "השיזף הגדול בחצבה. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cbaf6151b1-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
       }
     ]
   },
@@ -41489,7 +43775,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d790b8d4c2a4-e1584868585383-768x923.jpg",
+        "credit": "שושן צחור בנחל כלח עילי. צילום: דותן רותם"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d6f82367bcee-768x512.jpg",
+        "credit": "נחל כלח - צילם דותן רותם"
+      }
+    ]
   },
   {
     "id": 64185,
@@ -42179,7 +44475,29 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9fbbf2289-768x512.jpg",
+        "credit": "יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9f981f704-768x512.jpg",
+        "credit": "יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9f78507f5-768x512.jpg",
+        "credit": "ג'יפים עולים למישור עמיעז בנחל פרצים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9fe6b3b5c-768x512.jpg",
+        "credit": "סלע מלח בהר סדום. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9fced20e3-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64444,
@@ -42226,7 +44544,17 @@
         "שדה הבולבוסים"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c9cdb7b01e6c-768x512.jpg",
+        "credit": "שדה הבולבוסים בהר צין. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c9cdb5e2f7ec-768x512.jpg",
+        "credit": "שדה הבולבוסים בהר צין. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64105,
@@ -42267,7 +44595,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c86366d2f4-768x512.jpg",
+        "credit": "הקניון האדום. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c867c6d645-768x512.jpg",
+        "credit": "נחל שני בקניון האדום. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64286,
@@ -44561,6 +46899,24 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9ca6accbf58-768x512.jpg",
+        "credit": "בריכת צפירה בנחל צאלים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79f2bfa5606-768x373.jpeg",
+        "credit": "בריכת צפירה. צילום: ג'מיל אטרש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79f29057cb7-768x373.jpeg",
+        "credit": "מבריכת צפירה לנחל צאלים. צילום: ג'מאל אטרש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79f56b22938-768x512.jpg",
+        "credit": "בריכת צפירה. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -44603,7 +46959,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cbaf6151b1-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cbf741f63b-768x512.jpg",
+        "credit": "גבעת חצבה. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64248,
@@ -45386,7 +47752,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9ca68f7b23c-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9ca64e9f1de-768x1024.jpg",
+        "credit": "נחל משמר ונחל צאלים. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64130,
@@ -45691,6 +48067,32 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c99100e7ab-768x491.jpg",
+        "credit": "הר אמיר, המסלול הארוך. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c991b3ee22-768x485.jpg",
+        "credit": "הר אמיר, המסלול הארוך. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c999bf1de2-768x512.jpg",
+        "credit": "חורבת מדרס. צילום: יעקב יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c99752c189-768x512.jpg",
+        "credit": "חורבת מדרס, מבט מבפנים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c994a58463-768x512.jpg",
+        "credit": "הפירמידה בחורבת מדרס. צילום: יעקב יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c990360f48-768x525.jpg",
+        "credit": "הר אמיר, המסלול הקצר. צילום: יעקב שקולניק"
       }
     ]
   },
@@ -46134,6 +48536,28 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c8bf8e40bd-768x512.jpg",
+        "credit": "עמודי עמרם. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5dd4e9cab0c2d-768x512.jpg",
+        "credit": "הדרך לעמודי עמרם. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7a48c53d79f-768x512.jpg",
+        "credit": "הדרך לעמודי עמרם. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c8bd2d2604-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c8bad3572f-768x512.jpg",
+        "credit": "קניון שחורת. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -46534,6 +48958,20 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79f2bfa5606-768x373.jpeg",
+        "credit": "בריכת צפירה. צילום: ג'מיל אטרש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79f56b22938-768x512.jpg",
+        "credit": "בריכת צפירה. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c1f7ec8cd9aa-768x1024.jpeg",
+        "credit": "בריכת צפירה נחל צאלים צילמה סימה שילה"
       }
     ]
   },
@@ -47232,7 +49670,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9fced20e3-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c9fe6b3b5c-768x512.jpg",
+        "credit": "סלע מלח בהר סדום. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64465,
@@ -48756,6 +51204,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/barak-stream-the-long-route-שמורת-טבע-נחל-עשוש-יעקב-שקולניק-768x512.jpg",
+        "credit": "מעוק נחל ברק, המסלול הארוך. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/3-768x576.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/IMG-20160831-WA0021-2-e1560776240465.jpg",
+        "credit": ""
+      }
     ]
   },
   {
@@ -48799,7 +51261,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2026/05/Nachal-Gov_26_28-Large-768x576.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2026/05/Nachal-Gov_26_17-Large-768x1024.jpg",
+        "credit": "צילום: איל שפירא"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2026/05/Nachal-Gov_26_24-Large-768x576.jpg",
+        "credit": "צילום: איל שפירא"
+      }
+    ]
   },
   {
     "id": 64365,
@@ -49252,7 +51728,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c9cdbbadda7d-768x512.jpg",
+        "credit": "עין צין. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c9cdba5d69d6-768x1024.jpg",
+        "credit": "עצי תמר בעין צין – צילם יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64322,
@@ -49588,6 +52074,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c7ba7e25b6-768x505.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c7b86185ae-768x512.jpg",
+        "credit": "עין ירקעם. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -49743,6 +52239,16 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9ca6accbf58-768x512.jpg",
+        "credit": "בריכת צפירה בנחל צאלים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79f2bfa5606-768x373.jpeg",
+        "credit": "בריכת צפירה. צילום: ג'מיל אטרש"
       }
     ]
   },
@@ -50121,6 +52627,12 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cad1eb9d86-768x576.jpg",
+        "credit": "עין ענבה - צילם יעקב שקולניק"
       }
     ]
   },
@@ -50534,6 +53046,24 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cacf7b7e04-768x512.jpg",
+        "credit": "נחל בוקק. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7a44053a9f3-768x431.jpg",
+        "credit": "עין בוקק. צילום: גזית אגסי, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cad1eb9d86-768x576.jpg",
+        "credit": "עין ענבה – צילם יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9cad0e4b046-768x1152.jpg",
+        "credit": "נחל בוקק. צילום: יעקב שקולניק"
       }
     ]
   },
@@ -51400,7 +53930,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9ca66c84035-768x512.jpg",
+        "credit": "נחל צאלים תחתי. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9ca68f7b23c-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64066,
@@ -51441,7 +53981,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7262085c707-768x511.jpg",
+        "credit": "גלילי אבן (\"העצים המאובנים\"). צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c0a136d60e-768x512.jpg",
+        "credit": "אתר האבנים המבורזלות במכתש הגדול. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7a3d70b5a9a-768x242.jpg",
+        "credit": "מצלעות רכס חתירה. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 64018,
@@ -53722,7 +56276,13 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7263af7796b-768x576.jpg",
+        "credit": "חרבת שחאדה. צילום: רמי יוספי"
+      }
+    ]
   },
   {
     "id": 64016,
@@ -54274,7 +56834,13 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d749cca960b3-768x576.jpg",
+        "credit": "שמורת טבע נחל קנה. צילום: רמי יוספי"
+      }
+    ]
   },
   {
     "id": 64014,
@@ -54317,7 +56883,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d749c395f2b5.jpg",
+        "credit": "נחל אוג. צילום: אסף מזרחי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d749bc75556f-768x373.jpg",
+        "credit": "נחל אוג. צילום: ארז ברוכי"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d749c6c0e176-768x373.jpg",
+        "credit": "נחל אוג. צילום: ארז ברוכי"
+      }
+    ]
   },
   {
     "id": 64006,
@@ -54359,7 +56939,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d749bc75556f-768x373.jpg",
+        "credit": "נחל אוג. צילום: ארז ברוכי"
+      }
+    ]
   },
   {
     "id": 64003,
@@ -55299,6 +57885,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b76cb2cb21-768x512.jpg",
+        "credit": "מצפה מכוור בנחל דרגה. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b76e926602-768x512.jpg",
+        "credit": "קניון נחל דרגה. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -55339,7 +57935,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b72ce414b3-768x484.jpg",
+        "credit": "עמודי הבסיליקה בסבסטיה - צילם יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b72bc0b743-768x512.jpg",
+        "credit": "יעקב שקולניק. מקדש אוגוסטוס בסבסטיה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b72e4e6ae0-768x512.jpg",
+        "credit": "יעקב שקולניק. רחוב עמודי הבסיליקה בסבסטיה"
+      }
+    ]
   },
   {
     "id": 63934,
@@ -55598,7 +58208,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b67426af9e-768x512.jpg",
+        "credit": "עין כפירה. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b6758a1b65-768x512.jpg",
+        "credit": "עין כפירה. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63913,
@@ -56145,7 +58765,29 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c99752c189-768x512.jpg",
+        "credit": "חורבת מדרס, מבט מבפנים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c999bf1de2-768x512.jpg",
+        "credit": "חורבת מדרס. צילום: יעקב יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c994a58463-768x512.jpg",
+        "credit": "הפירמידה בחורבת מדרס. צילום: יעקב יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b63c5ee0f1-768x512.jpg",
+        "credit": "סובב חורבת מדרס. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b63a257fbc-768x512.jpg",
+        "credit": "סובב חורבת מדרס. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63665,
@@ -56182,7 +58824,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/שביל-השמורה-בני-ציון-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/מרסיה-יפיפיה-בני-ציון-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/כניסה-לשמורת-בני-ציון-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/בני-ציון-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      }
+    ]
   },
   {
     "id": 63643,
@@ -56774,7 +59434,33 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a3ef345ed9-768x512.jpg",
+        "credit": "אנדרטת חיל האוויר בהר טייסים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9b5cece28fe-768x598.jpg",
+        "credit": "עין טייסים. צילום: מיכל שחיבר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5ca35a3b0498f-768x297.jpg",
+        "credit": "מצפור הר טייסים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a3ed628a71-768x512.jpg",
+        "credit": "המצפור בהר טייסים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c9748d0145a6-768x512.jpg",
+        "credit": "אזוביון דגול בשמורת טבע בני ציון. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c9748cad20c6-768x512.jpg",
+        "credit": "שמורת טבע בני ציון. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63628,
@@ -56814,7 +59500,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a3a107957f-768x512.jpg",
+        "credit": "ביתן אהרון. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a39f3cd449-768x512.jpg",
+        "credit": "מערת קבורה בביתן אהרון. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63607,
@@ -56851,7 +59547,25 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/מזח-5-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/חוף-שחפים-Medium-768x472.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/מזח-4-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/צדפים-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      }
+    ]
   },
   {
     "id": 63569,
@@ -56890,7 +59604,41 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/נחל-אלכסנדר-Medium-768x576.jpg",
+        "credit": "אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/צב-רך-Medium-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/חורבת-סמארה-2-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/1-768x576.jpg",
+        "credit": "צילום:אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/חורבת-סמארה-768x576.jpg",
+        "credit": "צילום: אתי נפרין"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a2c8a10fd5-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a2c5de1cb6-768x512.jpg",
+        "credit": "יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a2c43a03f0-768x512.jpg",
+        "credit": "חוף בית ינאי – צילם יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63565,
@@ -57698,6 +60446,12 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a2570b2f28-768x512.jpg",
+        "credit": "נחל דולב מציג חורש במיטבו. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -58040,6 +60794,12 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5ca35d4f145b9-768x576.jpg",
+        "credit": "חורבת עיטאב. צילום: יעקב שקולניק"
       }
     ]
   },
@@ -58850,6 +61610,24 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/11/IMG-20181029-WA0019-768x768.jpg",
+        "credit": "המדרגות אל מערת תאומים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5ca35ca5b9f2e-768x297.jpg",
+        "credit": "חורבת בית עיטאב"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a258fd7430-768x512.jpg",
+        "credit": "כניסה לשמורת טבע נחל דולב מנחל המערה. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9a2570b2f28-768x512.jpg",
+        "credit": "נחל דולב מציג חורש במיטבו. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -58892,7 +61670,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c977df26e299-768x512.jpg",
+        "credit": "מעין זיו למבצר מונפור. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63484,
@@ -58930,7 +61714,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79ee030ee19-768x547.jpg",
+        "credit": "עין טמיר בשמורת נחל כזיב. צילום: שיר אוחנה, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c977d9165705-768x512.jpg",
+        "credit": "מעין זיו לעין טמיר. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79efbc68e18-768x576.jpg",
+        "credit": "שמורת טבע נחל כזיב. צילום: שיר אוחנה, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 63482,
@@ -58980,7 +61778,21 @@
         "פריחה אביבית"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c99f419b7e6a-768x512.jpg",
+        "credit": "אירוס הביצות באחו נוב. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c99f46568ae0-768x512.jpg",
+        "credit": "שמורת טבע אירוס הביצות נוב (אחו נוב). צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c99f445993af-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63431,
@@ -59022,7 +61834,29 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c97496e714f0-768x512.jpg",
+        "credit": "נחל אל על, המפל הלבן. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/4c41cd66-0621-44b4-b8bf-dbc9d97ccdc8-768x576.jpg",
+        "credit": "המפל הלבן בשמורת טבע נחל אל על, צילום מזי מגנאגיי מוסקביץ"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c99f022c5a4a-768x512.jpg",
+        "credit": "מבט אל נחל אל על ממתחם ג'ידיא (קצר ברדוויל). צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c99f11e0c608-768x512.jpg",
+        "credit": "ג'ידיא (קצר ברדוויל). צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c97498f9aae2-768x512.jpg",
+        "credit": "נחל אל אעל. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63370,
@@ -59071,7 +61905,21 @@
         "חורש ים תיכוני"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c99101b8c98e-e1584787542730-768x842.jpg",
+        "credit": "יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c99103ee0344-768x501.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c99100cc0759-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63314,
@@ -60221,7 +63069,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/5d87829f00fce-e1576758964338.jpg",
+        "credit": "שמורת טבע יער יהודיה- נחל זויתן- צילם עידו שקד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c98eb914494f-768x512.jpg",
+        "credit": "טיול בזאכי. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 63312,
@@ -60825,6 +63683,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c98eb914494f-768x512.jpg",
+        "credit": "טיול בזאכי. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c97483e16073-768x512.jpg",
+        "credit": "נחל הזאכי. צילום: יעקב שקולניק"
+      }
     ]
   },
   {
@@ -60871,7 +63739,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c9748e909092-768x512.jpg",
+        "credit": "אנדרטת אסון השריפה בפארק הכרמל. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7a435cd62f6-768x576.jpeg",
+        "credit": "חניון הלילה בחוות משמר הכרמל. צילום: לימור קטן פרידמן, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 62558,
@@ -61036,7 +63914,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c974a56e7326-768x486.jpg",
+        "credit": "נחל נשר עילי. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c974a3d1f3d4-768x512.jpg",
+        "credit": "כלניות בראש נחל נשר עילי. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 62552,
@@ -61600,7 +64488,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c974911b5d57-768x512.jpg",
+        "credit": "מבט מתוך מערת אצבע. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c974a7bad111-768x499.jpg",
+        "credit": "מטיילים ברכס אצבע ובמערת אצבע. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 60491,
@@ -61637,7 +64535,17 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c811457dc8a5-e1552474483595.jpg",
+        "credit": "כלנית מצויה. צילום: ארכיון רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6d628d7da18-768x373.jpg",
+        "credit": "צילום: קובי סופר"
+      }
+    ]
   },
   {
     "id": 59113,
@@ -62113,6 +65021,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79e61ce8f90-768x576.jpg",
+        "credit": "הר הנגב. צילום: ליאור שוימר, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79e5e217687-768x576.jpg",
+        "credit": "פריחה בבורות לוץ. צילום: ליאור שוימר, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e6cf26988c.jpg",
+        "credit": "צבעוני ססגוני"
+      }
     ]
   },
   {
@@ -62156,7 +65078,21 @@
       "character": "אופי הטיול מסלול בדרגת קושי בינונית – קשה",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e6a8bce0f5-768x512.jpg",
+        "credit": "צילום עמוס סבח"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79e20d603d7-768x432.jpg",
+        "credit": "יעל בשמורת טבע מצוק העתקים. צילום: אסף מזרחי, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d79e0abc4046-768x432.jpg",
+        "credit": "צילום: דודו זכאי, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 59090,
@@ -62199,7 +65135,21 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/באשן-שלוש-העורקים-צילום-עמוס-סבח-768x1193.jpg",
+        "credit": "באשן שלוש העורקים - צילום עמוס סבח"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e68adc333f-768x576.jpg",
+        "credit": "פשתנית ססגונית - צילום מרב לבל"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e681158881-768x432.jpg",
+        "credit": "פשתנית ססגונית. צילום: עמוס סבח"
+      }
+    ]
   },
   {
     "id": 59078,
@@ -62419,7 +65369,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7f7bd534a64-e1578391227160-768x453.jpg",
+        "credit": "עין מבוע. צילום: קובי הלפגוט, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e666177b06-768x595.jpg",
+        "credit": "צבעוני ההרים"
+      }
+    ]
   },
   {
     "id": 59068,
@@ -62452,7 +65412,17 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e64b832763-768x432.jpg",
+        "credit": "מרווה כחולה צילום עמוס סבח"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e650e8ca57-768x432.jpg",
+        "credit": "מרווה כחולה – צילמה מירב לבל"
+      }
+    ]
   },
   {
     "id": 59056,
@@ -64732,7 +67702,13 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e60da10a13-768x432.jpg",
+        "credit": "צילום מרגרטה וולצ'ק"
+      }
+    ]
   },
   {
     "id": 59032,
@@ -64767,7 +67743,13 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e5ccc40e42-e1550736778652.jpg",
+        "credit": "אירוס הארגמן - צילם אורי קייזר"
+      }
+    ]
   },
   {
     "id": 59025,
@@ -64817,7 +67799,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cb32e9be1151-768x576.jpg",
+        "credit": "שער פולג - צילמה יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cb32ebca9c5c-768x576.jpg",
+        "credit": "שמורת שער פולג. צילום: יעל לרנר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cad8c9adaaa6-768x576.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 59018,
@@ -65791,7 +68787,13 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e5a71bdc0d-768x432.jpg",
+        "credit": "צבעוני ההרים צילם רן פרץ"
+      }
+    ]
   },
   {
     "id": 59007,
@@ -65832,7 +68834,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6e59667a6bb.jpg",
+        "credit": "סייפן התבואה"
+      }
+    ]
   },
   {
     "id": 58910,
@@ -65867,7 +68875,13 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6d69270f29a-e1552474547322-768x424.jpg",
+        "credit": "צילום: מרגרטה וולצ'ק"
+      }
+    ]
   },
   {
     "id": 58907,
@@ -65902,7 +68916,13 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5b618cc9ef64d-768x576.jpg",
+        "credit": "אירוס הגלבוע - צילם רון גלדמן"
+      }
+    ]
   },
   {
     "id": 58887,
@@ -65943,7 +68963,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/tormosim-bear-tavor-e1574426755276.jpg",
+        "credit": "תורמוס ההרים, הר תבור. צילום: מוחמד מסאלחה (אבו רמזי)"
+      }
+    ]
   },
   {
     "id": 58863,
@@ -65990,7 +69016,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6d5110ae465-768x512.jpg",
+        "credit": "כליל החורש"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c6d511709d32-768x512.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 58585,
@@ -66296,6 +69332,12 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c977dd38e0eb-768x512.jpg",
+        "credit": "ממצפה הילה לעין טמיר ולמבצר מונפור. צילום: יעקב שקולניק"
       }
     ]
   },
@@ -66815,7 +69857,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cade3af358e7-768x576.jpg",
+        "credit": "מטיילים בעין טמיר. צילום: הלל גלזמן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c977da74e7e4-768x512.jpg",
+        "credit": "מבצר מונפור. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c97492817892-768x348.jpg",
+        "credit": "מצד האבירים. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 58578,
@@ -66858,7 +69914,13 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c977ddc4214e-768x435.jpg",
+        "credit": "ממצפה מונפור למבצר מונפור. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 58575,
@@ -66900,7 +69962,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/מונפור3-768x512.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/DSCN0048-e1570439890519-768x384.jpg",
+        "credit": "מבצר מונפור. צילום: צביקה צוק"
+      }
+    ]
   },
   {
     "id": 10517,
@@ -67246,7 +70318,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/007-3.jpg",
+        "credit": "שער הקפלה בגן לאומי הר תבור. צילום: מוחמד מסאלחה (אבו רמזי)"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/panorama-ar-tavor-2.jpg",
+        "credit": "הר תבור. צילום: מוחמד מסאלחה (אבו רמזי)"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/2-044-3.jpg",
+        "credit": "הר תבור – צילם מוחמד מסאלחה – אבו רמזי"
+      }
+    ]
   },
   {
     "id": 10473,
@@ -67289,7 +70375,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/2-4-768x576.jpg",
+        "credit": "כרם זיתים ביודפת, צילם אורי ארליך"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5dfc871cdee24.jpg",
+        "credit": "חצבים בתל יודפת. צילום: גל קראוס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/20160924_111553-768x432.jpg",
+        "credit": "תל יודפת. צילום: גל קראוס"
+      }
+    ]
   },
   {
     "id": 6066,
@@ -67337,7 +70437,13 @@
         "תצפית על בעלי החיים בחי בר יטבתה"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7f7c8069109-768x511.jpg",
+        "credit": "יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 6057,
@@ -68458,7 +71564,13 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809daf2e612-768x503.jpg",
+        "credit": "נחל שלמה זורם. צילום: דורון ניסים"
+      }
+    ]
   },
   {
     "id": 6053,
@@ -68845,7 +71957,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809b3663d13-768x511.jpg",
+        "credit": "שיטת הנגב בנחל סעיפים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809c29bf30e-768x511.jpg",
+        "credit": "מפגש נחל סעיפים עם נחל שני. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 6028,
@@ -68891,7 +72013,17 @@
         "בולבוסי גיר ענקיים"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/נחל-קידר-1-768x432.jpeg",
+        "credit": "בולבוסים בנחל קידר. צילום: יורם חמו"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/12/5c1210fccacab-768x512.jpg",
+        "credit": "בולבוסים בנחל קידר, צילום - יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 6024,
@@ -68917,7 +72049,7 @@
     "family": false,
     "accessible": true,
     "blurb": "האם פעם יצאתם לטיול פריחה ב...מעמקי הים? קבלו המלצה לאחד מהטיולים המענגים והמפתיעים ביותר - טיול מלא קסם וצבע לפריחת האלמוגים בשמורת חוף האלמוגים באילת, שאת כולו תעשו בשחייה ושניר…",
-    "image": "https://www.parks.org.il/wp-content/uploads/2017/09/chof-aalmogim.jpg",
+    "image": "https://www.parks.org.il/wp-content/uploads/2017/10/chof-almogim-768x398.jpg",
     "waze": "שמורת חוף האלמוגים",
     "details": {
       "summary": "האם פעם יצאתם לטיול פריחה ב...מעמקי הים? קבלו המלצה לאחד מהטיולים המענגים והמפתיעים ביותר - טיול מלא קסם וצבע לפריחת האלמוגים בשמורת חוף האלמוגים באילת, שאת כולו תעשו בשחייה ושנירקול מתחת לפני הים.",
@@ -68932,7 +72064,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/chof-almogim-768x398.jpg",
+        "credit": "צילום: אסף זבולוני"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/chof-almogim.jpg",
+        "credit": "שמורת טבע חוף האלמוגים"
+      }
+    ]
   },
   {
     "id": 6018,
@@ -68975,7 +72117,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/avdat-768x553.jpg",
+        "credit": "דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/IMG_3845-DORONNISSIM123-768x487.jpg",
+        "credit": "דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/IMG_5999-DORONNISSIM123-768x512.jpg",
+        "credit": "פסל המחשה בגן לאומי עבדת. צילום: דורון ניסים"
+      }
+    ]
   },
   {
     "id": 6005,
@@ -69390,6 +72546,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7a45f2e573c-768x543.jpg",
+        "credit": "עין בוקק. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7a4693246a6-768x574.jpg",
+        "credit": "נחל בוקק. צילום: צביקה צוק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d7a45ef8dd7c-768x431.jpg",
+        "credit": "צילום: גזית אגסי, רשות הטבע והגנים"
+      }
     ]
   },
   {
@@ -69439,7 +72609,21 @@
         "פריחות בעונה"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_1152-768x513.jpg",
+        "credit": "גן לאומי תל ערד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_1208-768x513.jpg",
+        "credit": "גן לאומי תל ערד. צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_1396-e1512977500632-768x237.jpg",
+        "credit": "שקיעה בגן לאומי תל ערד. צילום: מנו גרינשפן"
+      }
+    ]
   },
   {
     "id": 5981,
@@ -69481,7 +72665,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/machtesh-ramon-768x512.jpg",
+        "credit": "מכתש רמון. צילם דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/IMG-20190922-WA0048.jpg",
+        "credit": "צילום: גל קראוס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5dc12d8c33974-e1572942158650.jpg",
+        "credit": "אוספים חול צבעוני באתר אבן, רוח, מים. צילום: גל קראוס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/mactesh-ramon-doron-nisim-2-768x512.jpg",
+        "credit": "מכתש רמון. צילם דורון ניסים"
+      }
+    ]
   },
   {
     "id": 5964,
@@ -69523,7 +72725,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/mactesh-ramon-doron-nisim-768x512.jpg",
+        "credit": "דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/chalon-geologi-768x499.jpg",
+        "credit": "חלון גיאולוגי במכתש רמון. צילום: משרד ברוידא-מעוז"
+      }
+    ]
   },
   {
     "id": 5962,
@@ -70131,7 +73343,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/06/5d022f82e621f-768x432.jpeg",
+        "credit": "פרסת נקרות. צילום: צור נצר, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809a5868583-768x576.jpg",
+        "credit": "עין סהרונים זורם. צילום: ליאור שווימר, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809c9a5f728-768x576.jpg",
+        "credit": "חניון עין סהרונים. צילום: אריאל ליצ'ק, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 5959,
@@ -70472,6 +73698,20 @@
             ]
           ]
         ]
+      }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809a5868583-768x576.jpg",
+        "credit": "עין סהרונים זורם. צילום: ליאור שווימר, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809a209cc0f-768x576.jpg",
+        "credit": "עין סהרונים. צילום: נדב טאובה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809c9a5f728-768x576.jpg",
+        "credit": "חניון עין סהרונים. צילום: אריאל ליצ'ק, רשות הטבע והגנים"
       }
     ]
   },
@@ -72376,6 +75616,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d80a120ba5a3-768x576.jpg",
+        "credit": "נחל ארדון. צילום: ליאור שווימר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d80a046ef545.jpg",
+        "credit": "דייק אריכא בנחל ארדן. צילום: גל וין, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d80a0e5e6fc4-768x576.jpg",
+        "credit": "נחל ארדון. צילום: ליאור שווימר"
+      }
     ]
   },
   {
@@ -74278,6 +77532,16 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d809eb478f67-768x428.jpg",
+        "credit": "גבעת חרוט. צילום: דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d80a046ef545.jpg",
+        "credit": "דייק אריכא בנחל ארדן. צילום: גל וין, רשות הטבע והגנים"
+      }
     ]
   },
   {
@@ -75839,7 +79103,8 @@
           ]
         ]
       }
-    ]
+    ],
+    "photos": []
   },
   {
     "id": 5918,
@@ -75880,7 +79145,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/תצפית-ממרכז-המבקרים-מכתש-רמון.-צילום-אביב-קראוס-768x576.jpg",
+        "credit": "תצפית ממרכז המבקרים לעבר מכתש רמון. צילום: אביב קראוס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/mactesh-ramon-doron-nisim-768x512.jpg",
+        "credit": "דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/06/5d023b8f5fb74-e1584962488837-768x442.jpg",
+        "credit": "מרכז מבקרים מכתש רמון. צילום: אריאל לי'צק"
+      }
+    ]
   },
   {
     "id": 5903,
@@ -75927,7 +79206,17 @@
         "תצפית ממגדל התצפית"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/01/unnamed-file-7-768x576.jpg",
+        "credit": "הירידה למאגר המים תל באר שבע. צילום: צביקה צוק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/tel-beer-sheva-1-e1512931151759-768x290.jpg",
+        "credit": "תל באר שבע"
+      }
+    ]
   },
   {
     "id": 5900,
@@ -75969,7 +79258,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/-טבע-פורה-צילם-איל-מיטרני-e1584277541604-768x428.jpg",
+        "credit": "שמורת טבע פורה. צילום: איל מיטרני"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/-לשביל-שמורת-פורה.-יעקב-שקולניק-e1584360379552-768x349.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/03/-בשמורת-פורה.-יעקב-שקולניק-e1584360302663-768x298.jpg",
+        "credit": "כלניות בשמורת פורה. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 5877,
@@ -76001,7 +79304,7 @@
     "family": false,
     "accessible": true,
     "blurb": "שימו לב המסלול סגור זמנית, ניתן לטייל במסלולים חליפיים בשמורה. שמורת עין גדי היא נאת מדבר קסומה, ומעיינותיה זורמים אל ים המלח. השילוב המנצח בין מפלים יפים לבריכות מים מתוקים לצד מ…",
-    "image": "https://www.parks.org.il/wp-content/uploads/2019/09/5d8216e329348.png",
+    "image": "https://www.parks.org.il/wp-content/uploads/2018/03/IMG_0500-768x512.jpg",
     "waze": "נחל דוד",
     "details": {
       "summary": "שימו לב המסלול סגור זמנית, ניתן לטייל במסלולים חליפיים בשמורה. שמורת עין גדי היא נאת מדבר קסומה, ומעיינותיה זורמים אל ים המלח. השילוב המנצח בין מפלים יפים לבריכות מים מתוקים לצד מדבר צחיח, יוצר נווה מדבר מיוחד במינו ומקום נפלא לטיולים! בנחל דוד מסלולי טיול מקסימים המתאימים לכל רמה, כולל מסלול נגיש של 400 מטרים ולידו גן לאומי ובו בית כנסת וכתובות פסיפס המעידות על התיישבות קדומה באיזור.",
@@ -77622,6 +80925,12 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/03/IMG_0500-768x512.jpg",
+        "credit": "משתכשכים במפלים שבשמורת טבע עין גדי - נחל דוד. צילום: אלונה ואנסטסיה"
+      }
     ]
   },
   {
@@ -79161,6 +82470,12 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_6200-768x1151.jpg",
+        "credit": "מנו גרינשפן"
+      }
     ]
   },
   {
@@ -79385,7 +82700,25 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5caf037fbeeee-768x576.jpeg",
+        "credit": "בריכה בעין פרת. צילום: ערן קרוזל"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5caf0387e8daf-768x576.jpeg",
+        "credit": "משקיפים בעין פרת. צילום: ערן קוזל"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5caf038be7650-768x576.jpeg",
+        "credit": "עין פרת. צילום: ערן קרוזל"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/09/עיןפרת_דורוןניסים-768x556.jpg",
+        "credit": "דורון ניסים"
+      }
+    ]
   },
   {
     "id": 5847,
@@ -79427,7 +82760,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/gan-leumi-arodion-doron-nisim-2-compressed-768x512.jpg",
+        "credit": "גן לאומי הרודיון. צילום: דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/DSC_2638-768x513.jpg",
+        "credit": "פארק (גן לאומי) הרודיון. צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/DSC_2818-768x513.jpg",
+        "credit": "פארק (גן לאומי) הרודיון. צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/DSC_2792-768x513.jpg",
+        "credit": "פארק (גן לאומי) הרודיון. צילום: מנו גרינשפן"
+      }
+    ]
   },
   {
     "id": 5840,
@@ -80395,6 +83746,12 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/12/5e086dcbaa7f7-768x715.jpg",
+        "credit": "איריס הגלבוע באום זוקא. צילום: מרדכי לאש"
+      }
     ]
   },
   {
@@ -80946,7 +84303,17 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/achat-amearot-shenimzeu-baen-megilot-komran-768x513.png",
+        "credit": "אחת המערות שנמצאו בהן מגילות קומראן, מבט מגן לאומי קומראן. צילום: תמי קרן-רותם"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/komran-compressed-768x512.jpg",
+        "credit": "דורון ניסים"
+      }
+    ]
   },
   {
     "id": 5820,
@@ -81175,6 +84542,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/IMG_2621-768x1024.jpg",
+        "credit": "מצד קדרון - חורבת מזין. צילום: ערן קרוזל, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5b7a4f7b12209-768x432.jpg",
+        "credit": "חורבת מזין. צילום: גילה ציונית, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/מעלה-ראש-צוקים-ערן-קרוזל-1-768x576.jpeg",
+        "credit": "מעלה ראש צוקים. צילום: ערן קרוזל"
+      }
     ]
   },
   {
@@ -81219,7 +84600,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/11/חוזרים-לחבויה-בעיינות-צוקים-צילום-ערן-קרוזל-768x576.jpg",
+        "credit": "ערן קרוזל"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/brechat-kana.jpg",
+        "credit": "בריכת קנה בשמורת טבע עיינות צוקים. צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cb709c78e718-768x512.jpg",
+        "credit": "צילום: דורון ניסים"
+      }
+    ]
   },
   {
     "id": 5737,
@@ -81256,7 +84651,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/צילום-אליאסף-גוטמן-768x512.jpg",
+        "credit": "צילום אליאסף גוטמן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/הגן-הלאומי-תל-לכיש-יניב-כהן-רשות-הטבע-והגנים-10-Medium-768x492.jpeg",
+        "credit": "צילום יניב כהן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/02/תל-לכיש-דניאל-אסולין-סטודיו-4040-Medium-768x512.jpg",
+        "credit": "דניאל אסולין סטודיו 4040"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/ממשק-צומח-כוללני-בגן-לאומי-תל-לכיש-ותל-מארשה-ליעד-כהן-lacish-768x432.jpg",
+        "credit": "צילום: ליעד כהן"
+      }
+    ]
   },
   {
     "id": 5719,
@@ -81297,7 +84710,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/DSC_9498-768x513.jpg",
+        "credit": "מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_9145-768x513.jpg",
+        "credit": "צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/03/5c9c99752c189-768x512.jpg",
+        "credit": "חורבת מדרס, מבט מבפנים. צילום: יעקב שקולניק"
+      }
+    ]
   },
   {
     "id": 5717,
@@ -81490,7 +84917,13 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/shmurat-teva-amasrek-archion-ratag-compressed-768x512.jpg",
+        "credit": "שמורת טבע המסרק"
+      }
+    ]
   },
   {
     "id": 5715,
@@ -81538,7 +84971,21 @@
         "רחצה בים"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5bb60dcae6b26-768x576.jpg",
+        "credit": "צילום: אייל ברטוב"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/2-3-e1512922457693-768x343.jpg",
+        "credit": "חוף ניצנים. צילום: רון רוזן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/7-768x576.jpg",
+        "credit": "טביעות ידיים בחולות ניצנים. צילום: אייל ברטוב"
+      }
+    ]
   },
   {
     "id": 5704,
@@ -81580,7 +85027,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2023/08/עמק-המלך-שבגן-לאומי-סובב-חומות-ירושלים.jpg",
+        "credit": "צילום: רינת כהן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/12/איור-בריכת-השילוח-בימי-בית-שני-שלום-קוולר-ארכיון-עיר-דוד-Large-2-768x392.jpeg",
+        "credit": "איור בריכת השילוח בימי בית שני"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2020/09/הדמית-האחוזה-המלכותית-שעמדה-בארמון-הנציב.-איור-שלום-קוולר-ארכיון-עיר-דוד-768x305.jpg",
+        "credit": "איור: שלום קוולר, ארכיון עיר דוד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2022/05/-כהן-6-e1681983251142-768x597.jpeg",
+        "credit": "צילמה: רינת כהן, גן לאומי סובב חומות ירושלים"
+      }
+    ]
   },
   {
     "id": 5690,
@@ -81619,7 +85084,8 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": []
   },
   {
     "id": 5685,
@@ -81662,7 +85128,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cad96da4b42d-768x514.jpg",
+        "credit": "אבני בליסטראות באפולוניה - צילמה יעל אילן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/DSC_7650-768x513.jpg",
+        "credit": "צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/DSC_7580-768x513.jpg",
+        "credit": "מנו גרינשפן"
+      }
+    ]
   },
   {
     "id": 5602,
@@ -81705,7 +85185,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/שביל-האטד-בחוף-פלמחים-אמיר-חן-רשות-הטבע-והגנים-תמונה-שכבר-קיימת-אבל-קטנה-palmachim-768x512.jpg",
+        "credit": "אמיר חן, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/גן-לאומי-חוף-פלמחים-אייל-מטרני-רשות-הטבע-והגנים-palmachim-768x576.jpg",
+        "credit": "אייל מטרני רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/IMG_0344-e1520349159667-768x297.jpg",
+        "credit": "חוף פלמחים. צילם אמיר חן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/שביל-האטד-בחוף-פלמחים-אמיר-חן-רשות-הטבע-והגנים-palmachim-768x512.jpg",
+        "credit": "שביל האטד בחוף פלמחים. צילום: אמיר חן, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 5600,
@@ -81966,6 +85464,20 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/sorek-שמורת-טבע-נחל-שורק-פסח-2019-אמיר-חן-רשות-הטבע-והגנים-768x576.jpeg",
+        "credit": "טיול בשמורת טבע נחל שורק. צילום: אמיר חן, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/גן-לאומי-נחל-רובין-שפך-נחל-שורק.-צילום-פקדו-הובגן-768x346.jpg",
+        "credit": ""
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/ביצת-שורק-יניב-כהן-רשות-הטבע-והגנים-sorek-768x577.jpg",
+        "credit": "ביצת שורק. צילום: יניב כהן, רשות הטבע והגנים"
+      }
     ]
   },
   {
@@ -82004,7 +85516,8 @@
       "character": "",
       "highlights": []
     },
-    "routes": []
+    "routes": [],
+    "photos": []
   },
   {
     "id": 5560,
@@ -82564,7 +86077,29 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/שביל-החצבים-בירקון-שרית-768x576.jpeg",
+        "credit": "שרית פלצ'י מיארה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/חצבים-בירקון-שרית-768x576.jpeg",
+        "credit": "שרית פלצ'י מיארה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/חצבים-בירקון-שרית-2-768x1024.jpeg",
+        "credit": "צילמה שרית פלצ'י מיארה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/שביל-החצבים-בירקון-שרית-2-768x576.jpeg",
+        "credit": "שרית פלצ'י מיארה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/5b84f4ee4aec5-768x576.jpg",
+        "credit": "שביל החצבים בגן לאומי ירקון – צילם תום עמית"
+      }
+    ]
   },
   {
     "id": 5532,
@@ -82605,7 +86140,29 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/מבצר-בשלכת-768x576.jpg",
+        "credit": "דרור ברון"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/נרקיסים-768x1024.jpg",
+        "credit": "דרור ברון"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/קובי-חזן1-768x576.jpg",
+        "credit": "קובי חזן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/מבצר-1-768x373.jpg",
+        "credit": "אייל מיטרני"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/מבצר-768x373.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 5485,
@@ -83157,7 +86714,8 @@
           ]
         ]
       }
-    ]
+    ],
+    "photos": []
   },
   {
     "id": 5190,
@@ -83204,7 +86762,17 @@
         "חורבת אדמית"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/-קשת-הילה-בר-רשות-הטבע-והגנים-keshet-e1584873052666.jpeg",
+        "credit": "מערת קשת. צילום: הילה בר, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/מערת-קשת2.-צילום-איל-מילר-768x434.png",
+        "credit": "מערת קשת, צילום: איל מילר"
+      }
+    ]
   },
   {
     "id": 5161,
@@ -83252,7 +86820,17 @@
         "הכפר הדרוזי בית ג׳אן"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/admonit-achoresh-3.jpg",
+        "credit": "צילום: אמנון נחמיאס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/admonit-achoresh-768x576.jpg",
+        "credit": "צילום: אמנון נחמיאס"
+      }
+    ]
   },
   {
     "id": 5129,
@@ -84069,7 +87647,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/5c9769393acaa-768x530.jpg",
+        "credit": "אלון לויטה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cb5d4126f03a-768x512.jpg",
+        "credit": "צילם: דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/02/5c56f60789da1-e1578918912547.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 5089,
@@ -84112,7 +87704,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cade9954c8ca-768x576.jpg",
+        "credit": "דותן רותם"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cade840ab00d-768x510.jpg",
+        "credit": "צילום: אבי ברומברג"
+      }
+    ]
   },
   {
     "id": 5081,
@@ -84544,6 +88146,40 @@
           ]
         ]
       }
+    ],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/נחל-ראש-פינה-צילום-שלומי-יצחק-4-768x1024.jpeg",
+        "credit": "צילום שלומי יצחק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/nachal-rosh-pina2-768x512.jpg",
+        "credit": "נחל ראש פינה. צילום: גלית רוזן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/nachal-rosh-pina1-768x512.jpg",
+        "credit": "נחל ראש פינה. צילום: גלית רוזן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/נחל-ראש-פינה-צילום-שלומי-יצחק-5-768x1024.jpeg",
+        "credit": "צילום שלומי יצחק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/נחל-ראש-פינה-צילום-שלומי-יצחק-6-768x1024.jpeg",
+        "credit": "צילום שלומי יצחק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/נחל-ראש-פינה-צילום-שלומי-יצחק-3-768x639.jpeg",
+        "credit": "צילום שלומי יצחק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/נחל-ראש-פינה-צילום-שלומי-יצחק-768x1024.jpeg",
+        "credit": "צילום שלומי יצחק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/נחל-ראש-פינה-צילום-שלומי-יצחק-2-768x1024.jpeg",
+        "credit": "צילום שלומי יצחק"
+      }
     ]
   },
   {
@@ -84589,7 +88225,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cb5b07ea85bf-768x432.jpeg",
+        "credit": "מצוק הארבל. צילום: איציק בר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/arbel_2012_1-e1512900771516-768x238.jpg",
+        "credit": "הנוף הנשקף מהארבל. צילום: אייל עאמר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/zricha-bearbel-768x512.jpg",
+        "credit": "זריחה בארבל. צילום: מוטי בוהדנא"
+      }
+    ]
   },
   {
     "id": 5060,
@@ -84634,7 +88284,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/letayel-meal-abiza-bishmurat-teva-ein-afek-768x576.png",
+        "credit": "צילם אדריכל זאב מרגלית"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_8935-768x513.jpg",
+        "credit": "צילם מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/ein-afek.jpg",
+        "credit": ""
+      }
+    ]
   },
   {
     "id": 5047,
@@ -84680,7 +88344,17 @@
         "תצפית מרהיבה"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/unnamed-file-1-768x513.jpg",
+        "credit": "צילום: עפו בכריה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c24a973142cf-768x509.jpg",
+        "credit": "צילום: לייזר"
+      }
+    ]
   },
   {
     "id": 5042,
@@ -84725,7 +88399,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/08/5b7d451e43d83-e1534936436667-768x463.jpg",
+        "credit": "עידו שקד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/5d01e57dd902f-768x509.jpg",
+        "credit": "דולמן בשמורת המשושים. צילום: עידו שקד"
+      }
+    ]
   },
   {
     "id": 5016,
@@ -84767,7 +88451,21 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5c9748f550f7b-768x576.jpg",
+        "credit": "צילום: יעקב שקולניק"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/08/5b9e56d5da984-e1537103626678-768x428.jpg",
+        "credit": "מטיילים במג'רסה. שירן אונגר"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/10/majerse-e1512888467269-768x309.jpg",
+        "credit": "שמורת טבע מג'רסה. צילום: דובי זכאי"
+      }
+    ]
   },
   {
     "id": 4981,
@@ -84976,7 +88674,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/06/5d022f6db93df-768x513.jpg",
+        "credit": "צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/06/5d022f7907107-768x513.jpg",
+        "credit": "מבצר נמרוד. צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/06/5d022f73c6f5a-768x513.jpg",
+        "credit": "צילום: מנו גרינשפן"
+      }
+    ]
   },
   {
     "id": 4965,
@@ -85027,7 +88739,21 @@
         "תצפיות נוף"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_7488-768x513.jpg",
+        "credit": "מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_7605-768x513.jpg",
+        "credit": "מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_7669-e1512579053252-768x286.jpg",
+        "credit": "מנו גרינשפן"
+      }
+    ]
   },
   {
     "id": 4959,
@@ -85069,7 +88795,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/nachal-taninim-leteilim-rinat-ruso-768x576.jpg",
+        "credit": "רינת רוסו, רשות הטבע והגנים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/12/5c20c6b4e8ec5-768x576.jpg",
+        "credit": "נחל תנינים. צילום: אורי ארליך"
+      }
+    ]
   },
   {
     "id": 4931,
@@ -85118,7 +88854,17 @@
         "תצפית מרהיבה מראש הר בנטל על מרחבי הגולן והבשן"
       ]
     },
-    "routes": []
+    "routes": [],
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/09/5d80b73a43eaa.png",
+        "credit": "על פסגת הבנטל. צילום: גל קראוס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/5b61890db1b92-e1533200549734-768x297.jpg",
+        "credit": "צילום: סיגלית כהן, רשות הטבע והגנים"
+      }
+    ]
   },
   {
     "id": 4906,
@@ -85161,7 +88907,25 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/5d87831ce4d27-768x406.jpg",
+        "credit": "ניסים בדוס"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_3105-768x513.jpg",
+        "credit": "צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_3179-768x513.jpg",
+        "credit": "מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/01/Beit-shean.jpg",
+        "credit": "גן לאומי בית שאן. צילום: זאב מרגלית"
+      }
+    ]
   },
   {
     "id": 4896,
@@ -85203,7 +88967,17 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/churshat-tal-dudu-pero-1.jpg",
+        "credit": "צילום: דודו פרו"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/churshat-tal-doron-nisim-6-e1512576174446-768x347.jpg",
+        "credit": "צילום: דורון ניסים"
+      }
+    ]
   },
   {
     "id": 4885,
@@ -87180,7 +90954,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_8949-768x513.jpg",
+        "credit": "צילום: מנו גרינשפן"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/04/5cb81c9b884ca-768x576.jpg",
+        "credit": "צילום: הקרן לשמירת הטבע והמורשת"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/08/DSC_8638-2-768x513.jpg",
+        "credit": "צילום: מנו גרינשפן"
+      }
+    ]
   },
   {
     "id": 4880,
@@ -87206,7 +90994,7 @@
     "family": false,
     "accessible": false,
     "blurb": "מפולות סלעים בקניון המפורסם של נחל יהודיה סיכנו את המטיילים, ולכן במשך תקופה המסלול נסגר למטיילים, שהרגישו היטב בחסרונו. התגעגענו לבריכות הצלולות ועמודי הבזלת, לצמחיה והטבע הקסום…",
-    "image": "https://www.parks.org.il/wp-content/uploads/2017/09/nachal-yeudia.jpg",
+    "image": "https://www.parks.org.il/wp-content/uploads/2019/10/5d87829f00fce-e1576758964338.jpg",
     "waze": "חניון יהודיה",
     "details": {
       "summary": "מפולות סלעים בקניון המפורסם של נחל יהודיה סיכנו את המטיילים, ולכן במשך תקופה המסלול נסגר למטיילים, שהרגישו היטב בחסרונו. התגעגענו לבריכות הצלולות ועמודי הבזלת, לצמחיה והטבע הקסום שבשמורת יהודיה, לכן רשות הטבע והגנים סימנה שביל טיול חדש ובטוח בנחל יהודיה עליון, וכולכם מזומנים לבוא ולטייל במסלול קצר או ארוך. בטוח שיהיה רטוב!",
@@ -88096,7 +91884,21 @@
         ]
       }
     ],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2019/10/5d87829f00fce-e1576758964338.jpg",
+        "credit": "שמורת טבע יער יהודיה- נחל זויתן- צילם עידו שקד"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/20180430_134100-1-768x432.jpg",
+        "credit": "צילם ג'ורג'י נורקין, מנהל שמורת טבע יהודיה"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2018/06/20180430_130456-1-768x432.jpg",
+        "credit": "הנקיק השחור בנחל זויתן. צילם ג'ורג'י נורקין"
+      }
+    ]
   },
   {
     "id": 4830,
@@ -88129,7 +91931,8 @@
       "highlights": []
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": []
   },
   {
     "id": 4816,
@@ -88172,6 +91975,20 @@
       ]
     },
     "routes": [],
-    "pinSource": "search"
+    "pinSource": "search",
+    "photos": [
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/gan-leumi-achziv-zilem-doron-nisim-compressed-768x536.jpg",
+        "credit": "צילום: דורון ניסים"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/11/shkia-beachziv-compressed-768x576.jpg",
+        "credit": "שקיעה באכזיב"
+      },
+      {
+        "src": "https://www.parks.org.il/wp-content/uploads/2017/09/2-2-e1512483238395-768x296.jpg",
+        "credit": "צילום: דורון ניסים"
+      }
+    ]
   }
 ]
