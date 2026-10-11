@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>סופ״ש בטבע — חניון ומסלול</title>
+    <meta
+      name="description"
+      content="תכנון סופ״ש של חניון לילה ומסלול הליכה לפי אזור, משפחות, זמן, קושי ומסלול מעגלי. הנתונים מאתר רשות הטבע והגנים."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@600;700&family=Heebo:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="mast">
+      <p class="eyebrow">רשות הטבע והגנים · חניון לילה + הליכה</p>
+      <h1>סופ״ש בטבע</h1>
+      <p class="lead">
+        בוחרים אזור, סוג לינה ואופי מסלול. האתר מציע חניון לילה ומסלול הליכה קרוב,
+        מתוך העמודים הרשמיים של שמורות וגנים.
+      </p>
+    </header>
+
+    <main>
+      <form id="filters" class="filters">
+        <div class="field">
+          <label for="region">אזור</label>
+          <select id="region" name="region">
+            <option value="all">כל הארץ</option>
+            <option value="north">צפון</option>
+            <option value="center">מרכז</option>
+            <option value="south">דרום</option>
+            <option value="east">יו״ש</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="lodging">לינה</label>
+          <select id="lodging" name="lodging">
+            <option value="all">הכל</option>
+            <option value="paid">בתשלום, בהזמנה</option>
+            <option value="free">בלי תשלום</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="difficulty">קושי</label>
+          <select id="difficulty" name="difficulty">
+            <option value="all">כל הרמות</option>
+            <option value="easy">קל</option>
+            <option value="moderate">בינוני</option>
+            <option value="challenging">מאתגר</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="time">זמן הליכה</label>
+          <select id="time" name="time">
+            <option value="all">לא משנה</option>
+            <option value="h3">עד 3 שעות</option>
+            <option value="half">עד חצי יום</option>
+            <option value="day">יום מלא</option>
+          </select>
+        </div>
+        <div class="field grow">
+          <label for="query">חיפוש</label>
+          <input id="query" name="query" type="search" placeholder="שם חניון או מסלול" />
+        </div>
+        <fieldset class="checks">
+          <legend>אופי</legend>
+          <label><input type="checkbox" name="family" /> למשפחות</label>
+          <label><input type="checkbox" name="circular" /> מעגלי</label>
+          <label><input type="checkbox" name="water" /> מים בחניון</label>
+          <label><input type="checkbox" name="toilet" /> שירותים בחניון</label>
+        </fieldset>
+      </form>
+
+      <p id="summary" class="summary" aria-live="polite">טוען חניונים ומסלולים…</p>
+      <div id="results" class="results"></div>
+      <p id="more-wrap" class="more-wrap" hidden>
+        <button type="button" id="more">להציג עוד</button>
+      </p>
+    </main>
+
+    <footer class="colophon">
+      <p>
+        הנתונים נסרקו מאתר
+        <a href="https://www.parks.org.il/">רשות הטבע והגנים</a>
+        בתאריך <time id="fetched" datetime="">—</time>.
+        לפני יציאה צריך לבדוק באתר הרשמי אם המסלול פתוח, אם החניון פנוי, ומה המחיר העדכני.
+      </p>
+      <p>בחניוני הלילה בתשלום הכניסה עם כלבים אסורה, והלינה בהזמנה מראש.</p>
+    </footer>
+
+    <script src="plan.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
