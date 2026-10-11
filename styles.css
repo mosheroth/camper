@@ -267,6 +267,32 @@ button {
   border-radius: 99px;
   display: inline-block;
 }
+.camp-swatch {
+  background: var(--clay);
+  border-radius: 8px 8px 8px 0;
+  transform: rotate(-45deg);
+}
+.camp-marker { background: none; border: 0; }
+.camp-pin { position: relative; width: 36px; height: 46px; }
+.camp-pin svg { display: block; filter: drop-shadow(0 2px 2px rgba(35, 28, 22, 0.45)); }
+.camp-pin-tag {
+  position: absolute;
+  z-index: 1;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1px 8px 2px;
+  border: 2px solid var(--clay);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: Heebo, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(35, 28, 22, 0.28);
+}
 .map-note { color: var(--muted); margin: 8px 0 0; }
 .dossier {
   display: grid;

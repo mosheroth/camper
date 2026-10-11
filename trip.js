@@ -169,18 +169,33 @@ function drawMap(camp, trails) {
   const bounds = [];
 
   if (camp.lat != null) {
-    const marker = window.L.circleMarker([camp.lat, camp.lng], {
-      radius: 9,
-      color: "#231c16",
-      weight: 2,
-      fillColor: "#f4ecdf",
-      fillOpacity: 1,
+    const icon = window.L.divIcon({
+      className: "camp-marker",
+      html:
+        '<div class="camp-pin">' +
+        '<span class="camp-pin-tag">חניון</span>' +
+        '<svg viewBox="0 0 36 46" width="36" height="46" aria-hidden="true">' +
+        '<path d="M18 44.5C18 44.5 33 27.2 33 16.2A15 15 0 1 0 3 16.2C3 27.2 18 44.5 18 44.5Z" fill="#a3472c" stroke="#fffaf3" stroke-width="2.4"/>' +
+        '<path d="M11 22.2 18 13.2 25 22.2Z" fill="none" stroke="#fffaf3" stroke-width="1.8" stroke-linejoin="round"/>' +
+        '<path d="M18 13.6V22" stroke="#fffaf3" stroke-width="1.4"/>' +
+        "</svg></div>",
+      iconSize: [36, 46],
+      iconAnchor: [18, 44],
+      popupAnchor: [0, -40],
+    });
+    const marker = window.L.marker([camp.lat, camp.lng], {
+      icon,
+      zIndexOffset: 800,
+      title: camp.name,
+      alt: `חניון ${camp.name}`,
     }).addTo(map);
-    marker.bindPopup(camp.name);
+    const safeName = String(camp.name).replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    }[char]));
+    marker.bindPopup(`<strong>חניון</strong><br>${safeName}`);
     bounds.push([camp.lat, camp.lng]);
     const item = el("li", "key", `חניון · ${camp.name}`);
-    const dot = el("i", "swatch");
-    dot.style.background = "#231c16";
+    const dot = el("i", "swatch camp-swatch");
     item.prepend(dot);
     legend.append(item);
   }
@@ -242,12 +257,16 @@ function drawMap(camp, trails) {
   });
 
   if (bounds.length) {
-    map.fitBounds(bounds, { padding: [28, 28], maxZoom: 15 });
+    map.fitBounds(bounds, {
+      paddingTopLeft: [48, 72],
+      paddingBottomRight: [48, 36],
+      maxZoom: 15,
+    });
   } else {
     map.setView([31.4, 34.9], 7);
   }
   mapNote.textContent = drewLine
-    ? "העיגול הוא החניון. כל קו הוא מסלול אחר. לחיצה על שורה במקרא מסתירה את הקו."
+    ? "הסיכה עם הכיתוב חניון היא אתר הקמפינג. כל קו הוא מסלול אחר. לחיצה על שורה במקרא מסתירה את הקו."
     : "החניון מסומן. למסלולים בעמוד הזה אין עדיין קו שביל תואם, אז מסומנת נקודת ההתחלה.";
 }
 
