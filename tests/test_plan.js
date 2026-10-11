@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans } = require("../plan.js");
+const { buildPlans, planUrl } = require("../plan.js");
 
 const trails = [
   {
@@ -122,5 +122,7 @@ familyEasy.forEach((plan) => {
     assert.ok(trail.hoursMax == null || trail.hoursMax <= 5);
   });
 });
+
+assert.strictEqual(planUrl(10, [1, 2]), "trip.html?camp=10&trails=1%2C2");
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

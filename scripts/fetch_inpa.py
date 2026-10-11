@@ -29,7 +29,16 @@ from scripts.classify import (  # noqa: E402
     time_flags,
 )
 from scripts.geo import itm_to_wgs84, region_from_lat  # noqa: E402
+from scripts.details import (  # noqa: E402
+    arrival_text,
+    camp_sections,
+    content_image,
+    free_camp_details,
+    hours_text,
+    trail_details,
+)
 from scripts.match import nearby_trails  # noqa: E402
+from scripts.osm_routes import attach_routes  # noqa: E402
 
 API = "https://www.parks.org.il/wp-json/wp/v2"
 UA = (
@@ -348,9 +357,14 @@ def normalize_paid(item, areas):
         "access": None,
         "places": None,
         "priceFrom": price_from(paid_prices(acf)),
-        "prices": paid_prices(acf)[:4],
+        "prices": paid_prices(acf)[:8],
         "blurb": clip(blurb),
         "image": first_image(acf),
+        "details": {
+            "sections": camp_sections(acf),
+            "hours": hours_text(acf),
+            "arrival": arrival_text(acf),
+        },
     }
 
 
@@ -358,6 +372,11 @@ def normalize_free(item, areas):
     acf = item.get("acf") or {}
     lat, lng = coords_from_acf(acf)
     ids = area_ids(item, acf)
+    content = (item.get("content") or {}).get("rendered") or ""
+    details = free_camp_details(content)
+    arrival = arrival_text(acf)
+    if arrival:
+        details["arrival"] = arrival
     return {
         "id": item["id"],
         "name": title_of(item),
@@ -374,7 +393,8 @@ def normalize_free(item, areas):
         "priceFrom": 0,
         "prices": [],
         "blurb": clip(acf.get("map_description") or acf.get("arrival_instructions") or ""),
-        "image": first_image(acf),
+        "image": first_image(acf) or content_image(content),
+        "details": details,
     }
 
 
@@ -425,6 +445,8 @@ def normalize_trail(item, areas):
         "blurb": clip(acf.get("intro_text") or ""),
         "image": first_image(acf),
         "waze": plain_text(acf.get("waze_adress") or "") or None,
+        "details": trail_details(acf, (item.get("content") or {}).get("rendered") or ""),
+        "routes": [],
     }
 
 
@@ -437,15 +459,18 @@ def main():
     )
     free_raw = fetch_collection(
         "free_camping",
-        "id,title,link,acf,trip-area",
+        "id,title,link,acf,trip-area,content",
     )
     trail_raw = fetch_collection(
         "trip",
-        "id,title,link,tags,trip-area,acf",
+        "id,title,link,tags,trip-area,content,acf",
     )
     camps = [normalize_paid(item, areas) for item in paid_raw]
     camps.extend(normalize_free(item, areas) for item in free_raw)
     trails = [trail for trail in (normalize_trail(item, areas) for item in trail_raw) if trail]
+    print("matching trail lines…")
+    with_line = attach_routes(trails, cache_path=ROOT / "data" / ".osm-cache.json")
+    print("trails with a mapped line:", with_line)
     for camp in camps:
         camp["nearby"] = nearby_trails(camp, trails)
 
@@ -468,6 +493,7 @@ def main():
             "trails": len(trails),
             "family": sum(1 for trail in trails if trail["family"]),
             "circular": sum(1 for trail in trails if trail["circular"] is True),
+            "routes": sum(1 for trail in trails if trail.get("routes")),
         },
     }
     (data_dir / "meta.json").write_text(

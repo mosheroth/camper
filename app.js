@@ -132,9 +132,25 @@ function renderPlan(plan) {
     hike.append(alt);
   }
 
+  const opener = el("p", "opener", "למפה ולפירוט");
   const body = el("div", "plan-body");
   body.append(stay, hike);
-  article.append(body);
+  article.append(body, opener);
+  const href = window.CamperPlan.planUrl(camp.id, plan.trails.map((item) => item.trail.id));
+  article.tabIndex = 0;
+  article.setAttribute("role", "link");
+  article.setAttribute("aria-label", `לפתוח את הסופ״ש: ${camp.name}`);
+  const open = () => {
+    sessionStorage.setItem("camper-filters", JSON.stringify(readFilters()));
+    window.location.href = href;
+  };
+  article.addEventListener("click", (event) => {
+    if (event.target.closest("a")) return;
+    open();
+  });
+  article.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") open();
+  });
   return article;
 }
 
@@ -168,8 +184,8 @@ function render() {
     return;
   }
   const count = plans.length === 1
-    ? "הצעה אחת לסופ״ש. חניון לילה ומסלול הליכה קרוב."
-    : `${plans.length} הצעות לסופ״ש. כל הצעה היא חניון לילה ומסלול הליכה קרוב.`;
+    ? "הצעה אחת לסופ״ש. לחצו על השורה למפה ולפירוט."
+    : `${plans.length} הצעות לסופ״ש. לחצו על שורה למפה ולפירוט.`;
   summary.textContent = count;
   visible.forEach((plan) => results.append(renderPlan(plan)));
   moreWrap.hidden = shown >= plans.length;
@@ -200,6 +216,23 @@ Promise.all([
       const date = new Date(meta.fetchedAt);
       fetched.dateTime = meta.fetchedAt;
       fetched.textContent = new Intl.DateTimeFormat("he-IL", { dateStyle: "long" }).format(date);
+    }
+    const saved = sessionStorage.getItem("camper-filters");
+    if (saved) {
+      let filters = null;
+      try {
+        filters = JSON.parse(saved);
+      } catch (_error) {
+        filters = null;
+      }
+      if (!filters) return apply();
+      ["region", "lodging", "difficulty", "time"].forEach((name) => {
+        if (filters[name] && form.elements[name]) form.elements[name].value = filters[name];
+      });
+      ["family", "circular", "water", "toilet"].forEach((name) => {
+        if (form.elements[name]) form.elements[name].checked = Boolean(filters[name]);
+      });
+      if (typeof filters.query === "string") form.elements.query.value = filters.query;
     }
     apply();
   })

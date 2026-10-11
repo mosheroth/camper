@@ -49,6 +49,30 @@ class CatalogTests(unittest.TestCase):
             amount = int(float(adults[0]["price"].split()[0]))
             self.assertEqual(camp["priceFrom"], amount, camp["name"])
 
+    def test_day_hike_lines_stay_a_walkable_length(self):
+        from scripts.osm_routes import route_length_km
+
+        drawn = 0
+        for trail in self.trails:
+            for route in trail.get("routes") or []:
+                drawn += 1
+                length = route_length_km(route["lines"])
+                self.assertGreaterEqual(length, 0.4, trail["name"])
+                self.assertLessEqual(length, 14.05, trail["name"])
+                self.assertNotIn("אופני", route["name"])
+        self.assertGreater(drawn, 40)
+
+    def test_pages_keep_factual_detail(self):
+        paid = [camp for camp in self.camps if camp["paid"]]
+        free = [camp for camp in self.camps if not camp["paid"]]
+        self.assertTrue(all(camp["details"]["sections"] for camp in paid))
+        described = [
+            camp for camp in free
+            if camp["details"].get("summary") or camp["details"].get("sections")
+        ]
+        self.assertGreater(len(described), 80)
+        self.assertTrue(all(trail.get("details") for trail in self.trails))
+
     def test_family_signal_is_not_the_default_tag(self):
         family = sum(1 for trail in self.trails if trail["family"])
         self.assertGreater(family, 20)

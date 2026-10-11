@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>סופ״ש בטבע — מפה ופירוט</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@600;700&family=Heebo:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="mast trip-mast">
+      <p class="eyebrow"><a href="index.html">סופ״ש בטבע</a> · חזרה לרשימה</p>
+      <h1 id="title">טוען את הסופ״ש…</h1>
+      <p id="lead" class="lead"></p>
+    </header>
+    <main>
+      <div id="map" class="trip-map" role="region" aria-label="מפת החניון והמסלולים"></div>
+      <ul id="legend" class="legend"></ul>
+      <p id="map-note" class="map-note"></p>
+      <div id="dossier" class="dossier"></div>
+    </main>
+    <footer class="colophon">
+      <p>
+        פירוט החניון והמסלול נאסף מאתר
+        <a href="https://www.parks.org.il/">רשות הטבע והגנים</a>.
+        קו המסלול, כשיש כזה, מגיע ממפת השבילים הפתוחה של
+        <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
+        ורק כששם השביל תואם לשם הטיול. זה לא סימון רשמי של רט״ג.
+      </p>
+      <p>לפני יציאה יש לבדוק באתר הרשמי שהמסלול פתוח, שהחניון פנוי, ומה המחיר העדכני.</p>
+    </footer>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="trip.js"></script>
+  </body>
+</html>

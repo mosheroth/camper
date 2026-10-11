@@ -77,5 +77,10 @@
     return plans;
   }
 
-  return { buildPlans, trailMatches, timeMatches, campMatches };
+  function planUrl(campId, trailIds) {
+    const trails = (trailIds || []).filter((id) => id != null).join(",");
+    return `trip.html?camp=${encodeURIComponent(campId)}&trails=${encodeURIComponent(trails)}`;
+  }
+
+  return { buildPlans, trailMatches, timeMatches, campMatches, planUrl };
 });

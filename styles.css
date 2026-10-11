@@ -224,6 +224,85 @@ button {
 
 .colophon a { color: var(--green); }
 
+.plan { cursor: pointer; }
+.plan:focus-visible { outline: 3px solid var(--green-mid); outline-offset: 3px; }
+.opener {
+  margin: 0;
+  padding: 10px 18px 14px;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.trip-mast h1 { font-size: clamp(32px, 5vw, 52px); }
+.trip-mast a { color: var(--clay); text-decoration: none; }
+.trip-map {
+  height: 460px;
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--sand-deep);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.legend li[role="button"] { cursor: pointer; }
+.legend li.off { opacity: 0.4; }
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 99px;
+  display: inline-block;
+}
+.map-note { color: var(--muted); margin: 8px 0 0; }
+.dossier {
+  display: grid;
+  gap: 14px;
+  margin: 16px 0 28px;
+}
+.sheet {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+}
+.sheet h2, .sheet h3 {
+  font-family: "Frank Ruhl Libre", serif;
+  margin: 14px 0 6px;
+}
+.sheet h2 { margin-top: 0; font-size: 1.7rem; }
+.sheet-photo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  background: var(--sand-deep);
+}
+.sheet h3 { font-size: 1.15rem; }
+.detail-list { margin: 0 0 8px; padding-inline-start: 1.2rem; }
+.prices { width: 100%; border-collapse: collapse; }
+.prices td { padding: 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.prices td:last-child { white-space: nowrap; font-weight: 700; }
+.fine { color: var(--muted); font-size: 0.9rem; }
+
+@media (max-width: 700px) {
+  .trip-map { height: 320px; }
+}
+
 @media (max-width: 800px) {
   .filters { grid-template-columns: 1fr 1fr; }
   .field.grow { grid-column: 1 / -1; }
