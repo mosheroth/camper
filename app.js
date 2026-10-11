@@ -310,7 +310,7 @@ function renderPlan(plan) {
   }
 
   const href = window.CamperPlan.planUrl(camp.id, plan.trails.map((item) => item.trail.id));
-  const opener = el("a", "opener", "לפירוט");
+  const opener = el("a", "opener", "יצירת טיול");
   opener.href = href;
   opener.addEventListener("click", () => {
     sessionStorage.setItem("camper-filters", JSON.stringify(readFilters()));

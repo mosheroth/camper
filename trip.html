@@ -21,14 +21,24 @@
   </head>
   <body class="trip-page">
     <header class="mast trip-mast">
-      <p class="eyebrow"><a href="index.html">חזרה לרשימה</a></p>
+      <p class="eyebrow"><a href="index.html">חזרה לרשימה</a> · <a href="trips.html">הטיולים שלי</a></p>
       <div class="trip-head">
         <h1 id="title">טוען את הסופ״ש…</h1>
         <p id="lead" class="lead"></p>
       </div>
     </header>
+    <div class="trip-actions">
+      <label class="trip-name">
+        <span>שם הטיול</span>
+        <input id="trip-name" type="text" maxlength="80" placeholder="למשל: סופ״ש בקסטל" />
+      </label>
+      <button type="button" id="save-trip">שמירה</button>
+      <button type="button" id="share-trip" class="ghost">שליחה</button>
+      <button type="button" id="delete-trip" class="ghost danger" hidden>מחיקה</button>
+      <p id="save-note" class="fine" role="status"></p>
+    </div>
     <main class="workspace">
-      <aside class="panel" aria-label="הרכבת הסופ״ש">
+      <aside class="panel" aria-label="יצירת הטיול">
         <div class="panel-tabs" role="tablist">
           <button type="button" class="tab" id="tab-routes" role="tab" aria-selected="true" aria-controls="around">מסלולים</button>
           <button type="button" class="tab" id="tab-camp" role="tab" aria-selected="false" aria-controls="dossier">חניון</button>
@@ -60,6 +70,7 @@
       crossorigin=""
     ></script>
     <script src="plan.js"></script>
+    <script src="trips.js"></script>
     <script src="trip.js"></script>
   </body>
 </html>

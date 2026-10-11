@@ -883,3 +883,71 @@ button {
   }
   .browse-page .stage { order: -1; }
 }
+
+.browse-page .eyebrow a,
+.trip-page .eyebrow a { color: var(--clay); text-decoration: none; }
+
+.trip-actions {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0 16px 8px;
+}
+.trip-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 16rem;
+  min-width: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.trip-name input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 500;
+}
+.trip-actions .ghost,
+.saved .ghost {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 8px 14px;
+}
+.trip-actions .danger,
+.saved .danger { color: var(--clay); border-color: var(--clay); }
+.trip-actions .fine { flex: 1 1 100%; margin: 0; }
+.saved {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.saved h2 {
+  margin: 0 0 4px;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 1.3rem;
+}
+.saved .meta { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.saved .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.saved .actions a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid var(--green);
+  border-radius: 999px;
+  color: var(--green);
+  font-weight: 700;
+  text-decoration: none;
+}
+.saved.selected { background: #fff6ee; border-radius: 12px; padding-inline: 8px; }
+.library-empty a,
+#library .empty a { color: var(--green); font-weight: 700; }
