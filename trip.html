@@ -27,32 +27,29 @@
         <p id="lead" class="lead"></p>
       </div>
     </header>
-    <div class="trip-actions">
-      <label class="trip-name">
-        <span>שם הטיול</span>
-        <input id="trip-name" type="text" maxlength="80" placeholder="למשל: סופ״ש בקסטל" />
-      </label>
-      <button type="button" id="save-trip">שמירה</button>
-      <button type="button" id="share-trip" class="ghost">שליחה</button>
-      <button type="button" id="delete-trip" class="ghost danger" hidden>מחיקה</button>
-      <p id="save-note" class="fine" role="status"></p>
-    </div>
     <main class="workspace">
       <aside class="panel" aria-label="יצירת הטיול">
-        <div class="panel-tabs" role="tablist">
-          <button type="button" class="tab" id="tab-routes" role="tab" aria-selected="true" aria-controls="around">מסלולים</button>
-          <button type="button" class="tab" id="tab-camp" role="tab" aria-selected="false" aria-controls="dossier">חניון</button>
-          <button type="button" class="tab" id="tab-detail" role="tab" aria-selected="false" aria-controls="picked">פירוט</button>
+        <div class="trip-actions">
+          <label class="trip-name">
+            <span>שם הטיול</span>
+            <input id="trip-name" type="text" maxlength="80" placeholder="למשל: סופ״ש בקסטל" />
+          </label>
+          <div class="trip-buttons">
+            <button type="button" id="save-trip">שמירה</button>
+            <button type="button" id="share-trip" class="ghost">שליחה</button>
+            <button type="button" id="delete-trip" class="ghost danger" hidden>מחיקה</button>
+          </div>
+          <p id="save-note" class="fine" role="status"></p>
         </div>
         <div class="panel-body" id="panel-body">
           <p id="map-note" class="map-note"></p>
-          <section id="around" class="around" role="tabpanel"></section>
-          <div id="dossier" class="dossier" role="tabpanel" hidden></div>
+          <section id="around" class="around"></section>
+          <div id="dossier" class="dossier" hidden></div>
         </div>
       </aside>
       <section class="stage">
         <div id="map" class="trip-map" role="region" aria-label="מפת החניון והמסלולים"></div>
-        <ul id="legend" class="legend"></ul>
+        <ul id="legend" class="legend" hidden></ul>
       </section>
     </main>
     <footer class="colophon">

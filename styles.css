@@ -486,9 +486,9 @@ button {
   min-height: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: minmax(300px, 390px) minmax(0, 1fr);
+  grid-template-columns: minmax(340px, 440px) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
-  gap: 10px;
+  gap: 16px;
   padding: 0 12px 8px;
 }
 .trip-page .panel {
@@ -650,20 +650,7 @@ button {
   border: 0;
   border-radius: 0;
 }
-.trip-page .legend {
-  position: absolute;
-  z-index: 500;
-  bottom: 8px;
-  inset-inline: 8px;
-  margin: 0;
-  max-height: 28%;
-  overflow: auto;
-  pointer-events: none;
-}
-.trip-page .legend li {
-  pointer-events: auto;
-  background: rgba(255, 250, 243, 0.94);
-}
+.trip-page .legend { display: none; }
 .trip-page .colophon {
   flex: none;
   padding: 0 16px 8px;
@@ -951,3 +938,160 @@ button {
 .saved.selected { background: #fff6ee; border-radius: 12px; padding-inline: 8px; }
 .library-empty a,
 #library .empty a { color: var(--green); font-weight: 700; }
+
+.panel .trip-actions {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: auto;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.panel .trip-name {
+  flex: none;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.panel .trip-name input { flex: none; }
+.trip-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.panel .trip-buttons button { padding: 8px 14px; }
+.panel .trip-actions .fine { flex: none; }
+
+.trip-page .section-label {
+  margin: 18px 0 2px;
+  font-family: Heebo, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.board-hint {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+.section-head .section-label { margin: 0; }
+.section-head .radius { margin: 0; }
+
+.spot {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  padding: 12px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.spot:hover,
+.spot.linked {
+  background: #f3e6d4;
+  box-shadow: inset -3px 0 0 var(--clay);
+}
+.spot:focus-visible { outline: 3px solid var(--green-mid); outline-offset: 2px; }
+.spot .swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+.spot h3 {
+  margin: 0;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+.spot .meta {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.spot .text-link,
+.text-back {
+  display: inline;
+  margin-top: 4px;
+  padding: 0;
+  background: none;
+  color: var(--green);
+  border-radius: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.text-back {
+  display: inline-block;
+  margin: 12px 0 4px;
+  color: var(--clay);
+  font-size: 0.92rem;
+}
+.spot .remove,
+.detail-bar .remove {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 6px 12px;
+}
+.spot .add { padding: 6px 12px; }
+.spot button:disabled { opacity: 0.45; cursor: default; }
+.more-around { margin: 10px 0 4px; }
+.pin-hot .camp-pin {
+  transform: scale(1.08);
+  transform-origin: 50% 100%;
+}
+
+.browse-page .results { gap: 2px; padding-bottom: 8px; }
+.browse-page .plan.index-card {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 8px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.browse-page .plan.index-card.linked,
+.browse-page .plan.index-card:hover {
+  background: #f3e6d4;
+  box-shadow: inset -3px 0 0 var(--clay);
+}
+.browse-page .plan.index-card.selected {
+  border-color: var(--clay);
+  background: #fff6ee;
+}
+.browse-page .index-card h2 {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+.browse-page .index-card .meta {
+  margin: 1px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.browse-page .index-card .opener {
+  grid-column: auto;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+.browse-page .index-card .swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
