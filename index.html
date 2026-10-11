@@ -15,19 +15,25 @@
       href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@600;700&family=Heebo:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <header class="mast">
+  <body class="browse-page">
+    <header class="mast browse-mast">
       <p class="eyebrow">רשות הטבע והגנים · חניון לילה + הליכה</p>
-      <h1>סופ״ש בטבע</h1>
-      <p class="lead">
-        בוחרים אזור, סוג לינה ואופי מסלול. האתר מציע חניון לילה ומסלול הליכה קרוב,
-        מתוך העמודים הרשמיים של שמורות וגנים.
-      </p>
+      <div class="browse-head">
+        <h1>סופ״ש בטבע</h1>
+        <p class="lead">כל ההצעות מסומנות על מפת הארץ. לחיצה על אחת מתמקדת בה.</p>
+      </div>
     </header>
 
-    <main>
+    <main class="workspace">
+      <aside class="panel" aria-label="הצעות לסופ״ש">
       <form id="filters" class="filters">
         <div class="field">
           <label for="region">אזור</label>
@@ -78,11 +84,19 @@
         </fieldset>
       </form>
 
-      <p id="summary" class="summary" aria-live="polite">טוען חניונים ומסלולים…</p>
-      <div id="results" class="results"></div>
-      <p id="more-wrap" class="more-wrap" hidden>
-        <button type="button" id="more">להציג עוד</button>
-      </p>
+        <div class="panel-body" id="panel-body">
+          <p id="summary" class="summary" aria-live="polite">טוען חניונים ומסלולים…</p>
+          <div id="results" class="results"></div>
+        </div>
+      </aside>
+      <section class="stage">
+        <div id="browse-map" class="trip-map" role="region" aria-label="מפת ישראל עם הצעות לסופ״ש"></div>
+        <ul id="legend" class="legend">
+          <li><i class="swatch paid-swatch"></i> בתשלום</li>
+          <li><i class="swatch free-swatch"></i> בלי תשלום</li>
+          <li><i class="swatch camp-swatch"></i> ההצעה שנבחרה</li>
+        </ul>
+      </section>
     </main>
 
     <footer class="colophon">
@@ -95,6 +109,11 @@
       <p>בחניוני הלילה בתשלום הכניסה עם כלבים אסורה, והלינה בהזמנה מראש.</p>
     </footer>
 
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
     <script src="plan.js"></script>
     <script src="app.js"></script>
   </body>

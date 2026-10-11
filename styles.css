@@ -685,3 +685,201 @@ button {
   .trip-page .stage { order: -1; }
   .trip-page .panel .gallery-stage { height: 140px; }
 }
+
+/* Browse: Israel map beside the weekend list. */
+.browse-page {
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.browse-page .mast,
+.browse-page main,
+.browse-page .colophon {
+  width: 100%;
+  max-width: none;
+}
+.browse-page .browse-mast {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+}
+.browse-page .eyebrow { margin: 0; flex: none; }
+.browse-page .browse-head {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.browse-page h1 {
+  font-size: 1.45rem;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.browse-page .lead {
+  min-width: 0;
+  flex: 1;
+  max-width: none;
+  margin: 0;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.browse-page .workspace {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(320px, 460px) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 10px;
+  padding: 0 12px 8px;
+}
+.browse-page .panel {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.browse-page .filters {
+  flex: none;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 10px 12px;
+}
+.browse-page .field.grow,
+.browse-page .checks { grid-column: 1 / -1; }
+.browse-page .panel-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 12px 12px;
+}
+.browse-page .summary {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 8px 0;
+  background: var(--card);
+}
+.browse-page .plan {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  box-shadow: none;
+}
+.browse-page .plan.no-photo { grid-template-columns: minmax(0, 1fr); }
+.browse-page .plan .thumb {
+  grid-row: 1 / span 2;
+  width: 100%;
+  height: 100%;
+  min-height: 96px;
+}
+.browse-page .plan-body { grid-column: 2; grid-template-columns: 1fr; }
+.browse-page .plan.no-photo .plan-body,
+.browse-page .plan.no-photo .opener { grid-column: 1; }
+.browse-page .hike { border-right: 0; border-top: 1px solid var(--line); }
+.browse-page .camp,
+.browse-page .hike { padding: 10px 12px 8px; }
+.browse-page .plan h2 { font-size: 1.2rem; }
+.browse-page .plan h3 { font-size: 1.05rem; }
+.browse-page .blurb {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.browse-page .opener {
+  grid-column: 2;
+  display: inline-block;
+  margin: 0;
+  padding: 0 12px 12px;
+  color: var(--green);
+  font-weight: 700;
+  text-decoration: none;
+}
+.browse-page .plan.selected {
+  border-color: var(--clay);
+  background: #fff6ee;
+}
+.browse-page .plan.selected .hike { background: #f8efe4; }
+.browse-page .stage {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--sand-deep);
+}
+.browse-page .trip-map {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+.browse-page .legend {
+  position: absolute;
+  z-index: 500;
+  bottom: 8px;
+  inset-inline: 8px;
+  margin: 0;
+  max-height: 28%;
+  overflow: auto;
+  pointer-events: none;
+}
+.browse-page .legend li {
+  pointer-events: auto;
+  background: rgba(255, 250, 243, 0.94);
+}
+.paid-swatch { background: #a3472c; }
+.free-swatch { background: #1c3f34; }
+.browse-page .colophon {
+  flex: none;
+  padding: 0 16px 8px;
+  font-size: 0.75rem;
+}
+.browse-page .colophon p { margin: 0; }
+
+@media (max-width: 800px) {
+  .browse-page .browse-mast { gap: 8px; padding: 8px 12px; }
+  .browse-page .browse-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .browse-page h1 { font-size: 1.2rem; }
+  .browse-page .lead {
+    font-size: 0.82rem;
+    flex: none;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+  }
+  .browse-page .workspace {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(200px, 34dvh) minmax(0, 1fr);
+    gap: 8px;
+    padding: 0 8px 6px;
+  }
+  .browse-page .stage { order: -1; }
+}
