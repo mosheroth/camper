@@ -57,6 +57,9 @@ function shareText(trip) {
   const coffees = (place.coffee || [])
     .map((id) => places.find((item) => item.id === id))
     .filter((item) => item && item.lat != null);
+  const visits = (place.visit || [])
+    .map((id) => places.find((item) => item.id === id))
+    .filter((item) => item && item.lat != null);
   let home = "center";
   try {
     const saved = localStorage.getItem("camper-home");
@@ -71,6 +74,7 @@ function shareText(trip) {
     camp,
     trails: chosen,
     coffees,
+    visits,
     arrivalMinutes: place.arrival,
     origin,
     hours: {
@@ -82,6 +86,7 @@ function shareText(trip) {
       back: place.back,
       hikes: place.hikes,
       coffeeAt: place.stops,
+      visitAt: place.stops,
     },
     order: place.order,
     from: place.from,
@@ -154,6 +159,12 @@ function render() {
     if (trip.draft) card.append(el("p", "kicker", "טיוטה"));
     card.append(el("h2", null, trip.name));
     const names = (trip.trailIds || []).map(trailName).filter(Boolean);
+    const visits = ((trip.place && trip.place.visit) || [])
+      .map((id) => {
+        const place = places.find((item) => item.id === id);
+        return place ? place.name : "";
+      })
+      .filter(Boolean);
     const lookouts = ((trip.place && trip.place.coffee) || [])
       .map((id) => {
         const place = places.find((item) => item.id === id);
@@ -164,6 +175,7 @@ function render() {
       dateRange(trip.place),
       camp ? camp.name : "החניון לא נמצא בקטלוג",
       names.length ? names.join(" · ") : "בלי מסלול",
+      visits.length ? visits.join(" · ") : "",
       lookouts.length ? lookouts.join(" · ") : "",
       when(trip.updatedAt),
     ].filter(Boolean).join(" · ");

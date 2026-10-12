@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes } = require("../plan.js");
 
 const trails = [
   {
@@ -561,5 +561,64 @@ const sharedCup = shareMessage({
 });
 assert.ok(sharedCup.includes("08:00  תצפית לקפה · מצפור הר ברך"));
 assert.ok(sharedCup.includes("https://www.openstreetmap.org/node/9"));
+
+const haiBar = {
+  id: "r1877",
+  name: "שמורת טבע חי בר בכרמל",
+  lat: 32.75,
+  lng: 35.01,
+  url: "https://www.parks.org.il/reserve-park/hai-bar/",
+  hoursMin: null,
+  hoursMax: null,
+};
+const visitDay = buildItinerary({
+  camp: lake,
+  trails: [],
+  visits: [haiBar],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+const visit = visitDay.find((step) => step.kind === "visit");
+assert.strictEqual(visit.at, 8 * 60);
+assert.strictEqual(visit.walk, 90);
+assert.strictEqual(visit.back, 9 * 60 + 30);
+assert.strictEqual(visit.estimated, true);
+assert.strictEqual(visitDay.find((step) => step.kind === "lunch").at, 10 * 60);
+assert.ok(!visitDay.some((step) => step.kind === "need-hike"));
+const markedVisit = {
+  id: "r9",
+  name: "גן לאומי",
+  lat: 32.7,
+  lng: 35,
+  hoursMin: 1,
+  hoursMax: 2,
+  duration: "עד שעתיים",
+  url: "https://www.parks.org.il/reserve-park/example/",
+};
+assert.strictEqual(visitMinutes(markedVisit), 90);
+const timedVisit = buildItinerary({
+  camp: lake,
+  trails: [],
+  visits: [markedVisit],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+assert.strictEqual(timedVisit.find((step) => step.kind === "visit").estimated, false);
+assert.deepStrictEqual(normalizeOrder(["v:r9", "stay", "c:o1"], [], ["o1"], ["r9"]), ["v:r9", "stay", "c:o1"]);
+assert.deepStrictEqual(normalizeOrder(["stay"], [], [], ["r9"]), ["stay", "v:r9"]);
+const sharedVisit = shareMessage({
+  camp: lake,
+  trails: [],
+  visits: [haiBar],
+  arrivalMinutes: 17 * 60,
+  origin,
+  from: "2026-10-16",
+  to: "2026-10-17",
+});
+assert.ok(sharedVisit.startsWith("בניתי לנו מסלול עם קמפינג"));
+assert.ok(sharedVisit.includes("08:00  ביקור · שמורת טבע חי בר בכרמל · כשעה וחצי"));
+assert.ok(sharedVisit.includes(haiBar.url));
+const visitStages = tripStages(lake, [], ["stay", "v:r1877"], [], [haiBar]);
+assert.strictEqual(visitStages.stages.find((stage) => stage.kind === "visit").title, "ביקור");
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

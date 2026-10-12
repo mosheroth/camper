@@ -115,8 +115,9 @@
       params.set("trails", (trip.trailIds || []).join(","));
       if (trip.name) params.set("name", trip.name);
       const place = trip.place || {};
-      if (place.view === "detail" || place.view === "camp") params.set("view", place.view);
+      if (place.view === "detail" || place.view === "camp" || place.view === "visit") params.set("view", place.view);
       if (place.view === "detail" && place.focusId != null) params.set("focus", String(place.focusId));
+      if (place.view === "visit" && place.spot) params.set("spot", place.spot);
       if (place.arrival && place.arrival !== 17 * 60) params.set("arrival", String(place.arrival));
       if (place.dinner != null) params.set("dinner", String(place.dinner));
       if (place.rise != null) params.set("rise", String(place.rise));
@@ -136,6 +137,8 @@
       if (place.back != null) params.set("back", String(place.back));
       const coffee = (place.coffee || []).join(",");
       if (coffee) params.set("coffee", coffee);
+      const visit = (place.visit || []).join(",");
+      if (visit) params.set("visit", visit);
       const stops = Object.keys(place.stops || {}).map((id) => `${id}:${place.stops[id]}`).join(",");
       if (stops) params.set("stops", stops);
       if (withId && trip.id) params.set("trip", trip.id);
@@ -172,7 +175,7 @@
 
   function cleanPlace(place) {
     const source = place || {};
-    const view = source.view === "detail" || source.view === "camp" ? source.view : "routes";
+    const view = source.view === "detail" || source.view === "camp" || source.view === "visit" ? source.view : "routes";
     const focusId = Number(source.focusId);
     const from = cleanDate(source.from);
     let to = cleanDate(source.to);
@@ -188,6 +191,8 @@
       lunch: cleanMinute(source.lunch, null),
       hikes: cleanHikes(source.hikes),
       coffee: cleanCoffee(source.coffee),
+      visit: cleanVisit(source.visit),
+      spot: /^r\d+$/.test(source.spot || "") ? source.spot : "",
       stops: cleanStops(source.stops),
       radius: Number(source.radius) === 40 ? 40 : 20,
       order: cleanOrder(source.order),
@@ -237,6 +242,12 @@
         }
         return;
       }
+      const visit = /^v:(r\d+)$/.exec(String(token || ""));
+      if (visit) {
+        const marker = `v:${visit[1]}`;
+        if (!tokens.includes(marker)) tokens.push(marker);
+        return;
+      }
       const marker = /^c:([or]\d+)$/.exec(String(token || ""));
       if (marker) {
         const coffee = `c:${marker[1]}`;
@@ -248,6 +259,16 @@
     });
     if (!stay || tokens.length < 2) return null;
     return tokens;
+  }
+
+  function cleanVisit(value) {
+    const ids = [];
+    const parts = Array.isArray(value) ? value : String(value || "").split(",");
+    parts.forEach((part) => {
+      const id = String(part || "").trim();
+      if (/^r\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+    });
+    return ids.slice(0, 2);
   }
 
   function cleanCoffee(value) {

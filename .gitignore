@@ -3,3 +3,4 @@ __pycache__/
 .DS_Store
 data/.osm-cache.json
 data/.osm-places-cache.json
+data/.inpa-place-cache.json

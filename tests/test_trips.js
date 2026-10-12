@@ -129,6 +129,26 @@ assert.deepStrictEqual(cupped.place.order, ["c:o12", "stay", "c:o99"]);
 const cuppedPath = trips.sharePath(cupped);
 assert.ok(cuppedPath.includes("coffee=o12%2Co13") || cuppedPath.includes("coffee=o12,o13"));
 assert.ok(cuppedPath.includes("stops=o12%3A495") || cuppedPath.includes("stops=o12:495"));
+const hosted = trips.save({
+  name: "ביקור",
+  campId: 9,
+  trailIds: [],
+  place: {
+    visit: ["r1877", "nope", "r1877", "r2", "r3"],
+    spot: "r1877",
+    view: "visit",
+    stops: { r1877: 9 * 60, o12: 8 * 60 },
+    order: ["stay", "v:r1877", "v:r99"],
+  },
+});
+assert.deepStrictEqual(hosted.place.visit, ["r1877", "r2"]);
+assert.strictEqual(hosted.place.spot, "r1877");
+assert.strictEqual(hosted.place.view, "visit");
+assert.deepStrictEqual(hosted.place.stops, { r1877: 9 * 60, o12: 8 * 60 });
+assert.deepStrictEqual(hosted.place.order, ["stay", "v:r1877", "v:r99"]);
+const hostedPath = trips.sharePath(hosted);
+assert.ok(hostedPath.includes("visit=r1877%2Cr2") || hostedPath.includes("visit=r1877,r2"));
+assert.ok(hostedPath.includes("spot=r1877"));
 const swapped = trips.save({
   name: "הפוך",
   campId: 9,
@@ -140,7 +160,7 @@ assert.strictEqual(swapped.place.to, "2026-10-19");
 
 trips.remove(created.id);
 assert.strictEqual(trips.get(created.id), null);
-assert.strictEqual(trips.list().length, 7);
+assert.strictEqual(trips.list().length, 8);
 
 const broken = open({
   get: () => "{",

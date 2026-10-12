@@ -104,6 +104,14 @@ class CatalogTests(unittest.TestCase):
                 self.assertIn("openstreetmap.org", place["url"])
         self.assertIn("spring", {place["kind"] for place in places})
         self.assertIn("park", {place["kind"] for place in places})
+        hai = next(place for place in places if place["id"] == "r1877")
+        self.assertTrue(hai["paid"])
+        self.assertEqual(hai["priceFrom"], 24)
+        self.assertIn("חיות בר", hai["tags"])
+        self.assertTrue(hai["booking"])
+        self.assertGreaterEqual(len(hai["photos"]), 1)
+        self.assertTrue(hai["photos"][0]["src"].startswith("https://www.parks.org.il/"))
+        self.assertIsNone(hai["hoursMax"])
 
     def test_recovered_walks_stay_in_the_catalog(self):
         ids = {trail["id"] for trail in self.trails}

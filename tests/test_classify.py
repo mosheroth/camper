@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.fetch_places import hebrew_name, osm_kind, park_kind
+from scripts.fetch_places import entrance_paid, hebrew_name, osm_kind, park_kind, visit_span, visit_tags
 from scripts.classify import (
     difficulties,
     is_family,
@@ -110,6 +110,25 @@ class ClassifyTests(unittest.TestCase):
         ids = [item["id"] for item in linked]
         self.assertEqual(ids, [10, 11])
         self.assertLess(linked[0]["km"], 5)
+
+    def test_visit_flags_become_a_short_card(self):
+        acf = {
+            "Wild_Animals_s": True,
+            "pre_coordination_s": True,
+            "Baby_Carriage_s": True,
+            "accessibility_s": True,
+            "Entrance_Fee_Map_s": True,
+            "No_Charge_s": False,
+            "Up_To_Two_Hours_s": True,
+            "A_Day_s": True,
+            "map_filters_what_there": {"viewpoint_f": True},
+            "map_filters_payment": {"paid_f": True},
+        }
+        self.assertEqual(visit_tags(acf), ["חיות בר", "בתיאום מראש", "מונגש", "עגלה"])
+        self.assertEqual(visit_span(acf), (1.0, 2.0, "עד שעתיים או יותר"))
+        self.assertTrue(entrance_paid(acf, 24))
+        self.assertFalse(entrance_paid({"No_Charge_s": True}, None))
+        self.assertEqual(visit_span({}), (None, None, ""))
 
 
 if __name__ == "__main__":
