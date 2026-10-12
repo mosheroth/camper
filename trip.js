@@ -394,6 +394,17 @@ function drawMap(camp, trails, extras, onAdd) {
     storyBounds.push([camp.lat, camp.lng]);
   }
 
+  const hops = story.stages.filter((stage) => stage.lat != null).map((stage) => [stage.lat, stage.lng]);
+  if (hops.length > 1) {
+    window.L.polyline(hops.concat([hops[0]]), {
+      color: "#5c4a3a",
+      weight: 3,
+      opacity: 0.85,
+      dashArray: "8 8",
+      interactive: false,
+    }).addTo(overlay);
+  }
+
   let drewLine = false;
   story.paths.forEach((path) => {
     const key = String(path.trailId);
@@ -488,6 +499,8 @@ Promise.all([
     let radius = 20;
     let expanded = false;
     let arrival = 17 * 60;
+    let hereKey = null;
+    let hereMarker = null;
     const origin = window.CamperPlan.centerOrigin(camps);
     let panelMode = "routes";
     let focusId = selected[0] || null;
@@ -694,10 +707,28 @@ Promise.all([
       block.append(head);
       const list = el("ol", "timeline");
       const trails = selected.map((id) => byId.get(id)).filter(Boolean);
-      window.CamperPlan.buildItinerary({ camp, trails, arrivalMinutes: arrival, origin }).forEach((step) => {
+      const stages = window.CamperPlan.tripStages(camp, trails).stages;
+      window.CamperPlan.buildItinerary({ camp, trails, arrivalMinutes: arrival, origin }).forEach((step, index) => {
         const item = el("li");
+        const place = stepPlace(step, stages);
+        item.dataset.here = String(index);
+        item.tabIndex = 0;
+        if (place) {
+          item.dataset.lat = String(place.lat);
+          item.dataset.lng = String(place.lng);
+        } else {
+          item.title = "היציאה מאזור המרכז לא מסומנת על המפה הזאת.";
+        }
         const when = el("time", null, step.at == null ? step.day : `${step.day} ${clock(step.at)}`);
         item.append(when, el("p", null, stepCopy(step)));
+        const choose = () => {
+          hereKey = item.dataset.here;
+          paintHere(Boolean(place));
+        };
+        item.addEventListener("click", choose);
+        item.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") choose();
+        });
         list.append(item);
       });
       block.append(list);
@@ -710,7 +741,7 @@ Promise.all([
       const available = pool.filter((item) => !selected.includes(item.trail.id));
       const shown = expanded ? available : available.slice(0, 6);
       around.replaceChildren();
-      around.append(el("p", "board-hint", "המספרים על המפה הם סדר הסופ״ש. עומדים על מספר ורואים את השלב."));
+      around.append(el("p", "board-hint", "המספרים על המפה הם הסדר, והקו המקווקו הוא המעבר ביניהם. לחיצה על שורה בלוז מראה איפה אנחנו."));
       around.append(renderItinerary());
 
       around.append(el("h2", "section-label", "החניון"));
@@ -866,6 +897,48 @@ Promise.all([
         mapNote.textContent = "המפה לא התעדכנה. רשימת המסלולים כן.";
       }
       mapNote.hidden = panelMode !== "routes" || !mapNote.textContent;
+      paintHere(false);
+    }
+
+    function stepPlace(step, stages) {
+      const campStage = stages.find((stage) => stage.kind === "arrive");
+      if (step.kind === "arrive" || step.kind === "dinner" || step.kind === "rise" || step.kind === "lunch") {
+        return campStage || null;
+      }
+      if (step.kind === "start" || step.kind === "hike") {
+        const named = step.name
+          ? stages.find((stage) => stage.text === step.name && stage.kind === "depart-hike")
+            || stages.find((stage) => stage.text === step.name)
+          : null;
+        return named || stages.find((stage) => stage.kind === "depart-hike") || campStage || null;
+      }
+      return null;
+    }
+
+    function paintHere(fly) {
+      document.querySelectorAll(".timeline li").forEach((node) => {
+        node.classList.toggle("here", node.dataset.here === hereKey);
+      });
+      const row = hereKey == null ? null : document.querySelector(`.timeline li[data-here="${hereKey}"]`);
+      if (!row || !row.dataset.lat || !sharedMap) {
+        if (hereMarker && sharedMap) sharedMap.removeLayer(hereMarker);
+        hereMarker = null;
+        return;
+      }
+      const latlng = [Number(row.dataset.lat), Number(row.dataset.lng)];
+      const icon = window.L.divIcon({
+        className: "here-marker",
+        html: '<div class="here-pin"><span>איפה אנחנו</span><i></i></div>',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
+      });
+      if (!hereMarker) {
+        hereMarker = window.L.marker(latlng, { icon, zIndexOffset: 1100, interactive: false }).addTo(sharedMap);
+      } else {
+        hereMarker.setLatLng(latlng);
+        hereMarker.setIcon(icon);
+      }
+      if (fly) sharedMap.flyTo(latlng, Math.max(sharedMap.getZoom(), 15), { duration: 0.4 });
     }
 
     saveButton.addEventListener("click", () => {

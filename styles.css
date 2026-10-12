@@ -1042,6 +1042,34 @@ button {
   grid-template-columns: 92px minmax(0, 1fr);
   gap: 10px;
   align-items: baseline;
+  padding: 4px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.timeline li.here { background: #f3e6d4; }
+.here-marker { background: none; border: 0; }
+.here-pin { position: relative; width: 18px; height: 18px; }
+.here-pin i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #1c3f34;
+  border-radius: 50%;
+  background: #fffaf3;
+  box-shadow: 0 0 0 7px rgba(28, 63, 52, 0.28);
+}
+.here-pin span {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #1c3f34;
+  color: #fffaf3;
+  font: 700 13px/1.4 Heebo, sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(35, 28, 22, 0.3);
 }
 .timeline time {
   font-weight: 700;
