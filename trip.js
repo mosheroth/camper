@@ -663,7 +663,7 @@ function showTrip() {
     window.L.DomUtil.setPosition(tip, pos.add([dx, dy]));
   }
 
-  function drawMap(camp, trails, extras, onAdd, order, placeSpots, coffeePlaces, visitPlaces, home) {
+  function drawMap(camp, trails, extras, onAdd, order, placeSpots, coffeePlaces, visitPlaces, home, onPlace) {
   if (typeof window.L === "undefined") {
     mapNote.textContent = "המפה לא נטענה. אפשר עדיין לקרוא את הפירוט ולפתוח את העמודים הרשמיים.";
     return null;
@@ -881,8 +881,7 @@ function showTrip() {
     marker.on("click", () => {
       focusedKey = key;
       emphasize(key);
-      const row = document.querySelector(`.spot[data-id="${key}"]`);
-      if (row) row.scrollIntoView({ block: "nearest" });
+      if (onPlace) onPlace(place);
     });
     placeMarks.set(key, marker);
   });
@@ -1245,6 +1244,19 @@ Promise.all([
       const campNode = dossier.querySelector(".camp-sheet");
       if (campNode) campNode.hidden = panelMode !== "camp";
       picked.hidden = panelMode !== "detail" && panelMode !== "visit" && panelMode !== "coffee";
+    }
+
+    function openMappedPlace(place) {
+      if (!place || place.id == null) return;
+      if (place.kind === "viewpoint") {
+        if (!coffeeNear.has(place.id)) return;
+        catalog = "coffee";
+        openCoffee(place.id);
+        return;
+      }
+      if (!visitNear.has(place.id)) return;
+      catalog = "places";
+      openVisit(place.id);
     }
 
     function openVisit(id) {
@@ -2720,7 +2732,7 @@ Promise.all([
           kind: placeKind,
           varied: true,
         }).slice(0, 24);
-        drawMap(camp, chosen, extras, openTrail, order, placeSpots, chosenCoffees(), chosenVisits(), origin);
+        drawMap(camp, chosen, extras, openTrail, order, placeSpots, chosenCoffees(), chosenVisits(), origin, openMappedPlace);
       } catch (error) {
         mapNote.textContent = "המפה לא התעדכנה. רשימת המסלולים כן.";
       }
