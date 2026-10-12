@@ -134,6 +134,10 @@
       if (place.from) params.set("from", place.from);
       if (place.to) params.set("to", place.to);
       if (place.back != null) params.set("back", String(place.back));
+      const coffee = (place.coffee || []).join(",");
+      if (coffee) params.set("coffee", coffee);
+      const stops = Object.keys(place.stops || {}).map((id) => `${id}:${place.stops[id]}`).join(",");
+      if (stops) params.set("stops", stops);
       if (withId && trip.id) params.set("trip", trip.id);
       return `trip.html?${params.toString()}`;
     }
@@ -183,6 +187,8 @@
       start: cleanMinute(source.start, null),
       lunch: cleanMinute(source.lunch, null),
       hikes: cleanHikes(source.hikes),
+      coffee: cleanCoffee(source.coffee),
+      stops: cleanStops(source.stops),
       radius: Number(source.radius) === 40 ? 40 : 20,
       order: cleanOrder(source.order),
       from,
@@ -231,11 +237,38 @@
         }
         return;
       }
+      const marker = /^c:([or]\d+)$/.exec(String(token || ""));
+      if (marker) {
+        const coffee = `c:${marker[1]}`;
+        if (!tokens.includes(coffee)) tokens.push(coffee);
+        return;
+      }
       const id = Number(token);
       if (Number.isFinite(id) && !tokens.includes(id)) tokens.push(id);
     });
     if (!stay || tokens.length < 2) return null;
     return tokens;
+  }
+
+  function cleanCoffee(value) {
+    const ids = [];
+    const parts = Array.isArray(value) ? value : String(value || "").split(",");
+    parts.forEach((part) => {
+      const id = String(part || "").trim();
+      if (/^[or]\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+    });
+    return ids.slice(0, 2);
+  }
+
+  function cleanStops(value) {
+    const stops = {};
+    if (!value || typeof value !== "object") return stops;
+    Object.keys(value).forEach((id) => {
+      if (!/^[or]\d+$/.test(id)) return;
+      const at = cleanMinute(value[id], null);
+      if (at != null) stops[id] = at;
+    });
+    return stops;
   }
 
   function cleanHikes(value) {

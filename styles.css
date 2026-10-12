@@ -1417,6 +1417,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   background: #efe6d8;
 }
 .spot .preview-photos img:only-child { height: 148px; }
+.coffee-picks { margin: 18px 0 8px; }
 .more-around { margin: 10px 0 4px; }
 .pin-hot .camp-pin {
   transform: scale(1.08);

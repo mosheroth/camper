@@ -3,6 +3,7 @@ const library = document.querySelector("#library");
 
 let camps = [];
 let trails = [];
+let places = [];
 let map = null;
 let markerLayer = null;
 let selectedId = null;
@@ -53,6 +54,9 @@ function shareText(trip) {
     .map((id) => trails.find((item) => item.id === Number(id)))
     .filter(Boolean);
   const place = trip.place || {};
+  const coffees = (place.coffee || [])
+    .map((id) => places.find((item) => item.id === id))
+    .filter((item) => item && item.lat != null);
   let home = "center";
   try {
     const saved = localStorage.getItem("camper-home");
@@ -66,6 +70,7 @@ function shareText(trip) {
     name: trip.name,
     camp,
     trails: chosen,
+    coffees,
     arrivalMinutes: place.arrival,
     origin,
     hours: {
@@ -76,6 +81,7 @@ function shareText(trip) {
       lunch: place.lunch,
       back: place.back,
       hikes: place.hikes,
+      coffeeAt: place.stops,
     },
     order: place.order,
     from: place.from,
@@ -148,10 +154,17 @@ function render() {
     if (trip.draft) card.append(el("p", "kicker", "טיוטה"));
     card.append(el("h2", null, trip.name));
     const names = (trip.trailIds || []).map(trailName).filter(Boolean);
+    const lookouts = ((trip.place && trip.place.coffee) || [])
+      .map((id) => {
+        const place = places.find((item) => item.id === id);
+        return place ? place.name : "";
+      })
+      .filter(Boolean);
     const meta = [
       dateRange(trip.place),
       camp ? camp.name : "החניון לא נמצא בקטלוג",
       names.length ? names.join(" · ") : "בלי מסלול",
+      lookouts.length ? lookouts.join(" · ") : "",
       when(trip.updatedAt),
     ].filter(Boolean).join(" · ");
     card.append(el("p", "meta", meta));
@@ -229,10 +242,12 @@ ensureMap();
 Promise.all([
   fetch("data/camps.json").then((response) => response.json()),
   fetch("data/trails.json").then((response) => response.json()),
+  fetch("data/places.json").then((response) => (response.ok ? response.json() : [])).catch(() => []),
 ])
-  .then(([campData, trailData]) => {
+  .then(([campData, trailData, placeData]) => {
     camps = campData;
     trails = trailData;
+    places = Array.isArray(placeData) ? placeData : [];
     window.requestAnimationFrame(() => {
       if (map) map.invalidateSize();
       render();

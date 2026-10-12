@@ -25,6 +25,7 @@ const TIME_LABEL = {
   breakfast: "שעת ארוחת בוקר",
   start: "שעת יציאה למסלול",
   hike: "שעת המסלול",
+  coffee: "שעת התצפית",
   lunch: "שעת ארוחת צהריים",
   return: "שעת יציאה הביתה",
   home: "שעת הגעה הביתה",
@@ -109,6 +110,8 @@ function params() {
     from: readDate(query.get("from")),
     to: readDate(query.get("to")),
     back: readMinute(query.get("back")),
+    coffee: readCoffee(query.get("coffee")),
+    stops: readStops(query.get("stops")),
   };
 }
 
@@ -122,11 +125,34 @@ function readOrder(value) {
   value.split(",").forEach((part) => {
     if (part === "stay") tokens.push("stay");
     else {
-      const id = Number(part);
-      if (Number.isFinite(id)) tokens.push(id);
+      const placeId = window.CamperPlan.coffeePlaceId(part);
+      if (placeId) tokens.push(window.CamperPlan.coffeeToken(placeId));
+      else {
+        const id = Number(part);
+        if (Number.isFinite(id)) tokens.push(id);
+      }
     }
   });
   return tokens.length ? tokens : null;
+}
+
+function readCoffee(value) {
+  const ids = [];
+  String(value || "").split(",").forEach((part) => {
+    const id = part.trim();
+    if (/^[or]\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+  });
+  return ids.slice(0, 2);
+}
+
+function readStops(value) {
+  const stops = {};
+  String(value || "").split(",").forEach((part) => {
+    const [id, minutes] = part.split(":");
+    const at = readMinute(minutes);
+    if (/^[or]\d+$/.test(id || "") && at != null) stops[id] = at;
+  });
+  return stops;
 }
 
 function readMinute(value) {
@@ -425,7 +451,7 @@ function showTrip() {
   sharedMap.flyTo([tripView.lat, tripView.lng], tripView.zoom, { duration: 0.3 });
 }
 
-  function drawMap(camp, trails, extras, onAdd, order, placeSpots) {
+  function drawMap(camp, trails, extras, onAdd, order, placeSpots, coffeePlaces) {
   if (typeof window.L === "undefined") {
     mapNote.textContent = "המפה לא נטענה. אפשר עדיין לקרוא את הפירוט ולפתוח את העמודים הרשמיים.";
     return null;
@@ -464,7 +490,7 @@ function showTrip() {
     layer.on("mouseout", () => emphasize(focusedKey));
   }
 
-  const story = window.CamperPlan.tripStages(camp, trails, order);
+  const story = window.CamperPlan.tripStages(camp, trails, order, coffeePlaces);
   const colorByTrail = new Map();
   trails.forEach((trail, index) => {
     colorByTrail.set(trail.id, COLORS[(index + 1) % COLORS.length]);
@@ -558,8 +584,8 @@ function showTrip() {
   });
   story.stages.forEach((stage) => {
     if (stage.kind === "arrive") return;
-    const key = String(stage.trailId);
-    const color = colorByTrail.get(stage.trailId) || COLORS[1];
+    const key = stage.kind === "coffee" ? `place-${stage.placeId}` : String(stage.trailId);
+    const color = stage.kind === "coffee" ? PLACE_COLOR.viewpoint : (colorByTrail.get(stage.trailId) || COLORS[1]);
     const marker = window.L.marker([stage.lat, stage.lng], {
       icon: window.L.divIcon({
         className: "stage-marker",
@@ -668,6 +694,13 @@ Promise.all([
     let placesExpanded = false;
     const places = Array.isArray(placeCatalog) ? placeCatalog : [];
     const placeById = new Map(places.map((place) => [`place-${place.id}`, place]));
+    const coffeeNear = new Map(
+      window.CamperPlan.nearbyPlaces(camp, places, { maxKm: 15, kind: "viewpoint", varied: false })
+        .map((item) => [item.place.id, item]),
+    );
+    const selectedCoffee = query.coffee.filter((id) => coffeeNear.has(id)).slice(0, 2);
+    let coffeeExpanded = false;
+    let revealCoffee = null;
     const nearOn = {
       family: false,
       circular: false,
@@ -690,6 +723,7 @@ Promise.all([
       lunch: query.lunch,
       back: query.back,
       hikes: query.hikes,
+      coffeeAt: query.stops,
     };
     let hereKey = null;
     let hereMarker = null;
@@ -775,6 +809,8 @@ Promise.all([
         lunch: hours.lunch,
         back: hours.back,
         hikes: hours.hikes,
+        coffee: selectedCoffee.slice(),
+        stops: hours.coffeeAt,
         radius,
         order: placeOrder(),
         from: fromDate,
@@ -783,10 +819,36 @@ Promise.all([
     }
 
     function placeOrder() {
-      const normal = window.CamperPlan.normalizeOrder(order, selected);
-      const base = window.CamperPlan.normalizeOrder(null, selected);
+      const normal = window.CamperPlan.normalizeOrder(order, selected, selectedCoffee);
+      const base = window.CamperPlan.normalizeOrder(null, selected, selectedCoffee);
       if (normal.join(",") === base.join(",")) return null;
       return normal;
+    }
+
+    function chosenCoffees() {
+      return selectedCoffee.map((id) => {
+        const item = coffeeNear.get(id);
+        return item ? item.place : null;
+      }).filter(Boolean);
+    }
+
+    function addCoffee(id) {
+      if (selectedCoffee.includes(id) || selectedCoffee.length >= 2 || !coffeeNear.has(id)) return;
+      selectedCoffee.push(id);
+      focusedKey = `place-${id}`;
+      revealCoffee = `place-${id}`;
+      historyPush = true;
+      window.setTimeout(render, 0);
+    }
+
+    function removeCoffee(id) {
+      const index = selectedCoffee.indexOf(id);
+      if (index < 0) return;
+      selectedCoffee.splice(index, 1);
+      if (hours.coffeeAt) delete hours.coffeeAt[id];
+      if (focusedKey === `place-${id}`) focusedKey = focusId != null ? String(focusId) : "camp";
+      historyPush = true;
+      window.setTimeout(render, 0);
     }
 
     function editorRecord() {
@@ -1019,7 +1081,7 @@ Promise.all([
     function stepCopy(step) {
       if (step.kind === "depart") {
         if (step.at == null) return `יוצאים מהבית, מ${homePlace}. אין מרחק נסיעה, אז שעת היציאה גמישה.`;
-        const where = step.toward === "hike" ? "לכיוון המסלול" : "לכיוון החניון";
+        const where = step.toward === "hike" ? "לכיוון המסלול" : step.toward === "coffee" ? "לכיוון התצפית" : "לכיוון החניון";
         return `יוצאים מהבית, מ${homePlace}, ${where}. נסיעה של ${formatDuration(step.drive)} בערך.`;
       }
       if (step.kind === "arrive") {
@@ -1031,6 +1093,15 @@ Promise.all([
       if (step.kind === "rise") return "קמים בחניון.";
       if (step.kind === "breakfast") return "אוכלים ארוחת בוקר בחניון.";
       if (step.kind === "need-hike") return "עדיין אין מסלול. מוסיפים אחד, ושעת החזרה נכנסת ללוז.";
+      if (step.kind === "coffee") {
+        const name = shortName(step.name);
+        if (step.beforeStay) {
+          const tail = step.lastBefore ? "אחר כך כחצי שעה עד החניון." : "אחר כך ממשיכים.";
+          return `${name}. תצפית לקפה, כחצי שעה. ${tail}`;
+        }
+        const leaving = step.firstOfDay ? "יוצאים מהחניון. " : "";
+        return `${leaving}${name}. תצפית לקפה, כחצי שעה.`;
+      }
       if (step.kind === "hike") {
         const name = shortName(step.name);
         if (step.walk == null) return `${name}. אין משך הליכה, אז השעה גמישה.`;
@@ -1052,6 +1123,11 @@ Promise.all([
         return `יוצאים מהחניון הביתה.${ride}`;
       }
       if (step.kind === "home") return `מגיעים הביתה, ל${homePlace}.`;
+      if (step.kind === "lunch" && step.afterCoffee) {
+        return step.at == null
+          ? "אחרי התצפית אוכלים בחניון. השעה גמישה."
+          : "אחרי התצפית אוכלים בחניון.";
+      }
       if (step.at == null) return "אחרי המסלול אוכלים בחניון. השעה גמישה.";
       return "אוכלים בחניון אחרי המסלול.";
     }
@@ -1066,7 +1142,7 @@ Promise.all([
     }
 
     function moveToken(token, direction) {
-      const sequence = window.CamperPlan.normalizeOrder(order, selected);
+      const sequence = window.CamperPlan.normalizeOrder(order, selected, selectedCoffee);
       const index = sequence.indexOf(token);
       const target = sequence[index + direction];
       if (target == null) return;
@@ -1082,10 +1158,12 @@ Promise.all([
     function renderItinerary() {
       const block = el("section", "itinerary");
       const trails = selected.map((id) => byId.get(id)).filter(Boolean);
-      const sequence = window.CamperPlan.normalizeOrder(order, selected);
+      const sequence = window.CamperPlan.normalizeOrder(order, selected, selectedCoffee);
+      const coffees = chosenCoffees();
       const steps = window.CamperPlan.buildItinerary({
         camp,
         trails,
+        coffees,
         arrivalMinutes: arrival,
         origin,
         hours,
@@ -1096,9 +1174,10 @@ Promise.all([
       const depart = steps.find((step) => step.kind === "depart");
       const hikeFirst = sequence[0] !== "stay";
       block.append(el("h2", "section-label", "לוז"));
+      const morning = selected.length ? "ולמחרת המסלול." : coffees.length ? "ולמחרת תצפית לקפה." : "ולמחרת המסלול.";
       block.append(el("p", "itinerary-lead", hikeFirst
         ? `קודם המסלול, ואחר כך לילה בחניון. יוצאים מהבית, מ${homePlace}.`
-        : `יוצאים מהבית, מ${homePlace}. לילה בחניון, ולמחרת המסלול.`));
+        : `יוצאים מהבית, מ${homePlace}. לילה בחניון, ${morning}`));
       block.append(dateFields());
       const times = el("div", "trip-dates");
       times.append(timeField("יוצאים מהבית", depart ? depart.at : null, (minutes) => {
@@ -1109,6 +1188,7 @@ Promise.all([
           step: depart,
           next: minutes,
           trailIds: selected,
+          coffeeIds: selectedCoffee,
           order: sequence,
         });
         arrival = edited.arrival;
@@ -1122,7 +1202,7 @@ Promise.all([
         render();
       }));
       block.append(times);
-      const stages = window.CamperPlan.tripStages(camp, trails, sequence).stages;
+      const stages = window.CamperPlan.tripStages(camp, trails, sequence, coffees).stages;
       const groups = [];
       steps.forEach((step) => {
         const last = groups[groups.length - 1];
@@ -1194,7 +1274,8 @@ Promise.all([
               window.clearTimeout(previewTimer);
               previewTimer = null;
             }
-            showTrail(identity.dataset.id);
+            if (String(identity.dataset.id).startsWith("place-")) showPlace(identity.dataset.id);
+            else showTrail(identity.dataset.id);
           });
           card.addEventListener("mouseleave", () => {
             previewTimer = window.setTimeout(() => {
@@ -1410,6 +1491,13 @@ Promise.all([
         id = "camp";
         color = "#a3472c";
         meta = [camp.paid ? "בתשלום" : "בלי תשלום", (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ")].filter(Boolean).join(" · ");
+      } else if (typeof token === "string" && token.startsWith("c:")) {
+        const placeId = window.CamperPlan.coffeePlaceId(token);
+        const item = placeId ? coffeeNear.get(placeId) : null;
+        if (!item) return null;
+        id = `place-${placeId}`;
+        color = PLACE_COLOR.viewpoint;
+        meta = [item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ מהחניון`, "כחצי שעה"].join(" · ");
       } else if (typeof token === "number") {
         const item = choiceFor(token);
         if (!item.trail) return null;
@@ -1422,24 +1510,41 @@ Promise.all([
       const swatch = el("i", "swatch");
       swatch.style.background = color;
       const actions = el("div", "block-actions");
-      const info = el("button", "text-link", "פירוט");
-      info.type = "button";
-      info.addEventListener("click", (event) => {
-        event.stopPropagation();
-        if (id === "camp") {
-          focusFeature("camp");
-          setPanel("camp");
-        } else openTrail(Number(id));
-      });
-      actions.append(info);
-      if (id !== "camp") {
+      const placeId = id.startsWith("place-") ? id.slice(6) : "";
+      if (placeId) {
+        const place = coffeeNear.get(placeId) && coffeeNear.get(placeId).place;
+        if (place && place.url) {
+          const source = link(place.url, "במפה");
+          source.className = "text-link";
+          actions.append(source);
+        }
         const remove = el("button", "remove", "הסרה");
         remove.type = "button";
         remove.addEventListener("click", (event) => {
           event.stopPropagation();
-          removeTrail(Number(id));
+          removeCoffee(placeId);
         });
         actions.append(remove);
+      } else {
+        const info = el("button", "text-link", "פירוט");
+        info.type = "button";
+        info.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (id === "camp") {
+            focusFeature("camp");
+            setPanel("camp");
+          } else openTrail(Number(id));
+        });
+        actions.append(info);
+        if (id !== "camp") {
+          const remove = el("button", "remove", "הסרה");
+          remove.type = "button";
+          remove.addEventListener("click", (event) => {
+            event.stopPropagation();
+            removeTrail(Number(id));
+          });
+          actions.append(remove);
+        }
       }
       bar.append(swatch, el("p", "meta", meta), actions);
       bar.dataset.id = id;
@@ -1450,6 +1555,8 @@ Promise.all([
       if (group.id === "road") return "בדרך";
       if (group.id === "stay") return "לילה בחניון";
       if (group.id === "return") return "חזרה הביתה";
+      const coffee = group.steps.find((step) => step.kind === "coffee");
+      if (coffee) return `תצפית לקפה · ${shortName(coffee.name)}`;
       const hike = group.steps.find((step) => step.kind === "hike");
       return hike ? `המסלול · ${shortName(hike.name)}` : "המסלול";
     }
@@ -1460,6 +1567,7 @@ Promise.all([
         const token = Number(String(id).slice(5));
         return Number.isFinite(token) ? token : null;
       }
+      if (String(id).startsWith("coffee:")) return window.CamperPlan.coffeeToken(String(id).slice(7));
       return null;
     }
 
@@ -1486,6 +1594,7 @@ Promise.all([
             step,
             next,
             trailIds: selected,
+            coffeeIds: selectedCoffee,
             order,
           });
           arrival = edited.arrival;
@@ -1576,6 +1685,55 @@ Promise.all([
       return tools;
     }
 
+    function renderCoffee() {
+      const available = [...coffeeNear.values()]
+        .filter((item) => !selectedCoffee.includes(item.place.id))
+        .sort((left, right) => left.km - right.km || String(left.place.name).localeCompare(String(right.place.name), "he"));
+      if (!available.length && !selectedCoffee.length) return null;
+      const wrap = el("section", "coffee-picks");
+      wrap.append(el("h2", "section-label", "תצפית לקפה"));
+      wrap.append(el("p", "fine", "מצפור עם שם בטווח 15 ק״מ. הוספה מכניסה ללוז עצירה של כחצי שעה."));
+      if (selectedCoffee.length >= 2) {
+        wrap.append(el("p", "fine", "אפשר עד שתי תצפיות לקפה. הסירו אחת כדי להוסיף אחרת."));
+      }
+      const shown = coffeeExpanded ? available.slice(0, 12) : available.slice(0, 4);
+      shown.forEach((item) => {
+        const place = item.place;
+        const where = item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ מהחניון`;
+        const add = el("button", "add", "הוספה");
+        add.type = "button";
+        add.disabled = selectedCoffee.length >= 2;
+        add.addEventListener("click", () => addCoffee(place.id));
+        const row = spotRow(
+          `place-${place.id}`,
+          place.name,
+          where,
+          PLACE_COLOR.viewpoint,
+          add,
+          () => {
+            focusedKey = `place-${place.id}`;
+            emphasize(focusedKey);
+          },
+          () => showPlace(`place-${place.id}`),
+        );
+        row.classList.add("coffee");
+        wrap.append(row);
+      });
+      if (!shown.length && selectedCoffee.length) {
+        wrap.append(el("p", "fine", "התצפיות שנוספו נמצאות בלוז."));
+      }
+      if (!coffeeExpanded && available.length > shown.length) {
+        const more = el("button", "chip-btn more-around", `עוד ${Math.min(available.length, 12) - shown.length} תצפיות`);
+        more.type = "button";
+        more.addEventListener("click", () => {
+          coffeeExpanded = true;
+          render();
+        });
+        wrap.append(more);
+      }
+      return wrap;
+    }
+
     function renderAround() {
       const inRange = choices.filter((item) => item.km == null || item.km <= radius);
       const openOnes = inRange.filter((item) => !selected.includes(item.trail.id));
@@ -1586,6 +1744,8 @@ Promise.all([
       around.replaceChildren();
       around.append(el("p", "board-hint", "המספרים על המפה הם הסדר, והקו המקווקו הוא המעבר ביניהם. לחיצה על שורה בלוז מראה איפה אנחנו."));
       around.append(renderItinerary());
+      const coffeeList = renderCoffee();
+      if (coffeeList) around.append(coffeeList);
       if (selected.length >= maxPicks) {
         around.append(el("p", "fine", "אפשר עד ארבעה מסלולים. הסירו אחד כדי להוסיף אחר."));
       }
@@ -1662,7 +1822,8 @@ Promise.all([
     }
 
     function renderPlaces() {
-      const aroundPlaces = window.CamperPlan.nearbyPlaces(camp, places, { maxKm: 15, varied: true });
+      const aroundPlaces = window.CamperPlan.nearbyPlaces(camp, places, { maxKm: 15, varied: true })
+        .filter((item) => item.place.kind !== "viewpoint");
       if (!aroundPlaces.length) return;
       const kindOrder = ["spring", "waterfall", "viewpoint", "peak", "park", "reserve", "beach"];
       const present = kindOrder.filter((kind) => aroundPlaces.some((item) => item.place.kind === kind));
@@ -1772,6 +1933,7 @@ Promise.all([
       const steps = window.CamperPlan.buildItinerary({
         camp,
         trails: on ? current : current.concat(trail),
+        coffees: chosenCoffees(),
         arrivalMinutes: arrival,
         origin,
         hours,
@@ -1821,6 +1983,11 @@ Promise.all([
       renderDetail();
       applyPanel();
       if (panelMode === "routes") panelBody.scrollTop = keptScroll;
+      if (revealCoffee && panelMode === "routes") {
+        const card = document.querySelector(`.day-block[data-id="${revealCoffee}"]`);
+        if (card) card.scrollIntoView({ block: "nearest" });
+        revealCoffee = null;
+      }
       const extras = window.CamperPlan.nearbyList(
         choices.filter((item) => !selected.includes(item.trail.id) && item.trail.lat != null && (item.km == null || item.km <= radius)),
         nearFilters(),
@@ -1832,7 +1999,7 @@ Promise.all([
           kind: placeKind,
           varied: true,
         }).slice(0, 24);
-        drawMap(camp, chosen, extras, openTrail, order, placeSpots);
+        drawMap(camp, chosen, extras, openTrail, order, placeSpots, chosenCoffees());
       } catch (error) {
         mapNote.textContent = "המפה לא התעדכנה. רשימת המסלולים כן.";
       }
@@ -1844,6 +2011,9 @@ Promise.all([
       const campStage = stages.find((stage) => stage.kind === "arrive");
       if (step.kind === "arrive" || step.kind === "dinner" || step.kind === "rise" || step.kind === "breakfast" || step.kind === "lunch" || step.kind === "return") {
         return campStage || null;
+      }
+      if (step.kind === "coffee") {
+        return stages.find((stage) => stage.kind === "coffee" && stage.placeId === step.placeId) || null;
       }
       if (step.kind === "start" || step.kind === "hike") {
         const named = step.name
@@ -1893,6 +2063,7 @@ Promise.all([
         name: record.name,
         camp,
         trails: selected.map((id) => byId.get(id)).filter(Boolean),
+        coffees: chosenCoffees(),
         arrivalMinutes: arrival,
         origin,
         hours,
@@ -1932,6 +2103,7 @@ Promise.all([
       silenceHistory = true;
       historyPush = false;
       selected.splice(0, selected.length, ...next.trailIds.filter((id) => byId.has(id)).slice(0, maxPicks));
+      selectedCoffee.splice(0, selectedCoffee.length, ...next.coffee.filter((id) => coffeeNear.has(id)).slice(0, 2));
       if (next.name) nameInput.value = next.name;
       panelMode = next.view === "detail" && (next.focusId == null || !byId.has(next.focusId)) ? "routes" : next.view;
       if (panelMode === "detail") {
@@ -1947,6 +2119,7 @@ Promise.all([
         lunch: next.lunch,
         back: next.back,
         hikes: next.hikes,
+        coffeeAt: next.stops,
       };
       radius = next.radius;
       order = next.order;

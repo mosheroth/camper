@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, storyPath, nearbyList, nearbyPlaces, shareMessage } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage } = require("../plan.js");
 
 const trails = [
   {
@@ -499,5 +499,67 @@ assert.ok(shared.includes("17:00  מגיעים לחניון"));
 assert.ok(shared.includes("עין חמד\nhttps://www.parks.org.il/trail") || shared.includes("עין חמד · הליכה כשעתיים\nhttps://www.parks.org.il/trail"));
 assert.ok(shared.includes("הטיול במפה: https://example.com/trip.html?camp=1"));
 assert.ok(shared.indexOf("https://www.parks.org.il/camp") < shared.indexOf("לוז"));
+
+const lookout = { id: "o9", name: "מצפור הר ברך", lat: 32.73, lng: 35.02, url: "https://www.openstreetmap.org/node/9" };
+const cup = buildItinerary({
+  camp: lake,
+  trails: [],
+  coffees: [lookout],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+const coffeeStop = cup.find((step) => step.kind === "coffee");
+assert.strictEqual(coffeeStop.at, 8 * 60);
+assert.strictEqual(coffeeStop.back, 8 * 60 + 30);
+assert.strictEqual(coffeeStop.block, "coffee:o9");
+assert.strictEqual(cup.find((step) => step.kind === "lunch").at, 9 * 60);
+assert.ok(!cup.some((step) => step.kind === "need-hike"));
+const earlyCup = buildItinerary({
+  camp: lake,
+  trails: [],
+  coffees: [lookout],
+  arrivalMinutes: 17 * 60,
+  origin,
+  order: ["c:o9", "stay"],
+});
+assert.strictEqual(earlyCup.find((step) => step.kind === "coffee").at, 16 * 60);
+assert.strictEqual(earlyCup.find((step) => step.kind === "depart").toward, "coffee");
+const withHike = buildItinerary({
+  camp: lake,
+  trails: [{ id: 5, name: "נחל", hoursMin: 1, hoursMax: 1 }],
+  coffees: [lookout],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+assert.strictEqual(withHike.find((step) => step.kind === "hike").at, 8 * 60);
+assert.strictEqual(withHike.find((step) => step.kind === "coffee").at, 9 * 60);
+assert.strictEqual(withHike.find((step) => step.kind === "lunch").at, 10 * 60);
+assert.deepStrictEqual(normalizeOrder(["c:o1", "stay", "c:o2"], [], ["o1"]), ["c:o1", "stay"]);
+assert.deepStrictEqual(normalizeOrder(["stay", "c:o3"], []), ["stay", "c:o3"]);
+assert.deepStrictEqual(moveOrder(["stay", "c:o1", 2], [2], "c:o1", "stay", false), ["c:o1", "stay", 2]);
+const movedCup = retimedHours({
+  hours: {},
+  arrival: 17 * 60,
+  step: coffeeStop,
+  next: 8 * 60 + 30,
+  trailIds: [],
+  coffeeIds: ["o9"],
+});
+assert.strictEqual(movedCup.hours.start, 8 * 60 + 30);
+assert.strictEqual(movedCup.hours.coffeeAt.o9, undefined);
+const coffeeStages = tripStages(lake, [], ["stay", "c:o9"], [lookout]);
+assert.strictEqual(coffeeStages.stages.find((stage) => stage.kind === "coffee").title, "תצפית לקפה");
+assert.strictEqual(coffeeStages.stages.find((stage) => stage.kind === "coffee").lat, 32.73);
+const sharedCup = shareMessage({
+  camp: lake,
+  trails: [],
+  coffees: [lookout],
+  arrivalMinutes: 17 * 60,
+  origin,
+  from: "2026-10-16",
+  to: "2026-10-17",
+});
+assert.ok(sharedCup.includes("08:00  תצפית לקפה · מצפור הר ברך"));
+assert.ok(sharedCup.includes("https://www.openstreetmap.org/node/9"));
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);
