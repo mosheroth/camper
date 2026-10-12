@@ -458,6 +458,7 @@
       trailId: trail.id,
       walk,
       back,
+      estimated: Boolean(trail.hoursEstimated),
       beforeStay: Boolean(beforeStay),
       lastBefore: Boolean(lastBefore),
       firstOfDay: Boolean(firstOfDay),
@@ -1060,12 +1061,15 @@
       .filter(Boolean)
       .join(" ");
     const tags = [];
-    if (trail.family || text.includes("משפח")) tags.push("לילדים");
+    const features = (trail.features || []).join(" ");
+    if (trail.family || text.includes("משפח") || features.includes("משפח")) tags.push("לילדים");
     if (/חורש|מוצל|מנהרת צל|(?<![א-ת])צל(?![א-ת])/.test(text)) tags.push("מוצל");
-    if (/רטוב|הליכה במים|בריכ|מעיין|מפל/.test(text)) tags.push("מסלול רטוב");
-    if (/תצפית|מצפור|מרהיב/.test(text)) tags.push("נוף מהמם");
+    if (/רטוב|הליכה במים|בריכ|מעיין|מפל/.test(text) || features.includes("כניסה למים")) tags.push("מסלול רטוב");
+    if (/תצפית|מצפור|מרהיב/.test(text) || features.includes("תצפית")) tags.push("נוף מהמם");
     const play = `${text} ${details.snippet || ""}`;
     if (/(?:גן|פארק) שעשועים(?! גיאולוגי)|מתקני שעשועים|מתקני משחק/.test(play)) tags.push("פארק שעשועים");
+    if (features.includes("פריחה") && !tags.includes("פריחה")) tags.push("פריחה");
+    if (features.includes("כלבים") && !tags.includes("כלבים")) tags.push("כלבים");
     return tags.slice(0, 4);
   }
 
@@ -1240,6 +1244,7 @@
       if (step.kind === "hike") {
         const trail = byTrail.get(step.trailId);
         if (trail && trail.url) lines.push(trail.url);
+        if (trail && trail.tiuliUrl) lines.push(trail.tiuliUrl);
       }
       if (step.kind === "coffee" && step.url) lines.push(step.url);
       if (step.kind === "visit" && step.url) lines.push(step.url);

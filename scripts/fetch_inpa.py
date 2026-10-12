@@ -525,8 +525,13 @@ def main():
     print("matching trail lines…")
     with_line = attach_routes(trails, cache_path=ROOT / "data" / ".osm-cache.json")
     print("trails with a mapped line:", with_line)
-    for camp in camps:
-        camp["nearby"] = nearby_trails(camp, trails)
+    from scripts.fetch_tiuli import apply_saved
+    trails, camps, _places, tiuli_stats = apply_saved(trails, camps)
+    if tiuli_stats:
+        print("tiuli", json.dumps(tiuli_stats, ensure_ascii=False))
+    else:
+        for camp in camps:
+            camp["nearby"] = nearby_trails(camp, trails)
 
     data_dir = ROOT / "data"
     data_dir.mkdir(exist_ok=True)
@@ -550,6 +555,8 @@ def main():
             "routes": sum(1 for trail in trails if trail.get("routes")),
         },
     }
+    if tiuli_stats:
+        meta["tiuli"] = tiuli_stats
     (data_dir / "meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2),
         encoding="utf-8",

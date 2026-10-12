@@ -362,7 +362,7 @@ assert.strictEqual(flippedStages.stages[0].n, 1);
 assert.strictEqual(flippedStages.stages[flippedStages.stages.length - 1].kind, "arrive");
 assert.ok(flippedStages.stages.at(-1).text.includes("אחרי המסלול"));
 
-assert.deepStrictEqual(trailLures(swiss), ["לילדים", "מוצל", "נוף מהמם"]);
+assert.deepStrictEqual(trailLures(swiss), ["לילדים", "מוצל", "מסלול רטוב", "נוף מהמם"]);
 assert.deepStrictEqual(trailLures({
   name: "נחל יבש",
   blurb: "הליכה לאורך הנחל. יש מים לשתייה.",
@@ -772,5 +772,20 @@ assert.strictEqual(campGlance(liveCamps.find((item) => item.name.includes("חו�
 assert.strictEqual(campGlance(liveCamps.find((item) => item.name.includes("חורשת הצנחנים"))).bookingUrl, "");
 assert.strictEqual(campGlance({ paid: true, priceFrom: 80, blurb: "קצר", details: { summary: "קצר" }, facilities: [{ id: "cell", label: "קליטה" }, { id: "water", label: "מים" }] }).note, "");
 assert.deepStrictEqual(campGlance({ paid: false, facilities: [{ id: "cell", label: "קליטה" }, { id: "water", label: "מים" }] }).facilities.map((item) => item.label), ["מים", "קליטה"]);
+assert.deepStrictEqual(trailLures({
+  name: "נחל כלח",
+  family: false,
+  features: ["אפשרות לכניסה למים", "מתאים למשפחות", "טיול פריחה"],
+}), ["לילדים", "מסלול רטוב", "פריחה"]);
+const tiuliShare = shareMessage({
+  camp: { name: "חניון", lat: lake.lat, lng: lake.lng },
+  trails: [{ id: 8000024, name: "נחל כלח", tiuliUrl: "https://www.tiuli.com/tracks/24/-4", hoursMax: 4, hoursEstimated: true, lat: lake.lat + 0.02, lng: lake.lng }],
+  order: [8000024, "stay"],
+  arrivalMinutes: 17 * 60,
+  origin,
+  from: "2026-10-16",
+  to: "2026-10-17",
+});
+assert.ok(tiuliShare.includes("https://www.tiuli.com/tracks/24/-4"));
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

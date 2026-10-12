@@ -415,6 +415,7 @@ function campSheet(camp) {
     if (camp.paid) node.append(el("p", null, "הכניסה עם כלבים אסורה."));
     const links = el("div", "links");
     if (camp.url) links.append(link(camp.url, "העמוד המלא ברשות הטבע והגנים"));
+    if (camp.tiuliUrl) links.append(link(camp.tiuliUrl, "העמוד בטיולי"));
     if (camp.lat != null) {
       links.append(link(`https://www.waze.com/ul?ll=${camp.lat},${camp.lng}&navigate=yes`, "ניווט לחניון"));
     }
@@ -439,6 +440,16 @@ function visitFact(place) {
   return bits.join(" · ");
 }
 
+function hourPhrase(hours) {
+  const whole = Math.floor(hours);
+  const half = Math.abs(hours - whole - 0.5) < 0.01;
+  if (half && whole === 0) return "כחצי שעה";
+  const head = whole === 1 ? "כשעה" : whole === 2 ? "כשעתיים" : `כ־${whole} שעות`;
+  if (half) return `${head} וחצי`;
+  if (whole === hours) return head;
+  return `כ־${hours} שעות`;
+}
+
 function trailFacts(trail) {
   const bits = [];
   const difficulty = { easy: "קלה", moderate: "בינונית", challenging: "מאתגרת" };
@@ -447,8 +458,9 @@ function trailFacts(trail) {
   else if (trail.circular === "partial") bits.push("מעגלי חלקית");
   else if (trail.circular === false) bits.push("קווי");
   if (trail.hoursMax && trail.hoursMax <= 16) {
-    if (trail.hoursMin && trail.hoursMin !== trail.hoursMax) bits.push(`${trail.hoursMin}–${trail.hoursMax} שעות`);
-    else bits.push(`כ־${trail.hoursMax} שעות`);
+    const estimated = trail.hoursEstimated ? "הערכה של " : "";
+    if (trail.hoursMin && trail.hoursMin !== trail.hoursMax) bits.push(`${estimated}${trail.hoursMin}–${trail.hoursMax} שעות`);
+    else bits.push(`${estimated}${hourPhrase(trail.hoursMax)}`);
   }
   if (window.CamperPlan.lengthIsUsable(trail)) {
     if (trail.kmMin && trail.kmMax && trail.kmMin !== trail.kmMax) bits.push(`${trail.kmMin}–${trail.kmMax} ק״מ`);
@@ -500,6 +512,7 @@ function visitSheet(place, km, way) {
       node.append(el("p", "fine", `אין משך רשמי, אז הלוז שם הערכה של ${window.CamperPlan.shareDuration(window.CamperPlan.visitMinutes(place))}. אפשר לשנות את השעה.`));
     }
     const links = el("div", "links");
+    if (place.tiuliUrl) links.append(link(place.tiuliUrl, "העמוד בטיולי"));
     if (place.wiki) links.append(link(place.wiki, "הערך בוויקיפדיה"));
     if (place.site) links.append(link(place.site, "האתר"));
     if (place.url) links.append(link(place.url, officialPlace ? "העמוד המלא ברשות הטבע והגנים" : "הנקודה במפה"));
@@ -524,6 +537,7 @@ function coffeeSheet(place, km, way) {
       node.append(el("p", "fine", "אין תמונה או ערך שמסומנים על הנקודה."));
     }
     const links = el("div", "links");
+    if (place.tiuliUrl) links.append(link(place.tiuliUrl, "העמוד בטיולי"));
     if (place.wiki) links.append(link(place.wiki, "הערך בוויקיפדיה"));
     if (place.site) links.append(link(place.site, "האתר"));
     if (place.url) links.append(link(place.url, "הנקודה במפה"));
@@ -560,8 +574,11 @@ function trailSheet(trail) {
     }
     const links = el("div", "links");
     if (trail.url) links.append(link(trail.url, "העמוד המלא ברשות הטבע והגנים"));
+    if (trail.tiuliUrl) links.append(link(trail.tiuliUrl, "העמוד בטיולי"));
     if (trail.waze) {
       links.append(link(`https://www.waze.com/ul?q=${encodeURIComponent(trail.waze)}&navigate=yes`, "ניווט לתחילת המסלול"));
+    } else if (trail.lat != null) {
+      links.append(link(`https://www.waze.com/ul?ll=${trail.lat},${trail.lng}&navigate=yes`, "ניווט לתחילת המסלול"));
     }
     node.append(links);
   });
@@ -1467,13 +1484,14 @@ Promise.all([
       if (step.kind === "hike") {
         const name = shortName(step.name);
         if (step.walk == null) return `${name}. אין משך הליכה, אז השעה גמישה.`;
+        const estimate = step.estimated ? " זו הערכה לפי האורך, כי בעמוד לא רשום משך." : "";
         if (step.beforeStay) {
           const tail = step.lastBefore ? "אחר כך ממשיכים לחניון." : "אחר כך ממשיכים למסלול הבא.";
-          return `${name}. הליכה של ${formatDuration(step.walk)}. ${tail}`;
+          return `${name}. הליכה של ${formatDuration(step.walk)}.${estimate} ${tail}`;
         }
         const leaving = step.firstOfDay ? "יוצאים מהחניון. " : "";
         const longDay = step.back >= 15 * 60 ? " זה יום ארוך." : "";
-        return `${leaving}${name}. הליכה של ${formatDuration(step.walk)}, חזרה לחניון ב־${clock(step.back)}.${longDay}`;
+        return `${leaving}${name}. הליכה של ${formatDuration(step.walk)}, חזרה לחניון ב־${clock(step.back)}.${estimate}${longDay}`;
       }
       if (step.kind === "return") {
         const ride = step.drive == null ? "" : ` נסיעה של ${formatDuration(step.drive)} בערך.`;
@@ -2137,6 +2155,11 @@ Promise.all([
       }
       const copy = row.querySelector(".spot-copy");
       if (!copy) return;
+      if (place.tiuliUrl) {
+        const tiuli = link(place.tiuliUrl, "בטיולי");
+        tiuli.className = "text-link";
+        copy.append(tiuli);
+      }
       if (place.site) {
         const site = link(place.site, "באתר");
         site.className = "text-link";

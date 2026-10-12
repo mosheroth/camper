@@ -376,13 +376,22 @@ function renderPlan(plan) {
   if (glance.note) copy.append(el("p", "camp-note", glance.note));
   const quiet = glance.facts.concat(aroundLabel ? [aroundLabel] : []);
   if (quiet.length) copy.append(el("p", "fine", quiet.join(" · ")));
+  const pages = el("div", "links");
   if (camp.url) {
     const more = el("a", "camp-page", "העמוד ברשות הטבע והגנים");
     more.href = camp.url;
     more.target = "_blank";
     more.rel = "noopener noreferrer";
-    copy.append(more);
+    pages.append(more);
   }
+  if (camp.tiuliUrl) {
+    const more = el("a", "camp-page", "העמוד בטיולי");
+    more.href = camp.tiuliUrl;
+    more.target = "_blank";
+    more.rel = "noopener noreferrer";
+    pages.append(more);
+  }
+  if (pages.childNodes.length) copy.append(pages);
   article.append(radio, copy);
   radio.addEventListener("change", () => {
     if (radio.checked) selectPlan(camp.id, { zoom: true });

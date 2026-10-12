@@ -4,11 +4,19 @@
   "counts": {
     "paid": 18,
     "free": 108,
-    "trails": 282,
-    "family": 103,
-    "circular": 119,
+    "trails": 462,
+    "family": 221,
+    "circular": 193,
     "routes": 118,
     "places": 1982
   },
-  "placesFetchedAt": "2026-10-12T12:03:13Z"
+  "placesFetchedAt": "2026-10-12T12:03:13Z",
+  "tiuli": {
+    "fetchedAt": "2026-10-12T21:29:19Z",
+    "tracks": 225,
+    "linkedTrails": 44,
+    "addedTrails": 180,
+    "linkedCamps": 66,
+    "linkedPlaces": 71
+  }
 }

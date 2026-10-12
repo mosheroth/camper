@@ -5,3 +5,4 @@ data/.osm-cache.json
 data/.osm-places-cache.json
 data/.inpa-place-cache.json
 data/.osm-photo-cache.json
+data/.tiuli-html/

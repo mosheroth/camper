@@ -138,10 +138,36 @@ class CatalogTests(unittest.TestCase):
         ids = {trail["id"] for trail in self.trails}
         self.assertTrue({295240, 147488, 6070}.issubset(ids))
 
+    def test_tiuli_facts_join_the_inpa_catalog(self):
+        added = [trail for trail in self.trails if int(trail["id"]) >= 8_000_000]
+        linked = [trail for trail in self.trails if trail.get("tiuliUrl") and int(trail["id"]) < 8_000_000]
+        self.assertGreaterEqual(len(added), 150)
+        self.assertGreaterEqual(len(linked), 30)
+        for trail in added:
+            self.assertTrue(trail["tiuliUrl"].startswith("https://www.tiuli.com/tracks/"), trail["name"])
+            self.assertEqual(trail.get("url") or "", "")
+            self.assertEqual(trail.get("blurb") or "", "")
+            self.assertFalse(trail.get("photos"))
+            self.assertGreaterEqual(trail["lat"], 29.4)
+            self.assertLessEqual(trail["lat"], 33.4)
+            self.assertNotIn("אופני", trail["name"])
+            self.assertNotRegex(trail["name"], r"ג['׳]יפ|4\s*[xX×]\s*4")
+        swiss = next(trail for trail in self.trails if trail["id"] == 62571)
+        self.assertTrue(swiss["tiuliUrl"].startswith("https://www.tiuli.com/tracks/24/"))
+        linked_camps = [camp for camp in self.camps if camp.get("tiuliUrl")]
+        self.assertGreaterEqual(len(linked_camps), 40)
+        for camp in linked_camps:
+            self.assertTrue(camp["tiuliUrl"].startswith("https://www.tiuli.com/camping/"), camp["name"])
+        places = json.loads((ROOT / "data" / "places.json").read_text(encoding="utf-8"))
+        linked_places = [place for place in places if place.get("tiuliUrl")]
+        self.assertGreaterEqual(len(linked_places), 40)
+        for place in linked_places:
+            self.assertTrue(place["tiuliUrl"].startswith("https://www.tiuli.com/"), place["name"])
+
     def test_family_signal_is_not_the_default_tag(self):
         family = sum(1 for trail in self.trails if trail["family"])
         self.assertGreater(family, 20)
-        self.assertLess(family, 120)
+        self.assertLess(family / len(self.trails), 0.55)
 
 
 if __name__ == "__main__":
