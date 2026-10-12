@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates } = require("../plan.js");
 
 const trails = [
   {
@@ -135,6 +135,10 @@ assert.strictEqual(choices[0].km, 1.2);
 const castel = liveCamps.find((camp) => camp.id === 14987);
 const aroundCastel = nearbyChoices(castel, liveTrails).filter((item) => item.km != null && item.km <= 20);
 assert.ok(aroundCastel.length >= 10, "Castel should have many trails within 20 km");
+assert.strictEqual(aroundCount(castel).close, aroundCastel.length);
+assert.ok(aroundCount(castel).wide >= aroundCount(castel).close);
+assert.deepStrictEqual(aroundCount({ nearby: [{ km: 4 }, { km: 28 }, { km: null }] }), { close: 1, wide: 3 });
+assert.deepStrictEqual(aroundCount(null), { close: 0, wide: 0 });
 assert.strictEqual(lengthIsUsable({ kmMax: 40, hoursMax: 1.5 }), false);
 assert.strictEqual(lengthIsUsable({ kmMax: 800, hoursMax: 2 }), false);
 assert.strictEqual(lengthIsUsable({ kmMax: 6, hoursMax: 3 }), true);

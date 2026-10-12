@@ -236,6 +236,15 @@ function selectPlan(id, { zoom = false, reveal = false } = {}) {
   paintLink();
 }
 
+function aroundText(count) {
+  if (!count) return "";
+  if (count.close === 1) return "מסלול אחד בסביבה";
+  if (count.close > 1) return `${count.close} מסלולים בסביבה`;
+  if (count.wide === 1) return "מסלול אחד עד 40 ק״מ";
+  if (count.wide > 1) return `${count.wide} מסלולים עד 40 ק״מ`;
+  return "";
+}
+
 function shortTrail(name) {
   const cut = String(name).split(/\s+[–—-]\s+/)[0].trim();
   return cut.length > 32 ? `${cut.slice(0, 31)}…` : cut;
@@ -254,10 +263,11 @@ function renderPlan(plan) {
   const lodging = camp.paid ? "בתשלום" : "בלי תשלום";
   const distance = primary && primary.km != null ? `כ־${primary.km} ק״מ` : "";
   const trailName = primary ? shortTrail(primary.trail.name) : "";
+  const aroundLabel = aroundText(window.CamperPlan.aroundCount(camp));
   const swatch = el("i", camp.paid ? "swatch paid-swatch" : "swatch free-swatch");
   const copy = el("div", "index-copy");
   copy.append(el("h2", null, camp.name));
-  copy.append(el("p", "meta", [regions, lodging, distance, trailName].filter(Boolean).join(" · ")));
+  copy.append(el("p", "meta", [aroundLabel, regions, lodging, distance, trailName].filter(Boolean).join(" · ")));
   const href = window.CamperPlan.planUrl(camp.id, plan.trails.map((item) => item.trail.id));
   const opener = el("a", "opener", "לצפייה");
   opener.href = href;
@@ -268,7 +278,7 @@ function renderPlan(plan) {
   article.tabIndex = 0;
   article.setAttribute("role", "button");
   if (!article.hasAttribute("aria-pressed")) article.setAttribute("aria-pressed", "false");
-  article.setAttribute("aria-label", `להתמקד במפה: ${camp.name}`);
+  article.setAttribute("aria-label", aroundLabel ? `להתמקד במפה: ${camp.name}, ${aroundLabel}` : `להתמקד במפה: ${camp.name}`);
   article.addEventListener("mouseenter", () => {
     hoverCamp = camp.id;
     paintLink();

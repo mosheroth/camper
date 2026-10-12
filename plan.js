@@ -625,6 +625,12 @@
     return tags.slice(0, 4);
   }
 
+  function aroundCount(camp) {
+    const nearby = (camp && camp.nearby) || [];
+    const close = nearby.filter((near) => near.km != null && near.km <= 20).length;
+    return { close, wide: nearby.length };
+  }
+
   function nearbyChoices(camp, trails) {
     const byId = new Map((trails || []).map((trail) => [trail.id, trail]));
     return (camp.nearby || [])
@@ -644,6 +650,7 @@
     campMatches,
     planUrl,
     nearbyChoices,
+    aroundCount,
     lengthIsUsable,
     centerOrigin,
     buildItinerary,
