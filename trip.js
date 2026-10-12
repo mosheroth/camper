@@ -2296,9 +2296,6 @@ Promise.all([
           : "בלי מסלול במפה";
       lead.textContent = tripId ? `${count}${draft ? " · טיוטה" : " · שמור"}` : count;
       saveButton.textContent = tripId && !draft ? "שמירה" : "צור טיול";
-      if (draft && !saveNote.textContent) {
-        saveNote.textContent = "טיוטה נשמרת בדפדפן. רענון וקישור חוזרים לנקודה הזאת.";
-      }
       renderAround();
       renderDetail();
       applyPanel();
@@ -2374,12 +2371,49 @@ Promise.all([
       if (fly) sharedMap.flyTo(latlng, Math.max(sharedMap.getZoom(), 15), { duration: 0.4 });
     }
 
+    const menuButton = document.querySelector("#trip-menu");
+    const menuPanel = document.querySelector("#trip-menu-panel");
+
+    function closeTripMenu() {
+      if (!menuPanel || menuPanel.hidden) return;
+      menuPanel.hidden = true;
+      menuButton.setAttribute("aria-expanded", "false");
+      if (deleteButton.dataset.confirm === "yes") {
+        deleteButton.dataset.confirm = "";
+        deleteButton.textContent = "מחיקה";
+      }
+      if (menuPanel.contains(document.activeElement)) menuButton.focus();
+    }
+
+    function openTripMenu() {
+      menuPanel.hidden = false;
+      menuButton.setAttribute("aria-expanded", "true");
+      const first = menuPanel.querySelector("button:not([hidden])");
+      if (first) first.focus();
+    }
+
+    menuButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (menuPanel.hidden) openTripMenu();
+      else closeTripMenu();
+    });
+    document.addEventListener("pointerdown", (event) => {
+      if (!menuPanel || menuPanel.hidden) return;
+      if (menuPanel.contains(event.target) || menuButton.contains(event.target)) return;
+      closeTripMenu();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeTripMenu();
+    });
+
     saveButton.addEventListener("click", () => {
       if (!persistNew()) return;
+      closeTripMenu();
       render();
       saveNote.textContent = "הטיול נשמר אצלך, גם אחרי רענון.";
     });
     shareButton.addEventListener("click", async () => {
+      closeTripMenu();
       const record = editorRecord();
       const url = new URL(window.CamperTrips.sharePath(record), window.location.href).href;
       const text = window.CamperPlan.shareMessage({

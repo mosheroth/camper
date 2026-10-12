@@ -974,14 +974,18 @@ body.splitting { cursor: col-resize; user-select: none; }
   padding: 0 16px 8px;
 }
 .trip-name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1 1 16rem;
+  display: block;
   min-width: 0;
   font-size: 0.82rem;
   font-weight: 700;
 }
+.name-line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.name-line input,
 .trip-name input {
   flex: 1;
   min-width: 0;
@@ -994,16 +998,64 @@ body.splitting { cursor: col-resize; user-select: none; }
   font: inherit;
   font-weight: 500;
 }
-.trip-actions .ghost,
+.trip-menu { position: relative; flex: none; }
+.menu-toggle {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  width: 36px;
+  height: auto;
+  padding: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+}
+.menu-toggle svg { fill: currentColor; }
+.menu-toggle:hover,
+.menu-toggle[aria-expanded="true"] {
+  background: #fff;
+  color: var(--ink);
+}
+.menu-toggle:focus-visible { outline: 3px solid var(--green-mid); outline-offset: 2px; }
+.menu-panel {
+  position: absolute;
+  z-index: 4;
+  top: calc(100% + 4px);
+  inset-inline-end: 0;
+  min-width: 9.5rem;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(35, 28, 22, 0.16);
+}
+.menu-panel button {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 500;
+  text-align: start;
+}
+.menu-panel button:hover,
+.menu-panel button:focus-visible { background: var(--sand); }
+.menu-panel .danger { color: var(--clay); }
+.menu-panel .danger:not([hidden]) {
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 8px 8px;
+}
 .saved .ghost {
   background: transparent;
   color: var(--green);
   border: 1px solid var(--green);
   padding: 8px 14px;
 }
-.trip-actions .danger,
 .saved .danger { color: var(--clay); border-color: var(--clay); }
 .trip-actions .fine { flex: 1 1 100%; margin: 0; }
+.trip-actions .fine:empty { display: none; }
 .saved {
   padding: 12px 0;
   border-top: 1px solid var(--line);
@@ -1030,23 +1082,17 @@ body.splitting { cursor: col-resize; user-select: none; }
 #library .empty a { color: var(--green); font-weight: 700; }
 
 .panel .trip-actions {
-  flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
-  width: auto;
-  padding: 14px 16px 12px;
-  border-bottom: 1px solid var(--line);
-}
-.panel .trip-name {
-  flex: none;
+  position: relative;
+  z-index: 5;
   flex-direction: column;
   align-items: stretch;
   gap: 4px;
+  width: auto;
+  padding: 12px 16px 10px;
+  border-bottom: 1px solid var(--line);
 }
-.panel .trip-name input { flex: none; }
-.trip-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
-.panel .trip-buttons button { padding: 8px 14px; }
-.panel .trip-actions .fine { flex: none; }
+.panel .trip-name { flex: none; }
+.panel .trip-actions .fine { flex: none; font-size: 0.78rem; }
 
 .trip-page .section-label {
   margin: 18px 0 2px;

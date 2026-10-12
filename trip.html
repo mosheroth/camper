@@ -30,14 +30,23 @@
     <main class="workspace">
       <aside class="panel" aria-label="יצירת הטיול">
         <div class="trip-actions">
-          <label class="trip-name">
-            <span>שם הטיול</span>
+          <label class="trip-name" for="trip-name">שם הטיול</label>
+          <div class="name-line">
             <input id="trip-name" type="text" maxlength="80" placeholder="למשל: סופ״ש בקסטל" />
-          </label>
-          <div class="trip-buttons">
-            <button type="button" id="save-trip">צור טיול</button>
-            <button type="button" id="share-trip" class="ghost">שליחה</button>
-            <button type="button" id="delete-trip" class="ghost danger" hidden>מחיקה</button>
+            <div class="trip-menu">
+              <button type="button" id="trip-menu" class="menu-toggle" aria-haspopup="menu" aria-expanded="false" aria-controls="trip-menu-panel" aria-label="פעולות הטיול">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+                  <circle cx="3.2" cy="8" r="1.35" />
+                  <circle cx="8" cy="8" r="1.35" />
+                  <circle cx="12.8" cy="8" r="1.35" />
+                </svg>
+              </button>
+              <div id="trip-menu-panel" class="menu-panel" role="menu" hidden>
+                <button type="button" id="save-trip" role="menuitem">צור טיול</button>
+                <button type="button" id="share-trip" role="menuitem">שליחה</button>
+                <button type="button" id="delete-trip" class="danger" role="menuitem" hidden>מחיקה</button>
+              </div>
+            </div>
           </div>
           <p id="save-note" class="fine" role="status"></p>
         </div>
