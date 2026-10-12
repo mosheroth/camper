@@ -1001,7 +1001,8 @@ Promise.all([
         ? `קודם המסלול, ואחר כך לילה בחניון. יוצאים מהבית, מ${homePlace}.`
         : `יוצאים מהבית, מ${homePlace}. לילה בחניון, ולמחרת המסלול.`));
       block.append(dateFields());
-      block.append(timeChoices("יוצאים מהבית", [8, 12, 16], depart ? depart.at : null, (minutes) => {
+      const times = el("div", "trip-dates");
+      times.append(timeField("יוצאים מהבית", depart ? depart.at : null, (minutes) => {
         if (!depart || depart.at == null) return;
         const edited = window.CamperPlan.retimedHours({
           hours,
@@ -1016,11 +1017,12 @@ Promise.all([
         historyPush = true;
         render();
       }));
-      block.append(timeChoices("מגיעים לחניון", [15, 17, 19], arrival, (minutes) => {
+      times.append(timeField("מגיעים לחניון", arrival, (minutes) => {
         arrival = minutes;
         historyPush = true;
         render();
       }));
+      block.append(times);
       const stages = window.CamperPlan.tripStages(camp, trails, sequence).stages;
       const groups = [];
       steps.forEach((step) => {
@@ -1151,21 +1153,23 @@ Promise.all([
       return `${date.getFullYear()}-${m}-${d}`;
     }
 
-    function timeChoices(label, hoursOfDay, current, onPick) {
-      const head = el("div", "section-head");
-      head.append(el("p", "section-label", label));
-      const choices = el("div", "radius");
-      hoursOfDay.forEach((hour) => {
-        const minutes = hour * 60;
-        const button = el("button", "chip-btn", clock(minutes));
-        button.type = "button";
-        button.disabled = current == null;
-        button.setAttribute("aria-pressed", current != null && minutes === current ? "true" : "false");
-        button.addEventListener("click", () => onPick(minutes));
-        choices.append(button);
+    function timeField(label, current, onPick) {
+      const wrap = el("label", "date-field");
+      wrap.append(el("span", null, label));
+      const input = document.createElement("input");
+      input.type = "time";
+      input.step = 60;
+      input.disabled = current == null;
+      if (current != null) input.value = clock(current);
+      input.setAttribute("aria-label", label);
+      input.addEventListener("click", (event) => event.stopPropagation());
+      input.addEventListener("change", () => {
+        const [hour, minute] = input.value.split(":").map(Number);
+        if (!Number.isInteger(hour) || !Number.isInteger(minute)) return;
+        onPick(hour * 60 + minute);
       });
-      head.append(choices);
-      return head;
+      wrap.append(input);
+      return wrap;
     }
 
     function arrowIcon(up) {
