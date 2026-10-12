@@ -601,8 +601,8 @@ button {
   z-index: 3;
   display: flex;
   gap: 6px;
-  margin: 14px 0 8px;
-  padding: 8px 0;
+  margin: 0;
+  padding: 14px 0 8px;
   background: var(--card);
   border-bottom: 1px solid var(--line);
 }

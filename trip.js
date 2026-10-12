@@ -2452,7 +2452,7 @@ Promise.all([
       if (panelMode === "routes") panelBody.scrollTop = keptScroll;
       if (revealCatalog && panelMode === "routes") {
         const tabBar = document.querySelector(".catalog-tabs");
-        if (tabBar) tabBar.scrollIntoView({ block: "nearest" });
+        if (tabBar) tabBar.scrollIntoView({ block: "start" });
         if (focusCatalog) {
           const selectedTab = document.querySelector(".catalog-tabs [aria-selected='true']");
           if (selectedTab) selectedTab.focus();
