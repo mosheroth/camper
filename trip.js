@@ -419,7 +419,7 @@ function drawMap(camp, trails, extras, onAdd) {
     const distance = item.km == null ? "" : `<br>כ־${item.km} ק״מ מהחניון`;
     marker.bindPopup(`${escapeHtml(item.trail.name)}${distance}`);
     follow(marker, key);
-    marker.on("click", () => onAdd(item.trail.id));
+    marker.on("click", () => window.setTimeout(() => onAdd(item.trail.id), 0));
     entry.dots.push(marker);
     entry.bounds.push([item.trail.lat, item.trail.lng]);
     bounds.push([item.trail.lat, item.trail.lng]);
@@ -582,7 +582,7 @@ Promise.all([
       render();
     }
 
-    function spotRow(id, name, meta, swatchColor, action) {
+    function spotRow(id, name, meta, swatchColor, action, onOpen) {
       const row = el("article", "spot");
       row.dataset.id = String(id);
       row.tabIndex = 0;
@@ -594,14 +594,15 @@ Promise.all([
       if (meta) copy.append(el("p", "meta", meta));
       row.append(swatch, copy);
       if (action) row.append(action);
+      const activate = () => (onOpen ? onOpen(id) : focusFeature(id));
       row.addEventListener("mouseenter", () => emphasize(id));
       row.addEventListener("mouseleave", () => emphasize(focusedKey));
       row.addEventListener("click", (event) => {
         if (event.target.closest("button, a")) return;
-        focusFeature(id);
+        activate();
       });
       row.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") focusFeature(id);
+        if (event.key === "Enter") activate();
       });
       return row;
     }
@@ -684,7 +685,7 @@ Promise.all([
       const available = pool.filter((item) => !selected.includes(item.trail.id));
       const shown = expanded ? available : available.slice(0, 6);
       around.replaceChildren();
-      around.append(el("p", "board-hint", "הצבע ברשימה הוא הצבע על המפה. עומדים על שורה, והמסלול מודגש."));
+      around.append(el("p", "board-hint", "הצבע ברשימה הוא הצבע על המפה. פירוט פותח את המסלול לפני שמוסיפים אותו."));
       around.append(renderItinerary());
 
       around.append(el("h2", "section-label", "החניון"));
@@ -699,7 +700,7 @@ Promise.all([
 
       around.append(el("h2", "section-label", "בטיול"));
       if (!selected.length) {
-        around.append(el("p", "fine", "עדיין אין מסלולים. בוחרים נקודה על המפה, או מוסיפים מהרשימה למטה."));
+        around.append(el("p", "fine", "עדיין אין מסלולים. פותחים פירוט מהרשימה למטה, ומוסיפים משם."));
       }
       selected.forEach((id, index) => {
         const item = choiceFor(id);
@@ -737,12 +738,11 @@ Promise.all([
       head.append(radii);
       around.append(head);
       shown.forEach((item) => {
-        const add = el("button", "add", "להוסיף");
-        add.type = "button";
-        add.disabled = selected.length >= maxPicks;
-        add.addEventListener("click", () => addTrail(item.trail.id));
+        const info = el("button", "text-link", "פירוט");
+        info.type = "button";
+        info.addEventListener("click", () => openTrail(item.trail.id));
         const facts = [item.km == null ? "" : `כ־${item.km} ק״מ מהחניון`, trailFacts(item.trail)].filter(Boolean).join(" · ");
-        around.append(spotRow(item.trail.id, item.trail.name, facts, "#cfc3b4", add));
+        around.append(spotRow(item.trail.id, item.trail.name, facts, "#cfc3b4", info, openTrail));
       });
       if (!shown.length) {
         around.append(el("p", "fine", "כל המסלולים בטווח הזה כבר בטיול."));
@@ -786,9 +786,38 @@ Promise.all([
       const action = el("button", on ? "remove" : "add", on ? "הסרה מהטיול" : "להוסיף לטיול");
       action.type = "button";
       action.disabled = !on && selected.length >= maxPicks;
-      action.addEventListener("click", () => (on ? removeTrail(focus.id) : addTrail(focus.id)));
+      action.addEventListener("click", () => {
+        panelMode = "routes";
+        if (on) removeTrail(focus.id);
+        else addTrail(focus.id);
+      });
       bar.append(action);
-      picked.append(bar, trailSheet(focus));
+      const effect = el("p", "add-effect", scheduleEffect(focus, on));
+      picked.append(bar, effect, trailSheet(focus));
+    }
+
+    function scheduleEffect(trail, on) {
+      if (!on && selected.length >= maxPicks) {
+        return "אפשר עד ארבעה מסלולים. מסירים אחד מהטיול כדי להוסיף את זה.";
+      }
+      const current = selected.map((id) => byId.get(id)).filter(Boolean);
+      const steps = window.CamperPlan.buildItinerary({
+        camp,
+        trails: on ? current : current.concat(trail),
+        arrivalMinutes: arrival,
+        origin,
+      });
+      const hike = steps.find((step) => step.kind === "hike" && step.name === trail.name);
+      const lunch = steps.find((step) => step.kind === "lunch");
+      if (!hike || hike.walk == null) {
+        return on
+          ? "המסלול בלוז של שבת. אין משך הליכה, אז שעת החזרה גמישה."
+          : "אם מוסיפים לטיול, הוא נכנס לבוקר של שבת. אין משך הליכה, אז שעת החזרה גמישה.";
+      }
+      const meal = lunch && lunch.at != null ? ` אוכלים בחניון ב־${clock(lunch.at)}.` : "";
+      const longDay = hike.back >= 15 * 60 ? " זה יום ארוך." : "";
+      if (on) return `המסלול בלוז של שבת. חזרה לחניון ב־${clock(hike.back)}.${meal}${longDay}`;
+      return `אם מוסיפים לטיול, חוזרים לחניון ב־${clock(hike.back)}.${meal}${longDay}`;
     }
 
     function render() {
@@ -807,7 +836,7 @@ Promise.all([
       remember();
       const extras = choices.filter((item) => !selected.includes(item.trail.id) && item.trail.lat != null && (item.km == null || item.km <= radius));
       try {
-        drawMap(camp, chosen, extras, addTrail);
+        drawMap(camp, chosen, extras, openTrail);
       } catch (error) {
         mapNote.textContent = "המפה לא התעדכנה. רשימת המסלולים כן.";
       }

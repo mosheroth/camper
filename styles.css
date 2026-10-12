@@ -625,6 +625,12 @@ button {
   padding: 10px 0 8px;
   background: var(--card);
 }
+.add-effect {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: #f6f0e6;
+  border-radius: 12px;
+}
 .trip-page .dossier { margin: 0; gap: 0; }
 .trip-page .sheet {
   background: none;
