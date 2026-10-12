@@ -1153,22 +1153,105 @@ Promise.all([
       return `${date.getFullYear()}-${m}-${d}`;
     }
 
+    function timeControl(current, onPick, className) {
+      const button = el("button", className ? `time-value ${className}` : "time-value");
+      button.type = "button";
+      button.disabled = current == null;
+      button.textContent = current == null ? "—" : clock(current);
+      if (current == null) return button;
+      const start = ((current % 1440) + 1440) % 1440;
+      let hour = Math.floor(start / 60);
+      let minute = Math.round((start % 60) / 5) * 5;
+      if (minute === 60) {
+        minute = 0;
+        hour = (hour + 1) % 24;
+      }
+      let touched = false;
+      const panel = el("div", "time-panel");
+      panel.hidden = true;
+      const hours = el("div", "time-col");
+      hours.setAttribute("aria-label", "שעה");
+      const minutes = el("div", "time-col");
+      minutes.setAttribute("aria-label", "דקות");
+      for (let value = 0; value < 24; value += 1) hours.append(timeOption("hour", value));
+      for (let value = 0; value < 60; value += 5) minutes.append(timeOption("minute", value));
+      panel.append(hours, minutes);
+
+      function timeOption(kind, value) {
+        const option = el("button", "time-option", String(value).padStart(2, "0"));
+        option.type = "button";
+        option.dataset[kind] = String(value);
+        option.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (kind === "hour") hour = value;
+          else minute = value;
+          touched = true;
+          button.textContent = clock(hour * 60 + minute);
+          paint();
+          if (kind === "minute") close(true);
+        });
+        return option;
+      }
+
+      function paint() {
+        hours.querySelectorAll("button").forEach((option) => {
+          option.setAttribute("aria-selected", option.dataset.hour === String(hour) ? "true" : "false");
+        });
+        minutes.querySelectorAll("button").forEach((option) => {
+          option.setAttribute("aria-selected", option.dataset.minute === String(minute) ? "true" : "false");
+        });
+      }
+
+      function place() {
+        const box = button.getBoundingClientRect();
+        const height = 220;
+        const top = box.bottom + 6 + height > window.innerHeight && box.top > height + 6
+          ? box.top - height - 6
+          : box.bottom + 6;
+        panel.style.top = `${Math.max(8, top)}px`;
+        panel.style.left = `${Math.max(8, Math.min(box.left, window.innerWidth - 132))}px`;
+      }
+
+      function onDoc(event) {
+        if (panel.contains(event.target) || button.contains(event.target)) return;
+        close(true);
+      }
+
+      function open() {
+        paint();
+        panel.hidden = false;
+        document.body.append(panel);
+        place();
+        button.setAttribute("aria-expanded", "true");
+        document.addEventListener("pointerdown", onDoc);
+        panel.querySelectorAll("[aria-selected=true]").forEach((option) => {
+          option.scrollIntoView({ block: "center" });
+        });
+      }
+
+      function close(commit) {
+        document.removeEventListener("pointerdown", onDoc);
+        panel.remove();
+        panel.hidden = true;
+        button.setAttribute("aria-expanded", "false");
+        if (commit && touched) onPick(hour * 60 + minute);
+      }
+
+      button.setAttribute("aria-haspopup", "listbox");
+      button.setAttribute("aria-expanded", "false");
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (panel.isConnected) close(true);
+        else open();
+      });
+      paint();
+      return button;
+    }
+
     function timeField(label, current, onPick) {
       const wrap = el("label", "date-field");
       wrap.append(el("span", null, label));
-      const input = document.createElement("input");
-      input.type = "time";
-      input.step = 60;
-      input.disabled = current == null;
-      if (current != null) input.value = clock(current);
-      input.setAttribute("aria-label", label);
-      input.addEventListener("click", (event) => event.stopPropagation());
-      input.addEventListener("change", () => {
-        const [hour, minute] = input.value.split(":").map(Number);
-        if (!Number.isInteger(hour) || !Number.isInteger(minute)) return;
-        onPick(hour * 60 + minute);
-      });
-      wrap.append(input);
+      wrap.append(timeControl(current, onPick));
       return wrap;
     }
 
@@ -1233,22 +1316,12 @@ Promise.all([
       const when = el("time");
       when.append(el("span", null, step.day));
       if (step.at != null) {
-        const input = document.createElement("input");
-        input.type = "time";
-        input.className = "step-time";
-        input.step = 60;
-        input.value = clock(step.at);
-        input.setAttribute("aria-label", TIME_LABEL[step.kind] || "שעת השלב");
-        input.addEventListener("click", (event) => event.stopPropagation());
-        input.addEventListener("keydown", (event) => event.stopPropagation());
-        input.addEventListener("change", () => {
-          const [hour, minute] = input.value.split(":").map(Number);
-          if (!Number.isInteger(hour) || !Number.isInteger(minute)) return;
+        const input = timeControl(step.at, (next) => {
           const edited = window.CamperPlan.retimedHours({
             hours,
             arrival,
             step,
-            next: hour * 60 + minute,
+            next,
             trailIds: selected,
             order,
           });
@@ -1256,7 +1329,8 @@ Promise.all([
           hours = edited.hours;
           historyPush = true;
           render();
-        });
+        }, "step-time");
+        input.setAttribute("aria-label", TIME_LABEL[step.kind] || "שעת השלב");
         when.append(input);
       }
       item.append(when, el("p", null, stepCopy(step)));
@@ -1265,11 +1339,11 @@ Promise.all([
         paintHere(Boolean(place));
       };
       item.addEventListener("click", (event) => {
-        if (event.target.closest("input")) return;
+        if (event.target.closest("input, .time-value, .time-panel")) return;
         choose();
       });
       item.addEventListener("keydown", (event) => {
-        if (event.target.closest("input")) return;
+        if (event.target.closest("input, .time-value, .time-panel")) return;
         if (event.key === "Enter") choose();
       });
       return item;
