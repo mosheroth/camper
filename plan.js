@@ -133,44 +133,156 @@
     return ((number % 1440) + 1440) % 1440;
   }
 
-  function buildItinerary({ camp, trails, arrivalMinutes, origin, hours }) {
-    const clock = hours || {};
-    const arrival = minuteOf(arrivalMinutes) == null ? 17 * 60 : minuteOf(arrivalMinutes);
-    const drive = driveMinutes(camp, origin);
-    const dinner = clock.dinner == null ? arrival + 90 : minuteOf(clock.dinner);
-    const rise = clock.rise == null ? 7 * 60 : minuteOf(clock.rise);
-    const breakfast = clock.breakfast == null ? rise + 30 : minuteOf(clock.breakfast);
-    const start = clock.start == null ? 8 * 60 : minuteOf(clock.start);
-    const steps = [
-      { kind: "depart", day: "שישי", at: drive == null ? null : arrival - drive, drive },
-      { kind: "arrive", day: "שישי", at: arrival },
-      { kind: "dinner", day: "שישי", at: dinner },
-      { kind: "rise", day: "שבת", at: rise },
-      { kind: "breakfast", day: "שבת", at: breakfast },
-    ];
-    const chosen = trails || [];
-    if (!chosen.length) {
-      steps.push({ kind: "need-hike", day: "שבת" });
-      return steps;
+  function normalizeOrder(order, trailIds) {
+    const ids = [];
+    (trailIds || []).forEach((id) => {
+      const number = Number(id && id.id != null ? id.id : id);
+      if (Number.isFinite(number) && !ids.includes(number)) ids.push(number);
+    });
+    const tokens = [];
+    let stay = false;
+    (Array.isArray(order) ? order : []).forEach((token) => {
+      if (token === "stay") {
+        if (!stay) {
+          tokens.push("stay");
+          stay = true;
+        }
+        return;
+      }
+      const number = Number(token);
+      if (ids.includes(number) && !tokens.includes(number)) tokens.push(number);
+    });
+    if (!stay) tokens.unshift("stay");
+    ids.forEach((id) => {
+      if (!tokens.includes(id)) tokens.push(id);
+    });
+    return tokens;
+  }
+
+  function hikeStep(trail, { day, at, walk, back, beforeStay, lastBefore, firstOfDay }) {
+    return {
+      kind: "hike",
+      block: `hike:${trail.id}`,
+      day,
+      at,
+      name: trail.name,
+      trailId: trail.id,
+      walk,
+      back,
+      beforeStay: Boolean(beforeStay),
+      lastBefore: Boolean(lastBefore),
+      firstOfDay: Boolean(firstOfDay),
+    };
+  }
+
+  function stepsBeforeStay(list, arrivalAt) {
+    const walks = list.map(walkMinutes);
+    if (walks.some((walk) => walk == null)) {
+      return list.map((trail, index) => ({
+        raw: null,
+        step: hikeStep(trail, {
+          day: "שישי",
+          at: null,
+          walk: walks[index],
+          back: null,
+          beforeStay: true,
+          lastBefore: index === list.length - 1,
+        }),
+      }));
     }
+    let cursor = arrivalAt - 30 - walks.reduce((sum, walk) => sum + walk, 0);
+    return list.map((trail, index) => {
+      const at = cursor;
+      const back = at + walks[index];
+      cursor = back;
+      return {
+        raw: at,
+        step: hikeStep(trail, {
+          day: "שישי",
+          at: minuteOf(at),
+          walk: walks[index],
+          back,
+          beforeStay: true,
+          lastBefore: index === list.length - 1,
+        }),
+      };
+    });
+  }
+
+  function stepsAfterStay(list, clock) {
+    const start = clock.start == null ? 8 * 60 : minuteOf(clock.start);
     let cursor = start;
     let timed = true;
-    steps.push({ kind: "start", day: "שבת", at: start, count: chosen.length });
-    chosen.forEach((trail) => {
+    const steps = list.map((trail, index) => {
       const custom = clock.hikes && clock.hikes[trail.id] != null ? minuteOf(clock.hikes[trail.id]) : null;
       const at = custom == null ? cursor : custom;
       const walk = walkMinutes(trail);
       const back = walk == null ? null : at + walk;
-      steps.push({ kind: "hike", day: "שבת", at, name: trail.name, trailId: trail.id, walk, back });
       if (walk == null) timed = false;
       else cursor = back;
+      return hikeStep(trail, { day: "שבת", at, walk, back, firstOfDay: index === 0 });
     });
-    const lunch = !timed ? null : clock.lunch == null ? cursor + 30 : minuteOf(clock.lunch);
-    steps.push({ kind: "lunch", day: "שבת", at: lunch });
+    const last = steps[steps.length - 1];
+    const lunchAt = !timed || !last || last.back == null
+      ? null
+      : clock.lunch == null ? last.back + 30 : minuteOf(clock.lunch);
+    steps.push({ kind: "lunch", block: last.block, day: "שבת", at: lunchAt });
     return steps;
   }
 
-  function retimedHours({ hours, arrival, step, next, trailIds }) {
+  function buildItinerary({ camp, trails, arrivalMinutes, origin, hours, order }) {
+    const clock = hours || {};
+    const arrival = minuteOf(arrivalMinutes) == null ? 17 * 60 : minuteOf(arrivalMinutes);
+    const drive = driveMinutes(camp, origin);
+    const byId = new Map();
+    const loose = [];
+    (trails || []).forEach((trail) => {
+      if (trail && Number.isFinite(Number(trail.id))) byId.set(Number(trail.id), trail);
+      else if (trail) loose.push(trail);
+    });
+    const sequence = normalizeOrder(order, [...byId.keys()]);
+    const stayAt = sequence.indexOf("stay");
+    const before = sequence.slice(0, stayAt).map((id) => byId.get(id)).filter(Boolean);
+    const after = sequence.slice(stayAt + 1).map((id) => byId.get(id)).filter(Boolean).concat(loose);
+    const dinner = clock.dinner == null ? arrival + 90 : minuteOf(clock.dinner);
+    const rise = clock.rise == null ? 7 * 60 : minuteOf(clock.rise);
+    const breakfast = clock.breakfast == null ? rise + 30 : minuteOf(clock.breakfast);
+    const steps = [];
+    if (!before.length) {
+      steps.push({
+        kind: "depart",
+        block: "road",
+        day: "שישי",
+        at: drive == null ? null : minuteOf(arrival - drive),
+        drive,
+      });
+      steps.push({ kind: "arrive", block: "road", day: "שישי", at: arrival });
+    } else {
+      const placed = stepsBeforeStay(before, arrival);
+      const raw = placed[0].raw;
+      steps.push({
+        kind: "depart",
+        block: "road",
+        day: "שישי",
+        at: drive == null || raw == null ? (drive == null ? null : minuteOf(arrival - drive)) : minuteOf(raw - drive),
+        drive,
+        toward: "hike",
+      });
+      placed.forEach((item) => steps.push(item.step));
+    }
+    if (before.length) steps.push({ kind: "arrive", block: "stay", day: "שישי", at: arrival, afterHike: true });
+    steps.push({ kind: "dinner", block: "stay", day: "שישי", at: dinner });
+    steps.push({ kind: "rise", block: "stay", day: "שבת", at: rise });
+    steps.push({ kind: "breakfast", block: "stay", day: "שבת", at: breakfast });
+    if (!before.length && !after.length) {
+      steps.push({ kind: "need-hike", block: "stay", day: "שבת" });
+      return steps;
+    }
+    if (after.length) steps.push(...stepsAfterStay(after, clock));
+    return steps;
+  }
+
+  function retimedHours({ hours, arrival, step, next, trailIds, order }) {
     const clock = {
       dinner: hours && hours.dinner != null ? minuteOf(hours.dinner) : null,
       rise: hours && hours.rise != null ? minuteOf(hours.rise) : null,
@@ -188,29 +300,33 @@
     const target = minuteOf(next);
     if (!step || step.at == null || target == null) return { arrival: nextArrival, hours: clock };
     const delta = target - step.at;
-    const ids = (trailIds || []).map(Number).filter((id) => Number.isFinite(id));
-    const shiftHikes = (from) => {
-      ids.slice(from).forEach((id) => {
+    const sequence = normalizeOrder(order, trailIds);
+    const stayAt = sequence.indexOf("stay");
+    const before = new Set(sequence.slice(0, stayAt));
+    const after = sequence.slice(stayAt + 1);
+    const shiftAfter = (from) => {
+      after.slice(from).forEach((id) => {
         if (clock.hikes[id] != null) clock.hikes[id] = minuteOf(clock.hikes[id] + delta);
       });
     };
     if (step.kind === "depart" || step.kind === "arrive") nextArrival = minuteOf(nextArrival + delta);
+    else if (step.kind === "hike" && before.has(step.trailId)) nextArrival = minuteOf(nextArrival + delta);
     else if (step.kind === "dinner") clock.dinner = target;
     else if (step.kind === "rise") {
       clock.rise = target;
       if (clock.breakfast != null) clock.breakfast = minuteOf(clock.breakfast + delta);
       clock.start = minuteOf((clock.start == null ? 8 * 60 : clock.start) + delta);
-      shiftHikes(0);
+      shiftAfter(0);
       if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
     } else if (step.kind === "breakfast") clock.breakfast = target;
-    else if (step.kind === "start" || (step.kind === "hike" && ids[0] === step.trailId)) {
+    else if (step.kind === "start" || (step.kind === "hike" && after[0] === step.trailId)) {
       clock.start = target;
-      if (ids[0] != null) delete clock.hikes[ids[0]];
-      shiftHikes(1);
+      if (after[0] != null) delete clock.hikes[after[0]];
+      shiftAfter(1);
       if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
     } else if (step.kind === "hike") {
       clock.hikes[step.trailId] = target;
-      shiftHikes(ids.indexOf(step.trailId) + 1);
+      shiftAfter(after.indexOf(step.trailId) + 1);
       if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
     } else if (step.kind === "lunch") clock.lunch = target;
     return { arrival: nextArrival, hours: clock };
@@ -301,23 +417,41 @@
     return chainLines(ranked[0].lines, camp);
   }
 
-  function tripStages(camp, trails) {
+  function tripStages(camp, trails, order) {
     const stages = [];
     const paths = [];
     const chosen = trails || [];
-    if (camp && camp.lat != null) {
+    const byId = new Map();
+    const loose = [];
+    chosen.forEach((trail) => {
+      if (trail && Number.isFinite(Number(trail.id))) byId.set(Number(trail.id), trail);
+      else if (trail) loose.push(trail);
+    });
+    const sequence = normalizeOrder(order, [...byId.keys()]);
+    const stayAt = sequence.indexOf("stay");
+    const hikesBefore = stayAt > 0;
+    const hikesAfter = stayAt < sequence.length - 1 || loose.length > 0;
+    let number = 1;
+
+    function addCamp() {
+      if (!camp || camp.lat == null) return;
+      let text = camp.name;
+      if (hikesBefore && hikesAfter) text = `${camp.name}. ישנים כאן בין המסלולים.`;
+      else if (hikesBefore) text = `${camp.name}. אחרי המסלול ישנים כאן.`;
+      else if (chosen.length) text = `${camp.name}. בסוף המסלול חוזרים לכאן.`;
       stages.push({
         kind: "arrive",
-        n: 1,
+        n: number,
         lat: camp.lat,
         lng: camp.lng,
         title: "מגיעים לחניון לילה",
-        text: chosen.length ? `${camp.name}. בסוף המסלול חוזרים לכאן.` : camp.name,
+        text,
         photos: (camp.photos || []).slice(0, 2),
       });
+      number += 1;
     }
-    let number = stages.length + 1;
-    chosen.forEach((trail) => {
+
+    function addHike(trail) {
       const line = storyPath(trail, camp);
       const highlights = ((trail.details && trail.details.highlights) || []).slice(0, 3);
       const photos = (trail.photos || []).slice(0, 2);
@@ -345,7 +479,13 @@
         stages.push({ ...base, kind: "far", n: number, lat: end[0], lng: end[1], title: "המשך המסלול" });
         number += 1;
       }
+    }
+
+    sequence.forEach((token) => {
+      if (token === "stay") addCamp();
+      else if (byId.has(token)) addHike(byId.get(token));
     });
+    loose.forEach(addHike);
     return { stages, paths };
   }
 
@@ -389,6 +529,7 @@
     centerOrigin,
     buildItinerary,
     retimedHours,
+    normalizeOrder,
     tripStages,
     trailLures,
   };

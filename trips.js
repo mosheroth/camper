@@ -125,6 +125,11 @@
       const hikes = Object.keys(place.hikes || {}).map((id) => `${id}:${place.hikes[id]}`).join(",");
       if (hikes) params.set("hikes", hikes);
       if (place.radius === 40) params.set("radius", "40");
+      if (Array.isArray(place.order) && place.order.length) {
+        const text = place.order.map(String).join(",");
+        const fallback = ["stay"].concat(trip.trailIds || []).join(",");
+        if (text !== fallback) params.set("order", text);
+      }
       if (withId && trip.id) params.set("trip", trip.id);
       return `trip.html?${params.toString()}`;
     }
@@ -172,6 +177,7 @@
       lunch: cleanMinute(source.lunch, null),
       hikes: cleanHikes(source.hikes),
       radius: Number(source.radius) === 40 ? 40 : 20,
+      order: cleanOrder(source.order),
     };
   }
 
@@ -180,6 +186,25 @@
     const number = Number(value);
     if (!Number.isInteger(number) || number < 0 || number >= 24 * 60) return fallback;
     return number;
+  }
+
+  function cleanOrder(value) {
+    if (!Array.isArray(value)) return null;
+    const tokens = [];
+    let stay = false;
+    value.forEach((token) => {
+      if (token === "stay") {
+        if (!stay) {
+          tokens.push("stay");
+          stay = true;
+        }
+        return;
+      }
+      const id = Number(token);
+      if (Number.isFinite(id) && !tokens.includes(id)) tokens.push(id);
+    });
+    if (!stay || tokens.length < 2) return null;
+    return tokens;
   }
 
   function cleanHikes(value) {

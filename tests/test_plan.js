@@ -229,6 +229,62 @@ const movedHike = retimedHours({
 assert.strictEqual(movedHike.hours.hikes[6], 10 * 60 + 30);
 assert.strictEqual(movedHike.hours.lunch, 11 * 60 + 30);
 assert.strictEqual(movedHike.hours.start, null);
+assert.strictEqual(evening.find((step) => step.kind === "depart").block, "road");
+assert.strictEqual(evening.find((step) => step.kind === "arrive").block, "road");
+assert.strictEqual(evening.find((step) => step.kind === "breakfast").block, "stay");
+assert.strictEqual(
+  evening.find((step) => step.kind === "hike").block,
+  evening.find((step) => step.kind === "lunch").block,
+);
+
+const firstHike = buildItinerary({
+  camp: lake,
+  trails: [{ id: 5, name: "נחל קצר", hoursMin: 2, hoursMax: 2 }],
+  arrivalMinutes: 17 * 60,
+  origin,
+  order: [5, "stay"],
+});
+const flippedDepart = firstHike.find((step) => step.kind === "depart");
+const flippedHike = firstHike.find((step) => step.kind === "hike");
+const flippedArrive = firstHike.find((step) => step.kind === "arrive");
+assert.strictEqual(flippedDepart.toward, "hike");
+assert.ok(firstHike.indexOf(flippedHike) < firstHike.indexOf(flippedArrive));
+assert.strictEqual(flippedHike.beforeStay, true);
+assert.strictEqual(flippedHike.day, "שישי");
+assert.strictEqual(flippedArrive.block, "stay");
+assert.strictEqual(flippedHike.at, 17 * 60 - 30 - 120);
+assert.strictEqual(flippedDepart.at + flippedDepart.drive, flippedHike.at);
+assert.strictEqual(firstHike.find((step) => step.kind === "lunch"), undefined);
+assert.strictEqual(firstHike.find((step) => step.kind === "breakfast").at, 7 * 60 + 30);
+const slid = retimedHours({
+  hours: {},
+  arrival: 17 * 60,
+  step: flippedDepart,
+  next: 8 * 60,
+  trailIds: [5],
+  order: [5, "stay"],
+});
+assert.strictEqual(slid.arrival, 17 * 60 + (8 * 60 - flippedDepart.at));
+assert.strictEqual(slid.hours.rise, null);
+const slidHike = retimedHours({
+  hours: {},
+  arrival: 17 * 60,
+  step: flippedHike,
+  next: flippedHike.at + 60,
+  trailIds: [5],
+  order: [5, "stay"],
+});
+assert.strictEqual(slidHike.arrival, 18 * 60);
+assert.strictEqual(slidHike.hours.hikes[5], undefined);
+const ignored = buildItinerary({
+  camp: lake,
+  trails: [{ id: 5, name: "נחל", hoursMin: 1, hoursMax: 1 }],
+  arrivalMinutes: 17 * 60,
+  origin,
+  order: [99, "stay"],
+});
+assert.strictEqual(ignored.find((step) => step.kind === "hike").beforeStay, false);
+assert.strictEqual(ignored.find((step) => step.kind === "arrive").block, "road");
 
 const centers = centerOrigin([
   { lat: 32, lng: 34.7, regions: ["center"] },
@@ -249,6 +305,12 @@ assert.ok(Math.max(...lats) < 32.76, "the trip line stays on the selected hike")
 assert.ok(story.stages.filter((stage) => stage.trailId === 62571).every((stage) => stage.lat < 32.76));
 assert.strictEqual(story.stages.find((stage) => stage.kind === "depart-hike").title, "יוצאים לטיול");
 assert.ok(story.stages.filter((stage) => stage.kind !== "arrive").length <= 3);
+const pointTrail = { id: 5, name: "נחל", lat: 32.73, lng: 35.02 };
+const flippedStages = tripStages(lake, [pointTrail], [5, "stay"]);
+assert.strictEqual(flippedStages.stages[0].kind, "depart-hike");
+assert.strictEqual(flippedStages.stages[0].n, 1);
+assert.strictEqual(flippedStages.stages[flippedStages.stages.length - 1].kind, "arrive");
+assert.ok(flippedStages.stages.at(-1).text.includes("אחרי המסלול"));
 
 assert.deepStrictEqual(trailLures(swiss), ["לילדים", "מוצל", "נוף מהמם"]);
 assert.deepStrictEqual(trailLures({

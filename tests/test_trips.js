@@ -85,10 +85,25 @@ assert.ok(timedPath.includes("arrival=980"));
 assert.ok(timedPath.includes("dinner=1170"));
 assert.ok(timedPath.includes("rise=390"));
 assert.ok(timedPath.includes("hikes=9%3A480") || timedPath.includes("hikes=9:480"));
+const ordered = trips.save({
+  name: "סדר",
+  campId: 8,
+  trailIds: [3, 4],
+  place: { order: [4, "stay", 3, 3, "nope"] },
+});
+assert.deepStrictEqual(ordered.place.order, [4, "stay", 3]);
+const orderedPath = trips.sharePath(ordered);
+assert.ok(orderedPath.includes("order=4%2Cstay%2C3") || orderedPath.includes("order=4,stay,3"));
+assert.ok(!trips.sharePath({
+  campId: 8,
+  trailIds: [3],
+  name: "רגיל",
+  place: { order: ["stay", 3] },
+}).includes("order="));
 
 trips.remove(created.id);
 assert.strictEqual(trips.get(created.id), null);
-assert.strictEqual(trips.list().length, 3);
+assert.strictEqual(trips.list().length, 4);
 
 const broken = open({
   get: () => "{",
