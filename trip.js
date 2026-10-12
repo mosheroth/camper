@@ -451,6 +451,47 @@ function showTrip() {
   sharedMap.flyTo([tripView.lat, tripView.lng], tripView.zoom, { duration: 0.3 });
 }
 
+  // Leaflet chooses left/right from the map center, then a long label can still
+  // cross the map's edge. Nudge it back inside the map box on the screen.
+  function keepTipInside(event) {
+    const map = event.target;
+    const tip = event.tooltip && event.tooltip.getElement();
+    if (!tip || !map) return;
+    const pad = 8;
+    const mapBox = map.getContainer().getBoundingClientRect();
+    if (mapBox.width < 40 || mapBox.height < 40) return;
+    const room = Math.max(120, mapBox.width - pad * 2);
+    tip.style.maxWidth = "";
+    tip.style.whiteSpace = "";
+    const before = tip.getBoundingClientRect();
+    if (before.width > room) {
+      tip.style.maxWidth = `${Math.floor(room)}px`;
+      tip.style.whiteSpace = "normal";
+    }
+    const box = tip.getBoundingClientRect();
+    let dx = 0;
+    let dy = 0;
+    const shrink = before.width - box.width;
+    if (tip.classList.contains("leaflet-tooltip-left")) dx += shrink;
+    else if (tip.classList.contains("leaflet-tooltip-top") || tip.classList.contains("leaflet-tooltip-bottom")) dx += shrink / 2;
+    const grown = box.height - before.height;
+    if (tip.classList.contains("leaflet-tooltip-left") || tip.classList.contains("leaflet-tooltip-right")) dy -= grown / 2;
+    else if (tip.classList.contains("leaflet-tooltip-top")) dy -= grown;
+    const left = box.left + dx;
+    const right = box.right + dx;
+    const top = box.top + dy;
+    const bottom = box.bottom + dy;
+    if (right - left > mapBox.width - pad * 2) dx += mapBox.left + pad - left;
+    else if (left < mapBox.left + pad) dx += mapBox.left + pad - left;
+    else if (right > mapBox.right - pad) dx += mapBox.right - pad - right;
+    if (bottom - top > mapBox.height - pad * 2) dy += mapBox.top + pad - top;
+    else if (top < mapBox.top + pad) dy += mapBox.top + pad - top;
+    else if (bottom > mapBox.bottom - pad) dy += mapBox.bottom - pad - bottom;
+    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+    const pos = window.L.DomUtil.getPosition(tip);
+    window.L.DomUtil.setPosition(tip, pos.add([dx, dy]));
+  }
+
   function drawMap(camp, trails, extras, onAdd, order, placeSpots, coffeePlaces) {
   if (typeof window.L === "undefined") {
     mapNote.textContent = "המפה לא נטענה. אפשר עדיין לקרוא את הפירוט ולפתוח את העמודים הרשמיים.";
@@ -463,6 +504,26 @@ function showTrip() {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(sharedMap);
     overlay = window.L.layerGroup().addTo(sharedMap);
+    // Clamp after Leaflet positions the label, including a later zoom or font load.
+    if (!window.L.Tooltip.prototype._camperClamped) {
+      const placeTip = window.L.Tooltip.prototype._setPosition;
+      window.L.Tooltip.prototype._setPosition = function (pos) {
+        placeTip.call(this, pos);
+        keepTipInside({ target: this._map, tooltip: this });
+      };
+      window.L.Tooltip.prototype._camperClamped = true;
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        const tip = document.querySelector(".leaflet-tooltip");
+        if (!tip || !sharedMap) return;
+        sharedMap.eachLayer((layer) => {
+          if (!layer.isTooltipOpen || !layer.isTooltipOpen()) return;
+          const open = layer.getTooltip && layer.getTooltip();
+          if (open) open.update();
+        });
+      });
+    }
   }
   clearPreviewLine();
   previewing = false;
@@ -637,7 +698,7 @@ function showTrip() {
     }).addTo(overlay);
     const kind = PLACE_KIND[place.kind] || "";
     const where = item.km != null && item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ`;
-    marker.bindTooltip(`${place.name} · ${kind} · ${where}`, { direction: "top", opacity: 0.95 });
+    marker.bindTooltip(`${place.name} · ${kind} · ${where}`, { direction: "auto", opacity: 0.95 });
     marker.on("mouseover", () => emphasize(key));
     marker.on("mouseout", () => emphasize(focusedKey));
     marker.on("click", () => {

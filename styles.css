@@ -242,6 +242,14 @@ button {
   border-radius: 18px;
   background: var(--sand-deep);
 }
+/* Leaflet places a label from its left edge. On a right-to-left page that edge
+   is the label's right side, so the label slides off the map. */
+.leaflet-container { direction: ltr; }
+.leaflet-tooltip,
+.leaflet-popup-content {
+  direction: rtl;
+  text-align: right;
+}
 .legend {
   display: flex;
   flex-wrap: wrap;
