@@ -643,7 +643,7 @@
         number += 1;
       }
       if (pointKm(end, start) > 0.3 && away(end) && pointKm(end, middle) > 0.2) {
-        stages.push({ ...base, kind: "far", n: number, lat: end[0], lng: end[1], title: "המשך המסלול" });
+        stages.push({ ...base, kind: "far", n: number, lat: end[0], lng: end[1], title: "סוף המסלול" });
         number += 1;
       }
     }

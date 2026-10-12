@@ -352,6 +352,7 @@ const lats = story.paths[0].line.map((point) => point[0]);
 assert.ok(Math.max(...lats) < 32.76, "the trip line stays on the selected hike");
 assert.ok(story.stages.filter((stage) => stage.trailId === 62571).every((stage) => stage.lat < 32.76));
 assert.strictEqual(story.stages.find((stage) => stage.kind === "depart-hike").title, "יוצאים לטיול");
+assert.strictEqual(story.stages.find((stage) => stage.kind === "far").title, "סוף המסלול");
 assert.ok(story.stages.filter((stage) => stage.kind !== "arrive").length <= 3);
 const pointTrail = { id: 5, name: "נחל", lat: 32.73, lng: 35.02 };
 const flippedStages = tripStages(lake, [pointTrail], [5, "stay"]);
