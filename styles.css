@@ -1228,10 +1228,12 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .block-move svg { width: 14px; height: 14px; display: block; }
 .block-move:disabled { opacity: 0.35; cursor: default; }
+.day-block.can-drag,
 .day-block.can-drag header { cursor: grab; }
 .day-block.can-drag header .block-moves,
 .day-block.can-drag input,
-.day-block.can-drag button { cursor: pointer; }
+.day-block.can-drag button,
+.day-block.can-drag a { cursor: pointer; }
 .day-block.dragging { opacity: 0.55; }
 .day-block.dragging header { cursor: grabbing; }
 .day-block.drop-before { box-shadow: inset 0 3px 0 var(--green); }

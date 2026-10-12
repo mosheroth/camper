@@ -1380,7 +1380,13 @@ Promise.all([
       const index = sequence.indexOf(token);
       const target = sequence[index + direction];
       if (target == null) return;
-      applyOrder(window.CamperPlan.moveOrder(order, selected, token, target, direction > 0));
+      applyOrder(window.CamperPlan.moveOrder(order, selected, token, target, direction > 0, selectedCoffee, selectedVisits));
+    }
+
+    function tokenFromMark(value) {
+      if (value === "stay" || /^[cv]:[or]\d+$/.test(value)) return value;
+      const number = Number(value);
+      return Number.isFinite(number) ? number : null;
     }
 
     function clearDropMarks() {
@@ -1455,11 +1461,57 @@ Promise.all([
       const movable = sequence.length > 1;
       let hereIndex = 0;
       let pendingLeg = null;
+      block.addEventListener("dragenter", (event) => {
+        if (dragToken == null) return;
+        event.preventDefault();
+      });
+      block.addEventListener("dragover", (event) => {
+        if (dragToken == null) return;
+        const card = event.target.closest(".day-block.can-drag");
+        const leg = event.target.closest(".block-leg");
+        clearDropMarks();
+        if (card && card.dataset.token !== String(dragToken)) {
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+          const after = event.clientY > card.getBoundingClientRect().top + card.offsetHeight / 2;
+          card.classList.toggle("drop-before", !after);
+          card.classList.toggle("drop-after", after);
+          return;
+        }
+        if (leg && leg.dataset.before && leg.dataset.before !== String(dragToken)) {
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+          const next = [...block.querySelectorAll(".day-block")].find((node) => node.dataset.token === leg.dataset.before);
+          if (next) next.classList.add("drop-before");
+          return;
+        }
+        event.preventDefault();
+      });
+      block.addEventListener("drop", (event) => {
+        if (dragToken == null) return;
+        event.preventDefault();
+        const moving = dragToken;
+        const card = event.target.closest(".day-block.can-drag");
+        const leg = event.target.closest(".block-leg");
+        let onto = null;
+        let after = false;
+        if (card && card.dataset.token !== String(moving)) {
+          onto = tokenFromMark(card.dataset.token);
+          after = card.classList.contains("drop-after");
+        } else if (leg && leg.dataset.before && leg.dataset.before !== String(moving)) {
+          onto = tokenFromMark(leg.dataset.before);
+        }
+        clearDropMarks();
+        if (onto == null) return;
+        applyOrder(window.CamperPlan.moveOrder(order, selected, moving, onto, after, selectedCoffee, selectedVisits));
+      });
       groups.forEach((group) => {
         const inbound = group.steps.find((step) => step.inbound);
         if (inbound) pendingLeg = inbound.inbound;
+        let leg = null;
         if (pendingLeg) {
-          block.append(el("p", "block-leg", `נסיעה של ${formatDuration(pendingLeg)}`));
+          leg = el("p", "block-leg", `נסיעה של ${formatDuration(pendingLeg)}`);
+          block.append(leg);
           pendingLeg = null;
         }
         const card = el("section", "day-block");
@@ -1475,8 +1527,9 @@ Promise.all([
           card.classList.add("can-drag");
           card.draggable = true;
           card.dataset.token = String(token);
+          if (leg) leg.dataset.before = String(token);
           card.addEventListener("pointerdown", (event) => {
-            card.dataset.hold = event.target.closest("button, input, a, textarea, select, label") ? "no" : "yes";
+            card.dataset.hold = event.target.closest("button, input, a, textarea, select") ? "no" : "yes";
           });
           card.addEventListener("dragstart", (event) => {
             if (card.dataset.hold === "no") {
@@ -1489,29 +1542,11 @@ Promise.all([
             card.classList.add("dragging");
           });
           card.addEventListener("dragend", () => {
-            dragToken = null;
             card.classList.remove("dragging");
-            clearDropMarks();
-          });
-          card.addEventListener("dragover", (event) => {
-            if (dragToken == null || dragToken === token) return;
-            event.preventDefault();
-            event.dataTransfer.dropEffect = "move";
-            const after = event.clientY > card.getBoundingClientRect().top + card.offsetHeight / 2;
-            card.classList.toggle("drop-before", !after);
-            card.classList.toggle("drop-after", after);
-          });
-          card.addEventListener("dragleave", (event) => {
-            if (card.contains(event.relatedTarget)) return;
-            card.classList.remove("drop-before", "drop-after");
-          });
-          card.addEventListener("drop", (event) => {
-            event.preventDefault();
-            const after = card.classList.contains("drop-after");
-            const moving = dragToken;
-            clearDropMarks();
-            if (moving == null || moving === token) return;
-            applyOrder(window.CamperPlan.moveOrder(order, selected, moving, token, after));
+            window.setTimeout(() => {
+              dragToken = null;
+              clearDropMarks();
+            }, 0);
           });
         }
         card.append(head);

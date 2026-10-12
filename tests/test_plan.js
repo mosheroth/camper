@@ -538,6 +538,9 @@ assert.strictEqual(withHike.find((step) => step.kind === "lunch").at, 10 * 60);
 assert.deepStrictEqual(normalizeOrder(["c:o1", "stay", "c:o2"], [], ["o1"]), ["c:o1", "stay"]);
 assert.deepStrictEqual(normalizeOrder(["stay", "c:o3"], []), ["stay", "c:o3"]);
 assert.deepStrictEqual(moveOrder(["stay", "c:o1", 2], [2], "c:o1", "stay", false), ["c:o1", "stay", 2]);
+assert.deepStrictEqual(moveOrder(null, [2], "v:r9", "stay", false, [], ["r9"]), ["v:r9", "stay", 2]);
+assert.deepStrictEqual(moveOrder(null, [2], "c:o1", 2, false, ["o1"], []), ["stay", "c:o1", 2]);
+assert.deepStrictEqual(moveOrder(null, [2], 2, "stay", false, ["o1"], ["r9"]), [2, "stay", "v:r9", "c:o1"]);
 const movedCup = retimedHours({
   hours: {},
   arrival: 17 * 60,

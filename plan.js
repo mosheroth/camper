@@ -279,8 +279,8 @@
     return tokens;
   }
 
-  function moveOrder(order, trailIds, token, target, after) {
-    const sequence = normalizeOrder(order, trailIds);
+  function moveOrder(order, trailIds, token, target, after, coffeeIds, visitIds) {
+    const sequence = normalizeOrder(order, trailIds, coffeeIds, visitIds);
     const asToken = (value) => {
       if (value === "stay") return "stay";
       const visitId = visitPlaceId(value);
