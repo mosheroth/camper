@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, centerOrigin, tripStages } = require("../plan.js");
+const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, centerOrigin, tripStages, trailLures } = require("../plan.js");
 
 const trails = [
   {
@@ -203,5 +203,25 @@ assert.ok(Math.max(...lats) < 32.76, "the trip line stays on the selected hike")
 assert.ok(story.stages.filter((stage) => stage.trailId === 62571).every((stage) => stage.lat < 32.76));
 assert.strictEqual(story.stages.find((stage) => stage.kind === "depart-hike").title, "יוצאים לטיול");
 assert.ok(story.stages.filter((stage) => stage.kind !== "arrive").length <= 3);
+
+assert.deepStrictEqual(trailLures(swiss), ["לילדים", "מוצל", "נוף מהמם"]);
+assert.deepStrictEqual(trailLures({
+  name: "נחל יבש",
+  blurb: "הליכה לאורך הנחל. יש מים לשתייה.",
+  family: false,
+  details: { highlights: ["נחל"] },
+}), []);
+assert.deepStrictEqual(trailLures({
+  name: "הר אמיר",
+  details: { snippet: "מעין גן שעשועים גיאולוגי" },
+}), []);
+assert.deepStrictEqual(trailLures({
+  name: "נחל חרוד",
+  details: { snippet: "הכולל גן שעשועים, שבילים ופרגולות" },
+}), ["פארק שעשועים"]);
+assert.deepStrictEqual(trailLures({
+  name: "אל הירוק",
+  blurb: "בעונה הנכונה הוא גם די רטוב, בדרך אל המעיין.",
+}), ["מסלול רטוב"]);
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

@@ -1149,6 +1149,43 @@ button {
 }
 .spot .add { padding: 6px 12px; }
 .spot button:disabled { opacity: 0.45; cursor: default; }
+.spot .lures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.spot .lures li {
+  background: #e7f0d8;
+  color: var(--green);
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.spot .fold { display: inline-block; margin-top: 6px; }
+.spot .preview {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.spot .preview[hidden] { display: none; }
+.spot .preview-photos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 8px;
+}
+.spot .preview-photos img {
+  width: 100%;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #efe6d8;
+}
+.spot.open { background: #f3e6d4; }
 .more-around { margin: 10px 0 4px; }
 .pin-hot .camp-pin {
   transform: scale(1.08);

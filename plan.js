@@ -287,6 +287,23 @@
     return { stages, paths };
   }
 
+  function trailLures(trail) {
+    if (!trail) return [];
+    const details = trail.details || {};
+    const text = [trail.name, trail.blurb, details.summary, details.character]
+      .concat(details.highlights || [])
+      .filter(Boolean)
+      .join(" ");
+    const tags = [];
+    if (trail.family || text.includes("משפח")) tags.push("לילדים");
+    if (/חורש|מוצל|מנהרת צל|(?<![א-ת])צל(?![א-ת])/.test(text)) tags.push("מוצל");
+    if (/רטוב|הליכה במים|בריכ|מעיין|מפל/.test(text)) tags.push("מסלול רטוב");
+    if (/תצפית|מצפור|מרהיב/.test(text)) tags.push("נוף מהמם");
+    const play = `${text} ${details.snippet || ""}`;
+    if (/(?:גן|פארק) שעשועים(?! גיאולוגי)|מתקני שעשועים|מתקני משחק/.test(play)) tags.push("פארק שעשועים");
+    return tags.slice(0, 4);
+  }
+
   function nearbyChoices(camp, trails) {
     const byId = new Map((trails || []).map((trail) => [trail.id, trail]));
     return (camp.nearby || [])
@@ -310,5 +327,6 @@
     centerOrigin,
     buildItinerary,
     tripStages,
+    trailLures,
   };
 });
