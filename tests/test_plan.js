@@ -590,6 +590,7 @@ assert.strictEqual(visit.walk, 90);
 assert.strictEqual(visit.back, 9 * 60 + 30);
 assert.strictEqual(visit.estimated, true);
 assert.strictEqual(visitDay.find((step) => step.kind === "lunch").at, 10 * 60);
+assert.strictEqual(visitDay.find((step) => step.kind === "lunch").afterOfficial, true);
 assert.ok(!visitDay.some((step) => step.kind === "need-hike"));
 const markedVisit = {
   id: "r9",
@@ -631,6 +632,7 @@ const springStop = springDay.find((step) => step.kind === "visit");
 assert.strictEqual(springStop.walk, 45);
 assert.strictEqual(springStop.official, false);
 assert.strictEqual(springStop.estimated, true);
+assert.strictEqual(springDay.find((step) => step.kind === "lunch").afterOfficial, false);
 const sharedVisit = shareMessage({
   camp: lake,
   trails: [],

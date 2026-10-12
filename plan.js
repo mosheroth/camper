@@ -443,6 +443,10 @@
     }, options);
   }
 
+  function placeOfficial(place) {
+    return Boolean(place && (place.source === "inpa" || /parks\.org\.il/.test(place.url || "")));
+  }
+
   function visitStep(place, options) {
     const { part, at, back, beforeStay, lastBefore, firstOfDay } = options;
     return withLeg({
@@ -458,7 +462,7 @@
       walk: visitMinutes(place),
       back,
       estimated: visitIsEstimate(place),
-      official: place.source === "inpa" || /parks\.org\.il/.test(place.url || ""),
+      official: placeOfficial(place),
       duration: place.duration || "",
       beforeStay: Boolean(beforeStay),
       lastBefore: Boolean(lastBefore),
@@ -577,6 +581,7 @@
       at: lunchAt,
       afterCoffee: last.kind === "coffee",
       afterVisit: last.kind === "visit",
+      afterOfficial: Boolean(last.official),
     });
     return steps;
   }
@@ -671,6 +676,7 @@
           : before.some((item) => item.type === "visit")
             ? "visit"
             : "coffee",
+        towardOfficial: before.some((item) => item.type === "visit" && placeOfficial(item.place)),
       });
       placed.forEach((item) => steps.push(item.step));
     }
@@ -682,6 +688,7 @@
         at: arrival,
         afterHike: before.some((item) => item.type === "hike"),
         afterVisit: !before.some((item) => item.type === "hike") && before.some((item) => item.type === "visit"),
+        afterOfficial: before.some((item) => item.type === "visit" && placeOfficial(item.place)),
       });
     }
     steps.push({ kind: "dinner", block: "stay", part: "out", at: dinner });

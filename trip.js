@@ -1403,12 +1403,12 @@ Promise.all([
     function stepCopy(step) {
       if (step.kind === "depart") {
         if (step.at == null) return `יוצאים מהבית, מ${homePlace}. אין מרחק נסיעה, אז שעת היציאה גמישה.`;
-        const where = step.toward === "hike" ? "לכיוון המסלול" : step.toward === "visit" ? "לכיוון הביקור" : step.toward === "coffee" ? "לכיוון התצפית" : "לכיוון החניון";
+        const where = step.toward === "hike" ? "לכיוון המסלול" : step.toward === "visit" ? (step.towardOfficial ? "לכיוון הביקור" : "לכיוון נקודת העניין") : step.toward === "coffee" ? "לכיוון התצפית" : "לכיוון החניון";
         return `יוצאים מהבית, מ${homePlace}, ${where}. נסיעה של ${formatDuration(step.drive)} בערך.`;
       }
       if (step.kind === "arrive") {
         if (step.afterHike) return `מגיעים ל${camp.name} אחרי המסלול. כאן ישנים.`;
-        if (step.afterVisit) return `מגיעים ל${camp.name} אחרי הביקור. כאן ישנים.`;
+        if (step.afterVisit) return `מגיעים ל${camp.name} אחרי ${step.afterOfficial ? "הביקור" : "העצירה"}. כאן ישנים.`;
         return `מגיעים ל${camp.name}. כאן ישנים.`;
       }
       if (step.kind === "dinner") return "אוכלים בחניון.";
@@ -1464,9 +1464,10 @@ Promise.all([
       }
       if (step.kind === "home") return `מגיעים הביתה, ל${homePlace}.`;
       if (step.kind === "lunch" && step.afterVisit) {
+        const noun = step.afterOfficial ? "הביקור" : "העצירה";
         return step.at == null
-          ? "אחרי הביקור אוכלים בחניון. השעה גמישה."
-          : "אחרי הביקור אוכלים בחניון.";
+          ? `אחרי ${noun} אוכלים בחניון. השעה גמישה.`
+          : `אחרי ${noun} אוכלים בחניון.`;
       }
       if (step.kind === "lunch" && step.afterCoffee) {
         return step.at == null
@@ -1630,18 +1631,24 @@ Promise.all([
         const titled = blockTitle(group);
         const heading = decorate(el("h3"), titled[0], titled[1]);
         const coffeeStep = group.steps.find((step) => step.kind === "coffee");
-        if (coffeeStep) {
+        const visitStep = group.steps.find((step) => step.kind === "visit");
+        const openStep = coffeeStep
+          ? () => openCoffee(coffeeStep.placeId)
+          : visitStep
+            ? () => openVisit(visitStep.placeId)
+            : null;
+        if (openStep) {
           heading.classList.add("can-open");
           heading.tabIndex = 0;
           heading.setAttribute("role", "button");
           heading.addEventListener("click", (event) => {
             event.stopPropagation();
-            openCoffee(coffeeStep.placeId);
+            openStep();
           });
           heading.addEventListener("keydown", (event) => {
             if (event.key !== "Enter" && event.key !== " ") return;
             event.preventDefault();
-            openCoffee(coffeeStep.placeId);
+            openStep();
           });
         }
         head.append(heading);
@@ -1944,7 +1951,8 @@ Promise.all([
         actions.append(info);
         const place = visitNear.get(placeId) && visitNear.get(placeId).place;
         if (place && place.url) {
-          const source = link(place.url, "באתר הרשות");
+          const officialPlace = place.source === "inpa" || /parks\.org\.il/.test(place.url || "");
+          const source = link(place.url, officialPlace ? "באתר הרשות" : "במפה");
           source.className = "text-link";
           actions.append(source);
         }
@@ -2581,7 +2589,8 @@ Promise.all([
             ? `הערכה של ${window.CamperPlan.shareDuration(minutes)} נכנסת ללוז. משך הביקור לא מסומן בעמוד.`
             : `הערכה של ${window.CamperPlan.shareDuration(minutes)} נכנסת ללוז.`)
           : `הביקור נכנס ללוז לפי הסימון בעמוד: ${item.place.duration}.`;
-        picked.append(bar, el("p", "add-effect", on ? `הביקור בלוז. ${when}` : `אם מוסיפים לטיול, ${when}`), visitSheet(item.place, item.km, wayPhrase(item.place)));
+        const lead = officialPlace ? "הביקור" : "העצירה";
+        picked.append(bar, el("p", "add-effect", on ? `${lead} בלוז. ${when}` : `אם מוסיפים לטיול, ${when}`), visitSheet(item.place, item.km, wayPhrase(item.place)));
         return;
       }
       const focus = focusId != null ? byId.get(focusId) : null;
