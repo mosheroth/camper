@@ -259,7 +259,7 @@ function renderPlan(plan) {
   copy.append(el("h2", null, camp.name));
   copy.append(el("p", "meta", [regions, lodging, distance, trailName].filter(Boolean).join(" · ")));
   const href = window.CamperPlan.planUrl(camp.id, plan.trails.map((item) => item.trail.id));
-  const opener = el("a", "opener", "יצירת טיול");
+  const opener = el("a", "opener", "לצפייה");
   opener.href = href;
   opener.addEventListener("click", () => {
     sessionStorage.setItem("camper-filters", JSON.stringify(readFilters()));

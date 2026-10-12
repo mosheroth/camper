@@ -479,6 +479,7 @@ Promise.all([
     let tripId = stored && Number(stored.campId) === camp.id ? stored.id : null;
     nameInput.value = (tripId ? stored.name : query.name) || camp.name;
     deleteButton.hidden = !tripId;
+    saveButton.textContent = tripId ? "שמירה" : "צור טיול";
 
     document.title = `${nameInput.value} — סופ״ש בטבע`;
     title.textContent = camp.name;
@@ -532,6 +533,7 @@ Promise.all([
       tripId = saved.id;
       nameInput.value = saved.name;
       deleteButton.hidden = false;
+      saveButton.textContent = "שמירה";
       document.title = `${saved.name} — סופ״ש בטבע`;
       return saved;
     }

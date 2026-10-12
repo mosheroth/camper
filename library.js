@@ -90,8 +90,8 @@ function render() {
   library.append(el("p", "summary", trips.length ? count : "עדיין אין טיולים שמורים."));
   if (!trips.length) {
     const empty = el("p", "empty");
-    empty.append("יוצרים טיול ממפת הארץ, ושומרים אותו. ");
-    const start = el("a", null, "ליצירת טיול");
+    empty.append("צופים באפשרות מהמפה, ואז שומרים אותה כטיול. ");
+    const start = el("a", null, "למפה");
     start.href = "index.html";
     empty.append(start);
     library.append(empty);
