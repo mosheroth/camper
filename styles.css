@@ -530,9 +530,9 @@ button {
   min-height: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: minmax(340px, 440px) minmax(0, 1fr);
+  grid-template-columns: minmax(280px, var(--panel-size, 1fr)) 14px minmax(240px, var(--map-size, 1fr));
   grid-template-rows: minmax(0, 1fr);
-  gap: 16px;
+  gap: 0;
   padding: 0 12px 8px;
 }
 .trip-page .panel {
@@ -719,6 +719,7 @@ button {
     gap: 8px;
     padding: 0 8px 6px;
   }
+  .trip-page .splitter { display: none; }
   .trip-page .stage { order: -1; }
   .trip-page .panel .gallery-stage { height: 140px; }
 }
@@ -771,9 +772,9 @@ button {
   min-height: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: minmax(320px, 460px) minmax(0, 1fr);
+  grid-template-columns: minmax(280px, var(--panel-size, 1fr)) 14px minmax(240px, var(--map-size, 1fr));
   grid-template-rows: minmax(0, 1fr);
-  gap: 10px;
+  gap: 0;
   padding: 0 12px 8px;
 }
 .browse-page .panel {
@@ -918,11 +919,38 @@ button {
     gap: 8px;
     padding: 0 8px 6px;
   }
+  .browse-page .splitter { display: none; }
   .browse-page .stage { order: -1; }
 }
 
 .browse-page .eyebrow a,
 .trip-page .eyebrow a { color: var(--clay); text-decoration: none; }
+
+.splitter {
+  position: relative;
+  z-index: 2;
+  touch-action: none;
+  cursor: col-resize;
+}
+.splitter::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: var(--line);
+}
+.splitter:hover::before,
+.splitter:focus-visible::before,
+.splitter.dragging::before {
+  background: var(--green);
+  width: 6px;
+}
+.splitter:focus-visible { outline: none; }
+body.splitting { cursor: col-resize; user-select: none; }
 
 .trip-actions {
   flex: none;
