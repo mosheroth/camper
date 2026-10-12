@@ -83,6 +83,32 @@ class CatalogTests(unittest.TestCase):
                 self.assertTrue(photo["src"].startswith("https://www.parks.org.il/"))
                 self.assertNotIn("מפת", photo["src"])
 
+    def test_places_are_named_points_near_israel(self):
+        places = json.loads((ROOT / "data" / "places.json").read_text(encoding="utf-8"))
+        kinds = {"spring", "waterfall", "viewpoint", "peak", "park", "reserve", "beach"}
+        self.assertGreater(len(places), 100)
+        seen = set()
+        for place in places:
+            self.assertIn(place["kind"], kinds)
+            self.assertIn(place["source"], {"inpa", "osm"})
+            self.assertGreaterEqual(place["lat"], 29.4)
+            self.assertLessEqual(place["lat"], 33.4)
+            self.assertGreaterEqual(place["lng"], 34.2)
+            self.assertLessEqual(place["lng"], 35.95)
+            self.assertTrue(place["name"])
+            self.assertNotIn(place["id"], seen)
+            seen.add(place["id"])
+            if place["source"] == "inpa":
+                self.assertIn("parks.org.il", place["url"])
+            else:
+                self.assertIn("openstreetmap.org", place["url"])
+        self.assertIn("spring", {place["kind"] for place in places})
+        self.assertIn("park", {place["kind"] for place in places})
+
+    def test_recovered_walks_stay_in_the_catalog(self):
+        ids = {trail["id"] for trail in self.trails}
+        self.assertTrue({295240, 147488, 6070}.issubset(ids))
+
     def test_family_signal_is_not_the_default_tag(self):
         family = sum(1 for trail in self.trails if trail["family"])
         self.assertGreater(family, 20)

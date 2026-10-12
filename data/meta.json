@@ -1,12 +1,14 @@
 {
-  "fetchedAt": "2026-10-11T19:33:04Z",
+  "fetchedAt": "2026-10-12T10:06:51Z",
   "source": "https://www.parks.org.il",
   "counts": {
     "paid": 18,
     "free": 108,
-    "trails": 279,
-    "family": 101,
-    "circular": 117,
-    "routes": 117
-  }
+    "trails": 282,
+    "family": 103,
+    "circular": 119,
+    "routes": 118,
+    "places": 1982
+  },
+  "placesFetchedAt": "2026-10-12T10:09:12Z"
 }

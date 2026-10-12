@@ -133,14 +133,17 @@ def is_family(tags, text):
 
 
 _NOT_HIKE = re.compile(
-    r"אופני|ג['׳]יפ|רכוב|4\s*[xX×]\s*4"
+    r"אופני|ג['׳]יפ|רכוב(?!ים)|4\s*[xX×]\s*4"
     r"|(?:^|[^\u0590-\u05FF])(?:ברכב|לרכב)(?:[^\u0590-\u05FF]|$)"
 )
+# A walk that returns to the car, or a shuttle at the far end, is still a hike.
+_CAR_ASIDE = re.compile(r"חזרה\s+לרכב|לדאוג\s+לרכב|לרכב\s+אוסף")
 
 
 def is_hike(text):
     """False for bike, jeep and driving routes published in the same index."""
-    return _NOT_HIKE.search(text or "") is None
+    cleaned = _CAR_ASIDE.sub(" ", text or "")
+    return _NOT_HIKE.search(cleaned) is None
 
 
 def is_accessible(text, flags):

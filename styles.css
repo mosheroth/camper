@@ -1280,6 +1280,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   padding: 6px 12px;
 }
 .near-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.place-filters { margin: 6px 0 2px; }
 .near-filters .chip-btn { padding: 4px 10px; font-size: 0.82rem; }
 
 .spot {

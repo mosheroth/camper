@@ -103,8 +103,12 @@ def fetch_areas():
 
 
 def title_of(item):
-    raw = (item.get("title") or {}).get("rendered") or item.get("slug") or ""
-    return plain_text(raw)
+    title = item.get("title")
+    if isinstance(title, dict):
+        raw = title.get("rendered") or ""
+    else:
+        raw = title or ""
+    return plain_text(raw or item.get("slug") or "")
 
 
 def image_url(value):

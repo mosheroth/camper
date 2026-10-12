@@ -679,6 +679,41 @@
     return { close, wide: nearby.length };
   }
 
+  function nearbyPlaces(camp, places, options) {
+    const settings = options || {};
+    const maxKm = settings.maxKm == null ? 15 : settings.maxKm;
+    const kind = settings.kind && settings.kind !== "all" ? settings.kind : "";
+    const varied = settings.varied !== false && !kind;
+    const perKind = settings.perKind == null ? 3 : settings.perKind;
+    if (!camp || camp.lat == null || camp.lng == null) return [];
+    const matched = [];
+    (places || []).forEach((place) => {
+      if (!place || place.lat == null || place.lng == null) return;
+      if (kind && place.kind !== kind) return;
+      if (place.name && camp.name && place.name === camp.name) return;
+      const km = haversineKm(camp, place);
+      if (!Number.isFinite(km) || km > maxKm) return;
+      matched.push({ place, km: Math.round(km * 10) / 10 });
+    });
+    matched.sort((left, right) => {
+      if (left.km !== right.km) return left.km - right.km;
+      return String(left.place.name).localeCompare(String(right.place.name), "he");
+    });
+    if (!varied) return matched;
+    const picked = [];
+    const skipped = [];
+    const counts = {};
+    matched.forEach((item) => {
+      const count = counts[item.place.kind] || 0;
+      if (count >= perKind) skipped.push(item);
+      else {
+        counts[item.place.kind] = count + 1;
+        picked.push(item);
+      }
+    });
+    return picked.concat(skipped);
+  }
+
   function nearbyChoices(camp, trails) {
     const byId = new Map((trails || []).map((trail) => [trail.id, trail]));
     return (camp.nearby || [])
@@ -719,6 +754,7 @@
     campMatches,
     planUrl,
     nearbyChoices,
+    nearbyPlaces,
     nearbyList,
     aroundCount,
     lengthIsUsable,

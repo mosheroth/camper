@@ -1,4 +1,22 @@
 const COLORS = ["#a3472c", "#1d6a4f", "#1d4e89", "#8a5a00", "#6b3fa0"];
+const PLACE_KIND = {
+  spring: "מעיין",
+  waterfall: "מפל",
+  viewpoint: "מצפור",
+  peak: "פסגה",
+  park: "גן לאומי",
+  reserve: "שמורה",
+  beach: "חוף",
+};
+const PLACE_COLOR = {
+  spring: "#1d6a8a",
+  waterfall: "#0b6e8a",
+  viewpoint: "#8a5a00",
+  peak: "#4d5a32",
+  park: "#1d6a4f",
+  reserve: "#1d6a4f",
+  beach: "#1d4e89",
+};
 const TIME_LABEL = {
   depart: "שעת יציאה",
   arrive: "שעת הגעה",
@@ -337,6 +355,7 @@ let tripView = null;
 let previewLine = null;
 let previewing = false;
 let previewKey = null;
+let placeMarks = new Map();
 
 window.addEventListener("resize", () => {
   if (sharedMap) sharedMap.invalidateSize({ animate: false });
@@ -361,6 +380,11 @@ function emphasize(id) {
       });
       if (on) dot.bringToFront();
     });
+  });
+  placeMarks.forEach((marker, markerKey) => {
+    const on = markerKey === key;
+    marker.setStyle({ radius: on ? 9 : 5, weight: on ? 3 : 2, fillOpacity: 1 });
+    if (on) marker.bringToFront();
   });
   const pin = document.querySelector(".camp-marker");
   if (pin) pin.classList.toggle("pin-hot", key === "camp");
@@ -401,7 +425,7 @@ function showTrip() {
   sharedMap.flyTo([tripView.lat, tripView.lng], tripView.zoom, { duration: 0.3 });
 }
 
-  function drawMap(camp, trails, extras, onAdd, order) {
+  function drawMap(camp, trails, extras, onAdd, order, placeSpots) {
   if (typeof window.L === "undefined") {
     mapNote.textContent = "המפה לא נטענה. אפשר עדיין לקרוא את הפירוט ולפתוח את העמודים הרשמיים.";
     return null;
@@ -420,6 +444,7 @@ function showTrip() {
   sharedMap.stop();
   overlay.clearLayers();
   layersById = new Map();
+  placeMarks = new Map();
   sharedMap.invalidateSize({ animate: false });
   const map = sharedMap;
   const bounds = [];
@@ -572,6 +597,32 @@ function showTrip() {
     bounds.push([item.trail.lat, item.trail.lng]);
   });
 
+  (placeSpots || []).forEach((item) => {
+    const place = item.place;
+    if (!place || place.lat == null) return;
+    const key = `place-${place.id}`;
+    const color = PLACE_COLOR[place.kind] || "#6d6256";
+    const marker = window.L.circleMarker([place.lat, place.lng], {
+      radius: 5,
+      color,
+      weight: 2,
+      fillColor: "#fffaf3",
+      fillOpacity: 1,
+    }).addTo(overlay);
+    const kind = PLACE_KIND[place.kind] || "";
+    const where = item.km != null && item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ`;
+    marker.bindTooltip(`${place.name} · ${kind} · ${where}`, { direction: "top", opacity: 0.95 });
+    marker.on("mouseover", () => emphasize(key));
+    marker.on("mouseout", () => emphasize(focusedKey));
+    marker.on("click", () => {
+      focusedKey = key;
+      emphasize(key);
+      const row = document.querySelector(`.spot[data-id="${key}"]`);
+      if (row) row.scrollIntoView({ block: "nearest" });
+    });
+    placeMarks.set(key, marker);
+  });
+
   const view = { animate: false };
   const framed = storyBounds.length > 1 ? storyBounds : bounds;
   if (framed.length > 1) {
@@ -596,8 +647,9 @@ function showTrip() {
 Promise.all([
   fetch("data/camps.json").then((response) => response.json()),
   fetch("data/trails.json").then((response) => response.json()),
+  fetch("data/places.json").then((response) => (response.ok ? response.json() : [])).catch(() => []),
 ])
-  .then(([camps, trails]) => {
+  .then(([camps, trails, placeCatalog]) => {
     const query = params();
     const { campId, trailIds } = query;
     const camp = camps.find((item) => item.id === campId);
@@ -612,6 +664,10 @@ Promise.all([
     let radius = query.radius;
     let expanded = false;
     let nearSort = "near";
+    let placeKind = "all";
+    let placesExpanded = false;
+    const places = Array.isArray(placeCatalog) ? placeCatalog : [];
+    const placeById = new Map(places.map((place) => [`place-${place.id}`, place]));
     const nearOn = {
       family: false,
       circular: false,
@@ -871,7 +927,40 @@ Promise.all([
       else sharedMap.flyToBounds(points, { padding: [48, 48], maxZoom: 15, duration: 0.3 });
     }
 
-    function spotRow(id, name, meta, swatchColor, action, onOpen) {
+    function showPlace(id) {
+      const key = String(id);
+      if (!sharedMap) return;
+      if (previewKey === key && previewing) {
+        emphasize(key);
+        return;
+      }
+      clearPreviewLine();
+      emphasize(key);
+      const marker = placeMarks.get(key);
+      const place = placeById.get(key);
+      const point = marker
+        ? marker.getLatLng()
+        : (place && place.lat != null ? [place.lat, place.lng] : null);
+      if (!point) {
+        previewKey = key;
+        return;
+      }
+      previewKey = key;
+      previewing = true;
+      sharedMap.stop();
+      const latlng = point.lat != null ? [point.lat, point.lng] : point;
+      sharedMap.flyTo(latlng, 15, { duration: 0.3 });
+    }
+
+    function holdPlace(id) {
+      showPlace(id);
+      previewing = false;
+      previewKey = null;
+      focusedKey = String(id);
+      emphasize(focusedKey);
+    }
+
+    function spotRow(id, name, meta, swatchColor, action, onOpen, onPreview) {
       const row = el("article", "spot");
       row.dataset.id = String(id);
       row.tabIndex = 0;
@@ -889,7 +978,8 @@ Promise.all([
           window.clearTimeout(previewTimer);
           previewTimer = null;
         }
-        showTrail(id);
+        if (onPreview) onPreview(id);
+        else showTrail(id);
       };
       row.addEventListener("mouseenter", preview);
       row.addEventListener("mouseleave", () => {
@@ -1566,6 +1656,72 @@ Promise.all([
         });
         around.append(more);
       }
+      renderPlaces();
+    }
+
+    function renderPlaces() {
+      const aroundPlaces = window.CamperPlan.nearbyPlaces(camp, places, { maxKm: 15, varied: true });
+      if (!aroundPlaces.length) return;
+      const kindOrder = ["spring", "waterfall", "viewpoint", "peak", "park", "reserve", "beach"];
+      const present = kindOrder.filter((kind) => aroundPlaces.some((item) => item.place.kind === kind));
+      if (placeKind !== "all" && !present.includes(placeKind)) placeKind = "all";
+      const filtered = placeKind === "all"
+        ? aroundPlaces
+        : aroundPlaces.filter((item) => item.place.kind === placeKind);
+      const shown = placesExpanded ? filtered.slice(0, 24) : filtered.slice(0, 6);
+      around.append(el("h2", "section-label", `נקודות בסביבה · ${filtered.length}`));
+      around.append(el("p", "fine", "בטווח 15 ק״מ מהחניון. עומדים על שורה והמפה קופצת לנקודה."));
+      const filters = el("div", "near-filters place-filters");
+      [["all", "הכל"]].concat(present.map((kind) => [kind, PLACE_KIND[kind] || kind])).forEach(([key, label]) => {
+        const button = el("button", "chip-btn", label);
+        button.type = "button";
+        button.setAttribute("aria-pressed", key === placeKind ? "true" : "false");
+        button.addEventListener("click", () => {
+          placeKind = key;
+          placesExpanded = false;
+          render();
+        });
+        filters.append(button);
+      });
+      around.append(filters);
+      shown.forEach((item) => {
+        const place = item.place;
+        const where = item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ`;
+        const kind = PLACE_KIND[place.kind] || "";
+        const key = `place-${place.id}`;
+        const row = spotRow(
+          key,
+          place.name,
+          `${kind} · ${where}`,
+          PLACE_COLOR[place.kind] || "#6d6256",
+          null,
+          holdPlace,
+          showPlace,
+        );
+        row.classList.add("place");
+        if (place.url) {
+          const source = link(place.url, place.source === "osm" ? "במפה" : "באתר הרשות");
+          source.className = "text-link";
+          row.querySelector(".spot-copy").append(source);
+        }
+        around.append(row);
+      });
+      if (!shown.length) {
+        around.append(el("p", "fine", "אין נקודה מהסוג הזה בטווח הזה."));
+      }
+      const cap = Math.min(filtered.length, 24);
+      if (placesExpanded && filtered.length > shown.length) {
+        around.append(el("p", "fine", `מוצגות ${shown.length} הקרובות מתוך ${filtered.length}.`));
+      }
+      if (!placesExpanded && cap > shown.length) {
+        const more = el("button", "chip-btn more-around", `עוד ${cap - shown.length} נקודות`);
+        more.type = "button";
+        more.addEventListener("click", () => {
+          placesExpanded = true;
+          render();
+        });
+        around.append(more);
+      }
     }
 
     function renderDetail() {
@@ -1669,7 +1825,12 @@ Promise.all([
         "near",
       );
       try {
-        drawMap(camp, chosen, extras, openTrail, order);
+        const placeSpots = window.CamperPlan.nearbyPlaces(camp, places, {
+          maxKm: 15,
+          kind: placeKind,
+          varied: true,
+        }).slice(0, 24);
+        drawMap(camp, chosen, extras, openTrail, order, placeSpots);
       } catch (error) {
         mapNote.textContent = "המפה לא התעדכנה. רשימת המסלולים כן.";
       }

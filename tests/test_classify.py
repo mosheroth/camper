@@ -1,5 +1,6 @@
 import unittest
 
+from scripts.fetch_places import hebrew_name, osm_kind, park_kind
 from scripts.classify import (
     difficulties,
     is_family,
@@ -74,7 +75,22 @@ class ClassifyTests(unittest.TestCase):
         self.assertFalse(is_hike("מסלול טיול באופניים לאורך הירקון"))
         self.assertFalse(is_hike("טיול ג'יפים בנחל תבור לרכבי 4X4"))
         self.assertFalse(is_hike("מסלול רכוב, עם גיחות ברגל"))
+        self.assertFalse(is_hike("מסלול נסיעה ברכב שטח"))
         self.assertTrue(is_hike("מסלול מעגלי קל למשפחות"))
+        self.assertTrue(is_hike("חזרה לרכב על תוואי שביל ישראל"))
+        self.assertTrue(is_hike("יש לדאוג לרכב אוסף בסוף המסלול"))
+        self.assertTrue(is_hike("אחד מהקרבות הרכובים האחרונים"))
+
+    def test_place_names_stay_specific(self):
+        self.assertEqual(hebrew_name({"name:he": "עין עברונה", "name": "Ein Avrona"}), "עין עברונה")
+        self.assertIsNone(hebrew_name({"name": "Spring"}))
+        self.assertIsNone(hebrew_name({"name:he": "מעיין"}))
+        self.assertEqual(osm_kind({"natural": "spring", "tourism": "viewpoint"}), "spring")
+        self.assertEqual(osm_kind({"waterway": "waterfall"}), "waterfall")
+        self.assertEqual(osm_kind({"natural": "peak"}), "peak")
+        self.assertEqual(park_kind("גן לאומי כורסי", {"National_Park_s": True}), "park")
+        self.assertEqual(park_kind("שמורת טבע נחל עמוד", {}), "reserve")
+        self.assertEqual(park_kind("חוף פלמחים", {"Beach_s": True}), "beach")
 
     def test_regions_follow_the_paid_camp_index(self):
         self.assertEqual(region_from_lat(32.55), "north")

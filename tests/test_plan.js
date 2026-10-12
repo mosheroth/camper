@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, storyPath, nearbyList } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, storyPath, nearbyList, nearbyPlaces } = require("../plan.js");
 
 const trails = [
   {
@@ -435,6 +435,34 @@ assert.deepStrictEqual(nearbyList(nearItems, {}, "short").map((item) => item.tra
 assert.deepStrictEqual(nearbyList(nearItems, {}, "easy").map((item) => item.trail.id), [1, 3, 2]);
 assert.deepStrictEqual(nearbyList(nearItems, { family: true }, "near").map((item) => item.trail.id), [2]);
 assert.deepStrictEqual(nearbyList(nearItems, { time: "h3" }, "near").map((item) => item.trail.id), [3]);
+const placeCamp = { id: 1, name: "חניון", lat: 32, lng: 35 };
+const placeSpots = [
+  { id: "a", name: "א", kind: "spring", lat: 32.01, lng: 35 },
+  { id: "b", name: "ב", kind: "spring", lat: 32.02, lng: 35 },
+  { id: "c", name: "ג", kind: "spring", lat: 32.03, lng: 35 },
+  { id: "d", name: "ד", kind: "spring", lat: 32.04, lng: 35 },
+  { id: "e", name: "ה", kind: "viewpoint", lat: 32.05, lng: 35 },
+  { id: "far", name: "רחוק", kind: "peak", lat: 32.3, lng: 35 },
+  { id: "same", name: "חניון", kind: "park", lat: 32, lng: 35 },
+];
+assert.deepStrictEqual(
+  nearbyPlaces(placeCamp, placeSpots, { maxKm: 15, perKind: 3 }).map((item) => item.place.id),
+  ["a", "b", "c", "e", "d"],
+);
+assert.deepStrictEqual(
+  nearbyPlaces(placeCamp, placeSpots, { maxKm: 15, kind: "spring" }).map((item) => item.place.id),
+  ["a", "b", "c", "d"],
+);
+assert.ok(nearbyPlaces(placeCamp, placeSpots, { maxKm: 15 }).every((item) => item.km <= 15));
+const livePlaces = JSON.parse(fs.readFileSync(path.join(__dirname, "../data/places.json"), "utf8"));
+const carmelPlaces = nearbyPlaces(
+  liveCamps.find((camp) => camp.id === 16959),
+  livePlaces,
+  { maxKm: 15, varied: false },
+);
+assert.ok(carmelPlaces.some((item) => item.place.kind === "spring" && item.place.source === "osm"));
+assert.ok(carmelPlaces.some((item) => item.place.source === "inpa" && item.km < 1));
+assert.ok(liveTrails.some((trail) => trail.id === 295240));
 const deerLine = storyPath(liveTrails.find((trail) => trail.id === 62558), liveCamps.find((camp) => camp.id === 16959));
 assert.ok(deerLine.length > 5, "a hovered trail can be drawn from its recorded line");
 
