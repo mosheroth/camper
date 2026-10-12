@@ -1,4 +1,13 @@
 const COLORS = ["#a3472c", "#1d6a4f", "#1d4e89", "#8a5a00", "#6b3fa0"];
+const TIME_LABEL = {
+  depart: "שעת יציאה",
+  arrive: "שעת הגעה",
+  dinner: "שעת ארוחת ערב",
+  rise: "שעת קימה",
+  start: "שעת יציאה למסלול",
+  hike: "שעת המסלול",
+  lunch: "שעת ארוחת צהריים",
+};
 const REGION_LABEL = { north: "צפון", center: "מרכז", south: "דרום", east: "יו״ש" };
 
 const title = document.querySelector("#title");
@@ -34,10 +43,16 @@ function params() {
     .split(",")
     .map((value) => Number(value))
     .filter((value) => Number.isFinite(value));
-  const arrival = Number(query.get("arrival"));
   const radius = Number(query.get("radius"));
   const focus = Number(query.get("focus"));
   const view = query.get("view");
+  const hikes = {};
+  (query.get("hikes") || "").split(",").forEach((part) => {
+    const [id, minutes] = part.split(":");
+    const trailId = Number(id);
+    const at = readMinute(minutes);
+    if (Number.isInteger(trailId) && at != null) hikes[trailId] = at;
+  });
   return {
     campId,
     trailIds,
@@ -45,9 +60,21 @@ function params() {
     name: query.get("name") || "",
     view: view === "detail" || view === "camp" ? view : "routes",
     focusId: Number.isFinite(focus) ? focus : null,
-    arrival: arrival === 15 * 60 || arrival === 17 * 60 || arrival === 19 * 60 ? arrival : 17 * 60,
+    arrival: query.has("arrival") && readMinute(query.get("arrival")) != null ? readMinute(query.get("arrival")) : 17 * 60,
+    dinner: readMinute(query.get("dinner")),
+    rise: readMinute(query.get("rise")),
+    start: readMinute(query.get("start")),
+    lunch: readMinute(query.get("lunch")),
+    hikes,
     radius: radius === 40 ? 40 : 20,
   };
+}
+
+function readMinute(value) {
+  if (value == null || value === "") return null;
+  const number = Number(value);
+  if (!Number.isInteger(number) || number < 0 || number >= 24 * 60) return null;
+  return number;
 }
 
 function section(heading, bodyBuilder) {
@@ -508,6 +535,13 @@ Promise.all([
     let expanded = false;
     const openPreviews = new Set();
     let arrival = query.arrival;
+    let hours = {
+      dinner: query.dinner,
+      rise: query.rise,
+      start: query.start,
+      lunch: query.lunch,
+      hikes: query.hikes,
+    };
     let hereKey = null;
     let hereMarker = null;
     const origin = window.CamperPlan.centerOrigin(camps);
@@ -582,6 +616,11 @@ Promise.all([
         view: panelMode,
         focusId: panelMode === "detail" ? focusId : null,
         arrival,
+        dinner: hours.dinner,
+        rise: hours.rise,
+        start: hours.start,
+        lunch: hours.lunch,
+        hikes: hours.hikes,
         radius,
       };
     }
@@ -778,7 +817,7 @@ Promise.all([
       const list = el("ol", "timeline");
       const trails = selected.map((id) => byId.get(id)).filter(Boolean);
       const stages = window.CamperPlan.tripStages(camp, trails).stages;
-      window.CamperPlan.buildItinerary({ camp, trails, arrivalMinutes: arrival, origin }).forEach((step, index) => {
+      window.CamperPlan.buildItinerary({ camp, trails, arrivalMinutes: arrival, origin, hours }).forEach((step, index) => {
         const item = el("li");
         const place = stepPlace(step, stages);
         item.dataset.here = String(index);
@@ -789,20 +828,51 @@ Promise.all([
         } else {
           item.title = "היציאה מאזור המרכז לא מסומנת על המפה הזאת.";
         }
-        const when = el("time", null, step.at == null ? step.day : `${step.day} ${clock(step.at)}`);
+        const when = el("time");
+        when.append(el("span", null, step.day));
+        if (step.at != null) {
+          const input = document.createElement("input");
+          input.type = "time";
+          input.className = "step-time";
+          input.step = 60;
+          input.value = clock(step.at);
+          input.setAttribute("aria-label", TIME_LABEL[step.kind] || "שעת השלב");
+          input.addEventListener("click", (event) => event.stopPropagation());
+          input.addEventListener("keydown", (event) => event.stopPropagation());
+          input.addEventListener("change", () => {
+            const [hour, minute] = input.value.split(":").map(Number);
+            if (!Number.isInteger(hour) || !Number.isInteger(minute)) return;
+            const edited = window.CamperPlan.retimedHours({
+              hours,
+              arrival,
+              step,
+              next: hour * 60 + minute,
+              trailIds: selected,
+            });
+            arrival = edited.arrival;
+            hours = edited.hours;
+            historyPush = true;
+            render();
+          });
+          when.append(input);
+        }
         item.append(when, el("p", null, stepCopy(step)));
         const choose = () => {
           hereKey = item.dataset.here;
           paintHere(Boolean(place));
         };
-        item.addEventListener("click", choose);
+        item.addEventListener("click", (event) => {
+          if (event.target.closest("input")) return;
+          choose();
+        });
         item.addEventListener("keydown", (event) => {
+          if (event.target.closest("input")) return;
           if (event.key === "Enter") choose();
         });
         list.append(item);
       });
       block.append(list);
-      block.append(el("p", "fine", "השעות משוערות לפי המרחק מאזור המרכז."));
+      block.append(el("p", "fine", "אפשר לשנות כל שעה. מה שאחריה זז איתה."));
       return block;
     }
 
@@ -997,6 +1067,7 @@ Promise.all([
         trails: on ? current : current.concat(trail),
         arrivalMinutes: arrival,
         origin,
+        hours,
       });
       const hike = steps.find((step) => step.kind === "hike" && step.name === trail.name);
       const lunch = steps.find((step) => step.kind === "lunch");
@@ -1126,6 +1197,13 @@ Promise.all([
         focusedKey = String(next.focusId);
       }
       arrival = next.arrival;
+      hours = {
+        dinner: next.dinner,
+        rise: next.rise,
+        start: next.start,
+        lunch: next.lunch,
+        hikes: next.hikes,
+      };
       radius = next.radius;
       tripDepth = window.history.state && window.history.state.camperTrip ? window.history.state.depth || 0 : 0;
       render();

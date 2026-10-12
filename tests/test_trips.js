@@ -18,6 +18,8 @@ const created = trips.save({ name: "  סופ״ש בקסטל  ", campId: 14987, t
 assert.ok(created.id);
 assert.strictEqual(created.draft, false);
 assert.strictEqual(created.place.view, "routes");
+assert.strictEqual(created.place.dinner, null);
+assert.strictEqual(created.place.rise, null);
 assert.strictEqual(created.name, "סופ״ש בקסטל");
 assert.strictEqual(created.campId, 14987);
 assert.deepStrictEqual(created.trailIds, [5532, 113447, 1, 2]);
@@ -69,10 +71,24 @@ assert.strictEqual(kept.place.view, "detail");
 const committed = trips.save({ id: draft.id, name: "שמור", campId: 1, trailIds: [5], draft: false });
 assert.strictEqual(committed.draft, false);
 assert.ok(!trips.sharePath({ campId: 3, trailIds: [1], name: "רגיל" }).includes("view="));
+const timed = trips.save({
+  name: "שעות",
+  campId: 4,
+  trailIds: [9],
+  place: { arrival: 16 * 60 + 20, dinner: 19 * 60 + 30, rise: 6 * 60 + 30, hikes: { 9: 8 * 60 } },
+});
+assert.strictEqual(timed.place.arrival, 980);
+assert.strictEqual(timed.place.dinner, 19 * 60 + 30);
+assert.strictEqual(timed.place.hikes[9], 8 * 60);
+const timedPath = trips.sharePath(timed);
+assert.ok(timedPath.includes("arrival=980"));
+assert.ok(timedPath.includes("dinner=1170"));
+assert.ok(timedPath.includes("rise=390"));
+assert.ok(timedPath.includes("hikes=9%3A480") || timedPath.includes("hikes=9:480"));
 
 trips.remove(created.id);
 assert.strictEqual(trips.get(created.id), null);
-assert.strictEqual(trips.list().length, 2);
+assert.strictEqual(trips.list().length, 3);
 
 const broken = open({
   get: () => "{",

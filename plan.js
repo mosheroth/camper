@@ -126,32 +126,89 @@
     return Math.max(15, Math.round((mid * 60) / 15) * 15);
   }
 
-  function buildItinerary({ camp, trails, arrivalMinutes, origin }) {
-    const arrival = arrivalMinutes == null ? 17 * 60 : arrivalMinutes;
+  function minuteOf(value) {
+    if (value == null || value === "") return null;
+    const number = Number(value);
+    if (!Number.isInteger(number)) return null;
+    return ((number % 1440) + 1440) % 1440;
+  }
+
+  function buildItinerary({ camp, trails, arrivalMinutes, origin, hours }) {
+    const clock = hours || {};
+    const arrival = minuteOf(arrivalMinutes) == null ? 17 * 60 : minuteOf(arrivalMinutes);
     const drive = driveMinutes(camp, origin);
+    const dinner = clock.dinner == null ? arrival + 90 : minuteOf(clock.dinner);
+    const rise = clock.rise == null ? 7 * 60 : minuteOf(clock.rise);
+    const start = clock.start == null ? 8 * 60 : minuteOf(clock.start);
     const steps = [
       { kind: "depart", day: "שישי", at: drive == null ? null : arrival - drive, drive },
       { kind: "arrive", day: "שישי", at: arrival },
-      { kind: "dinner", day: "שישי", at: arrival + 90 },
-      { kind: "rise", day: "שבת", at: 7 * 60 },
+      { kind: "dinner", day: "שישי", at: dinner },
+      { kind: "rise", day: "שבת", at: rise },
     ];
     const chosen = trails || [];
     if (!chosen.length) {
       steps.push({ kind: "need-hike", day: "שבת" });
       return steps;
     }
-    let cursor = 8 * 60;
+    let cursor = start;
     let timed = true;
-    steps.push({ kind: "start", day: "שבת", at: cursor, count: chosen.length });
+    steps.push({ kind: "start", day: "שבת", at: start, count: chosen.length });
     chosen.forEach((trail) => {
+      const custom = clock.hikes && clock.hikes[trail.id] != null ? minuteOf(clock.hikes[trail.id]) : null;
+      const at = custom == null ? cursor : custom;
       const walk = walkMinutes(trail);
-      const back = walk == null ? null : cursor + walk;
-      steps.push({ kind: "hike", day: "שבת", at: cursor, name: trail.name, walk, back });
+      const back = walk == null ? null : at + walk;
+      steps.push({ kind: "hike", day: "שבת", at, name: trail.name, trailId: trail.id, walk, back });
       if (walk == null) timed = false;
       else cursor = back;
     });
-    steps.push({ kind: "lunch", day: "שבת", at: timed ? cursor + 30 : null });
+    const lunch = !timed ? null : clock.lunch == null ? cursor + 30 : minuteOf(clock.lunch);
+    steps.push({ kind: "lunch", day: "שבת", at: lunch });
     return steps;
+  }
+
+  function retimedHours({ hours, arrival, step, next, trailIds }) {
+    const clock = {
+      dinner: hours && hours.dinner != null ? minuteOf(hours.dinner) : null,
+      rise: hours && hours.rise != null ? minuteOf(hours.rise) : null,
+      start: hours && hours.start != null ? minuteOf(hours.start) : null,
+      lunch: hours && hours.lunch != null ? minuteOf(hours.lunch) : null,
+      hikes: {},
+    };
+    Object.keys((hours && hours.hikes) || {}).forEach((id) => {
+      const at = minuteOf(hours.hikes[id]);
+      if (at != null) clock.hikes[id] = at;
+    });
+    let nextArrival = minuteOf(arrival);
+    if (nextArrival == null) nextArrival = 17 * 60;
+    const target = minuteOf(next);
+    if (!step || step.at == null || target == null) return { arrival: nextArrival, hours: clock };
+    const delta = target - step.at;
+    const ids = (trailIds || []).map(Number).filter((id) => Number.isFinite(id));
+    const shiftHikes = (from) => {
+      ids.slice(from).forEach((id) => {
+        if (clock.hikes[id] != null) clock.hikes[id] = minuteOf(clock.hikes[id] + delta);
+      });
+    };
+    if (step.kind === "depart" || step.kind === "arrive") nextArrival = minuteOf(nextArrival + delta);
+    else if (step.kind === "dinner") clock.dinner = target;
+    else if (step.kind === "rise") {
+      clock.rise = target;
+      clock.start = minuteOf((clock.start == null ? 8 * 60 : clock.start) + delta);
+      shiftHikes(0);
+      if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
+    } else if (step.kind === "start" || (step.kind === "hike" && ids[0] === step.trailId)) {
+      clock.start = target;
+      if (ids[0] != null) delete clock.hikes[ids[0]];
+      shiftHikes(1);
+      if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
+    } else if (step.kind === "hike") {
+      clock.hikes[step.trailId] = target;
+      shiftHikes(ids.indexOf(step.trailId) + 1);
+      if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
+    } else if (step.kind === "lunch") clock.lunch = target;
+    return { arrival: nextArrival, hours: clock };
   }
 
   function pointKm(from, to) {
@@ -326,6 +383,7 @@
     lengthIsUsable,
     centerOrigin,
     buildItinerary,
+    retimedHours,
     tripStages,
     trailLures,
   };

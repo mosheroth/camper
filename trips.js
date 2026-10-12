@@ -117,6 +117,12 @@
       if (place.view === "detail" || place.view === "camp") params.set("view", place.view);
       if (place.view === "detail" && place.focusId != null) params.set("focus", String(place.focusId));
       if (place.arrival && place.arrival !== 17 * 60) params.set("arrival", String(place.arrival));
+      if (place.dinner != null) params.set("dinner", String(place.dinner));
+      if (place.rise != null) params.set("rise", String(place.rise));
+      if (place.start != null) params.set("start", String(place.start));
+      if (place.lunch != null) params.set("lunch", String(place.lunch));
+      const hikes = Object.keys(place.hikes || {}).map((id) => `${id}:${place.hikes[id]}`).join(",");
+      if (hikes) params.set("hikes", hikes);
       if (place.radius === 40) params.set("radius", "40");
       if (withId && trip.id) params.set("trip", trip.id);
       return `trip.html?${params.toString()}`;
@@ -154,14 +160,35 @@
     const source = place || {};
     const view = source.view === "detail" || source.view === "camp" ? source.view : "routes";
     const focusId = Number(source.focusId);
-    const arrival = Number(source.arrival);
-    const allowed = new Set([15 * 60, 17 * 60, 19 * 60]);
     return {
       view,
       focusId: Number.isFinite(focusId) ? focusId : null,
-      arrival: allowed.has(arrival) ? arrival : 17 * 60,
+      arrival: cleanMinute(source.arrival, 17 * 60),
+      dinner: cleanMinute(source.dinner, null),
+      rise: cleanMinute(source.rise, null),
+      start: cleanMinute(source.start, null),
+      lunch: cleanMinute(source.lunch, null),
+      hikes: cleanHikes(source.hikes),
       radius: Number(source.radius) === 40 ? 40 : 20,
     };
+  }
+
+  function cleanMinute(value, fallback) {
+    if (value == null || value === "") return fallback;
+    const number = Number(value);
+    if (!Number.isInteger(number) || number < 0 || number >= 24 * 60) return fallback;
+    return number;
+  }
+
+  function cleanHikes(value) {
+    const hikes = {};
+    if (!value || typeof value !== "object") return hikes;
+    Object.keys(value).forEach((id) => {
+      const trailId = Number(id);
+      const at = cleanMinute(value[id], null);
+      if (Number.isFinite(trailId) && at != null) hikes[trailId] = at;
+    });
+    return hikes;
   }
 
   return { open };

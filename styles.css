@@ -1039,7 +1039,7 @@ button {
 }
 .timeline li {
   display: grid;
-  grid-template-columns: 92px minmax(0, 1fr);
+  grid-template-columns: 132px minmax(0, 1fr);
   gap: 10px;
   align-items: baseline;
   padding: 4px 6px;
@@ -1072,10 +1072,31 @@ button {
   box-shadow: 0 2px 6px rgba(35, 28, 22, 0.3);
 }
 .timeline time {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
   font-weight: 700;
   font-size: 0.82rem;
   color: var(--green);
 }
+.step-time {
+  width: 5.7rem;
+  max-width: 100%;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  padding: 1px 2px;
+}
+.step-time:hover,
+.step-time:focus {
+  background: #fff;
+  outline: 1px solid var(--line);
+}
+.step-time::-webkit-calendar-picker-indicator { margin: 0; padding: 0; }
 .timeline p { margin: 0; }
 .section-head {
   display: flex;

@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, centerOrigin, tripStages, trailLures } = require("../plan.js");
+const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures } = require("../plan.js");
 
 const trails = [
   {
@@ -183,6 +183,40 @@ const unplaced = buildItinerary({
   origin,
 });
 assert.strictEqual(unplaced.find((step) => step.kind === "depart").at, null);
+
+const early = buildItinerary({
+  camp: lake,
+  trails: [{ id: 5, name: "ראשון", hoursMin: 2, hoursMax: 2 }, { id: 6, name: "שני", hoursMin: 1, hoursMax: 1 }],
+  arrivalMinutes: 17 * 60,
+  origin,
+  hours: { rise: 6 * 60, start: 7 * 60, dinner: 20 * 60, hikes: { 6: 12 * 60 } },
+});
+assert.strictEqual(early.find((step) => step.kind === "rise").at, 6 * 60);
+assert.strictEqual(early.find((step) => step.kind === "dinner").at, 20 * 60);
+assert.strictEqual(early.filter((step) => step.kind === "hike")[0].at, 7 * 60);
+assert.strictEqual(early.filter((step) => step.kind === "hike")[1].at, 12 * 60);
+assert.strictEqual(early.find((step) => step.kind === "lunch").at, 13 * 60 + 30);
+
+const shifted = retimedHours({
+  hours: {},
+  arrival: 17 * 60,
+  step: { kind: "rise", at: 7 * 60 },
+  next: 6 * 60 + 30,
+  trailIds: [5, 6],
+});
+assert.strictEqual(shifted.hours.rise, 6 * 60 + 30);
+assert.strictEqual(shifted.hours.start, 7 * 60 + 30);
+assert.strictEqual(shifted.arrival, 17 * 60);
+const movedHike = retimedHours({
+  hours: { lunch: 11 * 60 },
+  arrival: 17 * 60,
+  step: { kind: "hike", at: 10 * 60, trailId: 6 },
+  next: 10 * 60 + 30,
+  trailIds: [5, 6],
+});
+assert.strictEqual(movedHike.hours.hikes[6], 10 * 60 + 30);
+assert.strictEqual(movedHike.hours.lunch, 11 * 60 + 30);
+assert.strictEqual(movedHike.hours.start, null);
 
 const centers = centerOrigin([
   { lat: 32, lng: 34.7, regions: ["center"] },
