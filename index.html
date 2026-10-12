@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>סופ״ש בטבע — חניון ומסלול</title>
+    <title>בוחרים איפה הקמפינג — סופ״ש בטבע</title>
     <meta
       name="description"
       content="תכנון סופ״ש של חניון לילה ומסלול הליכה לפי אזור, משפחות, זמן, קושי ומסלול מעגלי. הנתונים מאתר רשות הטבע והגנים."
@@ -25,15 +25,18 @@
   </head>
   <body class="browse-page">
     <header class="mast browse-mast">
-      <p class="eyebrow"><a href="trips.html">הטיולים שלי</a> · צופים באפשרות</p>
+      <p class="eyebrow"><a href="trips.html">הטיולים שלי</a></p>
       <div class="browse-head">
-        <h1>סופ״ש בטבע</h1>
-        <p class="lead">כל שורה היא נקודה על המפה. עומדים עליה, והמפה מסמנת איפה זה.</p>
+        <div class="step-title">
+          <p class="step-kicker">שלב 1</p>
+          <h1>בוחרים איפה הקמפינג</h1>
+        </div>
+        <p class="lead">חניון אחד ללילה. אחר כך בונים את הטיול סביבו.</p>
       </div>
     </header>
 
     <main class="workspace">
-      <aside class="panel" aria-label="הצעות לסופ״ש">
+      <aside class="panel" aria-label="בחירת חניון הקמפינג">
       <form id="filters" class="filters">
         <div class="field">
           <label for="home">גרים ב</label>
@@ -105,7 +108,11 @@
 
         <div class="panel-body" id="panel-body">
           <p id="summary" class="summary" aria-live="polite">טוען חניונים ומסלולים…</p>
-          <div id="results" class="results"></div>
+          <div id="results" class="results" role="radiogroup" aria-label="איפה הקמפינג"></div>
+        </div>
+        <div class="step-next">
+          <p id="chosen-camp" class="fine">בוחרים חניון אחד.</p>
+          <a id="continue-step" class="next-step" aria-disabled="true">ממשיכים לבניית הטיול</a>
         </div>
       </aside>
       <div class="splitter" role="separator" aria-orientation="vertical" aria-label="שינוי גודל המפה" aria-valuemin="28" aria-valuemax="78" aria-valuenow="50" tabindex="0"></div>
@@ -114,7 +121,7 @@
         <ul id="legend" class="legend">
           <li><i class="swatch paid-swatch"></i> בתשלום</li>
           <li><i class="swatch free-swatch"></i> בלי תשלום</li>
-          <li><i class="swatch camp-swatch"></i> ההצעה שנבחרה</li>
+          <li><i class="swatch camp-swatch"></i> החניון שנבחר</li>
         </ul>
       </section>
     </main>

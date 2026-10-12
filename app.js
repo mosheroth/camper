@@ -238,14 +238,32 @@ function drawFocus(plan) {
   });
 }
 
+function updateContinue() {
+  const link = document.querySelector("#continue-step");
+  const note = document.querySelector("#chosen-camp");
+  if (!link || !note) return;
+  const plan = plans.find((item) => item.camp.id === selectedId);
+  if (!plan) {
+    link.setAttribute("aria-disabled", "true");
+    link.removeAttribute("href");
+    note.textContent = "בוחרים חניון אחד.";
+    return;
+  }
+  link.removeAttribute("aria-disabled");
+  link.href = window.CamperPlan.planUrl(plan.camp.id, plan.trails.map((item) => item.trail.id));
+  note.textContent = plan.camp.name;
+}
+
 function selectPlan(id, { zoom = false, reveal = false } = {}) {
   selectedId = id;
   results.querySelectorAll(".plan").forEach((node) => {
     const on = Number(node.dataset.camp) === id;
     node.classList.toggle("selected", on);
-    node.setAttribute("aria-pressed", on ? "true" : "false");
+    const radio = node.querySelector("input[type=radio]");
+    if (radio) radio.checked = on;
   });
   const plan = plans.find((item) => item.camp.id === id);
+  updateContinue();
   if (!plan) return;
   if (reveal) {
     const card = results.querySelector(`[data-camp="${id}"]`);
@@ -283,11 +301,16 @@ function shortTrail(name) {
 
 function renderPlan(plan) {
   const { camp } = plan;
-  const article = el("article", camp.paid ? "plan index-card" : "plan index-card free");
+  const article = el("label", camp.paid ? "plan index-card" : "plan index-card free");
   article.dataset.camp = String(camp.id);
+  const radio = document.createElement("input");
+  radio.type = "radio";
+  radio.name = "camp-choice";
+  radio.value = String(camp.id);
+  radio.className = "camp-choice";
   if (camp.id === selectedId) {
     article.classList.add("selected");
-    article.setAttribute("aria-pressed", "true");
+    radio.checked = true;
   }
   const [primary] = plan.trails;
   const regions = (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ");
@@ -300,17 +323,10 @@ function renderPlan(plan) {
   const copy = el("div", "index-copy");
   copy.append(el("h2", null, camp.name));
   copy.append(el("p", "meta", [fromHome, aroundLabel, regions, lodging, distance, trailName].filter(Boolean).join(" · ")));
-  const href = window.CamperPlan.planUrl(camp.id, plan.trails.map((item) => item.trail.id));
-  const opener = el("a", "opener", "לצפייה");
-  opener.href = href;
-  opener.addEventListener("click", () => {
-    sessionStorage.setItem("camper-filters", JSON.stringify(readFilters()));
+  article.append(radio, swatch, copy);
+  radio.addEventListener("change", () => {
+    if (radio.checked) selectPlan(camp.id, { zoom: true });
   });
-  article.append(swatch, copy, opener);
-  article.tabIndex = 0;
-  article.setAttribute("role", "button");
-  if (!article.hasAttribute("aria-pressed")) article.setAttribute("aria-pressed", "false");
-  article.setAttribute("aria-label", aroundLabel ? `להתמקד במפה: ${camp.name}, ${aroundLabel}` : `להתמקד במפה: ${camp.name}`);
   article.addEventListener("mouseenter", () => {
     hoverCamp = camp.id;
     paintLink();
@@ -318,16 +334,6 @@ function renderPlan(plan) {
   article.addEventListener("mouseleave", () => {
     hoverCamp = null;
     paintLink();
-  });
-  article.addEventListener("click", (event) => {
-    if (event.target.closest("a")) return;
-    selectPlan(camp.id, { zoom: true });
-  });
-  article.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      selectPlan(camp.id, { zoom: true });
-    }
   });
   return article;
 }
@@ -338,6 +344,7 @@ function render() {
   if (!plans.length) {
     summary.textContent = "אין סופ״ש שעומד בכל הסינונים. כדאי להרחיב אזור, זמן או קושי.";
     drawFocus(null);
+    updateContinue();
     const empty = el("p", "empty", "אפשר לאפס סינון ולבחור רק אזור, או לוותר על ״מעגלי״ ו״למשפחות״ יחד.");
     results.append(empty);
     return;
@@ -345,9 +352,10 @@ function render() {
   const homeName = HOME_AREA[readFilters().home];
   const sorted = homeName ? ` מהקרוב לבית באזור ${homeName}.` : "";
   summary.textContent = plans.length === 1
-    ? `הצעה אחת.${sorted} השורה והנקודה על המפה הן אותו מקום.`
-    : `${plans.length} הצעות.${sorted} כל שורה היא נקודה על המפה.`;
+    ? `חניון אחד.${sorted}`
+    : `${plans.length} חניונים.${sorted} בוחרים אחד.`;
   plans.forEach((plan) => results.append(renderPlan(plan)));
+  updateContinue();
   const selected = plans.find((plan) => plan.camp.id === selectedId);
   drawFocus(selected || null);
   paintLink();
@@ -368,6 +376,21 @@ function apply() {
 
 form.addEventListener("input", apply);
 form.addEventListener("change", apply);
+
+const continueStep = document.querySelector("#continue-step");
+if (continueStep) {
+  continueStep.addEventListener("click", (event) => {
+    if (continueStep.getAttribute("aria-disabled") === "true") {
+      event.preventDefault();
+      return;
+    }
+    try {
+      sessionStorage.setItem("camper-filters", JSON.stringify(readFilters()));
+    } catch (_error) {
+      /* the next page still opens with the chosen camp */
+    }
+  });
+}
 
 function showReturn() {
   let href = "";

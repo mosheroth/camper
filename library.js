@@ -144,8 +144,8 @@ function render() {
   library.append(el("p", "summary", trips.length ? count : "עדיין אין טיולים שמורים."));
   if (!trips.length) {
     const empty = el("p", "empty");
-    empty.append("צופים באפשרות מהמפה, ואז שומרים אותה כטיול. ");
-    const start = el("a", null, "למפה");
+    empty.append("קודם בוחרים איפה הקמפינג, ואז שומרים את הטיול. ");
+    const start = el("a", null, "לבחירת הקמפינג");
     start.href = "index.html";
     empty.append(start);
     library.append(empty);

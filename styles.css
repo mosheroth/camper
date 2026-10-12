@@ -821,6 +821,21 @@ button {
   line-height: 1.15;
   white-space: nowrap;
 }
+.step-kicker {
+  margin: 0;
+  flex: none;
+  color: var(--clay);
+  font-weight: 700;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+.step-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  flex: none;
+}
 .browse-page .lead {
   min-width: 0;
   flex: 1;
@@ -870,6 +885,36 @@ button {
   min-height: 0;
   overflow: auto;
   padding: 0 12px 12px;
+}
+.step-next {
+  flex: none;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--line);
+  background: var(--card);
+}
+.step-next .fine { margin: 0; }
+.next-step {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background: var(--green);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 10px 18px;
+}
+.next-step[aria-disabled="true"] {
+  background: var(--sand-deep);
+  color: var(--muted);
+  pointer-events: none;
+}
+.camp-choice {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  accent-color: var(--green);
 }
 .browse-page .summary {
   position: sticky;
@@ -966,7 +1011,7 @@ button {
     align-items: flex-start;
     gap: 2px;
   }
-  .browse-page h1 { font-size: 1.2rem; }
+  .browse-page h1 { font-size: 1.15rem; white-space: normal; }
   .browse-page .lead {
     font-size: 0.82rem;
     flex: none;
@@ -1561,9 +1606,10 @@ body.splitting { cursor: col-resize; user-select: none; }
 .browse-page .results { gap: 2px; padding-bottom: 8px; }
 .browse-page .plan.index-card {
   display: grid;
-  grid-template-columns: 14px minmax(0, 1fr) auto;
+  grid-template-columns: auto 12px minmax(0, 1fr);
   align-items: center;
   gap: 10px;
+  cursor: pointer;
   padding: 11px 8px;
   border: 1px solid transparent;
   border-radius: 12px;
