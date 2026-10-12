@@ -670,6 +670,7 @@
     if (after.length) steps.push(...stepsAfterStay(after, { ...clock, place: camp }));
     const dates = tripDates(from, to, today);
     const leave = clock.back == null ? defaultReturnAt(steps, dates.nights) : minuteOf(clock.back);
+    const lastAfter = after.length ? after[after.length - 1] : null;
     steps.push({
       kind: "return",
       block: "return",
@@ -677,6 +678,7 @@
       at: leave,
       drive,
       nights: dates.nights,
+      fromLookout: dates.nights <= 1 && lastAfter && lastAfter.type === "coffee",
     });
     if (drive != null) {
       const homeAt = leave + drive;
@@ -1097,8 +1099,8 @@
     if (step.kind === "dinner") return "ארוחת ערב בחניון";
     if (step.kind === "rise") return "קימה בחניון";
     if (step.kind === "breakfast") return "ארוחת בוקר בחניון";
-    if (step.kind === "lunch") return "ארוחת צהריים בחניון";
-    if (step.kind === "return") return "יוצאים הביתה";
+    if (step.kind === "lunch") return step.afterCoffee ? "ארוחת צהריים" : "ארוחת צהריים בחניון";
+    if (step.kind === "return") return step.fromLookout ? "אחרי התצפית יוצאים הביתה" : "יוצאים הביתה";
     if (step.kind === "home") return "מגיעים הביתה";
     if (step.kind === "hike") {
       const name = String(step.name || "מסלול").split(/\s+[–—-]\s+/)[0].trim();

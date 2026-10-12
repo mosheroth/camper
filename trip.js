@@ -1349,7 +1349,8 @@ Promise.all([
           const stay = extra === 1 ? "נשארים בחניון עוד לילה אחד לפני החזרה." : `נשארים בחניון עוד ${extra} לילות לפני החזרה.`;
           return `יוצאים מהחניון הביתה. ${stay}${ride}`;
         }
-        return `יוצאים מהחניון הביתה.${ride}`;
+        const head = step.fromLookout ? "אחרי התצפית יוצאים הביתה." : "יוצאים מהחניון הביתה.";
+        return `${head}${ride}`;
       }
       if (step.kind === "home") return `מגיעים הביתה, ל${homePlace}.`;
       if (step.kind === "lunch" && step.afterVisit) {
@@ -1359,8 +1360,8 @@ Promise.all([
       }
       if (step.kind === "lunch" && step.afterCoffee) {
         return step.at == null
-          ? "אחרי התצפית אוכלים בחניון. השעה גמישה."
-          : "אחרי התצפית אוכלים בחניון.";
+          ? "אחרי התצפית אוכלים. השעה גמישה."
+          : "אחרי התצפית אוכלים.";
       }
       if (step.at == null) return "אחרי המסלול אוכלים בחניון. השעה גמישה.";
       return "אוכלים בחניון אחרי המסלול.";

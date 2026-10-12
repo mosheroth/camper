@@ -158,6 +158,7 @@ assert.strictEqual(evening.find((step) => step.kind === "breakfast").at, 7 * 60 
 assert.strictEqual(hike.at, 8 * 60);
 assert.strictEqual(hike.back, 10 * 60);
 assert.strictEqual(lunch.at, 10 * 60 + 30);
+assert.strictEqual(evening.find((step) => step.kind === "return").fromLookout, false);
 
 const longer = buildItinerary({
   camp: lake,
@@ -513,6 +514,7 @@ assert.strictEqual(coffeeStop.at, 8 * 60);
 assert.strictEqual(coffeeStop.back, 8 * 60 + 30);
 assert.strictEqual(coffeeStop.block, "coffee:o9");
 assert.strictEqual(cup.find((step) => step.kind === "lunch").at, 9 * 60);
+assert.strictEqual(cup.find((step) => step.kind === "return").fromLookout, true);
 assert.ok(!cup.some((step) => step.kind === "need-hike"));
 const earlyCup = buildItinerary({
   camp: lake,
