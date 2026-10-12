@@ -6,6 +6,12 @@ const REGION_LABEL = {
   south: "דרום",
   east: "יו״ש",
 };
+const HOME_AREA = {
+  north: "הצפון",
+  center: "המרכז",
+  south: "הדרום",
+  east: "יו״ש",
+};
 const form = document.querySelector("#filters");
 const summary = document.querySelector("#summary");
 const results = document.querySelector("#results");
@@ -336,7 +342,7 @@ function render() {
     results.append(empty);
     return;
   }
-  const homeName = REGION_LABEL[readFilters().home];
+  const homeName = HOME_AREA[readFilters().home];
   const sorted = homeName ? ` מהקרוב לבית באזור ${homeName}.` : "";
   summary.textContent = plans.length === 1
     ? `הצעה אחת.${sorted} השורה והנקודה על המפה הן אותו מקום.`

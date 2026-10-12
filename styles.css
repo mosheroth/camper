@@ -913,6 +913,10 @@ button {
     overflow: hidden;
     white-space: normal;
   }
+  .browse-page .filters {
+    max-height: 200px;
+    overflow: auto;
+  }
   .browse-page .workspace {
     grid-template-columns: 1fr;
     grid-template-rows: minmax(200px, 34dvh) minmax(0, 1fr);

@@ -393,17 +393,20 @@ assert.ok(byHome[0].homeMinutes < byHome[1].homeMinutes);
 
 const weekend = { ...base, region: "all", lodging: "all", difficulty: "all", time: "all" };
 const shaded = buildPlans(liveCamps, liveTrails, { ...weekend, shade: true });
-assert.ok(shaded.length > 0 && shaded.length < open.length);
-shaded.forEach((plan) => plan.trails.forEach(({ trail }) => {
+assert.ok(shaded.length > 0 && shaded.length < open.length - 20);
+shaded.forEach((plan) => plan.trails.forEach(({ trail, km }) => {
   assert.ok(trailLures(trail).includes("מוצל"));
+  assert.ok(km != null && km <= 20);
 }));
 const wet = buildPlans(liveCamps, liveTrails, { ...weekend, wet: true });
 assert.ok(wet.length > 0 && wet.length < open.length);
-wet.forEach((plan) => plan.trails.forEach(({ trail }) => {
+wet.forEach((plan) => plan.trails.forEach(({ trail, km }) => {
   assert.ok(trailLures(trail).includes("מסלול רטוב"));
+  assert.ok(km != null && km <= 20);
 }));
 const views = buildPlans(liveCamps, liveTrails, { ...weekend, view: true });
 assert.ok(views.length > 0 && views.length < open.length);
+views.forEach((plan) => plan.trails.forEach(({ km }) => assert.ok(km != null && km <= 20)));
 const beside = buildPlans(liveCamps, liveTrails, { ...weekend, close: true });
 assert.ok(beside.length > 0 && beside.length < open.length);
 beside.forEach((plan) => plan.trails.forEach(({ km }) => assert.ok(km <= 5)));

@@ -64,6 +64,7 @@
       (camp.nearby || []).forEach((near) => {
         const trail = byId.get(near.id);
         if (!trail || !trailMatches(trail, filters)) return;
+        if ((filters.shade || filters.wet || filters.view) && !(near.km != null && near.km <= 20)) return;
         if (filters.close && !(near.km != null && near.km <= 5)) return;
         if (query && !campHit && !trail.name.includes(query)) return;
         picked.push({ trail, km: near.km });
@@ -678,6 +679,7 @@
     nearbyChoices,
     aroundCount,
     lengthIsUsable,
+    regionOrigin,
     centerOrigin,
     buildItinerary,
     retimedHours,

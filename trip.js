@@ -12,6 +12,22 @@ const TIME_LABEL = {
   home: "שעת הגעה הביתה",
 };
 const REGION_LABEL = { north: "צפון", center: "מרכז", south: "דרום", east: "יו״ש" };
+const HOME_PLACE = {
+  north: "אזור הצפון",
+  center: "אזור המרכז",
+  south: "אזור הדרום",
+  east: "אזור יו״ש",
+};
+
+function savedHome() {
+  try {
+    const saved = localStorage.getItem("camper-home");
+    if (REGION_LABEL[saved]) return saved;
+  } catch (_error) {
+    /* the trip stays on the center departure */
+  }
+  return "center";
+}
 
 const title = document.querySelector("#title");
 const lead = document.querySelector("#lead");
@@ -580,7 +596,9 @@ Promise.all([
     };
     let hereKey = null;
     let hereMarker = null;
-    const origin = window.CamperPlan.centerOrigin(camps);
+    const home = savedHome();
+    const origin = window.CamperPlan.regionOrigin(camps, home) || window.CamperPlan.centerOrigin(camps);
+    const homePlace = HOME_PLACE[home];
     let panelMode = query.view;
     let focusId = query.view === "detail" ? query.focusId : (selected[0] || null);
     if (panelMode === "detail" && (focusId == null || !byId.has(focusId))) {
@@ -821,9 +839,9 @@ Promise.all([
 
     function stepCopy(step) {
       if (step.kind === "depart") {
-        if (step.at == null) return "יוצאים מהבית, מאזור המרכז. אין מרחק נסיעה, אז שעת היציאה גמישה.";
+        if (step.at == null) return `יוצאים מהבית, מ${homePlace}. אין מרחק נסיעה, אז שעת היציאה גמישה.`;
         const where = step.toward === "hike" ? "לכיוון המסלול" : "לכיוון החניון";
-        return `יוצאים מהבית, מאזור המרכז, ${where}. נסיעה של ${formatDuration(step.drive)} בערך.`;
+        return `יוצאים מהבית, מ${homePlace}, ${where}. נסיעה של ${formatDuration(step.drive)} בערך.`;
       }
       if (step.kind === "arrive") {
         return step.afterHike
@@ -854,7 +872,7 @@ Promise.all([
         }
         return `יוצאים מהחניון הביתה.${ride}`;
       }
-      if (step.kind === "home") return "מגיעים הביתה, לאזור המרכז.";
+      if (step.kind === "home") return `מגיעים הביתה, ל${homePlace}.`;
       if (step.at == null) return "אחרי המסלול אוכלים בחניון. השעה גמישה.";
       return "אוכלים בחניון אחרי המסלול.";
     }
@@ -890,8 +908,8 @@ Promise.all([
       const hikeFirst = sequence[0] !== "stay";
       block.append(el("h2", "section-label", "לוז"));
       block.append(el("p", "itinerary-lead", hikeFirst
-        ? "קודם המסלול, ואחר כך לילה בחניון. יוצאים מהבית, מאזור המרכז."
-        : "יוצאים מהבית, מאזור המרכז. לילה בחניון, ולמחרת המסלול."));
+        ? `קודם המסלול, ואחר כך לילה בחניון. יוצאים מהבית, מ${homePlace}.`
+        : `יוצאים מהבית, מ${homePlace}. לילה בחניון, ולמחרת המסלול.`));
       block.append(dateFields());
       block.append(timeChoices("יוצאים מהבית", [8, 12, 16], depart ? depart.at : null, (minutes) => {
         if (!depart || depart.at == null) return;
