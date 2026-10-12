@@ -342,6 +342,17 @@ def places(value):
     return int(number)
 
 
+def booking_url(item, acf):
+    """Paid camps embed the reservation engine under the page tab labeled הזמנות."""
+    iframe = acf.get("iframe_sale") or ""
+    if "BE_Engine.aspx" not in iframe:
+        return ""
+    link = (item.get("link") or "").split("#")[0]
+    if not link.startswith("https://www.parks.org.il/"):
+        return ""
+    return f"{link}#8"
+
+
 def normalize_paid(item, areas):
     acf = item.get("acf") or {}
     lat, lng = coords_from_acf(acf)
@@ -359,6 +370,7 @@ def normalize_paid(item, areas):
         "id": item["id"],
         "name": title_of(item),
         "url": item.get("link"),
+        "bookingUrl": booking_url(item, acf),
         "paid": True,
         "lat": lat,
         "lng": lng,
@@ -395,6 +407,7 @@ def normalize_free(item, areas):
         "id": item["id"],
         "name": title_of(item),
         "url": item.get("link"),
+        "bookingUrl": "",
         "paid": False,
         "lat": lat,
         "lng": lng,

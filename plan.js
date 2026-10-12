@@ -88,6 +88,7 @@
       note: summary && summary !== blurb ? clipWords(summary, 140) : "",
       photo,
       credit,
+      bookingUrl: typeof source.bookingUrl === "string" ? source.bookingUrl : "",
     };
   }
 
@@ -1213,6 +1214,10 @@
     lines.push("");
     lines.push(camp.name || "החניון");
     if (camp.url) lines.push(camp.url);
+    if (camp.bookingUrl) {
+      lines.push("צריך להזמין מקום מראש");
+      lines.push(camp.bookingUrl);
+    }
     lines.push("");
     lines.push("לוז");
     const byTrail = new Map(trails.map((trail) => [trail.id, trail]));

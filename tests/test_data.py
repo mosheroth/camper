@@ -62,6 +62,15 @@ class CatalogTests(unittest.TestCase):
                 self.assertNotIn("אופני", route["name"])
         self.assertGreater(drawn, 40)
 
+    def test_paid_camps_link_to_the_reservation_tab(self):
+        for camp in self.camps:
+            if camp["paid"]:
+                self.assertTrue(camp["bookingUrl"].startswith("https://www.parks.org.il/camping/"), camp["name"])
+                self.assertTrue(camp["bookingUrl"].endswith("#8"), camp["name"])
+                self.assertTrue(camp["bookingUrl"].startswith(camp["url"].split("#")[0]), camp["name"])
+            else:
+                self.assertEqual(camp["bookingUrl"], "")
+
     def test_pages_keep_factual_detail(self):
         paid = [camp for camp in self.camps if camp["paid"]]
         free = [camp for camp in self.camps if not camp["paid"]]

@@ -179,7 +179,8 @@ function drawMarkers() {
     markersByCamp.set(camp.id, marker);
     const glance = window.CamperPlan.campGlance(camp);
     const facilities = glance.facilities.map((item) => item.label).slice(0, 4).join(" · ");
-    marker.bindPopup(`<strong>${escapeHtml(camp.name)}</strong><br>${escapeHtml([glance.stay, facilities].filter(Boolean).join(" · "))}`);
+    const booking = glance.bookingUrl ? "בהזמנה מראש" : "";
+    marker.bindPopup(`<strong>${escapeHtml(camp.name)}</strong><br>${escapeHtml([glance.stay, booking, facilities].filter(Boolean).join(" · "))}`);
     marker.on("mouseover", () => {
       hoverCamp = camp.id;
       paintLink();
@@ -204,7 +205,8 @@ function drawFocus(plan) {
     alt: `חניון ${plan.camp.name}`,
   }).addTo(focusLayer);
   const glance = window.CamperPlan.campGlance(plan.camp);
-  pin.bindPopup(`<strong>${escapeHtml(plan.camp.name)}</strong><br>${escapeHtml(glance.stay)}`);
+  const booking = glance.bookingUrl ? "בהזמנה מראש" : "";
+  pin.bindPopup(`<strong>${escapeHtml(plan.camp.name)}</strong><br>${escapeHtml([glance.stay, booking].filter(Boolean).join(" · "))}`);
   const seen = new Set();
   let colorIndex = 0;
   plan.trails.forEach(({ trail }) => {
@@ -345,6 +347,16 @@ function renderPlan(plan) {
   const copy = el("div", "index-copy");
   copy.append(el("h2", null, camp.name));
   copy.append(el("p", "meta", [regions, fromHome, glance.stay].filter(Boolean).join(" · ")));
+  if (glance.bookingUrl) {
+    const booking = el("p", "booking");
+    booking.append(document.createTextNode("צריך להזמין מקום מראש. "));
+    const book = el("a", "camp-page", "להזמנת מקום");
+    book.href = glance.bookingUrl;
+    book.target = "_blank";
+    book.rel = "noopener noreferrer";
+    booking.append(book);
+    copy.append(booking);
+  }
   if (glance.facilities.length) {
     const list = el("ul", "lures");
     glance.facilities.forEach((item) => {

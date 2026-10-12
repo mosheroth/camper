@@ -407,7 +407,12 @@ function campSheet(camp) {
       node.append(table);
       node.append(el("p", "fine", "המחיר הראשון למבוגר באוהל פרטי, לפני הנחות מנוי. יש לאמת במחירון העדכני."));
     }
-    if (camp.paid) node.append(el("p", null, "הלינה בהזמנה מראש. הכניסה עם כלבים אסורה."));
+    if (camp.bookingUrl) {
+      const booking = el("p", null, "צריך להזמין מקום מראש. ");
+      booking.append(link(camp.bookingUrl, "להזמנת מקום"));
+      node.append(booking);
+    }
+    if (camp.paid) node.append(el("p", null, "הכניסה עם כלבים אסורה."));
     const links = el("div", "links");
     if (camp.url) links.append(link(camp.url, "העמוד המלא ברשות הטבע והגנים"));
     if (camp.lat != null) {
@@ -1930,7 +1935,7 @@ Promise.all([
       if (group.id === "stay") {
         id = "camp";
         color = "#a3472c";
-        meta = [camp.paid ? "בתשלום" : "בלי תשלום", (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ")].filter(Boolean).join(" · ");
+        meta = [camp.paid ? "בתשלום" : "בלי תשלום", camp.bookingUrl ? "בהזמנה מראש" : "", (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ")].filter(Boolean).join(" · ");
       } else if (typeof token === "string" && token.startsWith("v:")) {
         const placeId = window.CamperPlan.visitPlaceId(token);
         const item = placeId ? visitNear.get(placeId) : null;

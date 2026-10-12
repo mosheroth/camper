@@ -1678,6 +1678,11 @@ body.splitting { cursor: col-resize; user-select: none; }
   line-height: 1.5;
 }
 .browse-page .index-card .lures .mark { margin: 0; }
+.browse-page .index-card .booking {
+  margin: 0;
+  color: var(--clay);
+  font-weight: 700;
+}
 .browse-page .index-card .blurb {
   margin: 2px 0 0;
   font-weight: 500;

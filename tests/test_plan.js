@@ -750,6 +750,18 @@ assert.deepStrictEqual(carmelGlance.facilities.map((item) => item.id), ["water",
 assert.ok(carmelGlance.photo.includes("parks.org.il"));
 assert.ok(carmelGlance.blurb.includes("כרמל"));
 assert.strictEqual(carmelGlance.note, "");
+assert.ok(carmelGlance.bookingUrl.startsWith("https://www.parks.org.il/camping/"));
+assert.ok(carmelGlance.bookingUrl.endsWith("#8"));
+const bookedShare = shareMessage({
+  camp: { name: "חניון", url: "https://www.parks.org.il/camp", bookingUrl: "https://www.parks.org.il/camp#8", lat: lake.lat, lng: lake.lng },
+  trails: [],
+  arrivalMinutes: 17 * 60,
+  origin,
+  from: "2026-10-16",
+  to: "2026-10-17",
+});
+assert.ok(bookedShare.includes("צריך להזמין מקום מראש"));
+assert.ok(bookedShare.includes("https://www.parks.org.il/camp#8"));
 const ashlim = campGlance(liveCamps.find((item) => item.name.includes("באר אשלים")));
 assert.strictEqual(ashlim.stay, "בלי תשלום");
 assert.ok(ashlim.facts.some((item) => item.includes("מקומות לינה")));
@@ -757,6 +769,7 @@ assert.ok(ashlim.facts.includes("גישה ברכב פרטי"));
 assert.ok(ashlim.note.length > 40 && ashlim.note.length <= 141);
 assert.ok(ashlim.note.endsWith("…"));
 assert.strictEqual(campGlance(liveCamps.find((item) => item.name.includes("חורשת הצנחנים"))).photo, "");
+assert.strictEqual(campGlance(liveCamps.find((item) => item.name.includes("חורשת הצנחנים"))).bookingUrl, "");
 assert.strictEqual(campGlance({ paid: true, priceFrom: 80, blurb: "קצר", details: { summary: "קצר" }, facilities: [{ id: "cell", label: "קליטה" }, { id: "water", label: "מים" }] }).note, "");
 assert.deepStrictEqual(campGlance({ paid: false, facilities: [{ id: "cell", label: "קליטה" }, { id: "water", label: "מים" }] }).facilities.map((item) => item.label), ["מים", "קליטה"]);
 
