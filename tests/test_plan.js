@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes, travelMinutes, onTheWay } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes, visitPlaceId, placeTags, travelMinutes, onTheWay } = require("../plan.js");
 
 const trails = [
   {
@@ -612,6 +612,25 @@ const timedVisit = buildItinerary({
 assert.strictEqual(timedVisit.find((step) => step.kind === "visit").estimated, false);
 assert.deepStrictEqual(normalizeOrder(["v:r9", "stay", "c:o1"], [], ["o1"], ["r9"]), ["v:r9", "stay", "c:o1"]);
 assert.deepStrictEqual(normalizeOrder(["stay"], [], [], ["r9"]), ["stay", "v:r9"]);
+assert.strictEqual(visitPlaceId("v:o5"), "o5");
+assert.deepStrictEqual(normalizeOrder(["stay"], [], [], ["o5"]), ["stay", "v:o5"]);
+assert.strictEqual(visitMinutes({ kind: "spring", name: "עין אלון" }), 45);
+assert.strictEqual(visitMinutes({ kind: "waterfall", name: "מפל" }), 60);
+assert.strictEqual(visitMinutes({ kind: "peak", name: "הר" }), 30);
+assert.deepStrictEqual(placeTags({ kind: "spring", name: "עין אלון" }), ["מים"]);
+assert.deepStrictEqual(placeTags({ kind: "peak", name: "הר", tags: ["מונגש"] }), ["מונגש", "תצפית"]);
+assert.deepStrictEqual(placeTags({ kind: "spring", name: "מערת הנחל" }), ["מים", "מערות"]);
+const springDay = buildItinerary({
+  camp: lake,
+  trails: [],
+  visits: [{ id: "o5", name: "עין אלון", kind: "spring", lat: 32.75, lng: 35.02, url: "https://www.openstreetmap.org/node/5" }],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+const springStop = springDay.find((step) => step.kind === "visit");
+assert.strictEqual(springStop.walk, 45);
+assert.strictEqual(springStop.official, false);
+assert.strictEqual(springStop.estimated, true);
 const sharedVisit = shareMessage({
   camp: lake,
   trails: [],

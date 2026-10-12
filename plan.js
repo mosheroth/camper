@@ -203,15 +203,35 @@
   }
 
   function visitPlaceId(token) {
-    const match = /^v:(r\d+)$/.exec(String(token || ""));
+    const match = /^v:([or]\d+)$/.exec(String(token || ""));
     return match ? match[1] : null;
   }
+
+  const POI_ESTIMATE = { spring: 45, waterfall: 60, peak: 30 };
 
   function visitMinutes(place) {
     const walked = walkMinutes(place);
     if (walked != null) return walked;
     if (place && Number(place.hoursMax) > 16) return 8 * 60;
+    if (place && POI_ESTIMATE[place.kind]) return POI_ESTIMATE[place.kind];
     return VISIT_ESTIMATE;
+  }
+
+  function placeTags(place) {
+    if (!place) return [];
+    const tags = [];
+    const seen = new Set();
+    const add = (tag) => {
+      if (!tag || seen.has(tag) || tags.length >= 4) return;
+      seen.add(tag);
+      tags.push(tag);
+    };
+    (place.tags || []).forEach(add);
+    const name = String(place.name || "");
+    if (place.kind === "spring" || place.kind === "waterfall" || /מעיין|מפל|בריכ/.test(name)) add("מים");
+    if (place.kind === "peak" || /תצפית|מצפור|מצפה/.test(name)) add("תצפית");
+    if (/מער/.test(name)) add("מערות");
+    return tags;
   }
 
   function visitIsEstimate(place) {
@@ -236,7 +256,7 @@
     const listed = Array.isArray(coffeeIds);
     const coffees = listed ? coffeeIdsOf(coffeeIds) : [];
     const visitsListed = Array.isArray(visitIds);
-    const visits = visitsListed ? coffeeIdsOf(visitIds).filter((id) => id.startsWith("r")) : [];
+    const visits = visitsListed ? coffeeIdsOf(visitIds) : [];
     const tokens = [];
     let stay = false;
     (Array.isArray(order) ? order : []).forEach((token) => {
@@ -438,6 +458,7 @@
       walk: visitMinutes(place),
       back,
       estimated: visitIsEstimate(place),
+      official: place.source === "inpa" || /parks\.org\.il/.test(place.url || ""),
       duration: place.duration || "",
       beforeStay: Boolean(beforeStay),
       lastBefore: Boolean(lastBefore),
@@ -617,7 +638,7 @@
       else if (trail) loose.push(trail);
     });
     const placesById = coffeeMap([].concat(coffees || [], visits || []));
-    const visitIds = coffeeIdsOf(visits).filter((id) => String(id).startsWith("r"));
+    const visitIds = coffeeIdsOf(visits);
     const sequence = normalizeOrder(order, [...byId.keys()], coffeeIdsOf(coffees), visitIds);
     const stayAt = sequence.indexOf("stay");
     const before = sequence.slice(0, stayAt).map((token) => activityFor(token, byId, placesById)).filter(Boolean);
@@ -716,7 +737,7 @@
     });
     Object.keys((hours && hours.visitAt) || {}).forEach((id) => {
       const at = minuteOf(hours.visitAt[id]);
-      if (/^r\d+$/.test(id) && at != null) clock.visitAt[id] = at;
+      if (/^[or]\d+$/.test(id) && at != null) clock.visitAt[id] = at;
     });
     let nextArrival = minuteOf(arrival);
     if (nextArrival == null) nextArrival = 17 * 60;
@@ -883,7 +904,7 @@
       else if (trail) loose.push(trail);
     });
     const placesById = coffeeMap([].concat(coffees || [], visits || []));
-    const visitIds = coffeeIdsOf(visits).filter((id) => String(id).startsWith("r"));
+    const visitIds = coffeeIdsOf(visits);
     const sequence = normalizeOrder(order, [...byId.keys()], coffeeIdsOf(coffees), visitIds);
     const stayAt = sequence.indexOf("stay");
     const hikesBefore = sequence.slice(0, stayAt).some((token) => byId.has(token));
@@ -1202,6 +1223,7 @@
     visitPlaceId,
     visitMinutes,
     visitIsEstimate,
+    placeTags,
     travelMinutes,
     onTheWay,
     shareDuration,

@@ -624,7 +624,9 @@ button {
 .catalog-tabs .tab-label {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.15;
   min-width: 0;
 }
 .catalog-tabs .count { flex: none; font-variant-numeric: tabular-nums; }
@@ -641,9 +643,34 @@ button {
 .catalog-pane .section-head { margin-top: 4px; flex-wrap: wrap; }
 .catalog-pane .section-head .fine { margin: 0; }
 .catalog-pane .coffee-picks { margin: 4px 0 8px; }
-@media (max-width: 420px) {
+@media (max-width: 520px) {
   .catalog-tabs { gap: 4px; }
-  .catalog-tabs .tab { padding: 7px 4px; font-size: 0.78rem; gap: 4px; }
+  .catalog-tabs .tab {
+    flex-direction: column;
+    padding: 6px 4px;
+    font-size: 0.74rem;
+    gap: 1px;
+  }
+}
+.place-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 2px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.place-search input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font: 700 0.88rem Heebo, sans-serif;
+  padding: 6px 12px;
 }
 .picked-strip {
   display: flex;

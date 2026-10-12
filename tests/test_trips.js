@@ -155,6 +155,21 @@ assert.deepStrictEqual(hosted.place.order, ["stay", "v:r1877", "v:r99"]);
 const hostedPath = trips.sharePath(hosted);
 assert.ok(hostedPath.includes("visit=r1877%2Cr2") || hostedPath.includes("visit=r1877,r2"));
 assert.ok(hostedPath.includes("spot=r1877"));
+const springStop = trips.save({
+  name: "מעיין",
+  campId: 9,
+  trailIds: [],
+  place: {
+    visit: ["o5", "nope", "o5"],
+    view: "visit",
+    spot: "o5",
+    order: ["stay", "v:o5"],
+  },
+});
+assert.deepStrictEqual(springStop.place.visit, ["o5"]);
+assert.strictEqual(springStop.place.spot, "o5");
+assert.deepStrictEqual(springStop.place.order, ["stay", "v:o5"]);
+assert.ok(trips.sharePath(springStop).includes("visit=o5"));
 const swapped = trips.save({
   name: "הפוך",
   campId: 9,
@@ -166,7 +181,7 @@ assert.strictEqual(swapped.place.to, "2026-10-19");
 
 trips.remove(created.id);
 assert.strictEqual(trips.get(created.id), null);
-assert.strictEqual(trips.list().length, 8);
+assert.strictEqual(trips.list().length, 9);
 
 const broken = open({
   get: () => "{",

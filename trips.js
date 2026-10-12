@@ -242,7 +242,7 @@
         }
         return;
       }
-      const visit = /^v:(r\d+)$/.exec(String(token || ""));
+      const visit = /^v:([or]\d+)$/.exec(String(token || ""));
       if (visit) {
         const marker = `v:${visit[1]}`;
         if (!tokens.includes(marker)) tokens.push(marker);
@@ -266,7 +266,7 @@
     const parts = Array.isArray(value) ? value : String(value || "").split(",");
     parts.forEach((part) => {
       const id = String(part || "").trim();
-      if (/^r\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+      if (/^[or]\d+$/.test(id) && !ids.includes(id)) ids.push(id);
     });
     return ids.slice(0, 2);
   }
