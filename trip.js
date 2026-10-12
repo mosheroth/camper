@@ -363,7 +363,7 @@ window.addEventListener("resize", () => {
 
 function emphasize(id) {
   const key = id == null ? null : String(id);
-  document.querySelectorAll(".spot").forEach((node) => {
+  document.querySelectorAll(".spot, .day-block").forEach((node) => {
     node.classList.toggle("linked", key != null && node.dataset.id === key);
   });
   layersById.forEach((entry, entryKey) => {
@@ -1186,6 +1186,25 @@ Promise.all([
           });
         }
         card.append(head);
+        const identity = blockIdentity(group);
+        if (identity) {
+          card.append(identity);
+          card.dataset.id = identity.dataset.id;
+          card.addEventListener("mouseenter", () => {
+            if (previewTimer) {
+              window.clearTimeout(previewTimer);
+              previewTimer = null;
+            }
+            showTrail(identity.dataset.id);
+          });
+          card.addEventListener("mouseleave", () => {
+            previewTimer = window.setTimeout(() => {
+              previewTimer = null;
+              if (previewKey !== String(identity.dataset.id)) return;
+              showTrip();
+            }, 60);
+          });
+        }
         const list = el("ol", "timeline");
         const splitMorning = group.steps.some((step) => step.part === "out") && group.steps.some((step) => step.part === "next");
         let markedMorning = false;
@@ -1383,6 +1402,51 @@ Promise.all([
       return button;
     }
 
+    function blockIdentity(group) {
+      const token = blockToken(group.id);
+      let id = null;
+      let meta = "";
+      let color = "";
+      if (group.id === "stay") {
+        id = "camp";
+        color = "#a3472c";
+        meta = [camp.paid ? "בתשלום" : "בלי תשלום", (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ")].filter(Boolean).join(" · ");
+      } else if (typeof token === "number") {
+        const item = choiceFor(token);
+        if (!item.trail) return null;
+        id = String(token);
+        color = COLORS[(selected.indexOf(token) + 1) % COLORS.length];
+        meta = [item.km == null ? "" : `כ־${item.km} ק״מ מהחניון`, trailFacts(item.trail)].filter(Boolean).join(" · ");
+      }
+      if (id == null) return null;
+      const bar = el("div", "block-identity");
+      const swatch = el("i", "swatch");
+      swatch.style.background = color;
+      const actions = el("div", "block-actions");
+      const info = el("button", "text-link", "פירוט");
+      info.type = "button";
+      info.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (id === "camp") {
+          focusFeature("camp");
+          setPanel("camp");
+        } else openTrail(Number(id));
+      });
+      actions.append(info);
+      if (id !== "camp") {
+        const remove = el("button", "remove", "הסרה");
+        remove.type = "button";
+        remove.addEventListener("click", (event) => {
+          event.stopPropagation();
+          removeTrail(Number(id));
+        });
+        actions.append(remove);
+      }
+      bar.append(swatch, el("p", "meta", meta), actions);
+      bar.dataset.id = id;
+      return bar;
+    }
+
     function blockTitle(group) {
       if (group.id === "road") return "בדרך";
       if (group.id === "stay") return "לילה בחניון";
@@ -1543,35 +1607,6 @@ Promise.all([
       around.replaceChildren();
       around.append(el("p", "board-hint", "המספרים על המפה הם הסדר, והקו המקווקו הוא המעבר ביניהם. לחיצה על שורה בלוז מראה איפה אנחנו."));
       around.append(renderItinerary());
-
-      around.append(el("h2", "section-label", "החניון"));
-      const campMeta = [camp.paid ? "בתשלום" : "בלי תשלום", (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ")].filter(Boolean).join(" · ");
-      const campInfo = el("button", "text-link", "פירוט");
-      campInfo.type = "button";
-      campInfo.addEventListener("click", () => {
-        focusFeature("camp");
-        setPanel("camp");
-      });
-      around.append(spotRow("camp", camp.name, campMeta, "#a3472c", campInfo));
-
-      around.append(el("h2", "section-label", "בטיול"));
-      if (!selected.length) {
-        around.append(el("p", "fine", "עדיין אין מסלולים. פותחים פירוט מהרשימה למטה, ומוסיפים משם."));
-      }
-      selected.forEach((id, index) => {
-        const item = choiceFor(id);
-        if (!item.trail) return;
-        const remove = el("button", "remove", "הסרה");
-        remove.type = "button";
-        remove.addEventListener("click", () => removeTrail(id));
-        const info = el("button", "text-link", "פירוט");
-        info.type = "button";
-        info.addEventListener("click", () => openTrail(id));
-        const facts = [item.km == null ? "" : `כ־${item.km} ק״מ מהחניון`, trailFacts(item.trail)].filter(Boolean).join(" · ");
-        const row = spotRow(id, item.trail.name, facts, COLORS[(index + 1) % COLORS.length], remove);
-        row.querySelector(".spot-copy").append(info);
-        around.append(row);
-      });
       if (selected.length >= maxPicks) {
         around.append(el("p", "fine", "אפשר עד ארבעה מסלולים. הסירו אחד כדי להוסיף אחר."));
       }

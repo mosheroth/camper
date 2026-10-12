@@ -1166,6 +1166,41 @@ body.splitting { cursor: col-resize; user-select: none; }
 .day-block.dragging header { cursor: grabbing; }
 .day-block.drop-before { box-shadow: inset 0 3px 0 var(--green); }
 .day-block.drop-after { box-shadow: inset 0 -3px 0 var(--green); }
+.day-block.linked { background: #f3e6d4; }
+.block-identity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.block-identity .swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+}
+.block-identity .meta {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.block-actions { display: flex; align-items: center; gap: 8px; flex: none; }
+.block-actions .text-link {
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: var(--green);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.block-actions .remove {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 4px 10px;
+}
 .chip-btn:disabled { opacity: 0.45; cursor: default; }
 .timeline li.day-gap {
   display: block;
