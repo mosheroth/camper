@@ -619,6 +619,8 @@ button {
   font-size: 0.9rem;
   line-height: 1.2;
 }
+.mark { margin-inline-end: 0.28em; }
+.catalog-tabs .mark { margin-inline-end: 0; }
 .catalog-tabs .tab-label {
   overflow: hidden;
   text-overflow: ellipsis;

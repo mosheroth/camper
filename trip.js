@@ -8,6 +8,34 @@ const PLACE_KIND = {
   reserve: "שמורה",
   beach: "חוף",
 };
+const PLACE_MARK = {
+  spring: "💧",
+  waterfall: "💦",
+  viewpoint: "🔭",
+  peak: "⛰️",
+  park: "🏞️",
+  reserve: "🌿",
+  beach: "🏖️",
+};
+const TAG_MARK = {
+  "לילדים": "🧒",
+  "מוצל": "🌳",
+  "מסלול רטוב": "💦",
+  "נוף מהמם": "🔭",
+  "פארק שעשועים": "🎢",
+  "מונגש": "♿",
+  "בתיאום מראש": "📅",
+  "תצפית": "🔭",
+  "חיות בר": "🦌",
+  "מים": "💧",
+  "ארכיאולוגיה": "🏺",
+  "פריחה": "🌸",
+  "עגלה": "🛒",
+  "מטמון": "💎",
+  "קל": "🙂",
+  "מערות": "🕳️",
+  "כלבים": "🐕",
+};
 const PLACE_COLOR = {
   spring: "#1d6a8a",
   waterfall: "#0b6e8a",
@@ -65,6 +93,26 @@ function el(tag, className, text) {
   if (className) node.className = className;
   if (text != null) node.textContent = text;
   return node;
+}
+
+function decorate(node, emoji, text) {
+  if (emoji) {
+    const mark = el("span", "mark", emoji);
+    mark.setAttribute("aria-hidden", "true");
+    node.append(mark);
+  }
+  if (text) node.append(document.createTextNode(text));
+  return node;
+}
+
+function tagItem(tag) {
+  return decorate(el("li"), TAG_MARK[tag], tag);
+}
+
+function kindLabel(kind, fallback) {
+  const name = PLACE_KIND[kind] || fallback || "";
+  if (!name) return "";
+  return PLACE_MARK[kind] ? `${PLACE_MARK[kind]} ${name}` : name;
 }
 
 function link(href, text) {
@@ -380,7 +428,7 @@ function trailFacts(trail) {
 }
 
 function visitSheet(place, km, way) {
-  const kind = PLACE_KIND[place.kind] || "ביקור";
+  const kind = kindLabel(place.kind, "ביקור");
   return section(place.name, (node) => {
     gallery(node, place);
     const bits = [kind];
@@ -396,7 +444,7 @@ function visitSheet(place, km, way) {
     if (place.blurb) node.append(el("p", null, place.blurb));
     if (place.tags && place.tags.length) {
       const lures = el("ul", "lures");
-      place.tags.forEach((tag) => lures.append(el("li", null, tag)));
+      place.tags.forEach((tag) => lures.append(tagItem(tag)));
       node.append(lures);
     }
     if (place.prices && place.prices.length) {
@@ -1239,14 +1287,14 @@ Promise.all([
       emphasize(focusedKey);
     }
 
-    function spotRow(id, name, meta, swatchColor, action, onOpen, onPreview) {
+    function spotRow(id, name, meta, swatchColor, action, onOpen, onPreview, emoji) {
       const row = el("article", "spot");
       row.dataset.id = String(id);
       row.tabIndex = 0;
       const swatch = el("i", "swatch");
       swatch.style.background = swatchColor;
       const copy = el("div", "spot-copy");
-      copy.append(el("h3", null, shortName(name)));
+      copy.append(decorate(el("h3"), emoji, shortName(name)));
       row.title = name;
       if (meta) copy.append(el("p", "meta", meta));
       row.append(swatch, copy);
@@ -1419,7 +1467,7 @@ Promise.all([
       });
       const depart = steps.find((step) => step.kind === "depart");
       const hikeFirst = sequence[0] !== "stay";
-      block.append(el("h2", "section-label", "לוז"));
+      block.append(decorate(el("h2", "section-label"), "🗓️", "לוז"));
       const morning = selected.length
         ? "ולמחרת המסלול."
         : visits.length
@@ -1514,13 +1562,14 @@ Promise.all([
         if (inbound) pendingLeg = inbound.inbound;
         let leg = null;
         if (pendingLeg) {
-          leg = el("p", "block-leg", `נסיעה של ${formatDuration(pendingLeg)}`);
+          leg = decorate(el("p", "block-leg"), "🚗", `נסיעה של ${formatDuration(pendingLeg)}`);
           block.append(leg);
           pendingLeg = null;
         }
         const card = el("section", "day-block");
         const head = el("header");
-        head.append(el("h3", null, blockTitle(group)));
+        const titled = blockTitle(group);
+        head.append(decorate(el("h3"), titled[0], titled[1]));
         const token = blockToken(group.id);
         if (movable && token != null) {
           const moves = el("div", "block-moves");
@@ -1872,15 +1921,18 @@ Promise.all([
     }
 
     function blockTitle(group) {
-      if (group.id === "road") return "בדרך";
-      if (group.id === "stay") return "לילה בחניון";
-      if (group.id === "return") return "חזרה הביתה";
+      if (group.id === "road") return ["🚗", "בדרך"];
+      if (group.id === "stay") return ["⛺", "לילה בחניון"];
+      if (group.id === "return") return ["🏠", "חזרה הביתה"];
       const visit = group.steps.find((step) => step.kind === "visit");
-      if (visit) return `ביקור · ${shortName(visit.name)}`;
+      if (visit) {
+        const item = visitNear.get(visit.placeId);
+        return [(item && PLACE_MARK[item.place.kind]) || "🏞️", `ביקור · ${shortName(visit.name)}`];
+      }
       const coffee = group.steps.find((step) => step.kind === "coffee");
-      if (coffee) return `תצפית לקפה · ${shortName(coffee.name)}`;
+      if (coffee) return ["☕", `תצפית לקפה · ${shortName(coffee.name)}`];
       const hike = group.steps.find((step) => step.kind === "hike");
-      return hike ? `המסלול · ${shortName(hike.name)}` : "המסלול";
+      return ["🥾", hike ? `המסלול · ${shortName(hike.name)}` : "המסלול"];
     }
 
     function blockToken(id) {
@@ -2020,15 +2072,16 @@ Promise.all([
       sort.append(select);
       const filters = el("div", "near-filters");
       [
-        ["short", "עד 3 שעות"],
-        ["easy", "קל"],
-        ["family", "למשפחות"],
-        ["circular", "מעגלי"],
-        ["shade", "מוצל"],
-        ["wet", "רטוב"],
-        ["view", "תצפית"],
-      ].forEach(([key, label]) => {
-        const button = el("button", "chip-btn", label);
+        ["short", "עד 3 שעות", "⏱️"],
+        ["easy", "קל", "🙂"],
+        ["family", "למשפחות", "👨‍👩‍👧"],
+        ["circular", "מעגלי", "🔁"],
+        ["shade", "מוצל", "🌳"],
+        ["wet", "רטוב", "💦"],
+        ["view", "תצפית", "🔭"],
+      ].forEach(([key, label, emoji]) => {
+        const button = el("button", "chip-btn");
+        decorate(button, emoji, label);
         button.type = "button";
         button.setAttribute("aria-pressed", nearOn[key] ? "true" : "false");
         button.addEventListener("click", () => {
@@ -2075,6 +2128,7 @@ Promise.all([
             emphasize(focusedKey);
           },
           () => showPlace(`place-${place.id}`),
+          "☕",
         );
         row.classList.add("coffee");
         appendPlaceMedia(row, place);
@@ -2125,11 +2179,11 @@ Promise.all([
       const tabs = el("div", "catalog-tabs");
       tabs.setAttribute("role", "tablist");
       tabs.setAttribute("aria-label", "מה להוסיף לטיול");
-      [
-        ["trails", "מסלולים", inRange.length],
-        ["places", "נקודות", placeCount],
-        ["coffee", "לקפה", coffeeNear.size],
-      ].forEach(([key, label, count]) => {
+        [
+        ["trails", "מסלולים", inRange.length, "🥾"],
+        ["places", "נקודות", placeCount, "📍"],
+        ["coffee", "לקפה", coffeeNear.size, "☕"],
+      ].forEach(([key, label, count, emoji]) => {
         const button = el("button", "tab");
         button.type = "button";
         button.id = `catalog-tab-${key}`;
@@ -2138,7 +2192,9 @@ Promise.all([
         const on = catalog === key;
         button.setAttribute("aria-selected", on ? "true" : "false");
         button.tabIndex = on ? 0 : -1;
-        button.append(el("span", "tab-label", label), el("span", "count", String(count)));
+        const mark = el("span", "mark", emoji);
+        mark.setAttribute("aria-hidden", "true");
+        button.append(mark, el("span", "tab-label", label), el("span", "count", String(count)));
         button.addEventListener("click", () => selectCatalog(key, false));
         tabs.append(button);
       });
@@ -2201,12 +2257,12 @@ Promise.all([
         const row = spotRow(item.trail.id, item.trail.name, facts, "#cfc3b4", info, () => {
           focusedKey = String(item.trail.id);
           emphasize(focusedKey);
-        });
+        }, null, "🥾");
         row.classList.add("nearby");
         const tags = window.CamperPlan.trailLures(item.trail);
         if (tags.length) {
           const lures = el("ul", "lures");
-          tags.forEach((tag) => lures.append(el("li", null, tag)));
+          tags.forEach((tag) => lures.append(tagItem(tag)));
           row.querySelector(".spot-copy").append(lures);
         }
         if (photos.length) {
@@ -2260,8 +2316,9 @@ Promise.all([
         parent.append(el("p", "fine", "«בדרך מהבית» הוא על הגישה מאזור הבית לחניון, לפני ההגעה ובלי סטייה של יותר מכמה קילומטרים. זו הערכת מרחק, לא כביש."));
       }
       const filters = el("div", "near-filters place-filters");
-      [["all", "הכל"]].concat(present.map((kind) => [kind, PLACE_KIND[kind] || kind])).forEach(([key, label]) => {
-        const button = el("button", "chip-btn", label);
+      [["all", "הכל", ""]].concat(present.map((kind) => [kind, PLACE_KIND[kind] || kind, PLACE_MARK[kind] || ""])).forEach(([key, label, emoji]) => {
+        const button = el("button", "chip-btn");
+        decorate(button, emoji, label);
         button.type = "button";
         button.setAttribute("aria-pressed", key === placeKind ? "true" : "false");
         button.addEventListener("click", () => {
@@ -2300,11 +2357,12 @@ Promise.all([
           action,
           visitable ? () => openVisit(place.id) : holdPlace,
           showPlace,
+          PLACE_MARK[place.kind] || "📍",
         );
         row.classList.add("place");
         if (visitable && place.tags && place.tags.length) {
           const lures = el("ul", "lures");
-          place.tags.forEach((tag) => lures.append(el("li", null, tag)));
+          place.tags.forEach((tag) => lures.append(tagItem(tag)));
           row.querySelector(".spot-copy").append(lures);
         }
         appendPlaceMedia(row, place);
