@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures } = require("../plan.js");
+const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates } = require("../plan.js");
 
 const trails = [
   {
@@ -250,7 +250,7 @@ const flippedArrive = firstHike.find((step) => step.kind === "arrive");
 assert.strictEqual(flippedDepart.toward, "hike");
 assert.ok(firstHike.indexOf(flippedHike) < firstHike.indexOf(flippedArrive));
 assert.strictEqual(flippedHike.beforeStay, true);
-assert.strictEqual(flippedHike.day, "שישי");
+assert.strictEqual(flippedHike.part, "out");
 assert.strictEqual(flippedArrive.block, "stay");
 assert.strictEqual(flippedHike.at, 17 * 60 - 30 - 120);
 assert.strictEqual(flippedDepart.at + flippedDepart.drive, flippedHike.at);
@@ -285,6 +285,50 @@ const ignored = buildItinerary({
 });
 assert.strictEqual(ignored.find((step) => step.kind === "hike").beforeStay, false);
 assert.strictEqual(ignored.find((step) => step.kind === "arrive").block, "road");
+
+const dated = buildItinerary({
+  camp: lake,
+  trails: [twoHours],
+  arrivalMinutes: 17 * 60,
+  origin,
+  from: "2026-10-16",
+  to: "2026-10-17",
+});
+assert.strictEqual(dated.find((step) => step.kind === "depart").day, "יום ו׳ 16.10");
+assert.strictEqual(dated.find((step) => step.kind === "breakfast").day, "יום ש׳ 17.10");
+assert.strictEqual(dated.find((step) => step.kind === "hike").day, "יום ש׳ 17.10");
+const leave = dated.find((step) => step.kind === "return");
+const home = dated.find((step) => step.kind === "home");
+assert.strictEqual(leave.day, "יום ש׳ 17.10");
+assert.strictEqual(leave.at, dated.find((step) => step.kind === "lunch").at + 30);
+assert.strictEqual(home.at, leave.at + leave.drive);
+assert.strictEqual(home.day, "יום ש׳ 17.10");
+const later = retimedHours({
+  hours: {},
+  arrival: 17 * 60,
+  step: leave,
+  next: 15 * 60,
+  trailIds: [],
+});
+assert.strictEqual(later.hours.back, 15 * 60);
+assert.strictEqual(later.arrival, 17 * 60);
+const held = buildItinerary({
+  camp: lake,
+  trails: [],
+  arrivalMinutes: 17 * 60,
+  origin,
+  from: "2026-10-15",
+  to: "2026-10-18",
+});
+assert.strictEqual(held.find((step) => step.kind === "rise").day, "יום ו׳ 16.10");
+assert.strictEqual(held.find((step) => step.kind === "return").day, "יום א׳ 18.10");
+assert.strictEqual(held.find((step) => step.kind === "return").at, 11 * 60);
+assert.strictEqual(held.find((step) => step.kind === "return").nights, 3);
+assert.deepStrictEqual(comingWeekend("2026-10-12"), { from: "2026-10-16", to: "2026-10-17" });
+assert.deepStrictEqual(comingWeekend("2026-10-16"), { from: "2026-10-16", to: "2026-10-17" });
+assert.deepStrictEqual(comingWeekend("2026-10-17"), { from: "2026-10-23", to: "2026-10-24" });
+assert.deepStrictEqual(tripDates("2026-10-18", "2026-10-16"), { from: "2026-10-18", to: "2026-10-19", nights: 1 });
+assert.deepStrictEqual(moveTripDates("2026-10-16", "2026-10-18", "2026-10-23", null), { from: "2026-10-23", to: "2026-10-25" });
 
 const centers = centerOrigin([
   { lat: 32, lng: 34.7, regions: ["center"] },

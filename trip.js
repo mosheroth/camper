@@ -8,6 +8,8 @@ const TIME_LABEL = {
   start: "שעת יציאה למסלול",
   hike: "שעת המסלול",
   lunch: "שעת ארוחת צהריים",
+  return: "שעת יציאה הביתה",
+  home: "שעת הגעה הביתה",
 };
 const REGION_LABEL = { north: "צפון", center: "מרכז", south: "דרום", east: "יו״ש" };
 
@@ -70,7 +72,14 @@ function params() {
     hikes,
     radius: radius === 40 ? 40 : 20,
     order: readOrder(query.get("order")),
+    from: readDate(query.get("from")),
+    to: readDate(query.get("to")),
+    back: readMinute(query.get("back")),
   };
+}
+
+function readDate(value) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(String(value || "")) ? value : null;
 }
 
 function readOrder(value) {
@@ -557,12 +566,16 @@ Promise.all([
     const openPreviews = new Set();
     let arrival = query.arrival;
     let order = query.order;
+    const opened = window.CamperPlan.tripDates(query.from, query.to);
+    let fromDate = opened.from;
+    let toDate = opened.to;
     let hours = {
       dinner: query.dinner,
       rise: query.rise,
       breakfast: query.breakfast,
       start: query.start,
       lunch: query.lunch,
+      back: query.back,
       hikes: query.hikes,
     };
     let hereKey = null;
@@ -644,9 +657,12 @@ Promise.all([
         breakfast: hours.breakfast,
         start: hours.start,
         lunch: hours.lunch,
+        back: hours.back,
         hikes: hours.hikes,
         radius,
         order: placeOrder(),
+        from: fromDate,
+        to: toDate,
       };
     }
 
@@ -829,6 +845,16 @@ Promise.all([
         const longDay = step.back >= 15 * 60 ? " זה יום ארוך." : "";
         return `${leaving}${name}. הליכה של ${formatDuration(step.walk)}, חזרה לחניון ב־${clock(step.back)}.${longDay}`;
       }
+      if (step.kind === "return") {
+        const ride = step.drive == null ? "" : ` נסיעה של ${formatDuration(step.drive)} בערך.`;
+        if (step.nights > 1) {
+          const extra = step.nights - 1;
+          const stay = extra === 1 ? "נשארים בחניון עוד לילה אחד לפני החזרה." : `נשארים בחניון עוד ${extra} לילות לפני החזרה.`;
+          return `יוצאים מהחניון הביתה. ${stay}${ride}`;
+        }
+        return `יוצאים מהחניון הביתה.${ride}`;
+      }
+      if (step.kind === "home") return "מגיעים הביתה, לאזור המרכז.";
       if (step.at == null) return "אחרי המסלול אוכלים בחניון. השעה גמישה.";
       return "אוכלים בחניון אחרי המסלול.";
     }
@@ -857,6 +883,8 @@ Promise.all([
         origin,
         hours,
         order: sequence,
+        from: fromDate,
+        to: toDate,
       });
       const depart = steps.find((step) => step.kind === "depart");
       const hikeFirst = sequence[0] !== "stay";
@@ -864,6 +892,7 @@ Promise.all([
       block.append(el("p", "itinerary-lead", hikeFirst
         ? "קודם המסלול, ואחר כך לילה בחניון. יוצאים מהבית, מאזור המרכז."
         : "יוצאים מהבית, מאזור המרכז. לילה בחניון, ולמחרת המסלול."));
+      block.append(dateFields());
       block.append(timeChoices("יוצאים מהבית", [8, 12, 16], depart ? depart.at : null, (minutes) => {
         if (!depart || depart.at == null) return;
         const edited = window.CamperPlan.retimedHours({
@@ -907,10 +936,10 @@ Promise.all([
         }
         card.append(head);
         const list = el("ol", "timeline");
-        const splitMorning = group.steps.some((step) => step.day === "שישי") && group.steps.some((step) => step.day === "שבת");
+        const splitMorning = group.steps.some((step) => step.part === "out") && group.steps.some((step) => step.part === "next");
         let markedMorning = false;
         group.steps.forEach((step) => {
-          if (splitMorning && !markedMorning && step.day === "שבת") {
+          if (splitMorning && !markedMorning && step.part === "next") {
             list.append(el("li", "day-gap", "בוקר שאחרי"));
             markedMorning = true;
           }
@@ -920,8 +949,55 @@ Promise.all([
         card.append(list);
         block.append(card);
       });
-      block.append(el("p", "fine", "אפשר לשנות כל שעה, ומה שאחריה זז איתה. את סדר הלילה והמסלולים משנים מכל בלוק."));
+      block.append(el("p", "fine", "אפשר לקבוע תאריך יציאה וחזרה. שינוי היציאה שומר על אורך הטיול, ושינוי שעה מזיז את מה שאחריה."));
       return block;
+    }
+
+    function dateFields() {
+      const row = el("div", "trip-dates");
+      row.append(dateField("יציאה", fromDate, (value) => {
+        const next = window.CamperPlan.moveTripDates(fromDate, toDate, value, null);
+        fromDate = next.from;
+        toDate = next.to;
+        historyPush = true;
+        render();
+      }));
+      row.append(dateField("חזרה", toDate, (value) => {
+        const next = window.CamperPlan.moveTripDates(fromDate, toDate, null, value);
+        fromDate = next.from;
+        toDate = next.to;
+        historyPush = true;
+        render();
+      }, addIso(fromDate, 1)));
+      return row;
+    }
+
+    function dateField(label, value, onChange, min) {
+      const wrap = el("label", "date-field");
+      wrap.append(el("span", null, label));
+      const input = document.createElement("input");
+      input.type = "date";
+      input.value = value;
+      input.required = true;
+      if (min) input.min = min;
+      input.addEventListener("click", (event) => event.stopPropagation());
+      input.addEventListener("change", () => {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(input.value)) {
+          render();
+          return;
+        }
+        onChange(input.value);
+      });
+      wrap.append(input);
+      return wrap;
+    }
+
+    function addIso(iso, count) {
+      const [year, month, day] = iso.split("-").map(Number);
+      const date = new Date(year, month - 1, day + count);
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${date.getFullYear()}-${m}-${d}`;
     }
 
     function timeChoices(label, hoursOfDay, current, onPick) {
@@ -953,6 +1029,7 @@ Promise.all([
     function blockTitle(group) {
       if (group.id === "road") return "בדרך";
       if (group.id === "stay") return "לילה בחניון";
+      if (group.id === "return") return "חזרה הביתה";
       const hike = group.steps.find((step) => step.kind === "hike");
       return hike ? `המסלול · ${shortName(hike.name)}` : "המסלול";
     }
@@ -976,6 +1053,8 @@ Promise.all([
         item.dataset.lng = String(place.lng);
       } else if (step.kind === "depart") {
         item.title = "היציאה מהבית לא מסומנת על המפה הזאת.";
+      } else if (step.kind === "home") {
+        item.title = "ההגעה הביתה לא מסומנת על המפה הזאת.";
       }
       const when = el("time");
       when.append(el("span", null, step.day));
@@ -1215,6 +1294,8 @@ Promise.all([
         origin,
         hours,
         order,
+        from: fromDate,
+        to: toDate,
       });
       const hike = steps.find((step) => step.kind === "hike" && step.trailId === trail.id);
       const lunch = steps.find((step) => step.kind === "lunch");
@@ -1226,14 +1307,16 @@ Promise.all([
           : `אם מוסיפים לטיול, הוא נכנס ליום ההגעה.${when}`;
       }
       if (!hike || hike.walk == null) {
+        const when = hike && hike.day ? hike.day : "למחרת";
         return on
-          ? "המסלול בלוז של שבת. אין משך הליכה, אז שעת החזרה גמישה."
-          : "אם מוסיפים לטיול, הוא נכנס לבוקר של שבת. אין משך הליכה, אז שעת החזרה גמישה.";
+          ? `המסלול בלוז של ${when}. אין משך הליכה, אז שעת החזרה גמישה.`
+          : `אם מוסיפים לטיול, הוא נכנס ללוז של ${when}. אין משך הליכה, אז שעת החזרה גמישה.`;
       }
       const meal = lunch && lunch.at != null ? ` אוכלים בחניון ב־${clock(lunch.at)}.` : "";
       const longDay = hike.back >= 15 * 60 ? " זה יום ארוך." : "";
-      if (on) return `המסלול בלוז של שבת. חזרה לחניון ב־${clock(hike.back)}.${meal}${longDay}`;
-      return `אם מוסיפים לטיול, חוזרים לחניון ב־${clock(hike.back)}.${meal}${longDay}`;
+      const when = hike.day || "למחרת";
+      if (on) return `המסלול בלוז של ${when}. חזרה לחניון ב־${clock(hike.back)}.${meal}${longDay}`;
+      return `אם מוסיפים לטיול, הוא נכנס ללוז של ${when}. חזרה לחניון ב־${clock(hike.back)}.${meal}${longDay}`;
     }
 
     function render() {
@@ -1268,7 +1351,7 @@ Promise.all([
 
     function stepPlace(step, stages) {
       const campStage = stages.find((stage) => stage.kind === "arrive");
-      if (step.kind === "arrive" || step.kind === "dinner" || step.kind === "rise" || step.kind === "breakfast" || step.kind === "lunch") {
+      if (step.kind === "arrive" || step.kind === "dinner" || step.kind === "rise" || step.kind === "breakfast" || step.kind === "lunch" || step.kind === "return") {
         return campStage || null;
       }
       if (step.kind === "start" || step.kind === "hike") {
@@ -1357,10 +1440,14 @@ Promise.all([
         breakfast: next.breakfast,
         start: next.start,
         lunch: next.lunch,
+        back: next.back,
         hikes: next.hikes,
       };
       radius = next.radius;
       order = next.order;
+      const dates = window.CamperPlan.tripDates(next.from, next.to);
+      fromDate = dates.from;
+      toDate = dates.to;
       tripDepth = window.history.state && window.history.state.camperTrip ? window.history.state.depth || 0 : 0;
       render();
       silenceHistory = false;

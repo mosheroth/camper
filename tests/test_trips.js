@@ -100,10 +100,31 @@ assert.ok(!trips.sharePath({
   name: "רגיל",
   place: { order: ["stay", 3] },
 }).includes("order="));
+const datedTrip = trips.save({
+  name: "תאריכים",
+  campId: 9,
+  trailIds: [],
+  place: { from: "2026-10-16", to: "2026-10-18", back: 11 * 60 },
+});
+assert.strictEqual(datedTrip.place.from, "2026-10-16");
+assert.strictEqual(datedTrip.place.to, "2026-10-18");
+assert.strictEqual(datedTrip.place.back, 11 * 60);
+const datedPath = trips.sharePath(datedTrip);
+assert.ok(datedPath.includes("from=2026-10-16"));
+assert.ok(datedPath.includes("to=2026-10-18"));
+assert.ok(datedPath.includes("back=660"));
+const swapped = trips.save({
+  name: "הפוך",
+  campId: 9,
+  trailIds: [],
+  place: { from: "2026-10-18", to: "2026-10-16" },
+});
+assert.strictEqual(swapped.place.from, "2026-10-18");
+assert.strictEqual(swapped.place.to, "2026-10-19");
 
 trips.remove(created.id);
 assert.strictEqual(trips.get(created.id), null);
-assert.strictEqual(trips.list().length, 4);
+assert.strictEqual(trips.list().length, 6);
 
 const broken = open({
   get: () => "{",

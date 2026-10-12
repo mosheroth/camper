@@ -130,6 +130,9 @@
         const fallback = ["stay"].concat(trip.trailIds || []).join(",");
         if (text !== fallback) params.set("order", text);
       }
+      if (place.from) params.set("from", place.from);
+      if (place.to) params.set("to", place.to);
+      if (place.back != null) params.set("back", String(place.back));
       if (withId && trip.id) params.set("trip", trip.id);
       return `trip.html?${params.toString()}`;
     }
@@ -166,6 +169,9 @@
     const source = place || {};
     const view = source.view === "detail" || source.view === "camp" ? source.view : "routes";
     const focusId = Number(source.focusId);
+    const from = cleanDate(source.from);
+    let to = cleanDate(source.to);
+    if (from && (!to || to <= from)) to = dayAfter(from);
     return {
       view,
       focusId: Number.isFinite(focusId) ? focusId : null,
@@ -178,7 +184,31 @@
       hikes: cleanHikes(source.hikes),
       radius: Number(source.radius) === 40 ? 40 : 20,
       order: cleanOrder(source.order),
+      from,
+      to,
+      back: cleanMinute(source.back, null),
     };
+  }
+
+  function cleanDate(value) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ""));
+    if (!match) return null;
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    const date = new Date(year, month - 1, day);
+    if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+    const m = String(month).padStart(2, "0");
+    const d = String(day).padStart(2, "0");
+    return `${year}-${m}-${d}`;
+  }
+
+  function dayAfter(iso) {
+    const [year, month, day] = iso.split("-").map(Number);
+    const date = new Date(year, month - 1, day + 1);
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${date.getFullYear()}-${m}-${d}`;
   }
 
   function cleanMinute(value, fallback) {

@@ -47,6 +47,12 @@ function when(iso) {
   return new Intl.DateTimeFormat("he-IL", { dateStyle: "medium" }).format(date);
 }
 
+function dateRange(place) {
+  if (!place || !place.from || !place.to) return "";
+  const show = (iso) => `${iso.slice(8, 10)}.${iso.slice(5, 7)}`;
+  return `${show(place.from)}–${show(place.to)}`;
+}
+
 function focusTrip(trip) {
   selectedId = trip.id;
   library.querySelectorAll(".saved").forEach((node) => {
@@ -106,6 +112,7 @@ function render() {
     card.append(el("h2", null, trip.name));
     const names = (trip.trailIds || []).map(trailName).filter(Boolean);
     const meta = [
+      dateRange(trip.place),
       camp ? camp.name : "החניון לא נמצא בקטלוג",
       names.length ? names.join(" · ") : "בלי מסלול",
       when(trip.updatedAt),

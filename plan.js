@@ -159,11 +159,81 @@
     return tokens;
   }
 
-  function hikeStep(trail, { day, at, walk, back, beforeStay, lastBefore, firstOfDay }) {
+  const WEEKDAYS = ["יום א׳", "יום ב׳", "יום ג׳", "יום ד׳", "יום ה׳", "יום ו׳", "יום ש׳"];
+
+  function parseISODate(value) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ""));
+    if (!match) return null;
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    const date = new Date(year, month - 1, day);
+    if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+    return date;
+  }
+
+  function isoDate(date) {
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${date.getFullYear()}-${month}-${day}`;
+  }
+
+  function addDays(iso, count) {
+    const date = parseISODate(iso);
+    if (!date) return null;
+    date.setDate(date.getDate() + count);
+    return isoDate(date);
+  }
+
+  function daySpan(from, to) {
+    const start = parseISODate(from);
+    const end = parseISODate(to);
+    if (!start || !end) return null;
+    return Math.round((end.getTime() - start.getTime()) / 86400000);
+  }
+
+  function dayLabel(iso) {
+    const date = parseISODate(iso);
+    if (!date) return "";
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    return `${WEEKDAYS[date.getDay()]} ${day}.${month}`;
+  }
+
+  function comingWeekend(today) {
+    const start = parseISODate(today) ? today : isoDate(new Date());
+    const untilFriday = (5 - parseISODate(start).getDay() + 7) % 7;
+    const from = addDays(start, untilFriday);
+    return { from, to: addDays(from, 1) };
+  }
+
+  function tripDates(from, to, today) {
+    const weekend = comingWeekend(today);
+    const start = parseISODate(from) ? from : weekend.from;
+    let end = parseISODate(to) ? to : addDays(start, 1);
+    if (daySpan(start, end) < 1) end = addDays(start, 1);
+    return { from: start, to: end, nights: daySpan(start, end) };
+  }
+
+  function moveTripDates(from, to, nextFrom, nextTo, today) {
+    const current = tripDates(from, to, today);
+    if (nextFrom) {
+      const start = parseISODate(nextFrom) ? nextFrom : current.from;
+      return { from: start, to: addDays(start, Math.max(1, current.nights)) };
+    }
+    if (nextTo) {
+      let end = parseISODate(nextTo) ? nextTo : current.to;
+      if (daySpan(current.from, end) < 1) end = addDays(current.from, 1);
+      return { from: current.from, to: end };
+    }
+    return { from: current.from, to: current.to };
+  }
+
+  function hikeStep(trail, { part, at, walk, back, beforeStay, lastBefore, firstOfDay }) {
     return {
       kind: "hike",
       block: `hike:${trail.id}`,
-      day,
+      part,
       at,
       name: trail.name,
       trailId: trail.id,
@@ -181,7 +251,7 @@
       return list.map((trail, index) => ({
         raw: null,
         step: hikeStep(trail, {
-          day: "שישי",
+          part: "out",
           at: null,
           walk: walks[index],
           back: null,
@@ -198,7 +268,7 @@
       return {
         raw: at,
         step: hikeStep(trail, {
-          day: "שישי",
+          part: "out",
           at: minuteOf(at),
           walk: walks[index],
           back,
@@ -220,17 +290,45 @@
       const back = walk == null ? null : at + walk;
       if (walk == null) timed = false;
       else cursor = back;
-      return hikeStep(trail, { day: "שבת", at, walk, back, firstOfDay: index === 0 });
+      return hikeStep(trail, { part: "next", at, walk, back, firstOfDay: index === 0 });
     });
     const last = steps[steps.length - 1];
     const lunchAt = !timed || !last || last.back == null
       ? null
       : clock.lunch == null ? last.back + 30 : minuteOf(clock.lunch);
-    steps.push({ kind: "lunch", block: last.block, day: "שבת", at: lunchAt });
+    steps.push({ kind: "lunch", block: last.block, part: "next", at: lunchAt });
     return steps;
   }
 
-  function buildItinerary({ camp, trails, arrivalMinutes, origin, hours, order }) {
+  function defaultReturnAt(steps, nights) {
+    if (nights > 1) return 11 * 60;
+    let end = null;
+    steps.forEach((step) => {
+      if (step.part !== "next") return;
+      const point = step.kind === "hike" && step.back != null
+        ? step.back
+        : step.kind === "lunch" && step.at != null
+          ? step.at
+          : null;
+      if (point == null) return;
+      end = end == null ? point : Math.max(end, point);
+    });
+    return end == null ? 16 * 60 : end + 30;
+  }
+
+  function stampDays(steps, dates) {
+    const labels = {
+      out: dayLabel(dates.from),
+      next: dayLabel(addDays(dates.from, 1)),
+      back: dayLabel(dates.to),
+    };
+    steps.forEach((step) => {
+      step.day = step.pastMidnight ? dayLabel(addDays(dates.to, 1)) : (labels[step.part] || labels.out);
+    });
+    return steps;
+  }
+
+  function buildItinerary({ camp, trails, arrivalMinutes, origin, hours, order, from, to, today }) {
     const clock = hours || {};
     const arrival = minuteOf(arrivalMinutes) == null ? 17 * 60 : minuteOf(arrivalMinutes);
     const drive = driveMinutes(camp, origin);
@@ -252,34 +350,52 @@
       steps.push({
         kind: "depart",
         block: "road",
-        day: "שישי",
+        part: "out",
         at: drive == null ? null : minuteOf(arrival - drive),
         drive,
       });
-      steps.push({ kind: "arrive", block: "road", day: "שישי", at: arrival });
+      steps.push({ kind: "arrive", block: "road", part: "out", at: arrival });
     } else {
       const placed = stepsBeforeStay(before, arrival);
       const raw = placed[0].raw;
       steps.push({
         kind: "depart",
         block: "road",
-        day: "שישי",
+        part: "out",
         at: drive == null || raw == null ? (drive == null ? null : minuteOf(arrival - drive)) : minuteOf(raw - drive),
         drive,
         toward: "hike",
       });
       placed.forEach((item) => steps.push(item.step));
     }
-    if (before.length) steps.push({ kind: "arrive", block: "stay", day: "שישי", at: arrival, afterHike: true });
-    steps.push({ kind: "dinner", block: "stay", day: "שישי", at: dinner });
-    steps.push({ kind: "rise", block: "stay", day: "שבת", at: rise });
-    steps.push({ kind: "breakfast", block: "stay", day: "שבת", at: breakfast });
-    if (!before.length && !after.length) {
-      steps.push({ kind: "need-hike", block: "stay", day: "שבת" });
-      return steps;
-    }
+    if (before.length) steps.push({ kind: "arrive", block: "stay", part: "out", at: arrival, afterHike: true });
+    steps.push({ kind: "dinner", block: "stay", part: "out", at: dinner });
+    steps.push({ kind: "rise", block: "stay", part: "next", at: rise });
+    steps.push({ kind: "breakfast", block: "stay", part: "next", at: breakfast });
+    if (!before.length && !after.length) steps.push({ kind: "need-hike", block: "stay", part: "next" });
     if (after.length) steps.push(...stepsAfterStay(after, clock));
-    return steps;
+    const dates = tripDates(from, to, today);
+    const leave = clock.back == null ? defaultReturnAt(steps, dates.nights) : minuteOf(clock.back);
+    steps.push({
+      kind: "return",
+      block: "return",
+      part: "back",
+      at: leave,
+      drive,
+      nights: dates.nights,
+    });
+    if (drive != null) {
+      const homeAt = leave + drive;
+      steps.push({
+        kind: "home",
+        block: "return",
+        part: "back",
+        at: minuteOf(homeAt),
+        drive,
+        pastMidnight: homeAt >= 24 * 60,
+      });
+    }
+    return stampDays(steps, dates);
   }
 
   function retimedHours({ hours, arrival, step, next, trailIds, order }) {
@@ -289,6 +405,7 @@
       breakfast: hours && hours.breakfast != null ? minuteOf(hours.breakfast) : null,
       start: hours && hours.start != null ? minuteOf(hours.start) : null,
       lunch: hours && hours.lunch != null ? minuteOf(hours.lunch) : null,
+      back: hours && hours.back != null ? minuteOf(hours.back) : null,
       hikes: {},
     };
     Object.keys((hours && hours.hikes) || {}).forEach((id) => {
@@ -328,7 +445,9 @@
       clock.hikes[step.trailId] = target;
       shiftAfter(after.indexOf(step.trailId) + 1);
       if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
-    } else if (step.kind === "lunch") clock.lunch = target;
+    }     else if (step.kind === "lunch") clock.lunch = target;
+    else if (step.kind === "return") clock.back = target;
+    else if (step.kind === "home") clock.back = minuteOf(target - (step.drive || 0));
     return { arrival: nextArrival, hours: clock };
   }
 
@@ -530,6 +649,9 @@
     buildItinerary,
     retimedHours,
     normalizeOrder,
+    comingWeekend,
+    tripDates,
+    moveTripDates,
     tripStages,
     trailLures,
   };
