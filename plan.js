@@ -92,6 +92,68 @@
     return true;
   }
 
+  function haversineKm(from, to) {
+    const rad = Math.PI / 180;
+    const dLat = (to.lat - from.lat) * rad;
+    const dLng = (to.lng - from.lng) * rad;
+    const lat1 = from.lat * rad;
+    const lat2 = to.lat * rad;
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+    return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
+  }
+
+  function centerOrigin(camps) {
+    const points = (camps || []).filter((camp) => camp.lat != null && (camp.regions || []).includes("center"));
+    if (!points.length) return null;
+    return {
+      lat: points.reduce((sum, camp) => sum + camp.lat, 0) / points.length,
+      lng: points.reduce((sum, camp) => sum + camp.lng, 0) / points.length,
+    };
+  }
+
+  function driveMinutes(camp, origin) {
+    if (!camp || camp.lat == null || camp.lng == null || !origin) return null;
+    const roadKm = haversineKm(camp, origin) * 1.35;
+    const minutes = Math.round((roadKm / 70) * 60 / 15) * 15;
+    return Math.max(15, minutes);
+  }
+
+  function walkMinutes(trail) {
+    if (!trail || trail.hoursMax == null || trail.hoursMax > 16) return null;
+    const min = trail.hoursMin == null ? trail.hoursMax : trail.hoursMin;
+    const mid = (Number(min) + Number(trail.hoursMax)) / 2;
+    if (!Number.isFinite(mid) || mid <= 0) return null;
+    return Math.max(15, Math.round((mid * 60) / 15) * 15);
+  }
+
+  function buildItinerary({ camp, trails, arrivalMinutes, origin }) {
+    const arrival = arrivalMinutes == null ? 17 * 60 : arrivalMinutes;
+    const drive = driveMinutes(camp, origin);
+    const steps = [
+      { kind: "depart", day: "שישי", at: drive == null ? null : arrival - drive, drive },
+      { kind: "arrive", day: "שישי", at: arrival },
+      { kind: "dinner", day: "שישי", at: arrival + 90 },
+      { kind: "rise", day: "שבת", at: 7 * 60 },
+    ];
+    const chosen = trails || [];
+    if (!chosen.length) {
+      steps.push({ kind: "need-hike", day: "שבת" });
+      return steps;
+    }
+    let cursor = 8 * 60;
+    let timed = true;
+    steps.push({ kind: "start", day: "שבת", at: cursor, count: chosen.length });
+    chosen.forEach((trail) => {
+      const walk = walkMinutes(trail);
+      const back = walk == null ? null : cursor + walk;
+      steps.push({ kind: "hike", day: "שבת", at: cursor, name: trail.name, walk, back });
+      if (walk == null) timed = false;
+      else cursor = back;
+    });
+    steps.push({ kind: "lunch", day: "שבת", at: timed ? cursor + 30 : null });
+    return steps;
+  }
+
   function nearbyChoices(camp, trails) {
     const byId = new Map((trails || []).map((trail) => [trail.id, trail]));
     return (camp.nearby || [])
@@ -104,5 +166,15 @@
       });
   }
 
-  return { buildPlans, trailMatches, timeMatches, campMatches, planUrl, nearbyChoices, lengthIsUsable };
+  return {
+    buildPlans,
+    trailMatches,
+    timeMatches,
+    campMatches,
+    planUrl,
+    nearbyChoices,
+    lengthIsUsable,
+    centerOrigin,
+    buildItinerary,
+  };
 });

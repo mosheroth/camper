@@ -971,6 +971,34 @@ button {
   color: var(--muted);
   font-size: 0.9rem;
 }
+.itinerary { margin-top: 8px; }
+.itinerary-lead {
+  margin: 4px 0 0;
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+.itinerary .section-head { margin-top: 12px; }
+.itinerary .fine { margin: 8px 0 0; }
+.timeline {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.timeline li {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+}
+.timeline time {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--green);
+}
+.timeline p { margin: 0; }
 .section-head {
   display: flex;
   align-items: center;

@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, planUrl, lengthIsUsable } = require("../plan.js");
+const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, centerOrigin } = require("../plan.js");
 
 const trails = [
   {
@@ -139,5 +139,57 @@ assert.strictEqual(lengthIsUsable({ kmMax: 40, hoursMax: 1.5 }), false);
 assert.strictEqual(lengthIsUsable({ kmMax: 800, hoursMax: 2 }), false);
 assert.strictEqual(lengthIsUsable({ kmMax: 6, hoursMax: 3 }), true);
 assert.strictEqual(lengthIsUsable({ kmMin: 2, kmMax: 4 }), true);
+
+const origin = { lat: 32.07, lng: 34.8 };
+const lake = { name: "חניון לילה האגם", lat: 32.72, lng: 35.01 };
+const twoHours = { name: "אנדרטת הנסיכים", hoursMin: 2, hoursMax: 2 };
+const oneHour = { name: "נחל קצר", hoursMin: 1, hoursMax: 1 };
+const evening = buildItinerary({ camp: lake, trails: [twoHours], arrivalMinutes: 17 * 60, origin });
+const depart = evening.find((step) => step.kind === "depart");
+const hike = evening.find((step) => step.kind === "hike");
+const lunch = evening.find((step) => step.kind === "lunch");
+assert.ok(depart.drive >= 60 && depart.drive <= 150);
+assert.strictEqual(depart.at + depart.drive, 17 * 60);
+assert.strictEqual(hike.at, 8 * 60);
+assert.strictEqual(hike.back, 10 * 60);
+assert.strictEqual(lunch.at, 10 * 60 + 30);
+
+const longer = buildItinerary({
+  camp: lake,
+  trails: [twoHours, oneHour],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+assert.strictEqual(longer.filter((step) => step.kind === "hike")[1].back, 11 * 60);
+assert.strictEqual(longer.find((step) => step.kind === "lunch").at, 11 * 60 + 30);
+
+const openEnded = buildItinerary({
+  camp: lake,
+  trails: [{ name: "בלי זמן", hoursMax: null }],
+  arrivalMinutes: 15 * 60,
+  origin,
+});
+assert.strictEqual(openEnded.find((step) => step.kind === "hike").back, null);
+assert.strictEqual(openEnded.find((step) => step.kind === "lunch").at, null);
+
+const noTrail = buildItinerary({ camp: lake, trails: [], arrivalMinutes: 19 * 60, origin });
+assert.ok(noTrail.some((step) => step.kind === "need-hike"));
+assert.strictEqual(noTrail.find((step) => step.kind === "arrive").at, 19 * 60);
+
+const unplaced = buildItinerary({
+  camp: { name: "בלי נקודה" },
+  trails: [twoHours],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+assert.strictEqual(unplaced.find((step) => step.kind === "depart").at, null);
+
+const centers = centerOrigin([
+  { lat: 32, lng: 34.7, regions: ["center"] },
+  { lat: 32.2, lng: 34.9, regions: ["center"] },
+  { lat: 33, lng: 35.5, regions: ["north"] },
+]);
+assert.strictEqual(centers.lat, 32.1);
+assert.strictEqual(centers.lng, 34.8);
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

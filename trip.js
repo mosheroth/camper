@@ -462,6 +462,8 @@ Promise.all([
     const choices = window.CamperPlan.nearbyChoices(camp, trails);
     let radius = 20;
     let expanded = false;
+    let arrival = 17 * 60;
+    const origin = window.CamperPlan.centerOrigin(camps);
     let panelMode = "routes";
     let focusId = selected[0] || null;
     if (focusId != null) focusedKey = String(focusId);
@@ -604,12 +606,86 @@ Promise.all([
       return row;
     }
 
+    function clock(minutes) {
+      const day = ((minutes % (24 * 60)) + 24 * 60) % (24 * 60);
+      const hours = Math.floor(day / 60);
+      const mins = day % 60;
+      return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
+    }
+
+    function formatDuration(minutes) {
+      const rounded = Math.max(15, Math.round(minutes / 15) * 15);
+      const hours = Math.floor(rounded / 60);
+      const mins = rounded % 60;
+      if (!hours) return `כ־${rounded} דקות`;
+      const head = hours === 1 ? "כשעה" : hours === 2 ? "כשעתיים" : `כ־${hours} שעות`;
+      if (!mins) return head;
+      if (mins === 30) return `${head} וחצי`;
+      return `${head} ו־${mins} דקות`;
+    }
+
+    function stepCopy(step) {
+      if (step.kind === "depart") {
+        if (step.at == null) return "יוצאים מאזור המרכז. אין מרחק נסיעה, אז שעת היציאה גמישה.";
+        return `יוצאים מאזור המרכז. נסיעה של ${formatDuration(step.drive)} בערך.`;
+      }
+      if (step.kind === "arrive") return `מגיעים ל${camp.name}. כאן ישנים.`;
+      if (step.kind === "dinner") return "אוכלים בחניון.";
+      if (step.kind === "rise") return "קמים בחניון.";
+      if (step.kind === "need-hike") return "עדיין אין מסלול. מוסיפים אחד, ושעת החזרה נכנסת ללוז.";
+      if (step.kind === "start") {
+        return step.count > 1 ? "יוצאים מהחניון למסלולים, לפי הסדר ברשימה." : "יוצאים מהחניון למסלול.";
+      }
+      if (step.kind === "hike") {
+        const name = shortName(step.name);
+        if (step.walk == null) return `${name}. אין משך הליכה, אז שעת החזרה גמישה.`;
+        const longDay = step.back >= 15 * 60 ? " זה יום ארוך." : "";
+        return `${name}. הליכה של ${formatDuration(step.walk)}, חזרה לחניון ב־${clock(step.back)}.${longDay}`;
+      }
+      if (step.at == null) return "אחרי המסלול אוכלים בחניון. השעה גמישה.";
+      return "אוכלים בחניון אחרי המסלול.";
+    }
+
+    function renderItinerary() {
+      const block = el("section", "itinerary");
+      block.append(el("h2", "section-label", "לוז"));
+      block.append(el("p", "itinerary-lead", "לילה אחד בחניון, ולמחרת המסלולים שברשימה. חוזרים לאותו חניון."));
+      const head = el("div", "section-head");
+      head.append(el("p", "section-label", "מגיעים לחניון"));
+      const choices = el("div", "radius");
+      [15, 17, 19].forEach((hour) => {
+        const minutes = hour * 60;
+        const button = el("button", "chip-btn", clock(minutes));
+        button.type = "button";
+        button.setAttribute("aria-pressed", minutes === arrival ? "true" : "false");
+        button.addEventListener("click", () => {
+          arrival = minutes;
+          render();
+        });
+        choices.append(button);
+      });
+      head.append(choices);
+      block.append(head);
+      const list = el("ol", "timeline");
+      const trails = selected.map((id) => byId.get(id)).filter(Boolean);
+      window.CamperPlan.buildItinerary({ camp, trails, arrivalMinutes: arrival, origin }).forEach((step) => {
+        const item = el("li");
+        const when = el("time", null, step.at == null ? step.day : `${step.day} ${clock(step.at)}`);
+        item.append(when, el("p", null, stepCopy(step)));
+        list.append(item);
+      });
+      block.append(list);
+      block.append(el("p", "fine", "השעות משוערות לפי המרחק מאזור המרכז."));
+      return block;
+    }
+
     function renderAround() {
       const pool = choices.filter((item) => item.km == null || item.km <= radius);
       const available = pool.filter((item) => !selected.includes(item.trail.id));
       const shown = expanded ? available : available.slice(0, 6);
       around.replaceChildren();
       around.append(el("p", "board-hint", "הצבע ברשימה הוא הצבע על המפה. עומדים על שורה, והמסלול מודגש."));
+      around.append(renderItinerary());
 
       around.append(el("h2", "section-label", "החניון"));
       const campMeta = [camp.paid ? "בתשלום" : "בלי תשלום", (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ")].filter(Boolean).join(" · ");
