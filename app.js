@@ -22,19 +22,33 @@ let markerLayer = null;
 let focusLayer = null;
 let markersByCamp = new Map();
 
+const CHECKS = ["family", "circular", "shade", "wet", "view", "close", "water", "toilet", "shower", "fire"];
+
 function readFilters() {
   const data = new FormData(form);
-  return {
+  const filters = {
+    home: data.get("home") || "",
     region: data.get("region"),
     lodging: data.get("lodging"),
     difficulty: data.get("difficulty"),
     time: data.get("time"),
-    family: data.get("family") === "on",
-    circular: data.get("circular") === "on",
-    water: data.get("water") === "on",
-    toilet: data.get("toilet") === "on",
     query: data.get("query") || "",
   };
+  CHECKS.forEach((name) => {
+    filters[name] = data.get(name) === "on";
+  });
+  return filters;
+}
+
+function rememberFilters() {
+  const filters = readFilters();
+  try {
+    sessionStorage.setItem("camper-filters", JSON.stringify(filters));
+    if (filters.home) localStorage.setItem("camper-home", filters.home);
+    else localStorage.removeItem("camper-home");
+  } catch (_error) {
+    /* private mode can block storage; the form still filters this visit */
+  }
 }
 
 function el(tag, className, text) {
@@ -245,6 +259,17 @@ function aroundText(count) {
   return "";
 }
 
+function homeLabel(minutes) {
+  if (minutes == null) return "";
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (!hours) return `כ־${minutes} דקות מהבית`;
+  const head = hours === 1 ? "כשעה" : hours === 2 ? "כשעתיים" : `כ־${hours} שעות`;
+  if (!mins) return `${head} מהבית`;
+  if (mins === 30) return `${head} וחצי מהבית`;
+  return `${head} ו־${mins} דקות מהבית`;
+}
+
 function shortTrail(name) {
   const cut = String(name).split(/\s+[–—-]\s+/)[0].trim();
   return cut.length > 32 ? `${cut.slice(0, 31)}…` : cut;
@@ -264,10 +289,11 @@ function renderPlan(plan) {
   const distance = primary && primary.km != null ? `כ־${primary.km} ק״מ` : "";
   const trailName = primary ? shortTrail(primary.trail.name) : "";
   const aroundLabel = aroundText(window.CamperPlan.aroundCount(camp));
+  const fromHome = homeLabel(plan.homeMinutes);
   const swatch = el("i", camp.paid ? "swatch paid-swatch" : "swatch free-swatch");
   const copy = el("div", "index-copy");
   copy.append(el("h2", null, camp.name));
-  copy.append(el("p", "meta", [aroundLabel, regions, lodging, distance, trailName].filter(Boolean).join(" · ")));
+  copy.append(el("p", "meta", [fromHome, aroundLabel, regions, lodging, distance, trailName].filter(Boolean).join(" · ")));
   const href = window.CamperPlan.planUrl(camp.id, plan.trails.map((item) => item.trail.id));
   const opener = el("a", "opener", "לצפייה");
   opener.href = href;
@@ -310,9 +336,11 @@ function render() {
     results.append(empty);
     return;
   }
+  const homeName = REGION_LABEL[readFilters().home];
+  const sorted = homeName ? ` מהקרוב לבית באזור ${homeName}.` : "";
   summary.textContent = plans.length === 1
-    ? "הצעה אחת. השורה והנקודה על המפה הן אותו מקום."
-    : `${plans.length} הצעות. כל שורה היא נקודה על המפה.`;
+    ? `הצעה אחת.${sorted} השורה והנקודה על המפה הן אותו מקום.`
+    : `${plans.length} הצעות.${sorted} כל שורה היא נקודה על המפה.`;
   plans.forEach((plan) => results.append(renderPlan(plan)));
   const selected = plans.find((plan) => plan.camp.id === selectedId);
   drawFocus(selected || null);
@@ -320,6 +348,7 @@ function render() {
 }
 
 function apply() {
+  rememberFilters();
   plans = window.CamperPlan.buildPlans(camps, trails, readFilters());
   if (!plans.some((plan) => plan.camp.id === selectedId)) selectedId = null;
   render();
@@ -394,10 +423,26 @@ Promise.all([
       ["region", "lodging", "difficulty", "time"].forEach((name) => {
         if (filters[name] && form.elements[name]) form.elements[name].value = filters[name];
       });
-      ["family", "circular", "water", "toilet"].forEach((name) => {
+      if (filters.home && form.elements.home) form.elements.home.value = filters.home;
+      else if (!Object.prototype.hasOwnProperty.call(filters, "home") && form.elements.home) {
+        try {
+          const stored = localStorage.getItem("camper-home");
+          if (stored) form.elements.home.value = stored;
+        } catch (_error) {
+          /* the visit simply stays unsorted */
+        }
+      }
+      CHECKS.forEach((name) => {
         if (form.elements[name]) form.elements[name].checked = Boolean(filters[name]);
       });
       if (typeof filters.query === "string") form.elements.query.value = filters.query;
+    } else if (form.elements.home) {
+      try {
+        const stored = localStorage.getItem("camper-home");
+        if (stored) form.elements.home.value = stored;
+      } catch (_error) {
+        /* the visit simply stays unsorted */
+      }
     }
     apply();
   })

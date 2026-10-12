@@ -380,4 +380,40 @@ assert.deepStrictEqual(trailLures({
   blurb: "בעונה הנכונה הוא גם די רטוב, בדרך אל המעיין.",
 }), ["מסלול רטוב"]);
 
+const homeCamps = [
+  { id: 1, name: "בית", lat: 32.1, lng: 34.8, regions: ["center"], nearby: [{ id: 1, km: 8 }] },
+  { id: 2, name: "רחוק", lat: 33.2, lng: 35.6, regions: ["north"], nearby: [{ id: 1, km: 1 }] },
+];
+const byTrail = buildPlans(homeCamps, [trails[0]], base);
+assert.deepStrictEqual(byTrail.map((plan) => plan.camp.id), [2, 1]);
+assert.strictEqual(byTrail[0].homeMinutes, null);
+const byHome = buildPlans(homeCamps, [trails[0]], { ...base, home: "center" });
+assert.deepStrictEqual(byHome.map((plan) => plan.camp.id), [1, 2]);
+assert.ok(byHome[0].homeMinutes < byHome[1].homeMinutes);
+
+const weekend = { ...base, region: "all", lodging: "all", difficulty: "all", time: "all" };
+const shaded = buildPlans(liveCamps, liveTrails, { ...weekend, shade: true });
+assert.ok(shaded.length > 0 && shaded.length < open.length);
+shaded.forEach((plan) => plan.trails.forEach(({ trail }) => {
+  assert.ok(trailLures(trail).includes("מוצל"));
+}));
+const wet = buildPlans(liveCamps, liveTrails, { ...weekend, wet: true });
+assert.ok(wet.length > 0 && wet.length < open.length);
+wet.forEach((plan) => plan.trails.forEach(({ trail }) => {
+  assert.ok(trailLures(trail).includes("מסלול רטוב"));
+}));
+const views = buildPlans(liveCamps, liveTrails, { ...weekend, view: true });
+assert.ok(views.length > 0 && views.length < open.length);
+const beside = buildPlans(liveCamps, liveTrails, { ...weekend, close: true });
+assert.ok(beside.length > 0 && beside.length < open.length);
+beside.forEach((plan) => plan.trails.forEach(({ km }) => assert.ok(km <= 5)));
+const showers = buildPlans(liveCamps, liveTrails, { ...weekend, shower: true });
+assert.ok(showers.length >= 1 && showers.length < open.length);
+showers.forEach((plan) => assert.ok(plan.camp.facilities.some((item) => item.id === "shower")));
+const fires = buildPlans(liveCamps, liveTrails, { ...weekend, fire: true });
+assert.ok(fires.length >= 1 && fires.length < open.length);
+const fromCenter = buildPlans(liveCamps, liveTrails, { ...weekend, home: "center" });
+assert.ok(fromCenter[0].homeMinutes <= fromCenter.at(-1).homeMinutes);
+assert.notStrictEqual(fromCenter[0].camp.id, 14987);
+
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

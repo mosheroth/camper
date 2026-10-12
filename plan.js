@@ -28,6 +28,12 @@
     if (filters.difficulty && filters.difficulty !== "all") {
       if (trail.difficulty !== filters.difficulty) return false;
     }
+    if (filters.shade || filters.wet || filters.view) {
+      const lures = trailLures(trail);
+      if (filters.shade && !lures.includes("מוצל")) return false;
+      if (filters.wet && !lures.includes("מסלול רטוב")) return false;
+      if (filters.view && !lures.includes("נוף מהמם")) return false;
+    }
     return timeMatches(trail, filters.time);
   }
 
@@ -40,12 +46,15 @@
     const facilities = new Set((camp.facilities || []).map((item) => item.id));
     if (filters.water && !facilities.has("water")) return false;
     if (filters.toilet && !facilities.has("toilet")) return false;
+    if (filters.shower && !facilities.has("shower")) return false;
+    if (filters.fire && !facilities.has("fire")) return false;
     return true;
   }
 
   function buildPlans(camps, trails, filters) {
     const byId = new Map(trails.map((trail) => [trail.id, trail]));
     const query = (filters.query || "").trim();
+    const origin = regionOrigin(camps, filters.home);
     const plans = [];
 
     camps.forEach((camp) => {
@@ -55,6 +64,7 @@
       (camp.nearby || []).forEach((near) => {
         const trail = byId.get(near.id);
         if (!trail || !trailMatches(trail, filters)) return;
+        if (filters.close && !(near.km != null && near.km <= 5)) return;
         if (query && !campHit && !trail.name.includes(query)) return;
         picked.push({ trail, km: near.km });
       });
@@ -65,13 +75,24 @@
         if (left !== right) return left - right;
         return (a.trail.hoursMax || 99) - (b.trail.hoursMax || 99);
       });
-      plans.push({ camp, trails: picked.slice(0, 2), km: picked[0].km });
+      plans.push({
+        camp,
+        trails: picked.slice(0, 2),
+        km: picked[0].km,
+        homeMinutes: origin ? driveMinutes(camp, origin) : null,
+      });
     });
 
     plans.sort((a, b) => {
-      const left = a.km == null ? 999 : a.km;
-      const right = b.km == null ? 999 : b.km;
-      if (left !== right) return left - right;
+      if (origin) {
+        const left = a.homeMinutes == null ? 9999 : a.homeMinutes;
+        const right = b.homeMinutes == null ? 9999 : b.homeMinutes;
+        if (left !== right) return left - right;
+      } else {
+        const left = a.km == null ? 999 : a.km;
+        const right = b.km == null ? 999 : b.km;
+        if (left !== right) return left - right;
+      }
       return a.camp.name.localeCompare(b.camp.name, "he");
     });
     return plans;
@@ -102,13 +123,18 @@
     return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
   }
 
-  function centerOrigin(camps) {
-    const points = (camps || []).filter((camp) => camp.lat != null && (camp.regions || []).includes("center"));
+  function regionOrigin(camps, region) {
+    if (!region || region === "all") return null;
+    const points = (camps || []).filter((camp) => camp.lat != null && (camp.regions || []).includes(region));
     if (!points.length) return null;
     return {
       lat: points.reduce((sum, camp) => sum + camp.lat, 0) / points.length,
       lng: points.reduce((sum, camp) => sum + camp.lng, 0) / points.length,
     };
+  }
+
+  function centerOrigin(camps) {
+    return regionOrigin(camps, "center");
   }
 
   function driveMinutes(camp, origin) {

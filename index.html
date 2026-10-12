@@ -36,7 +36,17 @@
       <aside class="panel" aria-label="הצעות לסופ״ש">
       <form id="filters" class="filters">
         <div class="field">
-          <label for="region">אזור</label>
+          <label for="home">גרים ב</label>
+          <select id="home" name="home">
+            <option value="">לא משנה</option>
+            <option value="north">צפון</option>
+            <option value="center">מרכז</option>
+            <option value="south">דרום</option>
+            <option value="east">יו״ש</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="region">אזור הלינה</label>
           <select id="region" name="region">
             <option value="all">כל הארץ</option>
             <option value="north">צפון</option>
@@ -76,11 +86,20 @@
           <input id="query" name="query" type="search" placeholder="שם חניון או מסלול" />
         </div>
         <fieldset class="checks">
-          <legend>אופי</legend>
+          <legend>מסלול ליד החניון</legend>
           <label><input type="checkbox" name="family" /> למשפחות</label>
           <label><input type="checkbox" name="circular" /> מעגלי</label>
-          <label><input type="checkbox" name="water" /> מים בחניון</label>
-          <label><input type="checkbox" name="toilet" /> שירותים בחניון</label>
+          <label><input type="checkbox" name="shade" /> מוצל</label>
+          <label><input type="checkbox" name="wet" /> מסלול רטוב</label>
+          <label><input type="checkbox" name="view" /> תצפית</label>
+          <label title="מסלול בטווח 5 ק״מ, בלי נסיעה ארוכה בבוקר"><input type="checkbox" name="close" /> ליד החניון</label>
+        </fieldset>
+        <fieldset class="checks">
+          <legend>בחניון</legend>
+          <label><input type="checkbox" name="water" /> מים</label>
+          <label><input type="checkbox" name="toilet" /> שירותים</label>
+          <label><input type="checkbox" name="shower" /> מקלחת</label>
+          <label><input type="checkbox" name="fire" /> מדורה</label>
         </fieldset>
       </form>
 
