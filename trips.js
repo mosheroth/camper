@@ -119,6 +119,7 @@
       if (place.arrival && place.arrival !== 17 * 60) params.set("arrival", String(place.arrival));
       if (place.dinner != null) params.set("dinner", String(place.dinner));
       if (place.rise != null) params.set("rise", String(place.rise));
+      if (place.breakfast != null) params.set("breakfast", String(place.breakfast));
       if (place.start != null) params.set("start", String(place.start));
       if (place.lunch != null) params.set("lunch", String(place.lunch));
       const hikes = Object.keys(place.hikes || {}).map((id) => `${id}:${place.hikes[id]}`).join(",");
@@ -166,6 +167,7 @@
       arrival: cleanMinute(source.arrival, 17 * 60),
       dinner: cleanMinute(source.dinner, null),
       rise: cleanMinute(source.rise, null),
+      breakfast: cleanMinute(source.breakfast, null),
       start: cleanMinute(source.start, null),
       lunch: cleanMinute(source.lunch, null),
       hikes: cleanHikes(source.hikes),

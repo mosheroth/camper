@@ -4,6 +4,7 @@ const TIME_LABEL = {
   arrive: "שעת הגעה",
   dinner: "שעת ארוחת ערב",
   rise: "שעת קימה",
+  breakfast: "שעת ארוחת בוקר",
   start: "שעת יציאה למסלול",
   hike: "שעת המסלול",
   lunch: "שעת ארוחת צהריים",
@@ -63,6 +64,7 @@ function params() {
     arrival: query.has("arrival") && readMinute(query.get("arrival")) != null ? readMinute(query.get("arrival")) : 17 * 60,
     dinner: readMinute(query.get("dinner")),
     rise: readMinute(query.get("rise")),
+    breakfast: readMinute(query.get("breakfast")),
     start: readMinute(query.get("start")),
     lunch: readMinute(query.get("lunch")),
     hikes,
@@ -538,6 +540,7 @@ Promise.all([
     let hours = {
       dinner: query.dinner,
       rise: query.rise,
+      breakfast: query.breakfast,
       start: query.start,
       lunch: query.lunch,
       hikes: query.hikes,
@@ -618,6 +621,7 @@ Promise.all([
         arrival,
         dinner: hours.dinner,
         rise: hours.rise,
+        breakfast: hours.breakfast,
         start: hours.start,
         lunch: hours.lunch,
         hikes: hours.hikes,
@@ -779,6 +783,7 @@ Promise.all([
       if (step.kind === "arrive") return `מגיעים ל${camp.name}. כאן ישנים.`;
       if (step.kind === "dinner") return "אוכלים בחניון.";
       if (step.kind === "rise") return "קמים בחניון.";
+      if (step.kind === "breakfast") return "אוכלים ארוחת בוקר בחניון.";
       if (step.kind === "need-hike") return "עדיין אין מסלול. מוסיפים אחד, ושעת החזרה נכנסת ללוז.";
       if (step.kind === "start") {
         return step.count > 1 ? "יוצאים מהחניון למסלולים, לפי הסדר ברשימה." : "יוצאים מהחניון למסלול.";
@@ -1114,7 +1119,7 @@ Promise.all([
 
     function stepPlace(step, stages) {
       const campStage = stages.find((stage) => stage.kind === "arrive");
-      if (step.kind === "arrive" || step.kind === "dinner" || step.kind === "rise" || step.kind === "lunch") {
+      if (step.kind === "arrive" || step.kind === "dinner" || step.kind === "rise" || step.kind === "breakfast" || step.kind === "lunch") {
         return campStage || null;
       }
       if (step.kind === "start" || step.kind === "hike") {
@@ -1200,6 +1205,7 @@ Promise.all([
       hours = {
         dinner: next.dinner,
         rise: next.rise,
+        breakfast: next.breakfast,
         start: next.start,
         lunch: next.lunch,
         hikes: next.hikes,

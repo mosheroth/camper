@@ -139,12 +139,14 @@
     const drive = driveMinutes(camp, origin);
     const dinner = clock.dinner == null ? arrival + 90 : minuteOf(clock.dinner);
     const rise = clock.rise == null ? 7 * 60 : minuteOf(clock.rise);
+    const breakfast = clock.breakfast == null ? rise + 30 : minuteOf(clock.breakfast);
     const start = clock.start == null ? 8 * 60 : minuteOf(clock.start);
     const steps = [
       { kind: "depart", day: "שישי", at: drive == null ? null : arrival - drive, drive },
       { kind: "arrive", day: "שישי", at: arrival },
       { kind: "dinner", day: "שישי", at: dinner },
       { kind: "rise", day: "שבת", at: rise },
+      { kind: "breakfast", day: "שבת", at: breakfast },
     ];
     const chosen = trails || [];
     if (!chosen.length) {
@@ -172,6 +174,7 @@
     const clock = {
       dinner: hours && hours.dinner != null ? minuteOf(hours.dinner) : null,
       rise: hours && hours.rise != null ? minuteOf(hours.rise) : null,
+      breakfast: hours && hours.breakfast != null ? minuteOf(hours.breakfast) : null,
       start: hours && hours.start != null ? minuteOf(hours.start) : null,
       lunch: hours && hours.lunch != null ? minuteOf(hours.lunch) : null,
       hikes: {},
@@ -195,10 +198,12 @@
     else if (step.kind === "dinner") clock.dinner = target;
     else if (step.kind === "rise") {
       clock.rise = target;
+      if (clock.breakfast != null) clock.breakfast = minuteOf(clock.breakfast + delta);
       clock.start = minuteOf((clock.start == null ? 8 * 60 : clock.start) + delta);
       shiftHikes(0);
       if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
-    } else if (step.kind === "start" || (step.kind === "hike" && ids[0] === step.trailId)) {
+    } else if (step.kind === "breakfast") clock.breakfast = target;
+    else if (step.kind === "start" || (step.kind === "hike" && ids[0] === step.trailId)) {
       clock.start = target;
       if (ids[0] != null) delete clock.hikes[ids[0]];
       shiftHikes(1);

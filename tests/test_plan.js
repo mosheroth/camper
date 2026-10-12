@@ -150,6 +150,7 @@ const hike = evening.find((step) => step.kind === "hike");
 const lunch = evening.find((step) => step.kind === "lunch");
 assert.ok(depart.drive >= 60 && depart.drive <= 150);
 assert.strictEqual(depart.at + depart.drive, 17 * 60);
+assert.strictEqual(evening.find((step) => step.kind === "breakfast").at, 7 * 60 + 30);
 assert.strictEqual(hike.at, 8 * 60);
 assert.strictEqual(hike.back, 10 * 60);
 assert.strictEqual(lunch.at, 10 * 60 + 30);
@@ -173,6 +174,7 @@ assert.strictEqual(openEnded.find((step) => step.kind === "hike").back, null);
 assert.strictEqual(openEnded.find((step) => step.kind === "lunch").at, null);
 
 const noTrail = buildItinerary({ camp: lake, trails: [], arrivalMinutes: 19 * 60, origin });
+assert.ok(noTrail.some((step) => step.kind === "breakfast"));
 assert.ok(noTrail.some((step) => step.kind === "need-hike"));
 assert.strictEqual(noTrail.find((step) => step.kind === "arrive").at, 19 * 60);
 
@@ -205,8 +207,18 @@ const shifted = retimedHours({
   trailIds: [5, 6],
 });
 assert.strictEqual(shifted.hours.rise, 6 * 60 + 30);
+assert.strictEqual(shifted.hours.breakfast, null);
 assert.strictEqual(shifted.hours.start, 7 * 60 + 30);
 assert.strictEqual(shifted.arrival, 17 * 60);
+const movedBreakfast = retimedHours({
+  hours: { breakfast: 7 * 60 + 30 },
+  arrival: 17 * 60,
+  step: { kind: "breakfast", at: 7 * 60 + 30 },
+  next: 8 * 60,
+  trailIds: [],
+});
+assert.strictEqual(movedBreakfast.hours.breakfast, 8 * 60);
+assert.strictEqual(movedBreakfast.hours.start, null);
 const movedHike = retimedHours({
   hours: { lunch: 11 * 60 },
   arrival: 17 * 60,
