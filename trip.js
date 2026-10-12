@@ -115,6 +115,15 @@ function kindLabel(kind, fallback) {
   return PLACE_MARK[kind] ? `${PLACE_MARK[kind]} ${name}` : name;
 }
 
+function placeOpenerLabel(place) {
+  const photos = (place.photos && place.photos.length) || place.image;
+  if (photos && (place.wiki || place.site)) return "פירוט";
+  if (photos) return "תמונות";
+  if (place.wiki) return "הערך";
+  if (place.site) return "האתר";
+  return "פירוט";
+}
+
 function link(href, text) {
   const node = el("a", null, text);
   node.href = href;
@@ -145,7 +154,7 @@ function params() {
     trailIds,
     tripId: query.get("trip") || "",
     name: query.get("name") || "",
-    view: view === "detail" || view === "camp" ? view : "routes",
+    view: view === "detail" || view === "camp" || view === "visit" || view === "coffee" ? view : "routes",
     focusId: Number.isFinite(focus) ? focus : null,
     arrival: query.has("arrival") && readMinute(query.get("arrival")) != null ? readMinute(query.get("arrival")) : 17 * 60,
     dinner: readMinute(query.get("dinner")),
@@ -161,7 +170,7 @@ function params() {
     back: readMinute(query.get("back")),
     coffee: readCoffee(query.get("coffee")),
     visit: readVisit(query.get("visit")),
-    spot: /^r\d+$/.test(query.get("spot") || "") ? query.get("spot") : "",
+    spot: /^[or]\d+$/.test(query.get("spot") || "") ? query.get("spot") : "",
     stops: readStops(query.get("stops")),
   };
 }
@@ -468,6 +477,30 @@ function visitSheet(place, km, way) {
       links.append(link(`https://www.waze.com/ul?ll=${place.lat},${place.lng}&navigate=yes`, "ניווט לכניסה"));
     }
     node.append(links);
+  });
+}
+
+function coffeeSheet(place, km, way) {
+  const photos = (place.photos || []).filter((item) => item && item.src);
+  return section(place.name, (node) => {
+    gallery(node, place);
+    const bits = ["מצפור"];
+    if (way) bits.push(way);
+    if (km != null) bits.push(km < 0.4 ? "במקום" : `כ־${km} ק״מ מהחניון`);
+    bits.push("כחצי שעה");
+    node.append(el("p", "kicker", bits.join(" · ")));
+    node.append(el("p", null, "עצירה של כחצי שעה בלוז, ליד המצפור."));
+    if (!photos.length && !place.image && !place.wiki && !place.site) {
+      node.append(el("p", "fine", "אין תמונה או ערך שמסומנים על הנקודה."));
+    }
+    const links = el("div", "links");
+    if (place.wiki) links.append(link(place.wiki, "הערך בוויקיפדיה"));
+    if (place.site) links.append(link(place.site, "האתר"));
+    if (place.url) links.append(link(place.url, "הנקודה במפה"));
+    if (place.lat != null) {
+      links.append(link(`https://www.waze.com/ul?ll=${place.lat},${place.lng}&navigate=yes`, "ניווט למצפור"));
+    }
+    if (links.childNodes.length) node.append(links);
   });
 }
 
@@ -908,7 +941,10 @@ Promise.all([
     let revealCatalog = false;
     let focusCatalog = false;
     let revealCoffee = null;
-    let focusPlace = query.view === "visit" && visitNear.has(query.spot) ? query.spot : "";
+    let focusPlace = (query.view === "visit" && visitNear.has(query.spot))
+      || (query.view === "coffee" && coffeeNear.has(query.spot))
+      ? query.spot
+      : "";
     const nearOn = {
       family: false,
       circular: false,
@@ -957,13 +993,13 @@ Promise.all([
       if (meta.firstChild) meta.insertBefore(document.createTextNode(" · "), meta.firstChild);
       meta.insertBefore(mark, meta.firstChild);
     }
-    let panelMode = query.view === "visit" ? (focusPlace ? "visit" : "routes") : query.view;
+    let panelMode = query.view === "visit" || query.view === "coffee" ? (focusPlace ? query.view : "routes") : query.view;
     let focusId = query.view === "detail" ? query.focusId : (selected[0] || null);
     if (panelMode === "detail" && (focusId == null || !byId.has(focusId))) {
       panelMode = "routes";
       focusId = selected[0] || null;
     }
-    if (panelMode === "visit") focusedKey = `place-${focusPlace}`;
+    if (panelMode === "visit" || panelMode === "coffee") focusedKey = `place-${focusPlace}`;
     else if (focusId != null) focusedKey = String(focusId);
     const maxPicks = 4;
     const around = document.querySelector("#around");
@@ -1038,7 +1074,7 @@ Promise.all([
         hikes: hours.hikes,
         coffee: selectedCoffee.slice(),
         visit: selectedVisits.slice(),
-        spot: panelMode === "visit" ? focusPlace : "",
+        spot: panelMode === "visit" || panelMode === "coffee" ? focusPlace : "",
         stops: Object.assign({}, hours.coffeeAt, hours.visitAt),
         radius,
         order: placeOrder(),
@@ -1192,13 +1228,13 @@ Promise.all([
     }
 
     function applyPanel() {
-      const reading = panelMode === "camp" || panelMode === "detail" || panelMode === "visit";
+      const reading = panelMode === "camp" || panelMode === "detail" || panelMode === "visit" || panelMode === "coffee";
       around.hidden = reading;
       mapNote.hidden = reading || !mapNote.textContent;
       dossier.hidden = !reading;
       const campNode = dossier.querySelector(".camp-sheet");
       if (campNode) campNode.hidden = panelMode !== "camp";
-      picked.hidden = panelMode !== "detail" && panelMode !== "visit";
+      picked.hidden = panelMode !== "detail" && panelMode !== "visit" && panelMode !== "coffee";
     }
 
     function openVisit(id) {
@@ -1206,6 +1242,16 @@ Promise.all([
       focusPlace = id;
       focusedKey = `place-${id}`;
       panelMode = "visit";
+      panelBody.scrollTop = 0;
+      historyPush = true;
+      render();
+    }
+
+    function openCoffee(id) {
+      if (!coffeeNear.has(id)) return;
+      focusPlace = id;
+      focusedKey = `place-${id}`;
+      panelMode = "coffee";
       panelBody.scrollTop = 0;
       historyPush = true;
       render();
@@ -1569,7 +1615,23 @@ Promise.all([
         const card = el("section", "day-block");
         const head = el("header");
         const titled = blockTitle(group);
-        head.append(decorate(el("h3"), titled[0], titled[1]));
+        const heading = decorate(el("h3"), titled[0], titled[1]);
+        const coffeeStep = group.steps.find((step) => step.kind === "coffee");
+        if (coffeeStep) {
+          heading.classList.add("can-open");
+          heading.tabIndex = 0;
+          heading.setAttribute("role", "button");
+          heading.addEventListener("click", (event) => {
+            event.stopPropagation();
+            openCoffee(coffeeStep.placeId);
+          });
+          heading.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            openCoffee(coffeeStep.placeId);
+          });
+        }
+        head.append(heading);
         const token = blockToken(group.id);
         if (movable && token != null) {
           const moves = el("div", "block-moves");
@@ -1582,7 +1644,7 @@ Promise.all([
           card.dataset.token = String(token);
           if (leg) leg.dataset.before = String(token);
           card.addEventListener("pointerdown", (event) => {
-            card.dataset.hold = event.target.closest("button, input, a, textarea, select") ? "no" : "yes";
+            card.dataset.hold = event.target.closest("button, input, a, textarea, select, h3.can-open") ? "no" : "yes";
           });
           card.addEventListener("dragstart", (event) => {
             if (card.dataset.hold === "no") {
@@ -1882,6 +1944,13 @@ Promise.all([
         actions.append(remove);
       } else if (placeId) {
         const place = coffeeNear.get(placeId) && coffeeNear.get(placeId).place;
+        const info = el("button", "text-link", place ? placeOpenerLabel(place) : "פירוט");
+        info.type = "button";
+        info.addEventListener("click", (event) => {
+          event.stopPropagation();
+          openCoffee(placeId);
+        });
+        actions.append(info);
         if (place && place.url) {
           const source = link(place.url, "במפה");
           source.className = "text-link";
@@ -2123,10 +2192,7 @@ Promise.all([
           where,
           PLACE_COLOR.viewpoint,
           add,
-          () => {
-            focusedKey = `place-${place.id}`;
-            emphasize(focusedKey);
-          },
+          () => openCoffee(place.id),
           () => showPlace(`place-${place.id}`),
           "☕",
         );
@@ -2389,6 +2455,33 @@ Promise.all([
 
     function renderDetail() {
       picked.replaceChildren();
+      if (panelMode === "coffee") {
+        const item = coffeeNear.get(focusPlace);
+        if (!item) {
+          picked.append(el("p", "around-lead", "המצפור לא נמצא בטווח של החניון."));
+          return;
+        }
+        const on = selectedCoffee.includes(focusPlace);
+        const bar = el("div", "detail-bar");
+        const back = el("button", "text-link", "חזרה לבניית הטיול");
+        back.type = "button";
+        back.addEventListener("click", () => setPanel("routes"));
+        const action = el("button", on ? "remove" : "add", on ? "הסרה מהטיול" : "להוסיף לטיול");
+        action.type = "button";
+        action.disabled = !on && selectedCoffee.length >= 2;
+        action.addEventListener("click", () => {
+          panelMode = "routes";
+          if (on) removeCoffee(focusPlace);
+          else addCoffee(focusPlace);
+        });
+        bar.append(back, action);
+        picked.append(
+          bar,
+          el("p", "add-effect", on ? "התצפית בלוז, כחצי שעה." : "אם מוסיפים לטיול, נכנסת עצירה של כחצי שעה."),
+          coffeeSheet(item.place, item.km, wayPhrase(item.place)),
+        );
+        return;
+      }
       if (panelMode === "visit") {
         const item = visitNear.get(focusPlace);
         if (!item) {
@@ -2682,14 +2775,17 @@ Promise.all([
       selectedCoffee.splice(0, selectedCoffee.length, ...next.coffee.filter((id) => coffeeNear.has(id)).slice(0, 2));
       selectedVisits.splice(0, selectedVisits.length, ...next.visit.filter((id) => visitNear.has(id)).slice(0, 2));
       if (next.name) nameInput.value = next.name;
-      focusPlace = next.view === "visit" && visitNear.has(next.spot) ? next.spot : "";
-      panelMode = next.view === "visit"
-        ? (focusPlace ? "visit" : "routes")
+      focusPlace = (next.view === "visit" && visitNear.has(next.spot))
+        || (next.view === "coffee" && coffeeNear.has(next.spot))
+        ? next.spot
+        : "";
+      panelMode = next.view === "visit" || next.view === "coffee"
+        ? (focusPlace ? next.view : "routes")
         : (next.view === "detail" && (next.focusId == null || !byId.has(next.focusId)) ? "routes" : next.view);
       if (panelMode === "detail") {
         focusId = next.focusId;
         focusedKey = String(next.focusId);
-      } else if (panelMode === "visit") {
+      } else if (panelMode === "visit" || panelMode === "coffee") {
         focusedKey = `place-${focusPlace}`;
       }
       arrival = next.arrival;

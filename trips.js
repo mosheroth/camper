@@ -115,9 +115,9 @@
       params.set("trails", (trip.trailIds || []).join(","));
       if (trip.name) params.set("name", trip.name);
       const place = trip.place || {};
-      if (place.view === "detail" || place.view === "camp" || place.view === "visit") params.set("view", place.view);
+      if (place.view === "detail" || place.view === "camp" || place.view === "visit" || place.view === "coffee") params.set("view", place.view);
       if (place.view === "detail" && place.focusId != null) params.set("focus", String(place.focusId));
-      if (place.view === "visit" && place.spot) params.set("spot", place.spot);
+      if ((place.view === "visit" || place.view === "coffee") && place.spot) params.set("spot", place.spot);
       if (place.arrival && place.arrival !== 17 * 60) params.set("arrival", String(place.arrival));
       if (place.dinner != null) params.set("dinner", String(place.dinner));
       if (place.rise != null) params.set("rise", String(place.rise));
@@ -175,7 +175,7 @@
 
   function cleanPlace(place) {
     const source = place || {};
-    const view = source.view === "detail" || source.view === "camp" || source.view === "visit" ? source.view : "routes";
+    const view = source.view === "detail" || source.view === "camp" || source.view === "visit" || source.view === "coffee" ? source.view : "routes";
     const focusId = Number(source.focusId);
     const from = cleanDate(source.from);
     let to = cleanDate(source.to);
@@ -192,7 +192,7 @@
       hikes: cleanHikes(source.hikes),
       coffee: cleanCoffee(source.coffee),
       visit: cleanVisit(source.visit),
-      spot: /^r\d+$/.test(source.spot || "") ? source.spot : "",
+      spot: /^[or]\d+$/.test(source.spot || "") ? source.spot : "",
       stops: cleanStops(source.stops),
       radius: Number(source.radius) === 40 ? 40 : 20,
       order: cleanOrder(source.order),

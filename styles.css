@@ -1263,6 +1263,8 @@ body.splitting { cursor: col-resize; user-select: none; }
   font-size: 0.92rem;
   font-weight: 700;
 }
+.day-block h3.can-open { cursor: pointer; }
+.day-block h3.can-open:hover { color: var(--green); }
 .day-block .timeline { margin-top: 4px; gap: 2px; }
 .block-moves { display: flex; gap: 4px; flex: none; direction: ltr; }
 .block-move {

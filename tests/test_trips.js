@@ -121,12 +121,18 @@ const cupped = trips.save({
     coffee: ["o12", "nope", "o12", "o13", "o14"],
     stops: { o12: 8 * 60 + 15, bad: 10 },
     order: ["c:o12", "stay", "c:o99"],
+    view: "coffee",
+    spot: "o12",
   },
 });
 assert.deepStrictEqual(cupped.place.coffee, ["o12", "o13"]);
+assert.strictEqual(cupped.place.view, "coffee");
+assert.strictEqual(cupped.place.spot, "o12");
 assert.deepStrictEqual(cupped.place.stops, { o12: 8 * 60 + 15 });
 assert.deepStrictEqual(cupped.place.order, ["c:o12", "stay", "c:o99"]);
 const cuppedPath = trips.sharePath(cupped);
+assert.ok(cuppedPath.includes("view=coffee"));
+assert.ok(cuppedPath.includes("spot=o12"));
 assert.ok(cuppedPath.includes("coffee=o12%2Co13") || cuppedPath.includes("coffee=o12,o13"));
 assert.ok(cuppedPath.includes("stops=o12%3A495") || cuppedPath.includes("stops=o12:495"));
 const hosted = trips.save({
