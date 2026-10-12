@@ -177,7 +177,9 @@ function drawMarkers() {
       fillOpacity: 0.9,
     }).addTo(markerLayer);
     markersByCamp.set(camp.id, marker);
-    marker.bindPopup(`<strong>${escapeHtml(camp.name)}</strong>`);
+    const glance = window.CamperPlan.campGlance(camp);
+    const facilities = glance.facilities.map((item) => item.label).slice(0, 4).join(" · ");
+    marker.bindPopup(`<strong>${escapeHtml(camp.name)}</strong><br>${escapeHtml([glance.stay, facilities].filter(Boolean).join(" · "))}`);
     marker.on("mouseover", () => {
       hoverCamp = camp.id;
       paintLink();
@@ -201,7 +203,8 @@ function drawFocus(plan) {
     title: plan.camp.name,
     alt: `חניון ${plan.camp.name}`,
   }).addTo(focusLayer);
-  pin.bindPopup(`<strong>חניון</strong><br>${escapeHtml(plan.camp.name)}`);
+  const glance = window.CamperPlan.campGlance(plan.camp);
+  pin.bindPopup(`<strong>${escapeHtml(plan.camp.name)}</strong><br>${escapeHtml(glance.stay)}`);
   const seen = new Set();
   let colorIndex = 0;
   plan.trails.forEach(({ trail }) => {
@@ -294,13 +297,21 @@ function homeLabel(minutes) {
   return `${head} ו־${mins} דקות מהבית`;
 }
 
-function shortTrail(name) {
-  const cut = String(name).split(/\s+[–—-]\s+/)[0].trim();
-  return cut.length > 32 ? `${cut.slice(0, 31)}…` : cut;
-}
+const FACILITY_MARK = {
+  water: "💧",
+  toilet: "🚻",
+  shower: "🚿",
+  fire: "🔥",
+  kitchen: "🍳",
+  "family-tent": "⛺",
+  caravan: "🚐",
+  power: "🔌",
+  cell: "📶",
+};
 
 function renderPlan(plan) {
   const { camp } = plan;
+  const glance = window.CamperPlan.campGlance(camp);
   const article = el("label", camp.paid ? "plan index-card" : "plan index-card free");
   article.dataset.camp = String(camp.id);
   const radio = document.createElement("input");
@@ -312,18 +323,55 @@ function renderPlan(plan) {
     article.classList.add("selected");
     radio.checked = true;
   }
-  const [primary] = plan.trails;
+  if (glance.photo) {
+    const img = document.createElement("img");
+    img.className = "camp-photo";
+    img.src = glance.photo;
+    img.alt = "";
+    img.loading = "lazy";
+    img.decoding = "async";
+    if (glance.credit) img.title = glance.credit;
+    img.addEventListener("error", () => {
+      img.remove();
+      article.classList.add("no-photo");
+    });
+    article.append(img);
+  } else {
+    article.classList.add("no-photo");
+  }
   const regions = (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ");
-  const lodging = camp.paid ? "בתשלום" : "בלי תשלום";
-  const distance = primary && primary.km != null ? `כ־${primary.km} ק״מ` : "";
-  const trailName = primary ? shortTrail(primary.trail.name) : "";
   const aroundLabel = aroundText(window.CamperPlan.aroundCount(camp));
   const fromHome = homeLabel(plan.homeMinutes);
-  const swatch = el("i", camp.paid ? "swatch paid-swatch" : "swatch free-swatch");
   const copy = el("div", "index-copy");
   copy.append(el("h2", null, camp.name));
-  copy.append(el("p", "meta", [fromHome, aroundLabel, regions, lodging, distance, trailName].filter(Boolean).join(" · ")));
-  article.append(radio, swatch, copy);
+  copy.append(el("p", "meta", [regions, fromHome, glance.stay].filter(Boolean).join(" · ")));
+  if (glance.facilities.length) {
+    const list = el("ul", "lures");
+    glance.facilities.forEach((item) => {
+      const row = el("li");
+      const mark = FACILITY_MARK[item.id];
+      if (mark) {
+        const emoji = el("span", "mark", mark);
+        emoji.setAttribute("aria-hidden", "true");
+        row.append(emoji);
+      }
+      row.append(document.createTextNode(item.label));
+      list.append(row);
+    });
+    copy.append(list);
+  }
+  if (glance.blurb) copy.append(el("p", "blurb", glance.blurb));
+  if (glance.note) copy.append(el("p", "camp-note", glance.note));
+  const quiet = glance.facts.concat(aroundLabel ? [aroundLabel] : []);
+  if (quiet.length) copy.append(el("p", "fine", quiet.join(" · ")));
+  if (camp.url) {
+    const more = el("a", "camp-page", "העמוד ברשות הטבע והגנים");
+    more.href = camp.url;
+    more.target = "_blank";
+    more.rel = "noopener noreferrer";
+    copy.append(more);
+  }
+  article.append(radio, copy);
   radio.addEventListener("change", () => {
     if (radio.checked) selectPlan(camp.id, { zoom: true });
   });

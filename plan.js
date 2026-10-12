@@ -51,6 +51,46 @@
     return true;
   }
 
+  const FACILITY_ORDER = ["water", "toilet", "shower", "kitchen", "fire", "family-tent", "caravan", "power", "cell"];
+
+  function clipWords(text, limit) {
+    const clean = String(text || "").replace(/\s+/g, " ").trim();
+    if (clean.length <= limit) return clean;
+    const cut = clean.slice(0, limit);
+    const space = cut.lastIndexOf(" ");
+    const head = space > limit * 0.6 ? cut.slice(0, space) : cut;
+    return `${head.trim()}…`;
+  }
+
+  function campGlance(camp) {
+    const source = camp || {};
+    const facilities = source.facilities || [];
+    const ordered = FACILITY_ORDER.map((id) => facilities.find((item) => item.id === id)).filter(Boolean);
+    facilities.forEach((item) => {
+      if (item && !FACILITY_ORDER.includes(item.id)) ordered.push(item);
+    });
+    const stay = source.paid
+      ? (source.priceFrom ? `בתשלום, מ־${source.priceFrom} ₪ למבוגר` : "בתשלום")
+      : "בלי תשלום";
+    const facts = [];
+    if (source.places) facts.push(`${source.places} מקומות לינה`);
+    if (source.access === "רכב פרטי" || source.access === "רכב 4×4") facts.push(`גישה ב${source.access}`);
+    else if (source.access) facts.push(`גישה: ${source.access}`);
+    const blurb = String(source.blurb || "").replace(/\s+/g, " ").trim();
+    const summary = String((source.details && source.details.summary) || "").replace(/\s+/g, " ").trim();
+    const photo = (source.photos && source.photos[0] && source.photos[0].src) || source.image || "";
+    const credit = (source.photos && source.photos[0] && source.photos[0].credit) || "";
+    return {
+      stay,
+      facilities: ordered.map((item) => ({ id: item.id, label: item.label })),
+      facts,
+      blurb,
+      note: summary && summary !== blurb ? clipWords(summary, 140) : "",
+      photo,
+      credit,
+    };
+  }
+
   function buildPlans(camps, trails, filters) {
     const byId = new Map(trails.map((trail) => [trail.id, trail]));
     const query = (filters.query || "").trim();
@@ -1212,6 +1252,7 @@
     trailMatches,
     timeMatches,
     campMatches,
+    campGlance,
     planUrl,
     nearbyChoices,
     nearbyPlaces,

@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes, visitPlaceId, placeTags, travelMinutes, onTheWay } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes, visitPlaceId, placeTags, travelMinutes, onTheWay, campGlance } = require("../plan.js");
 
 const trails = [
   {
@@ -743,5 +743,21 @@ assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("שמורת טבע
 assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("עין אלון")), true);
 assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("עין קדם")), false);
 assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("פארק הכרמל")), false);
+
+const carmelGlance = campGlance(carmelCamp);
+assert.strictEqual(carmelGlance.stay, "בתשלום, מ־64 ₪ למבוגר");
+assert.deepStrictEqual(carmelGlance.facilities.map((item) => item.id), ["water", "toilet", "shower", "kitchen", "fire", "family-tent"]);
+assert.ok(carmelGlance.photo.includes("parks.org.il"));
+assert.ok(carmelGlance.blurb.includes("כרמל"));
+assert.strictEqual(carmelGlance.note, "");
+const ashlim = campGlance(liveCamps.find((item) => item.name.includes("באר אשלים")));
+assert.strictEqual(ashlim.stay, "בלי תשלום");
+assert.ok(ashlim.facts.some((item) => item.includes("מקומות לינה")));
+assert.ok(ashlim.facts.includes("גישה ברכב פרטי"));
+assert.ok(ashlim.note.length > 40 && ashlim.note.length <= 141);
+assert.ok(ashlim.note.endsWith("…"));
+assert.strictEqual(campGlance(liveCamps.find((item) => item.name.includes("חורשת הצנחנים"))).photo, "");
+assert.strictEqual(campGlance({ paid: true, priceFrom: 80, blurb: "קצר", details: { summary: "קצר" }, facilities: [{ id: "cell", label: "קליטה" }, { id: "water", label: "מים" }] }).note, "");
+assert.deepStrictEqual(campGlance({ paid: false, facilities: [{ id: "cell", label: "קליטה" }, { id: "water", label: "מים" }] }).facilities.map((item) => item.label), ["מים", "קליטה"]);
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

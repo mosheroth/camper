@@ -911,9 +911,10 @@ button {
   pointer-events: none;
 }
 .camp-choice {
+  grid-area: choice;
   width: 1.15rem;
   height: 1.15rem;
-  margin: 0;
+  margin: 4px 0 0;
   accent-color: var(--green);
 }
 .browse-page .summary {
@@ -1012,6 +1013,7 @@ button {
     gap: 2px;
   }
   .browse-page h1 { font-size: 1.15rem; white-space: normal; }
+  .browse-page .camp-photo { height: 120px; }
   .browse-page .lead {
     font-size: 0.82rem;
     flex: none;
@@ -1603,19 +1605,37 @@ body.splitting { cursor: col-resize; user-select: none; }
   transform-origin: 50% 100%;
 }
 
-.browse-page .results { gap: 2px; padding-bottom: 8px; }
+.browse-page .results { gap: 10px; padding-bottom: 8px; }
 .browse-page .plan.index-card {
   display: grid;
-  grid-template-columns: auto 12px minmax(0, 1fr);
-  align-items: center;
-  gap: 10px;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "photo photo"
+    "choice copy";
+  align-items: start;
+  gap: 8px 10px;
   cursor: pointer;
-  padding: 11px 8px;
+  padding: 10px 8px 12px;
   border: 1px solid transparent;
   border-radius: 12px;
   background: transparent;
   box-shadow: none;
   overflow: visible;
+}
+.browse-page .plan.index-card.no-photo { grid-template-areas: "choice copy"; }
+.browse-page .camp-photo {
+  grid-area: photo;
+  width: 100%;
+  height: 148px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #efe6d8;
+}
+.browse-page .index-copy {
+  grid-area: copy;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
 }
 .browse-page .plan.index-card.linked,
 .browse-page .plan.index-card:hover {
@@ -1632,12 +1652,47 @@ body.splitting { cursor: col-resize; user-select: none; }
   line-height: 1.25;
 }
 .browse-page .index-card .meta {
-  margin: 1px 0 0;
+  margin: 0;
   color: var(--muted);
+  font-size: 0.86rem;
+  white-space: normal;
+}
+.browse-page .index-card .lures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.browse-page .index-card .lures li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #e7f0d8;
+  color: var(--green);
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.browse-page .index-card .lures .mark { margin: 0; }
+.browse-page .index-card .blurb {
+  margin: 2px 0 0;
+  font-weight: 500;
+}
+.browse-page .index-card .camp-note {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.browse-page .index-card .fine { margin: 0; font-size: 0.82rem; }
+.browse-page .camp-page {
+  justify-self: start;
+  color: var(--green);
+  font-weight: 700;
   font-size: 0.82rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .browse-page .index-card .opener {
   grid-column: auto;
