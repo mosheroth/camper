@@ -1437,6 +1437,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   font-size: 0.82rem;
   font-weight: 700;
 }
+.spot .text-link + .text-link { margin-inline-start: 10px; }
 .text-back {
   display: inline-block;
   margin: 12px 0 4px;

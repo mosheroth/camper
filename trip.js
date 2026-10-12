@@ -1912,6 +1912,39 @@ Promise.all([
       return frames;
     }
 
+    function appendPlaceMedia(row, place) {
+      const photos = previewPhotos(place);
+      if (photos.length) {
+        const preview = el("div", "preview");
+        const grid = el("div", "preview-photos");
+        photos.forEach((photo) => {
+          const img = document.createElement("img");
+          img.src = photo.src;
+          img.alt = photo.credit || place.name;
+          if (photo.credit) img.title = photo.credit;
+          img.addEventListener("error", () => img.remove());
+          grid.append(img);
+        });
+        preview.append(grid);
+        row.append(preview);
+      }
+      const copy = row.querySelector(".spot-copy");
+      if (!copy) return;
+      if (place.site) {
+        const site = link(place.site, "באתר");
+        site.className = "text-link";
+        copy.append(site);
+      } else if (place.wiki) {
+        const article = link(place.wiki, "בערך");
+        article.className = "text-link";
+        copy.append(article);
+      }
+      if (!place.url) return;
+      const source = link(place.url, place.source === "osm" ? "במפה" : "באתר הרשות");
+      source.className = "text-link";
+      copy.append(source);
+    }
+
     function nearFilters() {
       return {
         family: nearOn.family,
@@ -2002,6 +2035,7 @@ Promise.all([
           () => showPlace(`place-${place.id}`),
         );
         row.classList.add("coffee");
+        appendPlaceMedia(row, place);
         markWay(row, place);
         wrap.append(row);
       });
@@ -2171,26 +2205,7 @@ Promise.all([
           place.tags.forEach((tag) => lures.append(el("li", null, tag)));
           row.querySelector(".spot-copy").append(lures);
         }
-        const photos = visitable ? previewPhotos(place) : [];
-        if (photos.length) {
-          const preview = el("div", "preview");
-          const grid = el("div", "preview-photos");
-          photos.forEach((photo) => {
-            const img = document.createElement("img");
-            img.src = photo.src;
-            img.alt = photo.credit || place.name;
-            if (photo.credit) img.title = photo.credit;
-            img.addEventListener("error", () => img.remove());
-            grid.append(img);
-          });
-          preview.append(grid);
-          row.append(preview);
-        }
-        if (place.url) {
-          const source = link(place.url, place.source === "osm" ? "במפה" : "באתר הרשות");
-          source.className = "text-link";
-          row.querySelector(".spot-copy").append(source);
-        }
+        appendPlaceMedia(row, place);
         markWay(row, place);
         around.append(row);
       });

@@ -111,6 +111,18 @@ class CatalogTests(unittest.TestCase):
         self.assertTrue(hai["booking"])
         self.assertGreaterEqual(len(hai["photos"]), 1)
         self.assertTrue(hai["photos"][0]["src"].startswith("https://www.parks.org.il/"))
+        viewpoints = [place for place in places if place["kind"] == "viewpoint"]
+        photographed = [place for place in viewpoints if place.get("photos")]
+        self.assertGreater(len(photographed), 300)
+        for place in viewpoints:
+            self.assertIn("openstreetmap.org", place["url"])
+        cliff = next(place for place in viewpoints if place["id"] == "o833181797")
+        self.assertGreaterEqual(len(cliff["photos"]), 1)
+        self.assertTrue(cliff["photos"][0]["src"].startswith("https://"))
+        self.assertIn("wikimedia.org", cliff["photos"][0]["src"])
+        self.assertTrue(cliff["photos"][0]["credit"])
+        galim = next(place for place in viewpoints if place["id"] == "o11454119276")
+        self.assertIn("openstreetmap.org/node/11454119276", galim["url"])
         self.assertIsNone(hai["hoursMax"])
 
     def test_recovered_walks_stay_in_the_catalog(self):

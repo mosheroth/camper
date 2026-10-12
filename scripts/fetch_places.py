@@ -13,6 +13,8 @@ import json
 import re
 import sys
 import time
+import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -28,6 +30,7 @@ from scripts.photos import _from_image_dict, merge_photos, photos_from_media  # 
 
 CACHE = ROOT / "data" / ".osm-places-cache.json"
 FACT_CACHE = ROOT / "data" / ".inpa-place-cache.json"
+PHOTO_CACHE = ROOT / "data" / ".osm-photo-cache.json"
 VISIT_BUCKETS = (
     ("Up_To_Two_Hours_s", 1.0, 2.0, "עד שעתיים"),
     ("Two_To_Four_Hours_s", 2.0, 4.0, "שעתיים עד ארבע"),
@@ -404,6 +407,206 @@ def enrich_inpa_places(places, cache):
     return updated
 
 
+def _image_keys(tags):
+    keys = ["image"] if tags.get("image") else []
+    numbered = []
+    for key in tags:
+        match = re.fullmatch(r"image(\d+)", key)
+        if match:
+            numbered.append((int(match.group(1)), key))
+    keys.extend(key for _, key in sorted(numbered))
+    keys.extend(sorted(key for key in tags if key.startswith("wikimedia_commons")))
+    return keys
+
+
+def _file_title(raw):
+    text = (raw or "").strip()
+    if not text or text.lower().startswith(("http://i.imgur", "https://i.imgur", "https://i.ibb.co")):
+        return None
+    if text.lower().startswith("file:"):
+        name = text.split(":", 1)[1].strip()
+        return f"File:{name}" if name else None
+    if "wikimedia.org" not in text and "wikipedia.org" not in text:
+        return None
+    name = urllib.parse.unquote(urllib.parse.urlparse(text).path).rsplit("/", 1)[-1]
+    name = re.sub(r"^\d+px-", "", name)
+    if not name or name in {"thumb", "commons"}:
+        return None
+    return f"File:{name}"
+
+
+def _load_photo_cache():
+    if PHOTO_CACHE.exists():
+        return json.loads(PHOTO_CACHE.read_text(encoding="utf-8"))
+    return {"files": {}, "nearby": {}, "wikidata": {}}
+
+
+def _commons_query(params):
+    query = dict(params)
+    query["format"] = "json"
+    url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(query)
+    payload, _headers = fetch_json(url)
+    time.sleep(0.12)
+    return payload
+
+
+def _photo_from_info(info):
+    if not info:
+        return None
+    src = info.get("thumburl") or info.get("url") or ""
+    if src.startswith("//"):
+        src = "https:" + src
+    src = src.split("?", 1)[0]
+    if not src.startswith("https://"):
+        return None
+    meta = info.get("extmetadata") or {}
+    artist = plain_text((meta.get("Artist") or {}).get("value") or "")
+    credit = f"{clip(artist, 80)} · ויקישיתוף" if artist else "ויקישיתוף"
+    return {"src": src, "credit": credit}
+
+
+def _resolve_files(titles, cache):
+    files = cache.setdefault("files", {})
+    missing = [title for title in titles if title and title not in files]
+    for start in range(0, len(missing), 40):
+        chunk = missing[start:start + 40]
+        try:
+            payload = _commons_query({
+                "action": "query",
+                "titles": "|".join(chunk),
+                "prop": "imageinfo",
+                "iiprop": "url|extmetadata",
+                "iiurlwidth": "960",
+            })
+        except urllib.error.URLError as error:
+            print(f"commons imageinfo skipped: {error}")
+            continue
+        query = payload.get("query") or {}
+        normalized = {item.get("from"): item.get("to") for item in query.get("normalized") or []}
+        by_title = {}
+        for page in (query.get("pages") or {}).values():
+            title = page.get("title")
+            if not title:
+                continue
+            info = (page.get("imageinfo") or [None])[0]
+            by_title[title] = None if page.get("missing") or not info else _photo_from_info(info)
+        for title in chunk:
+            canonical = normalized.get(title, title)
+            files[title] = by_title.get(canonical, by_title.get(title))
+            if canonical and canonical not in files:
+                files[canonical] = files[title]
+
+
+def _wikidata_files(qids, cache):
+    known = cache.setdefault("wikidata", {})
+    missing = [qid for qid in dict.fromkeys(qids) if qid not in known]
+    for start in range(0, len(missing), 40):
+        chunk = missing[start:start + 40]
+        url = "https://www.wikidata.org/w/api.php?" + urllib.parse.urlencode({
+            "action": "wbgetentities",
+            "ids": "|".join(chunk),
+            "props": "claims",
+            "format": "json",
+        })
+        try:
+            payload, _headers = fetch_json(url)
+        except urllib.error.URLError as error:
+            print(f"wikidata skipped: {error}")
+            continue
+        time.sleep(0.12)
+        entities = payload.get("entities") or {}
+        for qid in chunk:
+            claims = ((entities.get(qid) or {}).get("claims") or {}).get("P18") or []
+            title = None
+            if claims:
+                value = ((claims[0].get("mainsnak") or {}).get("datavalue") or {}).get("value")
+                if isinstance(value, str) and value.strip():
+                    title = f"File:{value.strip()}"
+            known[qid] = title
+
+
+def _photos_for(titles, cache):
+    photos = []
+    seen = set()
+    for title in titles:
+        photo = (cache.get("files") or {}).get(title)
+        if not photo or not photo.get("src") or photo["src"] in seen:
+            continue
+        src = photo["src"].split("?", 1)[0]
+        seen.add(src)
+        photos.append({"src": src, "credit": photo.get("credit") or "ויקישיתוף"})
+        if len(photos) == 3:
+            break
+    return photos
+
+
+def _reading_links(place, tags):
+    site = (tags.get("website") or tags.get("contact:website") or "").strip()
+    if site.startswith("http"):
+        place["site"] = site
+    else:
+        place.pop("site", None)
+    wiki = tags.get("wikipedia:he") or ""
+    if not wiki and str(tags.get("wikipedia") or "").startswith("he:"):
+        wiki = tags.get("wikipedia") or ""
+    if str(wiki).startswith("he:"):
+        slug = urllib.parse.quote(str(wiki)[3:].replace(" ", "_"))
+        place["wiki"] = f"https://he.wikipedia.org/wiki/{slug}"
+    else:
+        place.pop("wiki", None)
+
+
+def enrich_osm_media(places):
+    """Attach the photo and the reading link already tagged on the OSM node."""
+    if not CACHE.exists():
+        return 0
+    elements = {item["id"]: item for item in json.loads(CACHE.read_text(encoding="utf-8"))}
+    cache = _load_photo_cache()
+    prepared = []
+    titles = []
+    qids = []
+    for place in places:
+        if place.get("source") != "osm" or not str(place.get("id") or "").startswith("o"):
+            continue
+        tags = (elements.get(int(place["id"][1:])) or {}).get("tags") or {}
+        _reading_links(place, tags)
+        refs = []
+        for key in _image_keys(tags):
+            title = _file_title(tags.get(key) or "")
+            if title and title not in refs:
+                refs.append(title)
+            if len(refs) == 3:
+                break
+        qid = tags.get("wikidata") or ""
+        if re.fullmatch(r"Q\d+", str(qid)) and not refs:
+            qids.append(qid)
+        prepared.append((place, refs, qid if re.fullmatch(r"Q\d+", str(qid)) else ""))
+        titles.extend(refs)
+    _wikidata_files(qids, cache)
+    for place, refs, qid in prepared:
+        if refs or not qid:
+            continue
+        extra = (cache.get("wikidata") or {}).get(qid)
+        if extra:
+            refs.append(extra)
+            titles.append(extra)
+    for place, refs, _qid in prepared:
+        place["_photo_refs"] = refs[:3]
+    _resolve_files(list(dict.fromkeys(title for title in titles if title)), cache)
+    photographed = 0
+    for place, _refs, _qid in prepared:
+        photos = _photos_for(place.pop("_photo_refs", []), cache)
+        if photos:
+            place["photos"] = photos
+            place["image"] = photos[0]["src"]
+            photographed += 1
+        else:
+            place.pop("photos", None)
+            place.pop("image", None)
+    PHOTO_CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+    return photographed
+
+
 def main():
     print("fetching parks…")
     parks = fetch_parks()
@@ -442,7 +645,13 @@ def write_places(places):
 
 
 if __name__ == "__main__":
-    if "--facts" in sys.argv:
+    if "--photos" in sys.argv:
+        loaded = json.loads(OUT.read_text(encoding="utf-8"))
+        done = enrich_osm_media(loaded)
+        write_places(loaded)
+        linked = sum(1 for place in loaded if place.get("source") == "osm" and (place.get("site") or place.get("wiki") or place.get("url")))
+        print(json.dumps({"photographed": done, "linked": linked}, ensure_ascii=False))
+    elif "--facts" in sys.argv:
         loaded = json.loads(OUT.read_text(encoding="utf-8"))
         cached = load_fact_cache()
         done = enrich_inpa_places(loaded, cached)

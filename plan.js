@@ -946,7 +946,7 @@
         title: "תצפית לקפה",
         text: place.name,
         placeId: String(place.id),
-        photos: [],
+        photos: (place.photos || []).slice(0, 2),
         highlights: [],
       });
       number += 1;
