@@ -1413,6 +1413,11 @@ Promise.all([
       return `${head} ו־${mins} דקות`;
     }
 
+    function legCopy(minutes) {
+      if (minutes === 0) return "בלי נסיעה";
+      return `נסיעה של ${formatDuration(minutes)}`;
+    }
+
     function stepCopy(step) {
       if (step.kind === "depart") {
         if (step.at == null) return `יוצאים מהבית, מ${homePlace}. אין מרחק נסיעה, אז שעת היציאה גמישה.`;
@@ -1631,11 +1636,11 @@ Promise.all([
         applyOrder(window.CamperPlan.moveOrder(order, selected, moving, onto, after, selectedCoffee, selectedVisits));
       });
       groups.forEach((group) => {
-        const inbound = group.steps.find((step) => step.inbound);
+        const inbound = group.steps.find((step) => step.inbound != null);
         if (inbound) pendingLeg = inbound.inbound;
         let leg = null;
-        if (pendingLeg) {
-          leg = decorate(el("p", "block-leg"), "🚗", `נסיעה של ${formatDuration(pendingLeg)}`);
+        if (pendingLeg != null) {
+          leg = decorate(el("p", "block-leg"), "🚗", legCopy(pendingLeg));
           block.append(leg);
           pendingLeg = null;
         }
@@ -1731,7 +1736,7 @@ Promise.all([
         });
         card.append(list);
         block.append(card);
-        const outbound = [...group.steps].reverse().find((step) => step.travel);
+        const outbound = [...group.steps].reverse().find((step) => step.travel != null);
         if (outbound) pendingLeg = outbound.travel;
       });
       block.append(el("p", "fine", movable

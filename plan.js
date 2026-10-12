@@ -401,8 +401,8 @@
   }
 
   function withLeg(step, { travel, inbound }) {
-    if (travel) step.travel = travel;
-    if (inbound) step.inbound = inbound;
+    if (travel != null) step.travel = travel;
+    if (inbound != null) step.inbound = inbound;
     return step;
   }
 
@@ -499,7 +499,7 @@
     const campPoint = camp && camp.lat != null ? camp : null;
     const hops = list.map((activity, index) => {
       const next = index === list.length - 1 ? campPoint : pointOf(list[index + 1]);
-      return hopMinutes(pointOf(activity), next, index === list.length - 1 ? 30 : 0);
+      return hopMinutes(pointOf(activity), next, index === list.length - 1 ? 30 : null);
     });
     if (walks.some((walk) => walk == null)) {
       return list.map((activity, index) => ({
@@ -509,17 +509,17 @@
           at: null,
           walk: walks[index],
           back: null,
-          travel: hops[index] || null,
+          travel: hops[index],
           beforeStay: true,
           lastBefore: index === list.length - 1,
         }),
       }));
     }
-    let cursor = arrivalAt - hops.reduce((sum, hop) => sum + hop, 0) - walks.reduce((sum, walk) => sum + walk, 0);
+    let cursor = arrivalAt - hops.reduce((sum, hop) => sum + (hop || 0), 0) - walks.reduce((sum, walk) => sum + walk, 0);
     return list.map((activity, index) => {
       const at = cursor;
       const back = at + walks[index];
-      cursor = back + hops[index];
+      cursor = back + (hops[index] || 0);
       return {
         raw: at,
         step: activityStep(activity, {
@@ -527,7 +527,7 @@
           at: minuteOf(at),
           walk: walks[index],
           back,
-          travel: hops[index] || null,
+          travel: hops[index],
           beforeStay: true,
           lastBefore: index === list.length - 1,
         }),
@@ -552,21 +552,21 @@
         custom = minuteOf(clock.hikes[activity.trail.id]);
       }
       const here = pointOf(activity);
-      const inbound = index === 0 ? hopMinutes(campPoint, here, 0) : 0;
+      const inbound = index === 0 ? hopMinutes(campPoint, here, null) : null;
       const next = index === list.length - 1 ? null : pointOf(list[index + 1]);
-      const travel = next ? hopMinutes(here, next, 0) : 0;
+      const travel = next ? hopMinutes(here, next, null) : null;
       const at = custom == null ? cursor : custom;
       const walk = activityMinutes(activity);
       const back = walk == null ? null : at + walk;
       if (walk == null) timed = false;
-      else cursor = back + travel;
+      else cursor = back + (travel || 0);
       return activityStep(activity, {
         part: "next",
         at,
         walk,
         back,
-        inbound: inbound || null,
-        travel: travel || null,
+        inbound,
+        travel,
         firstOfDay: index === 0,
       });
     });

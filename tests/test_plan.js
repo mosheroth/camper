@@ -678,6 +678,39 @@ assert.strictEqual(stopHikes[0].at, 8 * 60);
 assert.ok(stopHikes[0].inbound > 0);
 assert.strictEqual(stopHikes[0].travel, between);
 assert.strictEqual(stopHikes[1].at, stopHikes[0].back + between);
+const adjacent = { lat: lake.lat + 0.001, lng: lake.lng };
+assert.strictEqual(travelMinutes(lake, adjacent), 0);
+const adjacentDay = buildItinerary({
+  camp: lake,
+  trails: [
+    { id: 7, name: "צמוד לחניון", hoursMin: 1, hoursMax: 1, lat: adjacent.lat, lng: adjacent.lng },
+    { id: 6, name: "שני", hoursMin: 1, hoursMax: 1, lat: secondStop.lat, lng: secondStop.lng },
+  ],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+const adjacentHikes = adjacentDay.filter((step) => step.kind === "hike");
+assert.strictEqual(adjacentHikes[0].inbound, 0);
+assert.strictEqual(adjacentHikes[0].at, 8 * 60);
+assert.ok(adjacentHikes[0].travel >= 15);
+assert.strictEqual(adjacentHikes[1].at, adjacentHikes[0].back + adjacentHikes[0].travel);
+const besideBefore = buildItinerary({
+  camp: lake,
+  trails: [{ id: 8, name: "צמוד לפני", hoursMin: 1, hoursMax: 1, lat: adjacent.lat, lng: adjacent.lng }],
+  arrivalMinutes: 17 * 60,
+  origin,
+  order: [8, "stay"],
+});
+const beforeAdjacent = besideBefore.find((step) => step.kind === "hike");
+assert.strictEqual(beforeAdjacent.travel, 0);
+assert.strictEqual(beforeAdjacent.at, 17 * 60 - 60);
+const looseDay = buildItinerary({
+  camp: lake,
+  trails: [{ id: 9, name: "בלי נקודה", hoursMin: 1, hoursMax: 1 }],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+assert.ok(looseDay.find((step) => step.kind === "hike").inbound == null);
 const sharedLeg = shareMessage({
   camp: lake,
   trails: [{ id: 5, name: "רכס קרוב", hoursMin: 2, hoursMax: 2, lat: nearbyStop.lat, lng: nearbyStop.lng }],
