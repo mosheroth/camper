@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, centerOrigin } = require("../plan.js");
+const { buildPlans, nearbyChoices, planUrl, lengthIsUsable, buildItinerary, centerOrigin, tripStages } = require("../plan.js");
 
 const trails = [
   {
@@ -191,5 +191,17 @@ const centers = centerOrigin([
 ]);
 assert.strictEqual(centers.lat, 32.1);
 assert.strictEqual(centers.lng, 34.8);
+
+const swiss = liveTrails.find((trail) => trail.id === 62571);
+const lakeCamp = liveCamps.find((camp) => camp.id === 342394);
+const story = tripStages(lakeCamp, [swiss]);
+assert.strictEqual(story.stages[0].title, "מגיעים לחניון לילה");
+assert.strictEqual(story.stages[0].n, 1);
+assert.strictEqual(story.paths.length, 1);
+const lats = story.paths[0].line.map((point) => point[0]);
+assert.ok(Math.max(...lats) < 32.76, "the trip line stays on the selected hike");
+assert.ok(story.stages.filter((stage) => stage.trailId === 62571).every((stage) => stage.lat < 32.76));
+assert.strictEqual(story.stages.find((stage) => stage.kind === "depart-hike").title, "יוצאים לטיול");
+assert.ok(story.stages.filter((stage) => stage.kind !== "arrive").length <= 3);
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

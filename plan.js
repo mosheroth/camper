@@ -154,6 +154,139 @@
     return steps;
   }
 
+  function pointKm(from, to) {
+    return haversineKm({ lat: from[0], lng: from[1] }, { lat: to[0], lng: to[1] });
+  }
+
+  function lineKm(line) {
+    let sum = 0;
+    for (let index = 1; index < line.length; index += 1) sum += pointKm(line[index - 1], line[index]);
+    return sum;
+  }
+
+  function routeScore(routeName, trailName) {
+    const words = String(trailName || "").split(/[\s–—-]+/).filter((word) => word.length >= 3);
+    return words.reduce((sum, word) => (String(routeName || "").includes(word) ? sum + word.length : sum), 0);
+  }
+
+  function chainLines(lines, camp) {
+    const parts = lines.map((line) => line.slice()).filter((line) => line.length > 1 && lineKm(line) >= 0.25);
+    if (!parts.length) return [];
+    const unused = parts.slice();
+    let bestIndex = 0;
+    let flip = false;
+    let bestDistance = Infinity;
+    unused.forEach((line, index) => {
+      [line[0], line[line.length - 1]].forEach((point, end) => {
+        const distance = camp && camp.lat != null
+          ? haversineKm(camp, { lat: point[0], lng: point[1] })
+          : 0;
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = index;
+          flip = end === 1;
+        }
+      });
+    });
+    let current = unused.splice(bestIndex, 1)[0];
+    if (flip) current.reverse();
+    const chained = current.slice();
+    while (unused.length) {
+      const tail = chained[chained.length - 1];
+      let pick = -1;
+      let reverse = false;
+      let closest = 0.25;
+      unused.forEach((line, index) => {
+        const toStart = pointKm(tail, line[0]);
+        const toEnd = pointKm(tail, line[line.length - 1]);
+        if (toStart < closest) {
+          closest = toStart;
+          pick = index;
+          reverse = false;
+        }
+        if (toEnd < closest) {
+          closest = toEnd;
+          pick = index;
+          reverse = true;
+        }
+      });
+      if (pick < 0) break;
+      const next = unused.splice(pick, 1)[0];
+      if (reverse) next.reverse();
+      chained.push(...next.slice(1));
+    }
+    return chained;
+  }
+
+  function storyPath(trail, camp) {
+    const routes = (trail.routes || []).map((route) => {
+      const lines = (route.lines || []).filter((line) => lineKm(line) >= 0.25);
+      if (!lines.length) return null;
+      const anchor = lines[0][0];
+      const near = camp && camp.lat != null ? haversineKm(camp, { lat: anchor[0], lng: anchor[1] }) : 0;
+      return {
+        lines,
+        score: routeScore(route.name, trail.name),
+        near,
+        km: lines.reduce((sum, line) => sum + lineKm(line), 0),
+      };
+    }).filter(Boolean);
+    if (!routes.length) return [];
+    routes.sort((left, right) => right.score - left.score || left.near - right.near || right.km - left.km);
+    const ranked = routes[0].score === 0 && camp
+      ? routes.slice().sort((left, right) => left.near - right.near || right.km - left.km)
+      : routes;
+    return chainLines(ranked[0].lines, camp);
+  }
+
+  function tripStages(camp, trails) {
+    const stages = [];
+    const paths = [];
+    const chosen = trails || [];
+    if (camp && camp.lat != null) {
+      stages.push({
+        kind: "arrive",
+        n: 1,
+        lat: camp.lat,
+        lng: camp.lng,
+        title: "מגיעים לחניון לילה",
+        text: chosen.length ? `${camp.name}. בסוף המסלול חוזרים לכאן.` : camp.name,
+        photos: (camp.photos || []).slice(0, 2),
+      });
+    }
+    let number = stages.length + 1;
+    chosen.forEach((trail) => {
+      const line = storyPath(trail, camp);
+      const highlights = ((trail.details && trail.details.highlights) || []).slice(0, 3);
+      const photos = (trail.photos || []).slice(0, 2);
+      const base = { trailId: trail.id, text: trail.name, photos, highlights };
+      if (!line.length) {
+        if (trail.lat == null) return;
+        stages.push({ ...base, kind: "depart-hike", n: number, lat: trail.lat, lng: trail.lng, title: "יוצאים לטיול" });
+        number += 1;
+        return;
+      }
+      paths.push({ trailId: trail.id, line });
+      const start = line[0];
+      const end = line[line.length - 1];
+      const middle = line[Math.floor(line.length / 2)];
+      const away = (point) => !camp || camp.lat == null || haversineKm(camp, { lat: point[0], lng: point[1] }) > 0.2;
+      if (away(start)) {
+        stages.push({ ...base, kind: "depart-hike", n: number, lat: start[0], lng: start[1], title: "יוצאים לטיול" });
+        number += 1;
+      }
+      if (lineKm(line) >= 0.8 && away(middle) && pointKm(middle, start) > 0.25) {
+        stages.push({ ...base, kind: "along", n: number, lat: middle[0], lng: middle[1], title: "במסלול" });
+        number += 1;
+      }
+      if (pointKm(end, start) > 0.3 && away(end) && pointKm(end, middle) > 0.2) {
+        stages.push({ ...base, kind: "far", n: number, lat: end[0], lng: end[1], title: "המשך המסלול" });
+        number += 1;
+      }
+    });
+    return { stages, paths };
+  }
+
   function nearbyChoices(camp, trails) {
     const byId = new Map((trails || []).map((trail) => [trail.id, trail]));
     return (camp.nearby || [])
@@ -176,5 +309,6 @@
     lengthIsUsable,
     centerOrigin,
     buildItinerary,
+    tripStages,
   };
 });

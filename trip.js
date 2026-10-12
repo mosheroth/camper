@@ -316,6 +316,7 @@ function drawMap(camp, trails, extras, onAdd) {
   sharedMap.invalidateSize({ animate: false });
   const map = sharedMap;
   const bounds = [];
+  const storyBounds = [];
 
   function layerFor(key) {
     let entry = layersById.get(key);
@@ -331,11 +332,44 @@ function drawMap(camp, trails, extras, onAdd) {
     layer.on("mouseout", () => emphasize(focusedKey));
   }
 
+  const story = window.CamperPlan.tripStages(camp, trails);
+  const colorByTrail = new Map();
+  trails.forEach((trail, index) => {
+    colorByTrail.set(trail.id, COLORS[(index + 1) % COLORS.length]);
+  });
+
+  function stageCard(stage) {
+    const photos = (stage.photos || []).map((photo) => (
+      `<img src="${escapeHtml(photo.src)}" alt="${escapeHtml(photo.credit || stage.title)}">`
+    )).join("");
+    const places = (stage.highlights || []).join(" · ");
+    return (
+      `<div class="stage-card"><strong>${stage.n}. ${escapeHtml(stage.title)}</strong>` +
+      `<p>${escapeHtml(stage.text)}</p>` +
+      (places ? `<p class="stage-places">בדרך: ${escapeHtml(places)}</p>` : "") +
+      (photos ? `<div class="stage-photos">${photos}</div>` : "") +
+      "</div>"
+    );
+  }
+
+  function bindStage(marker, stage, key) {
+    marker.bindTooltip(stageCard(stage), {
+      direction: "auto",
+      opacity: 1,
+      className: "stage-tip",
+      offset: [0, -8],
+    });
+    marker.on("mouseover", () => emphasize(key));
+    marker.on("mouseout", () => emphasize(focusedKey));
+  }
+
   if (camp.lat != null) {
+    const arrive = story.stages.find((stage) => stage.kind === "arrive");
     const icon = window.L.divIcon({
       className: "camp-marker",
       html:
         '<div class="camp-pin">' +
+        `<span class="stage-badge">${arrive ? arrive.n : 1}</span>` +
         '<span class="camp-pin-tag">חניון</span>' +
         '<svg viewBox="0 0 36 46" width="36" height="46" aria-hidden="true">' +
         '<path d="M18 44.5C18 44.5 33 27.2 33 16.2A15 15 0 1 0 3 16.2C3 27.2 18 44.5 18 44.5Z" fill="#a3472c" stroke="#fffaf3" stroke-width="2.4"/>' +
@@ -352,57 +386,47 @@ function drawMap(camp, trails, extras, onAdd) {
       title: camp.name,
       alt: `חניון ${camp.name}`,
     }).addTo(overlay);
-    marker.bindPopup(`<strong>חניון</strong><br>${escapeHtml(camp.name)}`);
-    marker.on("mouseover", () => emphasize("camp"));
-    marker.on("mouseout", () => emphasize(focusedKey));
+    if (arrive) bindStage(marker, arrive, "camp");
     marker.on("click", () => focusFeature("camp"));
     const campLayer = layerFor("camp");
     campLayer.bounds.push([camp.lat, camp.lng]);
     bounds.push([camp.lat, camp.lng]);
+    storyBounds.push([camp.lat, camp.lng]);
   }
 
-  let colorIndex = 0;
   let drewLine = false;
-  const drawnNames = new Set();
-  trails.forEach((trail) => {
-    const hadRoutes = (trail.routes || []).length > 0;
-    const routes = (trail.routes || []).filter((route) => {
-      const key = route.name || trail.name;
-      if (drawnNames.has(key)) return false;
-      drawnNames.add(key);
-      return true;
-    });
-    const color = COLORS[(colorIndex + 1) % COLORS.length];
-    colorIndex += 1;
-    const key = String(trail.id);
+  story.paths.forEach((path) => {
+    const key = String(path.trailId);
+    const color = colorByTrail.get(path.trailId) || COLORS[1];
     const entry = layerFor(key);
-    if (!hadRoutes && trail.lat != null) {
-      const dot = window.L.circleMarker([trail.lat, trail.lng], {
-        radius: 7,
-        color,
-        weight: 2,
-        fillColor: color,
-        fillOpacity: 0.95,
-      }).addTo(overlay);
-      dot.bindPopup(escapeHtml(trail.name));
-      follow(dot, key);
-      dot.on("click", () => focusFeature(key));
-      entry.dots.push(dot);
-      entry.bounds.push([trail.lat, trail.lng]);
-      bounds.push([trail.lat, trail.lng]);
-      return;
-    }
-    routes.forEach((route) => {
-      (route.lines || []).forEach((line) => {
-        const path = window.L.polyline(line, { color, weight: 4, opacity: 0.85 }).addTo(overlay);
-        follow(path, key);
-        path.on("click", () => focusFeature(key));
-        entry.lines.push(path);
-        entry.bounds.push(...line);
-        bounds.push(...line);
-        drewLine = true;
-      });
-    });
+    const line = window.L.polyline(path.line, { color, weight: 5, opacity: 0.9 }).addTo(overlay);
+    follow(line, key);
+    line.on("click", () => focusFeature(key));
+    entry.lines.push(line);
+    entry.bounds.push(...path.line);
+    bounds.push(...path.line);
+    storyBounds.push(...path.line);
+    drewLine = true;
+  });
+  story.stages.forEach((stage) => {
+    if (stage.kind === "arrive") return;
+    const key = String(stage.trailId);
+    const color = colorByTrail.get(stage.trailId) || COLORS[1];
+    const marker = window.L.marker([stage.lat, stage.lng], {
+      icon: window.L.divIcon({
+        className: "stage-marker",
+        html: `<div class="stage-num" style="background:${color}">${stage.n}</div>`,
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
+      }),
+      zIndexOffset: 700,
+      title: `${stage.n}. ${stage.title}`,
+      keyboard: false,
+    }).addTo(overlay);
+    bindStage(marker, stage, key);
+    marker.on("click", () => focusFeature(key));
+    bounds.push([stage.lat, stage.lng]);
+    storyBounds.push([stage.lat, stage.lng]);
   });
 
   (extras || []).forEach((item) => {
@@ -426,10 +450,11 @@ function drawMap(camp, trails, extras, onAdd) {
   });
 
   const view = { animate: false };
-  if (bounds.length > 1) {
-    map.fitBounds(bounds, {
-      padding: [36, 36],
-      maxZoom: 12,
+  const framed = storyBounds.length > 1 ? storyBounds : bounds;
+  if (framed.length > 1) {
+    map.fitBounds(framed, {
+      padding: [48, 48],
+      maxZoom: 14,
       ...view,
     });
   } else if (camp.lat != null) {
@@ -685,7 +710,7 @@ Promise.all([
       const available = pool.filter((item) => !selected.includes(item.trail.id));
       const shown = expanded ? available : available.slice(0, 6);
       around.replaceChildren();
-      around.append(el("p", "board-hint", "הצבע ברשימה הוא הצבע על המפה. פירוט פותח את המסלול לפני שמוסיפים אותו."));
+      around.append(el("p", "board-hint", "המספרים על המפה הם סדר הסופ״ש. עומדים על מספר ורואים את השלב."));
       around.append(renderItinerary());
 
       around.append(el("h2", "section-label", "החניון"));
