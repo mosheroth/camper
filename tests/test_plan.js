@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, storyPath } = require("../plan.js");
 
 const trails = [
   {
@@ -424,5 +424,7 @@ assert.deepStrictEqual(moveOrder(["stay", 1, 2], [1, 2], 2, 1, false), ["stay", 
 assert.deepStrictEqual(moveOrder([1, "stay"], [1], 1, "stay", true), ["stay", 1]);
 assert.strictEqual(moveOrder(["stay", 1], [1], "stay", 1, false), null);
 assert.strictEqual(moveOrder(["stay", 1], [1], 9, "stay", true), null);
+const deerLine = storyPath(liveTrails.find((trail) => trail.id === 62558), liveCamps.find((camp) => camp.id === 16959));
+assert.ok(deerLine.length > 5, "a hovered trail can be drawn from its recorded line");
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

@@ -333,6 +333,10 @@ let sharedMap = null;
 let overlay = null;
 let layersById = new Map();
 let focusedKey = null;
+let tripView = null;
+let previewLine = null;
+let previewing = false;
+let previewKey = null;
 
 window.addEventListener("resize", () => {
   if (sharedMap) sharedMap.invalidateSize({ animate: false });
@@ -373,6 +377,30 @@ function focusFeature(id) {
   if (row) row.scrollIntoView({ block: "nearest" });
 }
 
+function clearPreviewLine() {
+  if (previewLine) {
+    previewLine.remove();
+    previewLine = null;
+  }
+}
+
+function rememberTrip() {
+  if (!sharedMap) return;
+  const center = sharedMap.getCenter();
+  tripView = { lat: center.lat, lng: center.lng, zoom: sharedMap.getZoom() };
+}
+
+function showTrip() {
+  clearPreviewLine();
+  previewKey = null;
+  const moved = previewing;
+  previewing = false;
+  emphasize(focusedKey);
+  if (!moved || !sharedMap || !tripView) return;
+  sharedMap.stop();
+  sharedMap.flyTo([tripView.lat, tripView.lng], tripView.zoom, { duration: 0.3 });
+}
+
   function drawMap(camp, trails, extras, onAdd, order) {
   if (typeof window.L === "undefined") {
     mapNote.textContent = "המפה לא נטענה. אפשר עדיין לקרוא את הפירוט ולפתוח את העמודים הרשמיים.";
@@ -386,6 +414,9 @@ function focusFeature(id) {
     }).addTo(sharedMap);
     overlay = window.L.layerGroup().addTo(sharedMap);
   }
+  clearPreviewLine();
+  previewing = false;
+  previewKey = null;
   sharedMap.stop();
   overlay.clearLayers();
   layersById = new Map();
@@ -554,6 +585,7 @@ function focusFeature(id) {
   } else {
     map.setView([31.4, 34.9], 7, view);
   }
+  rememberTrip();
   mapNote.textContent = drewLine
     ? ""
     : "למסלול שנבחר אין עדיין קו שביל, אז מוצגת נקודת ההתחלה.";
@@ -596,6 +628,7 @@ Promise.all([
     };
     let hereKey = null;
     let hereMarker = null;
+    let previewTimer = null;
     const home = savedHome();
     const origin = window.CamperPlan.regionOrigin(camps, home) || window.CamperPlan.centerOrigin(camps);
     const homePlace = HOME_PLACE[home];
@@ -794,6 +827,40 @@ Promise.all([
       render();
     }
 
+    function showTrail(id) {
+      const key = id == null ? null : String(id);
+      if (!key || !sharedMap) return;
+      if (previewKey === key && previewing) {
+        emphasize(key);
+        return;
+      }
+      clearPreviewLine();
+      emphasize(key);
+      const entry = layersById.get(key);
+      let points = entry && entry.bounds.length ? entry.bounds.slice() : [];
+      const trail = key === "camp" ? null : byId.get(Number(key));
+      if (trail && !(entry && entry.lines.length)) {
+        const line = window.CamperPlan.storyPath(trail, camp);
+        if (line.length > 1) {
+          previewLine = window.L.featureGroup([
+            window.L.polyline(line, { color: "#fffaf3", weight: 10, opacity: 0.95, interactive: false }),
+            window.L.polyline(line, { color: "#a3472c", weight: 5, opacity: 1, interactive: false }),
+          ]).addTo(sharedMap);
+          previewLine.bringToFront();
+          points = line;
+        }
+      }
+      if (!points.length) {
+        previewKey = key;
+        return;
+      }
+      previewKey = key;
+      previewing = true;
+      sharedMap.stop();
+      if (points.length === 1) sharedMap.flyTo(points[0], 14, { duration: 0.3 });
+      else sharedMap.flyToBounds(points, { padding: [48, 48], maxZoom: 15, duration: 0.3 });
+    }
+
     function spotRow(id, name, meta, swatchColor, action, onOpen) {
       const row = el("article", "spot");
       row.dataset.id = String(id);
@@ -807,8 +874,21 @@ Promise.all([
       row.append(swatch, copy);
       if (action) row.append(action);
       const activate = () => (onOpen ? onOpen(id) : focusFeature(id));
-      row.addEventListener("mouseenter", () => emphasize(id));
-      row.addEventListener("mouseleave", () => emphasize(focusedKey));
+      const preview = () => {
+        if (previewTimer) {
+          window.clearTimeout(previewTimer);
+          previewTimer = null;
+        }
+        showTrail(id);
+      };
+      row.addEventListener("mouseenter", preview);
+      row.addEventListener("mouseleave", () => {
+        previewTimer = window.setTimeout(() => {
+          previewTimer = null;
+          if (previewKey !== String(id)) return;
+          showTrip();
+        }, 60);
+      });
       row.addEventListener("click", (event) => {
         if (event.target.closest("button, a")) return;
         activate();

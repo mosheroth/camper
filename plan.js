@@ -710,6 +710,7 @@
     tripDates,
     moveTripDates,
     tripStages,
+    storyPath,
     trailLures,
   };
 });
