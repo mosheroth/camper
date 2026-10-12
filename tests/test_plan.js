@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes, travelMinutes } = require("../plan.js");
 
 const trails = [
   {
@@ -522,7 +522,8 @@ const earlyCup = buildItinerary({
   origin,
   order: ["c:o9", "stay"],
 });
-assert.strictEqual(earlyCup.find((step) => step.kind === "coffee").at, 16 * 60);
+assert.strictEqual(earlyCup.find((step) => step.kind === "coffee").travel, 15);
+assert.strictEqual(earlyCup.find((step) => step.kind === "coffee").at, 16 * 60 + 15);
 assert.strictEqual(earlyCup.find((step) => step.kind === "depart").toward, "coffee");
 const withHike = buildItinerary({
   camp: lake,
@@ -620,5 +621,46 @@ assert.ok(sharedVisit.includes("08:00  ביקור · שמורת טבע חי בר
 assert.ok(sharedVisit.includes(haiBar.url));
 const visitStages = tripStages(lake, [], ["stay", "v:r1877"], [], [haiBar]);
 assert.strictEqual(visitStages.stages.find((stage) => stage.kind === "visit").title, "ביקור");
+
+assert.strictEqual(travelMinutes(lake, null), null);
+assert.strictEqual(travelMinutes(lake, lake), 0);
+const nearbyStop = { lat: 32.75, lng: 35.02 };
+assert.strictEqual(travelMinutes(lake, nearbyStop), 15);
+const legDay = buildItinerary({
+  camp: lake,
+  trails: [{ id: 5, name: "רכס קרוב", hoursMin: 2, hoursMax: 2, lat: nearbyStop.lat, lng: nearbyStop.lng }],
+  arrivalMinutes: 17 * 60,
+  origin,
+  order: [5, "stay"],
+});
+const legHike = legDay.find((step) => step.kind === "hike");
+assert.strictEqual(legHike.travel, 15);
+assert.strictEqual(legHike.at, 17 * 60 - 15 - 120);
+const secondStop = { lat: 32.9, lng: 35.2 };
+const between = travelMinutes(nearbyStop, secondStop);
+const twoStops = buildItinerary({
+  camp: lake,
+  trails: [
+    { id: 5, name: "ראשון", hoursMin: 1, hoursMax: 1, lat: nearbyStop.lat, lng: nearbyStop.lng },
+    { id: 6, name: "שני", hoursMin: 1, hoursMax: 1, lat: secondStop.lat, lng: secondStop.lng },
+  ],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+const stopHikes = twoStops.filter((step) => step.kind === "hike");
+assert.strictEqual(stopHikes[0].at, 8 * 60);
+assert.ok(stopHikes[0].inbound > 0);
+assert.strictEqual(stopHikes[0].travel, between);
+assert.strictEqual(stopHikes[1].at, stopHikes[0].back + between);
+const sharedLeg = shareMessage({
+  camp: lake,
+  trails: [{ id: 5, name: "רכס קרוב", hoursMin: 2, hoursMax: 2, lat: nearbyStop.lat, lng: nearbyStop.lng }],
+  arrivalMinutes: 17 * 60,
+  origin,
+  order: [5, "stay"],
+  from: "2026-10-16",
+  to: "2026-10-17",
+});
+assert.ok(sharedLeg.includes("נסיעה של כ־15 דקות"));
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

@@ -1295,7 +1295,7 @@ Promise.all([
         const official = step.duration ? ` בעמוד הרשות: ${step.duration}.` : "";
         const estimate = step.estimated ? " זו הערכה, משך הביקור לא מסומן בעמוד." : official;
         if (step.beforeStay) {
-          const tail = step.lastBefore ? "אחר כך כחצי שעה עד החניון." : "אחר כך ממשיכים.";
+          const tail = step.lastBefore ? "אחר כך ממשיכים לחניון." : "אחר כך ממשיכים.";
           return `${name}. ביקור של ${length}.${estimate} ${tail}`;
         }
         const leaving = step.firstOfDay ? "יוצאים מהחניון. " : "";
@@ -1306,7 +1306,7 @@ Promise.all([
       if (step.kind === "coffee") {
         const name = shortName(step.name);
         if (step.beforeStay) {
-          const tail = step.lastBefore ? "אחר כך כחצי שעה עד החניון." : "אחר כך ממשיכים.";
+          const tail = step.lastBefore ? "אחר כך ממשיכים לחניון." : "אחר כך ממשיכים.";
           return `${name}. תצפית לקפה, כחצי שעה. ${tail}`;
         }
         const leaving = step.firstOfDay ? "יוצאים מהחניון. " : "";
@@ -1316,7 +1316,7 @@ Promise.all([
         const name = shortName(step.name);
         if (step.walk == null) return `${name}. אין משך הליכה, אז השעה גמישה.`;
         if (step.beforeStay) {
-          const tail = step.lastBefore ? "אחר כך כחצי שעה עד החניון." : "אחר כך ממשיכים למסלול הבא.";
+          const tail = step.lastBefore ? "אחר כך ממשיכים לחניון." : "אחר כך ממשיכים למסלול הבא.";
           return `${name}. הליכה של ${formatDuration(step.walk)}. ${tail}`;
         }
         const leaving = step.firstOfDay ? "יוצאים מהחניון. " : "";
@@ -1435,7 +1435,14 @@ Promise.all([
       });
       const movable = sequence.length > 1;
       let hereIndex = 0;
+      let pendingLeg = null;
       groups.forEach((group) => {
+        const inbound = group.steps.find((step) => step.inbound);
+        if (inbound) pendingLeg = inbound.inbound;
+        if (pendingLeg) {
+          block.append(el("p", "block-leg", `נסיעה של ${formatDuration(pendingLeg)}`));
+          pendingLeg = null;
+        }
         const card = el("section", "day-block");
         const head = el("header");
         head.append(el("h3", null, blockTitle(group)));
@@ -1522,6 +1529,8 @@ Promise.all([
         });
         card.append(list);
         block.append(card);
+        const outbound = [...group.steps].reverse().find((step) => step.travel);
+        if (outbound) pendingLeg = outbound.travel;
       });
       block.append(el("p", "fine", movable
         ? "גוררים בלוק כדי לשנות את הסדר. שינוי היציאה שומר על אורך הטיול, ושינוי שעה מזיז את מה שאחריה."

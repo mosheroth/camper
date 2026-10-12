@@ -138,10 +138,18 @@
     return regionOrigin(camps, "center");
   }
 
+  function travelMinutes(from, to) {
+    if (!from || from.lat == null || from.lng == null || !to || to.lat == null || to.lng == null) return null;
+    const km = haversineKm(from, to);
+    if (!Number.isFinite(km)) return null;
+    if (km < 0.4) return 0;
+    const minutes = Math.round((km * 1.35 / 70) * 60 / 15) * 15;
+    return Math.max(15, minutes);
+  }
+
   function driveMinutes(camp, origin) {
-    if (!camp || camp.lat == null || camp.lng == null || !origin) return null;
-    const roadKm = haversineKm(camp, origin) * 1.35;
-    const minutes = Math.round((roadKm / 70) * 60 / 15) * 15;
+    const minutes = travelMinutes(camp, origin);
+    if (minutes == null) return null;
     return Math.max(15, minutes);
   }
 
@@ -354,8 +362,15 @@
     return { from: current.from, to: current.to };
   }
 
-  function hikeStep(trail, { part, at, walk, back, beforeStay, lastBefore, firstOfDay }) {
-    return {
+  function withLeg(step, { travel, inbound }) {
+    if (travel) step.travel = travel;
+    if (inbound) step.inbound = inbound;
+    return step;
+  }
+
+  function hikeStep(trail, options) {
+    const { part, at, walk, back, beforeStay, lastBefore, firstOfDay } = options;
+    return withLeg({
       kind: "hike",
       block: `hike:${trail.id}`,
       part,
@@ -367,11 +382,12 @@
       beforeStay: Boolean(beforeStay),
       lastBefore: Boolean(lastBefore),
       firstOfDay: Boolean(firstOfDay),
-    };
+    }, options);
   }
 
-  function coffeeStep(place, { part, at, back, beforeStay, lastBefore, firstOfDay }) {
-    return {
+  function coffeeStep(place, options) {
+    const { part, at, back, beforeStay, lastBefore, firstOfDay } = options;
+    return withLeg({
       kind: "coffee",
       block: `coffee:${place.id}`,
       part,
@@ -386,11 +402,12 @@
       beforeStay: Boolean(beforeStay),
       lastBefore: Boolean(lastBefore),
       firstOfDay: Boolean(firstOfDay),
-    };
+    }, options);
   }
 
-  function visitStep(place, { part, at, back, beforeStay, lastBefore, firstOfDay }) {
-    return {
+  function visitStep(place, options) {
+    const { part, at, back, beforeStay, lastBefore, firstOfDay } = options;
+    return withLeg({
       kind: "visit",
       block: `visit:${place.id}`,
       part,
@@ -407,7 +424,19 @@
       beforeStay: Boolean(beforeStay),
       lastBefore: Boolean(lastBefore),
       firstOfDay: Boolean(firstOfDay),
-    };
+    }, options);
+  }
+
+  function pointOf(activity) {
+    if (!activity) return null;
+    const source = activity.type === "hike" ? activity.trail : activity.place;
+    if (!source || source.lat == null || source.lng == null) return null;
+    return { lat: source.lat, lng: source.lng };
+  }
+
+  function hopMinutes(from, to, fallback) {
+    const known = travelMinutes(from, to);
+    return known == null ? fallback : known;
   }
 
   function activityMinutes(activity) {
@@ -422,8 +451,13 @@
     return hikeStep(activity.trail, options);
   }
 
-  function stepsBeforeStay(list, arrivalAt) {
+  function stepsBeforeStay(list, arrivalAt, camp) {
     const walks = list.map(activityMinutes);
+    const campPoint = camp && camp.lat != null ? camp : null;
+    const hops = list.map((activity, index) => {
+      const next = index === list.length - 1 ? campPoint : pointOf(list[index + 1]);
+      return hopMinutes(pointOf(activity), next, index === list.length - 1 ? 30 : 0);
+    });
     if (walks.some((walk) => walk == null)) {
       return list.map((activity, index) => ({
         raw: null,
@@ -432,16 +466,17 @@
           at: null,
           walk: walks[index],
           back: null,
+          travel: hops[index] || null,
           beforeStay: true,
           lastBefore: index === list.length - 1,
         }),
       }));
     }
-    let cursor = arrivalAt - 30 - walks.reduce((sum, walk) => sum + walk, 0);
+    let cursor = arrivalAt - hops.reduce((sum, hop) => sum + hop, 0) - walks.reduce((sum, walk) => sum + walk, 0);
     return list.map((activity, index) => {
       const at = cursor;
       const back = at + walks[index];
-      cursor = back;
+      cursor = back + hops[index];
       return {
         raw: at,
         step: activityStep(activity, {
@@ -449,6 +484,7 @@
           at: minuteOf(at),
           walk: walks[index],
           back,
+          travel: hops[index] || null,
           beforeStay: true,
           lastBefore: index === list.length - 1,
         }),
@@ -462,6 +498,7 @@
     const visitTimes = clock.visitAt || {};
     let cursor = start;
     let timed = true;
+    const campPoint = clock.place && clock.place.lat != null ? clock.place : null;
     const steps = list.map((activity, index) => {
       let custom = null;
       if (activity.type === "coffee") {
@@ -471,12 +508,24 @@
       } else if (clock.hikes && clock.hikes[activity.trail.id] != null) {
         custom = minuteOf(clock.hikes[activity.trail.id]);
       }
+      const here = pointOf(activity);
+      const inbound = index === 0 ? hopMinutes(campPoint, here, 0) : 0;
+      const next = index === list.length - 1 ? null : pointOf(list[index + 1]);
+      const travel = next ? hopMinutes(here, next, 0) : 0;
       const at = custom == null ? cursor : custom;
       const walk = activityMinutes(activity);
       const back = walk == null ? null : at + walk;
       if (walk == null) timed = false;
-      else cursor = back;
-      return activityStep(activity, { part: "next", at, walk, back, firstOfDay: index === 0 });
+      else cursor = back + travel;
+      return activityStep(activity, {
+        part: "next",
+        at,
+        walk,
+        back,
+        inbound: inbound || null,
+        travel: travel || null,
+        firstOfDay: index === 0,
+      });
     });
     const last = steps[steps.length - 1];
     const lunchAt = !timed || !last || last.back == null
@@ -570,7 +619,7 @@
       });
       steps.push({ kind: "arrive", block: "road", part: "out", at: arrival });
     } else {
-      const placed = stepsBeforeStay(before, arrival);
+      const placed = stepsBeforeStay(before, arrival, camp);
       const raw = placed[0].raw;
       steps.push({
         kind: "depart",
@@ -600,7 +649,7 @@
     steps.push({ kind: "rise", block: "stay", part: "next", at: rise });
     steps.push({ kind: "breakfast", block: "stay", part: "next", at: breakfast });
     if (!before.length && !after.length) steps.push({ kind: "need-hike", block: "stay", part: "next" });
-    if (after.length) steps.push(...stepsAfterStay(after, clock));
+    if (after.length) steps.push(...stepsAfterStay(after, { ...clock, place: camp }));
     const dates = tripDates(from, to, today);
     const leave = clock.back == null ? defaultReturnAt(steps, dates.nights) : minuteOf(clock.back);
     steps.push({
@@ -1092,6 +1141,7 @@
         lines.push("");
         lines.push(currentDay);
       }
+      if (step.inbound) lines.push(`נסיעה של ${shareDuration(step.inbound)}`);
       const time = shareClock(step.at);
       lines.push(time ? `${time}  ${what}` : what);
       if (step.kind === "hike") {
@@ -1100,6 +1150,7 @@
       }
       if (step.kind === "coffee" && step.url) lines.push(step.url);
       if (step.kind === "visit" && step.url) lines.push(step.url);
+      if (step.travel) lines.push(`נסיעה של ${shareDuration(step.travel)}`);
     });
     if (settings.url) {
       lines.push("");
@@ -1131,6 +1182,7 @@
     visitPlaceId,
     visitMinutes,
     visitIsEstimate,
+    travelMinutes,
     shareDuration,
     comingWeekend,
     tripDates,

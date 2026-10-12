@@ -1177,6 +1177,22 @@ body.splitting { cursor: col-resize; user-select: none; }
   color: #fff;
 }
 .itinerary .fine { margin: 8px 0 0; }
+.block-leg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 12px 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.block-leg + .day-block { margin-top: 8px; }
+.block-leg::before,
+.block-leg::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: var(--line);
+}
 .day-block {
   margin-top: 10px;
   padding: 8px 10px 6px;
