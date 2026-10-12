@@ -1104,16 +1104,28 @@ body.splitting { cursor: col-resize; user-select: none; }
   font-weight: 700;
 }
 .day-block .timeline { margin-top: 4px; gap: 2px; }
-.block-moves { display: flex; gap: 4px; flex: none; }
+.block-moves { display: flex; gap: 4px; flex: none; direction: ltr; }
 .block-move {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
   background: transparent;
   border: 1px solid var(--line);
   color: var(--green);
   border-radius: 999px;
-  padding: 2px 8px;
-  font: 700 0.75rem Heebo, sans-serif;
 }
+.block-move svg { width: 14px; height: 14px; display: block; }
 .block-move:disabled { opacity: 0.35; cursor: default; }
+.day-block.can-drag header { cursor: grab; }
+.day-block.can-drag header .block-moves,
+.day-block.can-drag input,
+.day-block.can-drag button { cursor: pointer; }
+.day-block.dragging { opacity: 0.55; }
+.day-block.dragging header { cursor: grabbing; }
+.day-block.drop-before { box-shadow: inset 0 3px 0 var(--green); }
+.day-block.drop-after { box-shadow: inset 0 -3px 0 var(--green); }
 .chip-btn:disabled { opacity: 0.45; cursor: default; }
 .timeline li.day-gap {
   display: block;

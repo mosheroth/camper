@@ -186,6 +186,27 @@
     return tokens;
   }
 
+  function moveOrder(order, trailIds, token, target, after) {
+    const sequence = normalizeOrder(order, trailIds);
+    const asToken = (value) => {
+      if (value === "stay") return "stay";
+      const number = Number(value);
+      return sequence.includes(number) ? number : null;
+    };
+    const moving = asToken(token);
+    const onto = asToken(target);
+    const from = sequence.indexOf(moving);
+    if (moving == null || onto == null || from < 0 || moving === onto) return null;
+    const copy = sequence.slice();
+    const [item] = copy.splice(from, 1);
+    let to = copy.indexOf(onto);
+    if (to < 0) return null;
+    if (after) to += 1;
+    copy.splice(to, 0, item);
+    if (copy.every((entry, index) => entry === sequence[index])) return null;
+    return copy;
+  }
+
   const WEEKDAYS = ["יום א׳", "יום ב׳", "יום ג׳", "יום ד׳", "יום ה׳", "יום ו׳", "יום ש׳"];
 
   function parseISODate(value) {
@@ -684,6 +705,7 @@
     buildItinerary,
     retimedHours,
     normalizeOrder,
+    moveOrder,
     comingWeekend,
     tripDates,
     moveTripDates,

@@ -877,17 +877,27 @@ Promise.all([
       return "אוכלים בחניון אחרי המסלול.";
     }
 
+    let dragToken = null;
+
+    function applyOrder(next) {
+      if (!next) return;
+      order = next;
+      historyPush = true;
+      render();
+    }
+
     function moveToken(token, direction) {
       const sequence = window.CamperPlan.normalizeOrder(order, selected);
       const index = sequence.indexOf(token);
-      const next = index + direction;
-      if (index < 0 || next < 0 || next >= sequence.length) return;
-      const copy = sequence.slice();
-      const [item] = copy.splice(index, 1);
-      copy.splice(next, 0, item);
-      order = copy;
-      historyPush = true;
-      render();
+      const target = sequence[index + direction];
+      if (target == null) return;
+      applyOrder(window.CamperPlan.moveOrder(order, selected, token, target, direction > 0));
+    }
+
+    function clearDropMarks() {
+      document.querySelectorAll(".day-block.drop-before, .day-block.drop-after").forEach((node) => {
+        node.classList.remove("drop-before", "drop-after");
+      });
     }
 
     function renderItinerary() {
@@ -948,9 +958,50 @@ Promise.all([
         if (movable && token != null) {
           const moves = el("div", "block-moves");
           const index = sequence.indexOf(token);
-          moves.append(moveButton("מוקדם", "להזיז את הבלוק מוקדם יותר", index <= 0, () => moveToken(token, -1)));
-          moves.append(moveButton("מאוחר", "להזיז את הבלוק מאוחר יותר", index < 0 || index >= sequence.length - 1, () => moveToken(token, 1)));
+          moves.append(moveButton(true, "להזיז את הבלוק למעלה", index <= 0, () => moveToken(token, -1)));
+          moves.append(moveButton(false, "להזיז את הבלוק למטה", index < 0 || index >= sequence.length - 1, () => moveToken(token, 1)));
           head.append(moves);
+          card.classList.add("can-drag");
+          card.draggable = true;
+          card.dataset.token = String(token);
+          card.addEventListener("pointerdown", (event) => {
+            card.dataset.hold = event.target.closest("button, input, a, textarea, select, label") ? "no" : "yes";
+          });
+          card.addEventListener("dragstart", (event) => {
+            if (card.dataset.hold === "no") {
+              event.preventDefault();
+              return;
+            }
+            dragToken = token;
+            event.dataTransfer.effectAllowed = "move";
+            event.dataTransfer.setData("text/plain", String(token));
+            card.classList.add("dragging");
+          });
+          card.addEventListener("dragend", () => {
+            dragToken = null;
+            card.classList.remove("dragging");
+            clearDropMarks();
+          });
+          card.addEventListener("dragover", (event) => {
+            if (dragToken == null || dragToken === token) return;
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+            const after = event.clientY > card.getBoundingClientRect().top + card.offsetHeight / 2;
+            card.classList.toggle("drop-before", !after);
+            card.classList.toggle("drop-after", after);
+          });
+          card.addEventListener("dragleave", (event) => {
+            if (card.contains(event.relatedTarget)) return;
+            card.classList.remove("drop-before", "drop-after");
+          });
+          card.addEventListener("drop", (event) => {
+            event.preventDefault();
+            const after = card.classList.contains("drop-after");
+            const moving = dragToken;
+            clearDropMarks();
+            if (moving == null || moving === token) return;
+            applyOrder(window.CamperPlan.moveOrder(order, selected, moving, token, after));
+          });
         }
         card.append(head);
         const list = el("ol", "timeline");
@@ -967,7 +1018,9 @@ Promise.all([
         card.append(list);
         block.append(card);
       });
-      block.append(el("p", "fine", "אפשר לקבוע תאריך יציאה וחזרה. שינוי היציאה שומר על אורך הטיול, ושינוי שעה מזיז את מה שאחריה."));
+      block.append(el("p", "fine", movable
+        ? "גוררים בלוק כדי לשנות את הסדר. שינוי היציאה שומר על אורך הטיול, ושינוי שעה מזיז את מה שאחריה."
+        : "אפשר לקבוע תאריך יציאה וחזרה. שינוי היציאה שומר על אורך הטיול, ושינוי שעה מזיז את מה שאחריה."));
       return block;
     }
 
@@ -1035,12 +1088,31 @@ Promise.all([
       return head;
     }
 
-    function moveButton(text, label, disabled, onClick) {
-      const button = el("button", "block-move", text);
+    function arrowIcon(up) {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox", "0 0 16 16");
+      svg.setAttribute("aria-hidden", "true");
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", up ? "M3.5 10.5 8 6l4.5 4.5" : "M3.5 5.5 8 10l4.5-4.5");
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", "currentColor");
+      path.setAttribute("stroke-width", "1.8");
+      path.setAttribute("stroke-linecap", "round");
+      path.setAttribute("stroke-linejoin", "round");
+      svg.append(path);
+      return svg;
+    }
+
+    function moveButton(up, label, disabled, onClick) {
+      const button = el("button", "block-move");
       button.type = "button";
       button.disabled = disabled;
       button.setAttribute("aria-label", label);
-      button.addEventListener("click", onClick);
+      button.append(arrowIcon(up));
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        onClick();
+      });
       return button;
     }
 

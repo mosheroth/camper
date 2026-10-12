@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder } = require("../plan.js");
 
 const trails = [
   {
@@ -418,5 +418,11 @@ assert.ok(fires.length >= 1 && fires.length < open.length);
 const fromCenter = buildPlans(liveCamps, liveTrails, { ...weekend, home: "center" });
 assert.ok(fromCenter[0].homeMinutes <= fromCenter.at(-1).homeMinutes);
 assert.notStrictEqual(fromCenter[0].camp.id, 14987);
+
+assert.deepStrictEqual(moveOrder(["stay", 1, 2], [1, 2], "stay", 1, true), [1, "stay", 2]);
+assert.deepStrictEqual(moveOrder(["stay", 1, 2], [1, 2], 2, 1, false), ["stay", 2, 1]);
+assert.deepStrictEqual(moveOrder([1, "stay"], [1], 1, "stay", true), ["stay", 1]);
+assert.strictEqual(moveOrder(["stay", 1], [1], "stay", 1, false), null);
+assert.strictEqual(moveOrder(["stay", 1], [1], 9, "stay", true), null);
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);
