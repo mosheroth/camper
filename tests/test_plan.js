@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, storyPath, nearbyList, nearbyPlaces } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, storyPath, nearbyList, nearbyPlaces, shareMessage } = require("../plan.js");
 
 const trails = [
   {
@@ -465,5 +465,39 @@ assert.ok(carmelPlaces.some((item) => item.place.source === "inpa" && item.km < 
 assert.ok(liveTrails.some((trail) => trail.id === 295240));
 const deerLine = storyPath(liveTrails.find((trail) => trail.id === 62558), liveCamps.find((camp) => camp.id === 16959));
 assert.ok(deerLine.length > 5, "a hovered trail can be drawn from its recorded line");
+
+const shared = shareMessage({
+  name: "סופ״ש בכרמל",
+  camp: {
+    id: 1,
+    name: "חניון לילה הקסטל",
+    url: "https://www.parks.org.il/camp",
+    lat: 31.8,
+    lng: 35.1,
+    regions: ["center"],
+  },
+  trails: [{
+    id: 9,
+    name: "עין חמד – מסלול קצר",
+    url: "https://www.parks.org.il/trail",
+    hoursMin: 2,
+    hoursMax: 2,
+    lat: 31.8,
+    lng: 35.11,
+  }],
+  arrivalMinutes: 17 * 60,
+  origin: { lat: 32.1, lng: 34.8 },
+  from: "2026-10-16",
+  to: "2026-10-17",
+  url: "https://example.com/trip.html?camp=1",
+});
+assert.ok(shared.startsWith("בניתי לנו מסלול עם קמפינג\n"));
+assert.ok(shared.includes("סופ״ש בכרמל"));
+assert.ok(shared.includes("חניון לילה הקסטל\nhttps://www.parks.org.il/camp"));
+assert.ok(shared.includes("לוז"));
+assert.ok(shared.includes("17:00  מגיעים לחניון"));
+assert.ok(shared.includes("עין חמד\nhttps://www.parks.org.il/trail") || shared.includes("עין חמד · הליכה כשעתיים\nhttps://www.parks.org.il/trail"));
+assert.ok(shared.includes("הטיול במפה: https://example.com/trip.html?camp=1"));
+assert.ok(shared.indexOf("https://www.parks.org.il/camp") < shared.indexOf("לוז"));
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

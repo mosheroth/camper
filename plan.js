@@ -747,6 +747,94 @@
     return matched;
   }
 
+  function shareClock(minutes) {
+    if (minutes == null) return "";
+    const day = ((minutes % 1440) + 1440) % 1440;
+    const hour = Math.floor(day / 60);
+    const mins = day % 60;
+    return `${String(hour).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
+  }
+
+  function shareDuration(minutes) {
+    const rounded = Math.max(15, Math.round(minutes / 15) * 15);
+    const hours = Math.floor(rounded / 60);
+    const mins = rounded % 60;
+    if (!hours) return `כ־${rounded} דקות`;
+    const head = hours === 1 ? "כשעה" : hours === 2 ? "כשעתיים" : `כ־${hours} שעות`;
+    if (!mins) return head;
+    if (mins === 30) return `${head} וחצי`;
+    return `${head} ו־${mins} דקות`;
+  }
+
+  function shareWhat(step) {
+    if (step.kind === "depart") return "יוצאים מהבית";
+    if (step.kind === "arrive") return "מגיעים לחניון";
+    if (step.kind === "dinner") return "ארוחת ערב בחניון";
+    if (step.kind === "rise") return "קימה בחניון";
+    if (step.kind === "breakfast") return "ארוחת בוקר בחניון";
+    if (step.kind === "lunch") return "ארוחת צהריים בחניון";
+    if (step.kind === "return") return "יוצאים הביתה";
+    if (step.kind === "home") return "מגיעים הביתה";
+    if (step.kind === "hike") {
+      const name = String(step.name || "מסלול").split(/\s+[–—-]\s+/)[0].trim();
+      if (step.walk == null) return name;
+      return `${name} · הליכה ${shareDuration(step.walk)}`;
+    }
+    return "";
+  }
+
+  function shareMessage(options) {
+    const settings = options || {};
+    const camp = settings.camp || {};
+    const trails = settings.trails || [];
+    const steps = buildItinerary({
+      camp,
+      trails,
+      arrivalMinutes: settings.arrivalMinutes,
+      origin: settings.origin,
+      hours: settings.hours,
+      order: settings.order,
+      from: settings.from,
+      to: settings.to,
+    });
+    const lines = ["בניתי לנו מסלול עם קמפינג"];
+    const name = String(settings.name || "").trim();
+    if (name && name !== "טיול בלי שם" && name !== camp.name) lines.push(name);
+    const dates = tripDates(settings.from, settings.to);
+    lines.push(`${dayLabel(dates.from)} עד ${dayLabel(dates.to)}`);
+    lines.push("");
+    lines.push(camp.name || "החניון");
+    if (camp.url) lines.push(camp.url);
+    lines.push("");
+    lines.push("לוז");
+    const byTrail = new Map(trails.map((trail) => [trail.id, trail]));
+    let currentDay = "";
+    steps.forEach((step) => {
+      if (step.kind === "need-hike") {
+        lines.push("עדיין אין מסלול");
+        return;
+      }
+      const what = shareWhat(step);
+      if (!what) return;
+      if (step.day && step.day !== currentDay) {
+        currentDay = step.day;
+        lines.push("");
+        lines.push(currentDay);
+      }
+      const time = shareClock(step.at);
+      lines.push(time ? `${time}  ${what}` : what);
+      if (step.kind === "hike") {
+        const trail = byTrail.get(step.trailId);
+        if (trail && trail.url) lines.push(trail.url);
+      }
+    });
+    if (settings.url) {
+      lines.push("");
+      lines.push(`הטיול במפה: ${settings.url}`);
+    }
+    return lines.join("\n");
+  }
+
   return {
     buildPlans,
     trailMatches,
@@ -770,5 +858,6 @@
     tripStages,
     storyPath,
     trailLures,
+    shareMessage,
   };
 });

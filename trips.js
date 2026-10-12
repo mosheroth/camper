@@ -7,9 +7,10 @@
       get: () => localStorage.getItem("camper-trips"),
       set: (value) => localStorage.setItem("camper-trips", value),
     });
-    trips.send = async function send(trip) {
+    trips.send = async function send(trip, text) {
       const url = new URL(trips.sharePath(trip), window.location.href).href;
-      const payload = { title: trip.name || "טיול", text: trip.name || "טיול", url };
+      const body = text || `${trip.name || "טיול"}\n${url}`;
+      const payload = { title: "בניתי לנו מסלול עם קמפינג", text: body, url };
       if (navigator.share) {
         try {
           await navigator.share(payload);
@@ -19,7 +20,7 @@
         }
       }
       try {
-        await navigator.clipboard.writeText(url);
+        await navigator.clipboard.writeText(body);
         return { ok: true, url, copied: true };
       } catch (_error) {
         return { ok: false, url, copied: false };

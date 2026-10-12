@@ -47,6 +47,43 @@ function when(iso) {
   return new Intl.DateTimeFormat("he-IL", { dateStyle: "medium" }).format(date);
 }
 
+function shareText(trip) {
+  const camp = campById(trip.campId) || { name: "החניון" };
+  const chosen = (trip.trailIds || [])
+    .map((id) => trails.find((item) => item.id === Number(id)))
+    .filter(Boolean);
+  const place = trip.place || {};
+  let home = "center";
+  try {
+    const saved = localStorage.getItem("camper-home");
+    if (saved) home = saved;
+  } catch (_error) {
+    /* the departure stays the center of the country */
+  }
+  const origin = window.CamperPlan.regionOrigin(camps, home) || window.CamperPlan.centerOrigin(camps);
+  const url = new URL(window.CamperTrips.sharePath(trip), window.location.href).href;
+  return window.CamperPlan.shareMessage({
+    name: trip.name,
+    camp,
+    trails: chosen,
+    arrivalMinutes: place.arrival,
+    origin,
+    hours: {
+      dinner: place.dinner,
+      rise: place.rise,
+      breakfast: place.breakfast,
+      start: place.start,
+      lunch: place.lunch,
+      back: place.back,
+      hikes: place.hikes,
+    },
+    order: place.order,
+    from: place.from,
+    to: place.to,
+    url,
+  });
+}
+
 function dateRange(place) {
   if (!place || !place.from || !place.to) return "";
   const show = (iso) => `${iso.slice(8, 10)}.${iso.slice(5, 7)}`;
@@ -125,16 +162,16 @@ function render() {
     share.type = "button";
     share.addEventListener("click", async (event) => {
       event.stopPropagation();
-      const result = await window.CamperTrips.send(trip);
+      const result = await window.CamperTrips.send(trip, shareText(trip));
       if (result.aborted) return;
       let status = card.querySelector(".share-note");
       if (!status) {
         status = el("p", "fine share-note");
         card.append(status);
       }
-      if (result.copied) status.textContent = "הקישור הועתק. אפשר לשלוח אותו.";
+      if (result.copied) status.textContent = "ההודעה הועתקה, עם הלוז והקישורים.";
       else if (result.shared) status.textContent = "אפשר לשלוח את הטיול.";
-      else status.textContent = result.url;
+      else status.textContent = "לא הצלחנו להעתיק את ההודעה.";
     });
     const remove = el("button", "ghost danger", "מחיקה");
     remove.type = "button";

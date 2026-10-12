@@ -1920,11 +1920,25 @@ Promise.all([
       saveNote.textContent = "הטיול נשמר אצלך, גם אחרי רענון.";
     });
     shareButton.addEventListener("click", async () => {
-      const result = await window.CamperTrips.send(editorRecord());
+      const record = editorRecord();
+      const url = new URL(window.CamperTrips.sharePath(record), window.location.href).href;
+      const text = window.CamperPlan.shareMessage({
+        name: record.name,
+        camp,
+        trails: selected.map((id) => byId.get(id)).filter(Boolean),
+        arrivalMinutes: arrival,
+        origin,
+        hours,
+        order,
+        from: fromDate,
+        to: toDate,
+        url,
+      });
+      const result = await window.CamperTrips.send(record, text);
       if (result.aborted) return;
-      if (result.copied) saveNote.textContent = "הקישור הועתק. אפשר לשלוח אותו.";
+      if (result.copied) saveNote.textContent = "ההודעה הועתקה, עם הלוז והקישורים.";
       else if (result.shared) saveNote.textContent = "אפשר לשלוח את הטיול.";
-      else saveNote.textContent = `אפשר להעתיק את הקישור: ${result.url}`;
+      else saveNote.textContent = text;
     });
     deleteButton.addEventListener("click", () => {
       if (!tripId) return;
