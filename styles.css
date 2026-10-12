@@ -1255,6 +1255,32 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .section-head .section-label { margin: 0; }
 .section-head .radius { margin: 0; }
+.near-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 8px 0 6px;
+}
+.near-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.near-sort select {
+  width: auto;
+  min-width: 9.5rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font: 700 0.88rem Heebo, sans-serif;
+  padding: 6px 12px;
+}
+.near-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.near-filters .chip-btn { padding: 4px 10px; font-size: 0.82rem; }
 
 .spot {
   display: grid;

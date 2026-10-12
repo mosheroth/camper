@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, storyPath } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, storyPath, nearbyList } = require("../plan.js");
 
 const trails = [
   {
@@ -425,6 +425,16 @@ assert.deepStrictEqual(moveOrder(["stay", 1, 2], [1, 2], 2, 1, false), ["stay", 
 assert.deepStrictEqual(moveOrder([1, "stay"], [1], 1, "stay", true), ["stay", 1]);
 assert.strictEqual(moveOrder(["stay", 1], [1], "stay", 1, false), null);
 assert.strictEqual(moveOrder(["stay", 1], [1], 9, "stay", true), null);
+const nearItems = [
+  { km: 4, trail: { id: 1, name: "רחוק קל", difficulty: "easy", hoursMax: 5, family: false, circular: false } },
+  { km: 1, trail: { id: 2, name: "קרוב ארוך", difficulty: "challenging", hoursMax: 6, family: true, circular: true } },
+  { km: 2, trail: { id: 3, name: "קצר", difficulty: "moderate", hoursMax: 2, family: false, circular: true } },
+];
+assert.deepStrictEqual(nearbyList(nearItems, {}, "near").map((item) => item.trail.id), [2, 3, 1]);
+assert.deepStrictEqual(nearbyList(nearItems, {}, "short").map((item) => item.trail.id), [3, 1, 2]);
+assert.deepStrictEqual(nearbyList(nearItems, {}, "easy").map((item) => item.trail.id), [1, 3, 2]);
+assert.deepStrictEqual(nearbyList(nearItems, { family: true }, "near").map((item) => item.trail.id), [2]);
+assert.deepStrictEqual(nearbyList(nearItems, { time: "h3" }, "near").map((item) => item.trail.id), [3]);
 const deerLine = storyPath(liveTrails.find((trail) => trail.id === 62558), liveCamps.find((camp) => camp.id === 16959));
 assert.ok(deerLine.length > 5, "a hovered trail can be drawn from its recorded line");
 

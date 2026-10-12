@@ -611,6 +611,16 @@ Promise.all([
     const choices = window.CamperPlan.nearbyChoices(camp, trails);
     let radius = query.radius;
     let expanded = false;
+    let nearSort = "near";
+    const nearOn = {
+      family: false,
+      circular: false,
+      shade: false,
+      wet: false,
+      view: false,
+      short: false,
+      easy: false,
+    };
     const openPreviews = new Set();
     let arrival = query.arrival;
     let order = query.order;
@@ -1375,9 +1385,70 @@ Promise.all([
       emphasize(focusedKey);
     }
 
+    function nearFilters() {
+      return {
+        family: nearOn.family,
+        circular: nearOn.circular,
+        shade: nearOn.shade,
+        wet: nearOn.wet,
+        view: nearOn.view,
+        difficulty: nearOn.easy ? "easy" : "all",
+        time: nearOn.short ? "h3" : "all",
+      };
+    }
+
+    function nearbyTools() {
+      const tools = el("div", "near-tools");
+      const sort = el("label", "near-sort");
+      sort.append(el("span", null, "מיון"));
+      const select = document.createElement("select");
+      select.setAttribute("aria-label", "מיון המסלולים בסביבה");
+      [
+        ["near", "קרוב לחניון"],
+        ["short", "הליכה קצרה"],
+        ["easy", "מהקל לקשה"],
+      ].forEach(([value, label]) => {
+        const option = el("option", null, label);
+        option.value = value;
+        if (value === nearSort) option.selected = true;
+        select.append(option);
+      });
+      select.addEventListener("change", () => {
+        nearSort = select.value;
+        expanded = false;
+        render();
+      });
+      sort.append(select);
+      const filters = el("div", "near-filters");
+      [
+        ["short", "עד 3 שעות"],
+        ["easy", "קל"],
+        ["family", "למשפחות"],
+        ["circular", "מעגלי"],
+        ["shade", "מוצל"],
+        ["wet", "רטוב"],
+        ["view", "תצפית"],
+      ].forEach(([key, label]) => {
+        const button = el("button", "chip-btn", label);
+        button.type = "button";
+        button.setAttribute("aria-pressed", nearOn[key] ? "true" : "false");
+        button.addEventListener("click", () => {
+          nearOn[key] = !nearOn[key];
+          expanded = false;
+          render();
+        });
+        filters.append(button);
+      });
+      tools.append(sort, filters);
+      return tools;
+    }
+
     function renderAround() {
-      const pool = choices.filter((item) => item.km == null || item.km <= radius);
-      const available = pool.filter((item) => !selected.includes(item.trail.id));
+      const inRange = choices.filter((item) => item.km == null || item.km <= radius);
+      const openOnes = inRange.filter((item) => !selected.includes(item.trail.id));
+      const filters = nearFilters();
+      const filtering = Object.values(nearOn).some(Boolean);
+      const available = window.CamperPlan.nearbyList(openOnes, filters, nearSort);
       const shown = expanded ? available : available.slice(0, 6);
       around.replaceChildren();
       around.append(el("p", "board-hint", "המספרים על המפה הם הסדר, והקו המקווקו הוא המעבר ביניהם. לחיצה על שורה בלוז מראה איפה אנחנו."));
@@ -1416,8 +1487,10 @@ Promise.all([
       }
 
       const head = el("div", "section-head");
-      const nearCount = choices.filter((item) => item.km != null && item.km <= radius).length;
-      head.append(el("h2", "section-label", nearCount ? `בסביבה · ${nearCount}` : "בסביבה"));
+      const nearLabel = filtering
+        ? `בסביבה · ${available.length} מתוך ${inRange.length}`
+        : (inRange.length ? `בסביבה · ${inRange.length}` : "בסביבה");
+      head.append(el("h2", "section-label", nearLabel));
       const radii = el("div", "radius");
       [20, 40].forEach((value) => {
         const button = el("button", "chip-btn", `${value} ק״מ`);
@@ -1433,6 +1506,7 @@ Promise.all([
       });
       head.append(radii);
       around.append(head);
+      around.append(nearbyTools());
       shown.forEach((item) => {
         const info = el("button", "text-link", "פירוט");
         info.type = "button";
@@ -1479,7 +1553,9 @@ Promise.all([
         around.append(row);
       });
       if (!shown.length) {
-        around.append(el("p", "fine", "כל המסלולים בטווח הזה כבר בטיול."));
+        around.append(el("p", "fine", openOnes.length
+          ? "אין מסלול שמתאים לסינון בטווח הזה."
+          : "כל המסלולים בטווח הזה כבר בטיול."));
       }
       if (!expanded && available.length > shown.length) {
         const more = el("button", "chip-btn more-around", `עוד ${available.length - shown.length} בסביבה`);
@@ -1587,7 +1663,11 @@ Promise.all([
       renderDetail();
       applyPanel();
       if (panelMode === "routes") panelBody.scrollTop = keptScroll;
-      const extras = choices.filter((item) => !selected.includes(item.trail.id) && item.trail.lat != null && (item.km == null || item.km <= radius));
+      const extras = window.CamperPlan.nearbyList(
+        choices.filter((item) => !selected.includes(item.trail.id) && item.trail.lat != null && (item.km == null || item.km <= radius)),
+        nearFilters(),
+        "near",
+      );
       try {
         drawMap(camp, chosen, extras, openTrail, order);
       } catch (error) {

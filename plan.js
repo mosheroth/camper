@@ -691,6 +691,27 @@
       });
   }
 
+  function nearbyList(items, filters, sort) {
+    const matched = (items || []).filter((item) => item && item.trail && trailMatches(item.trail, filters || {}));
+    const rank = { easy: 0, moderate: 1, challenging: 2 };
+    matched.sort((left, right) => {
+      if (sort === "short") {
+        const leftHours = left.trail.hoursMax == null ? 99 : left.trail.hoursMax;
+        const rightHours = right.trail.hoursMax == null ? 99 : right.trail.hoursMax;
+        if (leftHours !== rightHours) return leftHours - rightHours;
+      } else if (sort === "easy") {
+        const leftRank = rank[left.trail.difficulty] == null ? 9 : rank[left.trail.difficulty];
+        const rightRank = rank[right.trail.difficulty] == null ? 9 : rank[right.trail.difficulty];
+        if (leftRank !== rightRank) return leftRank - rightRank;
+      }
+      const leftKm = left.km == null ? 999 : left.km;
+      const rightKm = right.km == null ? 999 : right.km;
+      if (leftKm !== rightKm) return leftKm - rightKm;
+      return String(left.trail.name).localeCompare(String(right.trail.name), "he");
+    });
+    return matched;
+  }
+
   return {
     buildPlans,
     trailMatches,
@@ -698,6 +719,7 @@
     campMatches,
     planUrl,
     nearbyChoices,
+    nearbyList,
     aroundCount,
     lengthIsUsable,
     regionOrigin,
