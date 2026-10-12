@@ -677,7 +677,6 @@ Promise.all([
       short: false,
       easy: false,
     };
-    const openPreviews = new Set();
     let arrival = query.arrival;
     let order = query.order;
     const opened = window.CamperPlan.tripDates(query.from, query.to);
@@ -1519,26 +1518,6 @@ Promise.all([
       return frames;
     }
 
-    function togglePreview(row) {
-      const key = row.dataset.id;
-      const willOpen = !openPreviews.has(key);
-      openPreviews.clear();
-      document.querySelectorAll(".spot.nearby").forEach((node) => {
-        const on = willOpen && node === row;
-        if (on) openPreviews.add(key);
-        const box = node.querySelector(".preview");
-        if (box) box.hidden = !on;
-        node.classList.toggle("open", on);
-        const fold = node.querySelector(".fold");
-        if (fold) {
-          fold.textContent = on ? "סגירה" : "תמונות";
-          fold.setAttribute("aria-expanded", on ? "true" : "false");
-        }
-      });
-      focusedKey = willOpen ? key : (focusId != null ? String(focusId) : "camp");
-      emphasize(focusedKey);
-    }
-
     function nearFilters() {
       return {
         family: nearOn.family,
@@ -1638,13 +1617,9 @@ Promise.all([
         info.addEventListener("click", () => openTrail(item.trail.id));
         const facts = [item.km == null ? "" : `כ־${item.km} ק״מ מהחניון`, trailFacts(item.trail)].filter(Boolean).join(" · ");
         const photos = previewPhotos(item.trail);
-        let row;
-        row = spotRow(item.trail.id, item.trail.name, facts, "#cfc3b4", info, () => {
-          if (photos.length) togglePreview(row);
-          else {
-            focusedKey = String(item.trail.id);
-            emphasize(focusedKey);
-          }
+        const row = spotRow(item.trail.id, item.trail.name, facts, "#cfc3b4", info, () => {
+          focusedKey = String(item.trail.id);
+          emphasize(focusedKey);
         });
         row.classList.add("nearby");
         const tags = window.CamperPlan.trailLures(item.trail);
@@ -1654,14 +1629,7 @@ Promise.all([
           row.querySelector(".spot-copy").append(lures);
         }
         if (photos.length) {
-          const open = openPreviews.has(String(item.trail.id));
-          const fold = el("button", "text-link fold", open ? "סגירה" : "תמונות");
-          fold.type = "button";
-          fold.setAttribute("aria-expanded", open ? "true" : "false");
-          fold.addEventListener("click", () => togglePreview(row));
-          row.querySelector(".spot-copy").append(fold);
           const preview = el("div", "preview");
-          preview.hidden = !open;
           const grid = el("div", "preview-photos");
           photos.forEach((photo) => {
             const img = document.createElement("img");
@@ -1673,7 +1641,6 @@ Promise.all([
           });
           preview.append(grid);
           row.append(preview);
-          row.classList.toggle("open", open);
         }
         around.append(row);
       });

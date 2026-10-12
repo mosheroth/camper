@@ -1397,12 +1397,10 @@ body.splitting { cursor: col-resize; user-select: none; }
   font-weight: 700;
   line-height: 1.5;
 }
-.spot .fold { display: inline-block; margin-top: 6px; }
 .spot .preview {
   grid-column: 1 / -1;
   min-width: 0;
 }
-.spot .preview[hidden] { display: none; }
 .spot .preview-photos {
   display: flex;
   gap: 6px;
@@ -1419,7 +1417,6 @@ body.splitting { cursor: col-resize; user-select: none; }
   background: #efe6d8;
 }
 .spot .preview-photos img:only-child { height: 148px; }
-.spot.open { background: #f3e6d4; }
 .more-around { margin: 10px 0 4px; }
 .pin-hot .camp-pin {
   transform: scale(1.08);
