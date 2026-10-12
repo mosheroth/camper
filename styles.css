@@ -595,6 +595,54 @@ button {
   background: var(--card);
   padding: 10px 0 8px;
 }
+.catalog-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 8px;
+  padding: 8px 0;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+.catalog-tabs .tab {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--sand);
+  color: var(--ink);
+  padding: 7px 8px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+.catalog-tabs .tab-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.catalog-tabs .count { flex: none; font-variant-numeric: tabular-nums; }
+.catalog-tabs .tab:not([aria-selected="true"]) .count { color: var(--muted); }
+.catalog-tabs .tab[aria-selected="true"] {
+  background: var(--green);
+  color: #fff;
+}
+.catalog-tabs .tab:focus-visible {
+  outline: 3px solid var(--green-mid);
+  outline-offset: 2px;
+}
+.catalog-pane { min-width: 0; }
+.catalog-pane .section-head { margin-top: 4px; flex-wrap: wrap; }
+.catalog-pane .section-head .fine { margin: 0; }
+.catalog-pane .coffee-picks { margin: 4px 0 8px; }
+@media (max-width: 420px) {
+  .catalog-tabs { gap: 4px; }
+  .catalog-tabs .tab { padding: 7px 4px; font-size: 0.78rem; gap: 4px; }
+}
 .picked-strip {
   display: flex;
   flex-wrap: wrap;

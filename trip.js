@@ -856,6 +856,9 @@ Promise.all([
     );
     const selectedVisits = query.visit.filter((id) => visitNear.has(id)).slice(0, 2);
     let coffeeExpanded = false;
+    let catalog = "trails";
+    let revealCatalog = false;
+    let focusCatalog = false;
     let revealCoffee = null;
     let focusPlace = query.view === "visit" && visitNear.has(query.spot) ? query.spot : "";
     const nearOn = {
@@ -2039,14 +2042,17 @@ Promise.all([
       return tools;
     }
 
-    function renderCoffee() {
+    function renderCoffee(parent) {
       const available = [...coffeeNear.values()]
         .filter((item) => !selectedCoffee.includes(item.place.id))
         .sort((left, right) => left.km - right.km || String(left.place.name).localeCompare(String(right.place.name), "he"));
-      if (!available.length && !selectedCoffee.length) return null;
       const wrap = el("section", "coffee-picks");
-      wrap.append(el("h2", "section-label", "תצפית לקפה"));
       wrap.append(el("p", "fine", "מצפור עם שם בטווח 15 ק״מ. הוספה מכניסה ללוז עצירה של כחצי שעה."));
+      if (!available.length && !selectedCoffee.length) {
+        wrap.append(el("p", "fine", "אין מצפור עם שם בטווח 15 ק״מ."));
+        parent.append(wrap);
+        return;
+      }
       if (selectedCoffee.length >= 2) {
         wrap.append(el("p", "fine", "אפשר עד שתי תצפיות לקפה. הסירו אחת כדי להוסיף אחרת."));
       }
@@ -2087,7 +2093,21 @@ Promise.all([
         });
         wrap.append(more);
       }
-      return wrap;
+      parent.append(wrap);
+    }
+
+    function selectCatalog(key, focus) {
+      if (catalog === key) {
+        if (focus) {
+          const selectedTab = document.getElementById(`catalog-tab-${catalog}`);
+          if (selectedTab) selectedTab.focus();
+        }
+        return;
+      }
+      catalog = key;
+      revealCatalog = true;
+      focusCatalog = Boolean(focus);
+      render();
     }
 
     function renderAround() {
@@ -2097,20 +2117,65 @@ Promise.all([
       const filtering = Object.values(nearOn).some(Boolean);
       const available = window.CamperPlan.nearbyList(openOnes, filters, nearSort);
       const shown = expanded ? available : available.slice(0, 6);
+      const placeCount = window.CamperPlan.nearbyPlaces(camp, places, { maxKm: 15, varied: true })
+        .filter((item) => item.place.kind !== "viewpoint").length;
       around.replaceChildren();
       around.append(el("p", "board-hint", "המספרים על המפה הם הסדר, והקו המקווקו הוא המעבר ביניהם. לחיצה על שורה בלוז מראה איפה אנחנו."));
       around.append(renderItinerary());
-      const coffeeList = renderCoffee();
-      if (coffeeList) around.append(coffeeList);
+      const tabs = el("div", "catalog-tabs");
+      tabs.setAttribute("role", "tablist");
+      tabs.setAttribute("aria-label", "מה להוסיף לטיול");
+      [
+        ["trails", "מסלולים", inRange.length],
+        ["places", "נקודות", placeCount],
+        ["coffee", "לקפה", coffeeNear.size],
+      ].forEach(([key, label, count]) => {
+        const button = el("button", "tab");
+        button.type = "button";
+        button.id = `catalog-tab-${key}`;
+        button.setAttribute("role", "tab");
+        button.setAttribute("aria-controls", "catalog-pane");
+        const on = catalog === key;
+        button.setAttribute("aria-selected", on ? "true" : "false");
+        button.tabIndex = on ? 0 : -1;
+        button.append(el("span", "tab-label", label), el("span", "count", String(count)));
+        button.addEventListener("click", () => selectCatalog(key, false));
+        tabs.append(button);
+      });
+      tabs.addEventListener("keydown", (event) => {
+        const order = ["trails", "places", "coffee"];
+        const index = order.indexOf(catalog);
+        let next = -1;
+        if (event.key === "ArrowLeft" || event.key === "ArrowDown") next = (index + 1) % order.length;
+        else if (event.key === "ArrowRight" || event.key === "ArrowUp") next = (index - 1 + order.length) % order.length;
+        else if (event.key === "Home") next = 0;
+        else if (event.key === "End") next = order.length - 1;
+        else return;
+        event.preventDefault();
+        selectCatalog(order[next], true);
+      });
+      around.append(tabs);
+      const pane = el("div", "catalog-pane");
+      pane.id = "catalog-pane";
+      pane.setAttribute("role", "tabpanel");
+      pane.setAttribute("aria-labelledby", `catalog-tab-${catalog}`);
+      around.append(pane);
+      if (catalog === "places") {
+        renderPlaces(pane);
+        return;
+      }
+      if (catalog === "coffee") {
+        renderCoffee(pane);
+        return;
+      }
       if (selected.length >= maxPicks) {
-        around.append(el("p", "fine", "אפשר עד ארבעה מסלולים. הסירו אחד כדי להוסיף אחר."));
+        pane.append(el("p", "fine", "אפשר עד ארבעה מסלולים. הסירו אחד כדי להוסיף אחר."));
       }
 
       const head = el("div", "section-head");
-      const nearLabel = filtering
-        ? `בסביבה · ${available.length} מתוך ${inRange.length}`
-        : (inRange.length ? `בסביבה · ${inRange.length}` : "בסביבה");
-      head.append(el("h2", "section-label", nearLabel));
+      head.append(el("p", "fine", filtering
+        ? `${available.length} מתוך ${inRange.length}`
+        : "מסלולים בטווח מהחניון."));
       const radii = el("div", "radius");
       [20, 40].forEach((value) => {
         const button = el("button", "chip-btn", `${value} ק״מ`);
@@ -2125,8 +2190,8 @@ Promise.all([
         radii.append(button);
       });
       head.append(radii);
-      around.append(head);
-      around.append(nearbyTools());
+      pane.append(head);
+      pane.append(nearbyTools());
       shown.forEach((item) => {
         const info = el("button", "text-link", "פירוט");
         info.type = "button";
@@ -2158,10 +2223,10 @@ Promise.all([
           preview.append(grid);
           row.append(preview);
         }
-        around.append(row);
+        pane.append(row);
       });
       if (!shown.length) {
-        around.append(el("p", "fine", openOnes.length
+        pane.append(el("p", "fine", openOnes.length
           ? "אין מסלול שמתאים לסינון בטווח הזה."
           : "כל המסלולים בטווח הזה כבר בטיול."));
       }
@@ -2172,15 +2237,17 @@ Promise.all([
           expanded = true;
           render();
         });
-        around.append(more);
+        pane.append(more);
       }
-      renderPlaces();
     }
 
-    function renderPlaces() {
+    function renderPlaces(parent) {
       const aroundPlaces = window.CamperPlan.nearbyPlaces(camp, places, { maxKm: 15, varied: true })
         .filter((item) => item.place.kind !== "viewpoint");
-      if (!aroundPlaces.length) return;
+      if (!aroundPlaces.length) {
+        parent.append(el("p", "fine", "אין נקודות בטווח 15 ק״מ מהחניון."));
+        return;
+      }
       const kindOrder = ["spring", "waterfall", "viewpoint", "peak", "park", "reserve", "beach"];
       const present = kindOrder.filter((kind) => aroundPlaces.some((item) => item.place.kind === kind));
       if (placeKind !== "all" && !present.includes(placeKind)) placeKind = "all";
@@ -2188,10 +2255,9 @@ Promise.all([
         ? aroundPlaces
         : aroundPlaces.filter((item) => item.place.kind === placeKind);
       const shown = placesExpanded ? filtered.slice(0, 24) : filtered.slice(0, 6);
-      around.append(el("h2", "section-label", `נקודות בסביבה · ${filtered.length}`));
-      around.append(el("p", "fine", "בטווח 15 ק״מ מהחניון. גן, שמורה או חוף אפשר להוסיף ללוז כביקור. עומדים על שורה והמפה קופצת לנקודה."));
+      parent.append(el("p", "fine", "בטווח 15 ק״מ מהחניון. גן, שמורה או חוף אפשר להוסיף ללוז כביקור. עומדים על שורה והמפה קופצת לנקודה."));
       if (window.CamperPlan.onTheWay(origin, camp, camp) != null) {
-        around.append(el("p", "fine", "«בדרך מהבית» הוא על הגישה מאזור הבית לחניון, לפני ההגעה ובלי סטייה של יותר מכמה קילומטרים. זו הערכת מרחק, לא כביש."));
+        parent.append(el("p", "fine", "«בדרך מהבית» הוא על הגישה מאזור הבית לחניון, לפני ההגעה ובלי סטייה של יותר מכמה קילומטרים. זו הערכת מרחק, לא כביש."));
       }
       const filters = el("div", "near-filters place-filters");
       [["all", "הכל"]].concat(present.map((kind) => [kind, PLACE_KIND[kind] || kind])).forEach(([key, label]) => {
@@ -2205,7 +2271,7 @@ Promise.all([
         });
         filters.append(button);
       });
-      around.append(filters);
+      parent.append(filters);
       shown.forEach((item) => {
         const place = item.place;
         const where = item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ`;
@@ -2243,14 +2309,14 @@ Promise.all([
         }
         appendPlaceMedia(row, place);
         markWay(row, place);
-        around.append(row);
+        parent.append(row);
       });
       if (!shown.length) {
-        around.append(el("p", "fine", "אין נקודה מהסוג הזה בטווח הזה."));
+        parent.append(el("p", "fine", "אין נקודה מהסוג הזה בטווח הזה."));
       }
       const cap = Math.min(filtered.length, 24);
       if (placesExpanded && filtered.length > shown.length) {
-        around.append(el("p", "fine", `מוצגות ${shown.length} הקרובות מתוך ${filtered.length}.`));
+        parent.append(el("p", "fine", `מוצגות ${shown.length} הקרובות מתוך ${filtered.length}.`));
       }
       if (!placesExpanded && cap > shown.length) {
         const more = el("button", "chip-btn more-around", `עוד ${cap - shown.length} נקודות`);
@@ -2259,7 +2325,7 @@ Promise.all([
           placesExpanded = true;
           render();
         });
-        around.append(more);
+        parent.append(more);
       }
     }
 
@@ -2384,6 +2450,16 @@ Promise.all([
       renderDetail();
       applyPanel();
       if (panelMode === "routes") panelBody.scrollTop = keptScroll;
+      if (revealCatalog && panelMode === "routes") {
+        const tabBar = document.querySelector(".catalog-tabs");
+        if (tabBar) tabBar.scrollIntoView({ block: "nearest" });
+        if (focusCatalog) {
+          const selectedTab = document.querySelector(".catalog-tabs [aria-selected='true']");
+          if (selectedTab) selectedTab.focus();
+        }
+        revealCatalog = false;
+        focusCatalog = false;
+      }
       if (revealCoffee && panelMode === "routes") {
         const card = document.querySelector(`.day-block[data-id="${revealCoffee}"]`);
         if (card) card.scrollIntoView({ block: "nearest" });
