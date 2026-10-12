@@ -755,7 +755,7 @@ Promise.all([
         node.classList.toggle("open", on);
         const fold = node.querySelector(".fold");
         if (fold) {
-          fold.textContent = on ? "לסגור" : "לפתוח";
+          fold.textContent = on ? "סגירה" : "תמונות";
           fold.setAttribute("aria-expanded", on ? "true" : "false");
         }
       });
@@ -843,7 +843,7 @@ Promise.all([
         }
         if (photos.length) {
           const open = openPreviews.has(String(item.trail.id));
-          const fold = el("button", "text-link fold", open ? "לסגור" : "לפתוח");
+          const fold = el("button", "text-link fold", open ? "סגירה" : "תמונות");
           fold.type = "button";
           fold.setAttribute("aria-expanded", open ? "true" : "false");
           fold.addEventListener("click", () => togglePreview(row));
@@ -854,8 +854,8 @@ Promise.all([
           photos.forEach((photo) => {
             const img = document.createElement("img");
             img.src = photo.src;
-            img.alt = photo.credit ? `צילום: ${photo.credit}` : item.trail.name;
-            if (photo.credit) img.title = `צילום: ${photo.credit}`;
+            img.alt = photo.credit || item.trail.name;
+            if (photo.credit) img.title = photo.credit;
             img.addEventListener("error", () => img.remove());
             grid.append(img);
           });
