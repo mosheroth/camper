@@ -153,6 +153,24 @@
     return Math.max(15, minutes);
   }
 
+  // Straight-line approach from the chosen home region to the camp.
+  // True only while the point is still before the camp and the extra length stays small.
+  function onTheWay(home, camp, point) {
+    if (!home || home.lat == null || home.lng == null) return null;
+    if (!camp || camp.lat == null || camp.lng == null) return null;
+    if (!point || point.lat == null || point.lng == null) return null;
+    const trip = haversineKm(home, camp);
+    if (!Number.isFinite(trip) || trip < 5) return null;
+    const toPoint = haversineKm(home, point);
+    const toCamp = haversineKm(point, camp);
+    if (!Number.isFinite(toPoint) || !Number.isFinite(toCamp)) return null;
+    const along = (trip * trip + toPoint * toPoint - toCamp * toCamp) / (2 * trip);
+    const remaining = trip - along;
+    const detour = toPoint + toCamp - trip;
+    if (along < 0 || remaining < 0.8 || detour > 5) return false;
+    return true;
+  }
+
   function walkMinutes(trail) {
     if (!trail || trail.hoursMax == null || trail.hoursMax > 16) return null;
     const min = trail.hoursMin == null ? trail.hoursMax : trail.hoursMin;
@@ -1183,6 +1201,7 @@
     visitMinutes,
     visitIsEstimate,
     travelMinutes,
+    onTheWay,
     shareDuration,
     comingWeekend,
     tripDates,

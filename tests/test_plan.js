@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes, travelMinutes } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes, travelMinutes, onTheWay } = require("../plan.js");
 
 const trails = [
   {
@@ -662,5 +662,27 @@ const sharedLeg = shareMessage({
   to: "2026-10-17",
 });
 assert.ok(sharedLeg.includes("נסיעה של כ־15 דקות"));
+
+const wayHome = { lat: 32, lng: 35 };
+const wayCamp = { lat: 32.18, lng: 35 };
+const onApproach = { lat: 32.09, lng: 35.02 };
+const pastCamp = { lat: 32.27, lng: 35 };
+const farSide = { lat: 32.09, lng: 35.12 };
+assert.strictEqual(onTheWay(wayHome, wayCamp, onApproach), true);
+assert.strictEqual(onTheWay(wayHome, wayCamp, pastCamp), false);
+assert.strictEqual(onTheWay(wayHome, wayCamp, farSide), false);
+assert.strictEqual(onTheWay(wayHome, wayCamp, wayCamp), false);
+assert.strictEqual(onTheWay(wayHome, wayCamp, { lat: 31.9, lng: 35 }), false);
+assert.strictEqual(onTheWay(null, wayCamp, onApproach), null);
+assert.strictEqual(onTheWay(wayHome, wayCamp, { name: "בלי מיקום" }), null);
+assert.strictEqual(onTheWay(wayHome, { lat: 32.02, lng: 35 }, onApproach), null);
+
+const carmelCamp = liveCamps.find((item) => item.id === 16959);
+const northHome = regionOrigin(liveCamps, "north");
+const namedPlace = (name) => livePlaces.find((item) => item.name === name);
+assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("שמורת טבע חי בר בכרמל")), true);
+assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("עין אלון")), true);
+assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("עין קדם")), false);
+assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("פארק הכרמל")), false);
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

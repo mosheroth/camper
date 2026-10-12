@@ -379,11 +379,12 @@ function trailFacts(trail) {
   return bits.join(" · ");
 }
 
-function visitSheet(place, km) {
+function visitSheet(place, km, way) {
   const kind = PLACE_KIND[place.kind] || "ביקור";
   return section(place.name, (node) => {
     gallery(node, place);
     const bits = [kind];
+    if (way) bits.push(way);
     if (km != null) bits.push(km < 0.4 ? "במקום" : `כ־${km} ק״מ מהחניון`);
     if (place.paid === true) bits.push(place.priceFrom != null ? `בתשלום, מ־${place.priceFrom} ₪ למבוגר` : "בתשלום");
     else if (place.paid === false) bits.push("בחינם");
@@ -574,7 +575,7 @@ function showTrip() {
     window.L.DomUtil.setPosition(tip, pos.add([dx, dy]));
   }
 
-  function drawMap(camp, trails, extras, onAdd, order, placeSpots, coffeePlaces, visitPlaces) {
+  function drawMap(camp, trails, extras, onAdd, order, placeSpots, coffeePlaces, visitPlaces, home) {
   if (typeof window.L === "undefined") {
     mapNote.textContent = "המפה לא נטענה. אפשר עדיין לקרוא את הפירוט ולפתוח את העמודים הרשמיים.";
     return null;
@@ -784,7 +785,9 @@ function showTrip() {
     }).addTo(overlay);
     const kind = PLACE_KIND[place.kind] || "";
     const where = item.km != null && item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ`;
-    marker.bindTooltip(`${place.name} · ${kind} · ${where}`, { direction: "auto", opacity: 0.95 });
+    const way = window.CamperPlan.onTheWay(home, camp, place);
+    const route = way == null ? "" : way ? " · בדרך מהבית" : " · לא בדרך";
+    marker.bindTooltip(`${place.name} · ${kind} · ${where}${route}`, { direction: "auto", opacity: 0.95 });
     marker.on("mouseover", () => emphasize(key));
     marker.on("mouseout", () => emphasize(focusedKey));
     marker.on("click", () => {
@@ -887,6 +890,22 @@ Promise.all([
     const home = savedHome();
     const origin = window.CamperPlan.regionOrigin(camps, home) || window.CamperPlan.centerOrigin(camps);
     const homePlace = HOME_PLACE[home];
+
+    function wayPhrase(place) {
+      const answer = window.CamperPlan.onTheWay(origin, camp, place);
+      if (answer == null) return "";
+      return answer ? "בדרך מהבית" : "לא בדרך";
+    }
+
+    function markWay(row, place) {
+      const phrase = wayPhrase(place);
+      if (!phrase) return;
+      const meta = row.querySelector(".meta");
+      if (!meta) return;
+      const mark = el("span", phrase === "בדרך מהבית" ? "on-way" : "off-way", phrase);
+      if (meta.firstChild) meta.insertBefore(document.createTextNode(" · "), meta.firstChild);
+      meta.insertBefore(mark, meta.firstChild);
+    }
     let panelMode = query.view === "visit" ? (focusPlace ? "visit" : "routes") : query.view;
     let focusId = query.view === "detail" ? query.focusId : (selected[0] || null);
     if (panelMode === "detail" && (focusId == null || !byId.has(focusId))) {
@@ -1983,6 +2002,7 @@ Promise.all([
           () => showPlace(`place-${place.id}`),
         );
         row.classList.add("coffee");
+        markWay(row, place);
         wrap.append(row);
       });
       if (!shown.length && selectedCoffee.length) {
@@ -2100,6 +2120,9 @@ Promise.all([
       const shown = placesExpanded ? filtered.slice(0, 24) : filtered.slice(0, 6);
       around.append(el("h2", "section-label", `נקודות בסביבה · ${filtered.length}`));
       around.append(el("p", "fine", "בטווח 15 ק״מ מהחניון. גן, שמורה או חוף אפשר להוסיף ללוז כביקור. עומדים על שורה והמפה קופצת לנקודה."));
+      if (window.CamperPlan.onTheWay(origin, camp, camp) != null) {
+        around.append(el("p", "fine", "«בדרך מהבית» הוא על הגישה מאזור הבית לחניון, לפני ההגעה ובלי סטייה של יותר מכמה קילומטרים. זו הערכת מרחק, לא כביש."));
+      }
       const filters = el("div", "near-filters place-filters");
       [["all", "הכל"]].concat(present.map((kind) => [kind, PLACE_KIND[kind] || kind])).forEach(([key, label]) => {
         const button = el("button", "chip-btn", label);
@@ -2168,6 +2191,7 @@ Promise.all([
           source.className = "text-link";
           row.querySelector(".spot-copy").append(source);
         }
+        markWay(row, place);
         around.append(row);
       });
       if (!shown.length) {
@@ -2214,7 +2238,7 @@ Promise.all([
         const when = window.CamperPlan.visitIsEstimate(item.place)
           ? `הערכה של ${window.CamperPlan.shareDuration(minutes)} נכנסת ללוז. משך הביקור לא מסומן בעמוד.`
           : `הביקור נכנס ללוז לפי הסימון בעמוד: ${item.place.duration}.`;
-        picked.append(bar, el("p", "add-effect", on ? `הביקור בלוז. ${when}` : `אם מוסיפים לטיול, ${when}`), visitSheet(item.place, item.km));
+        picked.append(bar, el("p", "add-effect", on ? `הביקור בלוז. ${when}` : `אם מוסיפים לטיול, ${when}`), visitSheet(item.place, item.km, wayPhrase(item.place)));
         return;
       }
       const focus = focusId != null ? byId.get(focusId) : null;
@@ -2325,7 +2349,7 @@ Promise.all([
           kind: placeKind,
           varied: true,
         }).slice(0, 24);
-        drawMap(camp, chosen, extras, openTrail, order, placeSpots, chosenCoffees(), chosenVisits());
+        drawMap(camp, chosen, extras, openTrail, order, placeSpots, chosenCoffees(), chosenVisits(), origin);
       } catch (error) {
         mapNote.textContent = "המפה לא התעדכנה. רשימת המסלולים כן.";
       }
