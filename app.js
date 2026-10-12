@@ -324,6 +324,36 @@ function apply() {
 form.addEventListener("input", apply);
 form.addEventListener("change", apply);
 
+function showReturn() {
+  let href = "";
+  try {
+    href = sessionStorage.getItem("camper-return") || "";
+  } catch (_error) {
+    return;
+  }
+  const eyebrow = document.querySelector(".eyebrow");
+  if (!eyebrow) return;
+  const current = eyebrow.querySelector(".return-trip");
+  if (!/^trip\.html\?camp=\d+/.test(href)) {
+    if (current) {
+      const separator = current.previousSibling;
+      if (separator && separator.nodeType === Node.TEXT_NODE) separator.remove();
+      current.remove();
+    }
+    return;
+  }
+  const anchor = current || document.createElement("a");
+  anchor.className = "return-trip";
+  anchor.href = href;
+  anchor.textContent = "חזרה לטיול";
+  if (!current) {
+    eyebrow.append(document.createTextNode(" · "));
+    eyebrow.append(anchor);
+  }
+}
+
+window.addEventListener("pageshow", showReturn);
+
 ensureMap();
 
 Promise.all([

@@ -60,12 +60,21 @@
       const now = new Date().toISOString();
       const id = input && input.id;
       const index = id ? listNow.findIndex((trip) => trip.id === id) : -1;
-      if (index >= 0) {
+      const previous = index >= 0 ? listNow[index] : null;
+      const draft = input && Object.prototype.hasOwnProperty.call(input, "draft")
+        ? Boolean(input.draft)
+        : previous ? Boolean(previous.draft) : false;
+      const place = input && input.place
+        ? cleanPlace(input.place)
+        : previous && previous.place ? cleanPlace(previous.place) : cleanPlace(null);
+      if (previous) {
         const next = {
-          ...listNow[index],
+          ...previous,
           name,
           campId,
           trailIds,
+          draft,
+          place,
           updatedAt: now,
         };
         listNow[index] = next;
@@ -77,6 +86,8 @@
         name,
         campId,
         trailIds,
+        draft,
+        place,
         createdAt: now,
         updatedAt: now,
       };
@@ -90,19 +101,24 @@
     }
 
     function sharePath(trip) {
-      const params = new URLSearchParams();
-      params.set("camp", String(trip.campId));
-      params.set("trails", (trip.trailIds || []).join(","));
-      if (trip.name) params.set("name", trip.name);
-      return `trip.html?${params.toString()}`;
+      return tripPath(trip, false);
     }
 
     function editPath(trip) {
+      return tripPath(trip, true);
+    }
+
+    function tripPath(trip, withId) {
       const params = new URLSearchParams();
       params.set("camp", String(trip.campId));
       params.set("trails", (trip.trailIds || []).join(","));
       if (trip.name) params.set("name", trip.name);
-      if (trip.id) params.set("trip", trip.id);
+      const place = trip.place || {};
+      if (place.view === "detail" || place.view === "camp") params.set("view", place.view);
+      if (place.view === "detail" && place.focusId != null) params.set("focus", String(place.focusId));
+      if (place.arrival && place.arrival !== 17 * 60) params.set("arrival", String(place.arrival));
+      if (place.radius === 40) params.set("radius", "40");
+      if (withId && trip.id) params.set("trip", trip.id);
       return `trip.html?${params.toString()}`;
     }
 
@@ -132,6 +148,20 @@
 
   function uid() {
     return `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  function cleanPlace(place) {
+    const source = place || {};
+    const view = source.view === "detail" || source.view === "camp" ? source.view : "routes";
+    const focusId = Number(source.focusId);
+    const arrival = Number(source.arrival);
+    const allowed = new Set([15 * 60, 17 * 60, 19 * 60]);
+    return {
+      view,
+      focusId: Number.isFinite(focusId) ? focusId : null,
+      arrival: allowed.has(arrival) ? arrival : 17 * 60,
+      radius: Number(source.radius) === 40 ? 40 : 20,
+    };
   }
 
   return { open };

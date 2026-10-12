@@ -34,11 +34,19 @@ function params() {
     .split(",")
     .map((value) => Number(value))
     .filter((value) => Number.isFinite(value));
+  const arrival = Number(query.get("arrival"));
+  const radius = Number(query.get("radius"));
+  const focus = Number(query.get("focus"));
+  const view = query.get("view");
   return {
     campId,
     trailIds,
     tripId: query.get("trip") || "",
     name: query.get("name") || "",
+    view: view === "detail" || view === "camp" ? view : "routes",
+    focusId: Number.isFinite(focus) ? focus : null,
+    arrival: arrival === 15 * 60 || arrival === 17 * 60 || arrival === 19 * 60 ? arrival : 17 * 60,
+    radius: radius === 40 ? 40 : 20,
   };
 }
 
@@ -496,15 +504,19 @@ Promise.all([
     const byId = new Map(trails.map((trail) => [trail.id, trail]));
     const selected = trailIds.filter((id) => byId.has(id));
     const choices = window.CamperPlan.nearbyChoices(camp, trails);
-    let radius = 20;
+    let radius = query.radius;
     let expanded = false;
     const openPreviews = new Set();
-    let arrival = 17 * 60;
+    let arrival = query.arrival;
     let hereKey = null;
     let hereMarker = null;
     const origin = window.CamperPlan.centerOrigin(camps);
-    let panelMode = "routes";
-    let focusId = selected[0] || null;
+    let panelMode = query.view;
+    let focusId = query.view === "detail" ? query.focusId : (selected[0] || null);
+    if (panelMode === "detail" && (focusId == null || !byId.has(focusId))) {
+      panelMode = "routes";
+      focusId = selected[0] || null;
+    }
     if (focusId != null) focusedKey = String(focusId);
     const maxPicks = 4;
     const around = document.querySelector("#around");
@@ -518,15 +530,39 @@ Promise.all([
     const saveNote = document.querySelector("#save-note");
     const stored = query.tripId && window.CamperTrips ? window.CamperTrips.get(query.tripId) : null;
     let tripId = stored && Number(stored.campId) === camp.id ? stored.id : null;
-    nameInput.value = (tripId ? stored.name : query.name) || camp.name;
+    let draft = tripId ? Boolean(stored.draft) : true;
+    if (!tripId && window.CamperTrips) {
+      const key = selected.join(",");
+      const existing = window.CamperTrips.list().find((trip) => (
+        trip.draft && Number(trip.campId) === camp.id && (trip.trailIds || []).join(",") === key
+      ));
+      if (existing) {
+        tripId = existing.id;
+        draft = true;
+        if (!query.name && existing.name) nameInput.value = existing.name;
+      }
+    }
+    if (!nameInput.value) nameInput.value = query.name || (tripId && stored ? stored.name : "") || camp.name;
     deleteButton.hidden = !tripId;
-    saveButton.textContent = tripId ? "שמירה" : "צור טיול";
+    saveButton.textContent = tripId && !draft ? "שמירה" : "צור טיול";
+    let historyPush = false;
+    let silenceHistory = false;
+    let tripDepth = window.history.state && window.history.state.camperTrip ? window.history.state.depth || 0 : 0;
 
     document.title = `${nameInput.value} — סופ״ש בטבע`;
     title.textContent = camp.name;
     const back = el("button", "text-back", "חזרה לבניית הטיול");
     back.type = "button";
-    back.addEventListener("click", () => setPanel("routes"));
+    back.addEventListener("click", () => {
+      if (panelMode === "routes") return;
+      if (tripDepth > 0) {
+        window.history.back();
+        return;
+      }
+      panelMode = "routes";
+      historyPush = true;
+      render();
+    });
     dossier.append(back, campSheet(camp), picked);
 
     function chosenTrails() {
@@ -541,37 +577,65 @@ Promise.all([
       return nameInput.value.trim() || camp.name;
     }
 
-    function remember() {
-      const url = new URL(window.location.href);
-      url.searchParams.set("camp", String(camp.id));
-      url.searchParams.set("trails", selected.join(","));
-      url.searchParams.set("name", currentName());
-      if (tripId) url.searchParams.set("trip", tripId);
-      else url.searchParams.delete("trip");
-      window.history.replaceState(null, "", url);
-      if (!tripId || !window.CamperTrips) return;
-      const saved = window.CamperTrips.save({
-        id: tripId,
+    function currentPlace() {
+      return {
+        view: panelMode,
+        focusId: panelMode === "detail" ? focusId : null,
+        arrival,
+        radius,
+      };
+    }
+
+    function editorRecord() {
+      return {
+        id: tripId || undefined,
         name: currentName(),
         campId: camp.id,
         trailIds: selected,
-      });
-      if (!saved) saveNote.textContent = "לא הצלחנו לשמור בדפדפן הזה.";
+        draft,
+        place: currentPlace(),
+      };
+    }
+
+    function remember(push) {
+      if (!window.CamperTrips) return;
+      const saved = window.CamperTrips.save(editorRecord());
+      if (!saved) {
+        saveNote.textContent = "לא הצלחנו לשמור בדפדפן הזה.";
+        return;
+      }
+      tripId = saved.id;
+      draft = Boolean(saved.draft);
+      deleteButton.hidden = false;
+      const url = new URL(window.CamperTrips.editPath(saved), window.location.href);
+      try {
+        sessionStorage.setItem("camper-return", `trip.html${url.search}`);
+      } catch (_error) {
+        /* private mode can block storage; the address bar still holds the point */
+      }
+      if (silenceHistory) return;
+      const same = `${url.pathname}${url.search}` === `${window.location.pathname}${window.location.search}`;
+      if (push && !same) {
+        tripDepth += 1;
+        window.history.pushState({ camperTrip: true, depth: tripDepth }, "", url);
+      } else {
+        window.history.replaceState({ camperTrip: true, depth: tripDepth }, "", url);
+      }
     }
 
     function persistNew() {
       if (!window.CamperTrips) return null;
       const saved = window.CamperTrips.save({
+        ...editorRecord(),
         id: tripId,
-        name: currentName(),
-        campId: camp.id,
-        trailIds: selected,
+        draft: false,
       });
       if (!saved) {
         saveNote.textContent = "לא הצלחנו לשמור בדפדפן הזה.";
         return null;
       }
       tripId = saved.id;
+      draft = false;
       nameInput.value = saved.name;
       deleteButton.hidden = false;
       saveButton.textContent = "שמירה";
@@ -584,6 +648,7 @@ Promise.all([
       selected.push(id);
       focusId = id;
       focusedKey = String(id);
+      historyPush = true;
       window.setTimeout(render, 0);
     }
 
@@ -593,6 +658,7 @@ Promise.all([
       selected.splice(index, 1);
       if (focusId === id) focusId = selected[0] || null;
       if (focusedKey === String(id)) focusedKey = focusId != null ? String(focusId) : "camp";
+      historyPush = true;
       window.setTimeout(render, 0);
     }
 
@@ -600,6 +666,7 @@ Promise.all([
       panelMode = mode;
       if (mode === "detail" && focusId == null) focusId = selected[0] || null;
       panelBody.scrollTop = 0;
+      historyPush = true;
       render();
     }
 
@@ -618,6 +685,7 @@ Promise.all([
       focusedKey = String(id);
       panelMode = "detail";
       panelBody.scrollTop = 0;
+      historyPush = true;
       render();
     }
 
@@ -700,6 +768,7 @@ Promise.all([
         button.setAttribute("aria-pressed", minutes === arrival ? "true" : "false");
         button.addEventListener("click", () => {
           arrival = minutes;
+          historyPush = true;
           render();
         });
         choices.append(button);
@@ -814,6 +883,7 @@ Promise.all([
         button.addEventListener("click", () => {
           radius = value;
           expanded = false;
+          historyPush = true;
           render();
         });
         radii.append(button);
@@ -942,6 +1012,9 @@ Promise.all([
     }
 
     function render() {
+      const push = historyPush;
+      historyPush = false;
+      remember(push && !silenceHistory);
       const chosen = chosenTrails();
       const keptScroll = panelMode === "routes" ? panelBody.scrollTop : 0;
       const count = chosen.length === 1
@@ -949,12 +1022,15 @@ Promise.all([
         : chosen.length
           ? `${chosen.length} מסלולים במפה`
           : "בלי מסלול במפה";
-      lead.textContent = tripId ? `${count} · שמור` : count;
+      lead.textContent = tripId ? `${count}${draft ? " · טיוטה" : " · שמור"}` : count;
+      saveButton.textContent = tripId && !draft ? "שמירה" : "צור טיול";
+      if (draft && !saveNote.textContent) {
+        saveNote.textContent = "טיוטה נשמרת בדפדפן. רענון וקישור חוזרים לנקודה הזאת.";
+      }
       renderAround();
       renderDetail();
       applyPanel();
       if (panelMode === "routes") panelBody.scrollTop = keptScroll;
-      remember();
       const extras = choices.filter((item) => !selected.includes(item.trail.id) && item.trail.lat != null && (item.km == null || item.km <= radius));
       try {
         drawMap(camp, chosen, extras, openTrail);
@@ -1012,12 +1088,7 @@ Promise.all([
       saveNote.textContent = "הטיול נשמר אצלך, גם אחרי רענון.";
     });
     shareButton.addEventListener("click", async () => {
-      const draft = {
-        name: currentName(),
-        campId: camp.id,
-        trailIds: selected,
-      };
-      const result = await window.CamperTrips.send(draft);
+      const result = await window.CamperTrips.send(editorRecord());
       if (result.aborted) return;
       if (result.copied) saveNote.textContent = "הקישור הועתק. אפשר לשלוח אותו.";
       else if (result.shared) saveNote.textContent = "אפשר לשלוח את הטיול.";
@@ -1031,11 +1102,34 @@ Promise.all([
         return;
       }
       window.CamperTrips.remove(tripId);
+      try {
+        sessionStorage.removeItem("camper-return");
+      } catch (_error) {
+        /* the trip is already gone from the list */
+      }
       window.location.href = "trips.html";
     });
     nameInput.addEventListener("change", () => {
       document.title = `${currentName()} — סופ״ש בטבע`;
-      if (tripId) remember();
+      remember(false);
+    });
+    window.addEventListener("popstate", () => {
+      const next = params();
+      if (next.campId !== camp.id) return;
+      silenceHistory = true;
+      historyPush = false;
+      selected.splice(0, selected.length, ...next.trailIds.filter((id) => byId.has(id)).slice(0, maxPicks));
+      if (next.name) nameInput.value = next.name;
+      panelMode = next.view === "detail" && (next.focusId == null || !byId.has(next.focusId)) ? "routes" : next.view;
+      if (panelMode === "detail") {
+        focusId = next.focusId;
+        focusedKey = String(next.focusId);
+      }
+      arrival = next.arrival;
+      radius = next.radius;
+      tripDepth = window.history.state && window.history.state.camperTrip ? window.history.state.depth || 0 : 0;
+      render();
+      silenceHistory = false;
     });
 
     render();

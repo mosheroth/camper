@@ -16,6 +16,8 @@ assert.deepStrictEqual(trips.list(), []);
 
 const created = trips.save({ name: "  סופ״ש בקסטל  ", campId: 14987, trailIds: [5532, 5532, "113447", 1, 2, 3] });
 assert.ok(created.id);
+assert.strictEqual(created.draft, false);
+assert.strictEqual(created.place.view, "routes");
 assert.strictEqual(created.name, "סופ״ש בקסטל");
 assert.strictEqual(created.campId, 14987);
 assert.deepStrictEqual(created.trailIds, [5532, 113447, 1, 2]);
@@ -43,9 +45,34 @@ assert.ok(path.includes("name="));
 assert.ok(!path.includes("trip="));
 assert.ok(trips.editPath(updated).includes(`trip=${created.id}`));
 
+const draft = trips.save({
+  name: "טיוטה",
+  campId: 1,
+  trailIds: [5],
+  draft: true,
+  place: { view: "detail", focusId: 5, arrival: 15 * 60, radius: 40 },
+});
+assert.strictEqual(draft.draft, true);
+assert.strictEqual(draft.place.focusId, 5);
+assert.strictEqual(draft.place.arrival, 900);
+const sharedDraft = trips.sharePath(draft);
+assert.ok(sharedDraft.includes("view=detail"));
+assert.ok(sharedDraft.includes("focus=5"));
+assert.ok(sharedDraft.includes("arrival=900"));
+assert.ok(sharedDraft.includes("radius=40"));
+assert.ok(!sharedDraft.includes("trip="));
+assert.ok(trips.editPath(draft).includes(`trip=${draft.id}`));
+assert.ok(trips.editPath(draft).includes("view=detail"));
+const kept = trips.save({ id: draft.id, name: "טיוטה", campId: 1, trailIds: [5] });
+assert.strictEqual(kept.draft, true);
+assert.strictEqual(kept.place.view, "detail");
+const committed = trips.save({ id: draft.id, name: "שמור", campId: 1, trailIds: [5], draft: false });
+assert.strictEqual(committed.draft, false);
+assert.ok(!trips.sharePath({ campId: 3, trailIds: [1], name: "רגיל" }).includes("view="));
+
 trips.remove(created.id);
 assert.strictEqual(trips.get(created.id), null);
-assert.strictEqual(trips.list().length, 1);
+assert.strictEqual(trips.list().length, 2);
 
 const broken = open({
   get: () => "{",
