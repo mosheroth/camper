@@ -303,7 +303,7 @@ function drawMap(camp, trails, extras, onAdd) {
     return null;
   }
   if (!sharedMap) {
-    sharedMap = window.L.map("map", { scrollWheelZoom: false });
+    sharedMap = window.L.map("map", { scrollWheelZoom: true });
     window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 17,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
