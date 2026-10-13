@@ -1037,7 +1037,7 @@ button {
 @media (max-width: 800px) {
   .search-page .role-row {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
     gap: 6px;
     padding: 8px 10px;
@@ -1058,8 +1058,10 @@ button {
     margin: 0;
   }
   .search-page .near-pick {
-    min-width: 0;
-    justify-content: flex-end;
+    justify-self: start;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0;
   }
   .search-page .near-pick select {
     min-width: 0;
@@ -1908,6 +1910,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   gap: 6px;
   max-width: 100%;
   margin: 0;
+  margin-inline-start: auto;
   padding: 4px 10px;
   border-radius: 999px;
   background: var(--sand);
@@ -1918,7 +1921,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 .near-pick.on { background: var(--green); color: #fff; }
 .role-row .near-pick select {
   width: auto;
-  max-width: 14rem;
+  max-width: min(18rem, 70vw);
   margin: 0;
   padding: 2px 2px;
   border: 0;

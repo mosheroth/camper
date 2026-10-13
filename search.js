@@ -359,30 +359,42 @@ function pinTrip(id) {
   window.history.replaceState(null, "", `${url.pathname}${url.search}`);
 }
 
-function nearControl() {
+function placeControl() {
   const choices = focusableTrips();
-  if (!choices.length) return null;
-  const wrap = el("label", near ? "near-pick on" : "near-pick");
-  wrap.append(document.createTextNode("סביב"));
+  const onTrip = Boolean(near && choices.some((entry) => entry.trip.id === near.id));
+  const wrap = el("label", onTrip ? "near-pick on" : "near-pick");
+  if (onTrip) wrap.append(document.createTextNode("סביב"));
   const pick = document.createElement("select");
-  pick.setAttribute("aria-label", "הטיול שהחיפוש סביבו");
-  const off = el("option", null, near ? "כל הארץ" : "טיול");
-  off.value = "";
-  pick.append(off);
-  choices.forEach(({ trip, focus }) => {
-    const option = el("option", null, focus.label);
-    option.value = trip.id;
-    pick.append(option);
+  pick.setAttribute("aria-label", "איפה מחפשים");
+  const areas = document.createElement("optgroup");
+  areas.label = "אזור";
+  [["all", "כל הארץ"], ["north", "צפון"], ["center", "מרכז"], ["south", "דרום"], ["east", "יו״ש"]].forEach(([value, label]) => {
+    const option = el("option", null, label);
+    option.value = value;
+    areas.append(option);
   });
-  pick.value = near && choices.some((entry) => entry.trip.id === near.id) ? near.id : "";
+  pick.append(areas);
+  if (choices.length) {
+    const trips = document.createElement("optgroup");
+    trips.label = "סביב טיול";
+    choices.forEach(({ trip, focus }) => {
+      const option = el("option", null, focus.label);
+      option.value = `trip:${trip.id}`;
+      trips.append(option);
+    });
+    pick.append(trips);
+  }
+  pick.value = onTrip ? `trip:${near.id}` : region;
   pick.addEventListener("change", () => {
-    if (!pick.value) {
-      if (near) dropNear(true);
-      return;
+    if (pick.value.startsWith("trip:")) {
+      const trip = window.CamperTrips.get(pick.value.slice(5));
+      near = trip ? focusFor(trip, camps, trails, places) : null;
+      region = "all";
+      pinTrip(near ? trip.id : "");
+    } else {
+      region = pick.value;
+      dropNear(false);
     }
-    const trip = window.CamperTrips.get(pick.value);
-    near = trip ? focusFor(trip, camps, trails, places) : null;
-    pinTrip(near ? trip.id : "");
     limit = PAGE;
     openKey = "";
     render();
@@ -701,23 +713,7 @@ function render() {
     chipRow.append(button);
   });
   roles.append(chipRow);
-  const regionPick = document.createElement("select");
-  regionPick.setAttribute("aria-label", "אזור");
-  [["all", "כל הארץ"], ["north", "צפון"], ["center", "מרכז"], ["south", "דרום"], ["east", "יו״ש"]].forEach(([value, label]) => {
-    const option = el("option", null, label);
-    option.value = value;
-    regionPick.append(option);
-  });
-  regionPick.value = region;
-  regionPick.addEventListener("change", () => {
-    region = regionPick.value;
-    dropNear(false);
-    limit = PAGE;
-    render();
-  });
-  roles.append(regionPick);
-  const around = nearControl();
-  if (around) roles.append(around);
+  roles.append(placeControl());
   paintTraits();
 
   const rows = visible();
