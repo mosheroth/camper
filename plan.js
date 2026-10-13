@@ -1238,6 +1238,11 @@
     const lines = [shareTitle(settings.name)];
     const dates = tripDates(settings.from, settings.to);
     lines.push(`${dayLabel(dates.from)} עד ${dayLabel(dates.to)}`);
+    const weather = Array.isArray(settings.weather) ? settings.weather.map((line) => String(line || "").trim()).filter(Boolean) : [];
+    if (weather.length) {
+      lines.push("");
+      weather.forEach((line) => lines.push(line));
+    }
     lines.push("");
     lines.push(camp.name || "החניון");
     if (camp.url) lines.push(camp.url);

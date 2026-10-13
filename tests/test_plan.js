@@ -506,6 +506,16 @@ assert.ok(!shared.includes("  קמפינג\n"));
 assert.ok(shared.includes("עין חמד\nhttps://www.parks.org.il/trail") || shared.includes("עין חמד · הליכה כשעתיים\nhttps://www.parks.org.il/trail"));
 assert.ok(shared.includes("הטיול במפה: https://example.com/trip.html?camp=1"));
 assert.ok(shared.indexOf("https://www.parks.org.il/camp") < shared.indexOf("לוז"));
+assert.ok(!shared.includes("מזג אוויר"));
+const sharedWeather = shareMessage({
+  name: "סופ״ש בכרמל",
+  camp: { name: "חניון לילה הקסטל" },
+  from: "2026-10-16",
+  to: "2026-10-17",
+  weather: ["מזג אוויר", "יום ו׳ 16.10 · סופת רעמים · 20°–23° · גשם 66%"],
+});
+assert.ok(sharedWeather.includes("יום ו׳ 16.10 עד יום ש׳ 17.10\n\nמזג אוויר\nיום ו׳ 16.10 · סופת רעמים"));
+assert.ok(sharedWeather.indexOf("מזג אוויר") < sharedWeather.indexOf("חניון לילה הקסטל"));
 
 const lookout = { id: "o9", name: "מצפור הר ברך", lat: 32.73, lng: 35.02, url: "https://www.openstreetmap.org/node/9" };
 const cup = buildItinerary({

@@ -1153,6 +1153,8 @@ Promise.all([
     const opened = window.CamperPlan.tripDates(query.from, query.to);
     let fromDate = opened.from;
     let toDate = opened.to;
+    const weatherCache = new Map();
+    const weatherPending = new Set();
     const openedStops = splitStops(query.stops, query.visit);
     let hours = {
       dinner: query.dinner,
@@ -1296,6 +1298,120 @@ Promise.all([
         const item = visitNear.get(id);
         return item ? item.place : null;
       }).filter(Boolean);
+    }
+
+    function weatherSpot() {
+      if (camp && camp.lat != null && camp.lng != null) {
+        return { lat: Number(camp.lat), lng: Number(camp.lng), name: camp.name || "החניון" };
+      }
+      const trail = selected.map((id) => byId.get(id)).find((item) => item && item.lat != null && item.lng != null);
+      if (trail) return { lat: Number(trail.lat), lng: Number(trail.lng), name: trail.name || "המסלול" };
+      const place = chosenVisits().concat(chosenCoffees()).find((item) => item && item.lat != null && item.lng != null);
+      if (place) return { lat: Number(place.lat), lng: Number(place.lng), name: place.name || "הנקודה" };
+      return null;
+    }
+
+    function weatherKey(spot, cover) {
+      return `${Number(spot.lat).toFixed(3)},${Number(spot.lng).toFixed(3)},${cover.from},${cover.to}`;
+    }
+
+    function paintWeather(body, report, spot) {
+      body.replaceChildren();
+      if (!report || report.status === "error") {
+        const note = el("p", "fine", "לא הצלחנו להביא תחזית. ");
+        const again = el("button", "weather-retry", "נסו שוב");
+        again.type = "button";
+        again.addEventListener("click", (event) => {
+          event.stopPropagation();
+          weatherCache.delete(body.dataset.weather);
+          render();
+        });
+        note.append(again);
+        body.append(note);
+        return;
+      }
+      if (report.status !== "ready" || !report.days.length) {
+        body.append(el("p", "fine", report.note || "אין תחזית לתאריכים האלה."));
+        return;
+      }
+      body.append(el("p", "weather-read", report.summary));
+      const list = el("ul", "weather-days");
+      report.days.forEach((day) => {
+        const row = el("li", "weather-day");
+        const mark = el("span", "mark", day.emoji);
+        mark.setAttribute("aria-hidden", "true");
+        row.append(mark, el("span", null, day.line));
+        list.append(row);
+      });
+      body.append(list);
+      if (report.note) body.append(el("p", "fine", report.note));
+      const source = el("p", "fine");
+      source.append(`לפי ${spot.name}. תחזית `);
+      const link = document.createElement("a");
+      link.href = "https://open-meteo.com/";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Open-Meteo";
+      source.append(link, ".");
+      body.append(source);
+    }
+
+    function ensureWeather(key, spot, from, to) {
+      if (weatherCache.has(key) || weatherPending.has(key)) return;
+      weatherPending.add(key);
+      window.CamperWeather.load(spot.lat, spot.lng, from, to).then((report) => {
+        weatherCache.set(key, report);
+      }).catch(() => {
+        weatherCache.set(key, { status: "error" });
+      }).finally(() => {
+        weatherPending.delete(key);
+        const live = document.querySelector(`[data-weather="${CSS.escape(key)}"]`);
+        if (live) paintWeather(live, weatherCache.get(key), weatherSpot() || spot);
+      });
+    }
+
+    function weatherSection() {
+      const box = el("section", "weather");
+      box.append(decorate(el("h3"), "🌤️", "מזג אוויר"));
+      const spot = weatherSpot();
+      if (!spot) {
+        box.append(el("p", "fine", "כשיהיה חניון או מסלול עם מיקום, תופיע כאן תחזית לתאריכים."));
+        return box;
+      }
+      const dates = window.CamperPlan.tripDates(fromDate, toDate);
+      const cover = window.CamperWeather.coverage(dates.from, dates.to);
+      if (cover.status !== "ready") {
+        box.append(el("p", "fine", cover.note));
+        return box;
+      }
+      const key = weatherKey(spot, cover);
+      const body = el("div", "weather-body");
+      body.dataset.weather = key;
+      const cached = weatherCache.get(key);
+      if (cached) paintWeather(body, cached, spot);
+      else {
+        body.append(el("p", "fine", "בודקים את התחזית…"));
+        ensureWeather(key, spot, cover.from, cover.to);
+      }
+      box.append(body);
+      return box;
+    }
+
+    async function weatherShareLines() {
+      const spot = weatherSpot();
+      const dates = window.CamperPlan.tripDates(fromDate, toDate);
+      const cover = window.CamperWeather.coverage(dates.from, dates.to);
+      if (!spot || cover.status !== "ready") return [];
+      const key = weatherKey(spot, cover);
+      if (!weatherCache.has(key)) {
+        try {
+          weatherCache.set(key, await window.CamperWeather.load(spot.lat, spot.lng, cover.from, cover.to));
+        } catch (_error) {
+          return [];
+        }
+      }
+      const report = weatherCache.get(key);
+      return report && report.share ? report.share : [];
     }
 
     function addVisit(id) {
@@ -1702,6 +1818,7 @@ Promise.all([
         ? `קודם המסלול, ואחר כך לילה בחניון. יוצאים מהבית, מ${homePlace}.`
         : `יוצאים מהבית, מ${homePlace}. לילה בחניון, ${morning}`));
       block.append(dateFields());
+      block.append(weatherSection());
       const times = el("div", "trip-dates");
       times.append(timeField("יוצאים מהבית", depart ? depart.at : null, (minutes) => {
         if (!depart || depart.at == null) return;
@@ -2598,6 +2715,7 @@ Promise.all([
         order,
         from: fromDate,
         to: toDate,
+        weather: await weatherShareLines(),
         url,
       });
       const result = await window.CamperTrips.send(record, text);

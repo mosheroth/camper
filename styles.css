@@ -1300,6 +1300,50 @@ body.splitting { cursor: col-resize; user-select: none; }
   font-size: 0.82rem;
   font-weight: 700;
 }
+.weather {
+  margin-top: 12px;
+  padding: 10px 12px 8px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fffdf8;
+}
+.weather h3 {
+  margin: 0;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 1.15rem;
+}
+.weather-read {
+  margin: 8px 0 0;
+  font-size: 0.95rem;
+}
+.weather-days {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.weather-day {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.88rem;
+}
+.weather .fine { margin: 8px 0 0; }
+.weather .fine a,
+.weather-retry {
+  color: var(--green-mid);
+}
+.weather-retry {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+}
 .date-field input,
 .date-field .time-value {
   border: 1px solid var(--line);
