@@ -1,6 +1,6 @@
 const ISRAEL_BOUNDS = [[29.45, 34.22], [33.35, 35.92]];
 const PAGE = 24;
-const NEAR_KM = 25;
+const NEAR_KM = 5;
 const ROLE = {
   hike: ["טיול רגלי", "#a3472c"],
   camp: ["קמפינג", "#1c3f34"],
@@ -206,9 +206,26 @@ function kmBetween(from, to) {
 }
 
 function circleBounds(point) {
+  const spots = point.spots && point.spots.length ? point.spots : [point];
   const latPad = point.km / 111;
-  const lngPad = latPad / Math.max(0.2, Math.cos(point.lat * Math.PI / 180));
-  return [[point.lat - latPad, point.lng - lngPad], [point.lat + latPad, point.lng + lngPad]];
+  let south = Infinity;
+  let north = -Infinity;
+  let west = Infinity;
+  let east = -Infinity;
+  spots.forEach((spot) => {
+    const lngPad = latPad / Math.max(0.2, Math.cos(spot.lat * Math.PI / 180));
+    south = Math.min(south, spot.lat - latPad);
+    north = Math.max(north, spot.lat + latPad);
+    west = Math.min(west, spot.lng - lngPad);
+    east = Math.max(east, spot.lng + lngPad);
+  });
+  return [[south, west], [north, east]];
+}
+
+function kmFromTrip(item) {
+  if (!near || !item || item.lat == null) return Infinity;
+  const spots = near.spots && near.spots.length ? near.spots : [near];
+  return Math.min(...spots.map((spot) => kmBetween(spot, item)));
 }
 
 function inRegion(item) {
@@ -246,7 +263,7 @@ function matchesTraits(item) {
 
 function inNear(item) {
   if (!near) return true;
-  return kmBetween(near, item) <= near.km;
+  return kmFromTrip(item) <= near.km;
 }
 
 function basePool() {
@@ -261,7 +278,7 @@ function pool() {
 function visible() {
   const text = queryBox.value.trim();
   const matched = pool().filter((item) => role === "all" || item.role === role);
-  if (near) matched.sort((left, right) => kmBetween(near, left) - kmBetween(near, right));
+  if (near) matched.sort((left, right) => kmFromTrip(left) - kmFromTrip(right));
   else matched.sort((left, right) => left.name.localeCompare(right.name, "he"));
   if (!text && role === "all" && region === "all" && !near && !chosenTraits().length) {
     return matched.filter((item) => item.role === "camp").slice(0, limit);
@@ -327,7 +344,7 @@ function link(href, text) {
 
 function placeMeta(item) {
   if (!near || item.lat == null) return item.meta;
-  const away = kmBetween(near, item);
+  const away = kmFromTrip(item);
   const where = away < 0.4 ? "במקום" : `כ־${Math.max(1, Math.round(away))} ק״מ מהטיול`;
   return [where, item.meta].filter(Boolean).join(" · ");
 }
@@ -906,16 +923,13 @@ function focusFor(trip, campData, trailData, placeData) {
       lat: spots.reduce((sum, spot) => sum + spot.lat, 0) / spots.length,
       lng: spots.reduce((sum, spot) => sum + spot.lng, 0) / spots.length,
     };
-  let reach = NEAR_KM;
-  spots.forEach((spot) => {
-    reach = Math.max(reach, kmBetween(anchor, spot) + 8);
-  });
   const label = String(trip.name || (camp && camp.name) || "הטיול").trim();
   return {
     id: trip.id,
     lat: anchor.lat,
     lng: anchor.lng,
-    km: Math.min(80, Math.round(reach)),
+    km: NEAR_KM,
+    spots: spots.map((spot) => ({ lat: spot.lat, lng: spot.lng })),
     label: label.length > 42 ? `${label.slice(0, 41)}…` : label,
   };
 }
