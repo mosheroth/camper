@@ -615,6 +615,7 @@ function menu(item, anchor) {
 function render() {
   const tally = counts();
   roles.replaceChildren();
+  const chipRow = el("div", "role-chips");
   [
     ["all", "הכל", ""],
     ["camp", ROLE.camp[0], ROLE_MARK.camp],
@@ -636,8 +637,9 @@ function render() {
       openKey = "";
       render();
     });
-    roles.append(button);
+    chipRow.append(button);
   });
+  roles.append(chipRow);
   const regionPick = document.createElement("select");
   regionPick.setAttribute("aria-label", "אזור");
   [["all", "כל הארץ"], ["north", "צפון"], ["center", "מרכז"], ["south", "דרום"], ["east", "יו״ש"]].forEach(([value, label]) => {

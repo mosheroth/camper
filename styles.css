@@ -782,13 +782,26 @@ button {
   .trip-page .lead { font-size: 0.82rem; }
   .trip-page .workspace {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(200px, 36dvh) minmax(0, 1fr);
+    grid-template-rows: minmax(168px, 28dvh) minmax(0, 1fr);
     gap: 8px;
     padding: 0 8px 6px;
   }
   .trip-page .splitter { display: none; }
   .trip-page .stage { order: -1; }
   .trip-page .panel .gallery-stage { height: 140px; }
+  .trip-page .colophon,
+  .search-page .colophon {
+    padding: 2px 12px 6px;
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+  .trip-page .colophon p,
+  .search-page .colophon p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 /* Browse: Israel map beside the weekend list. */
@@ -1018,6 +1031,45 @@ button {
 .browse-page .colophon p { margin: 0; }
 
 @media (max-width: 800px) {
+  .search-page .role-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+  .search-page .role-chips {
+    display: flex;
+    grid-column: 1 / -1;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .search-page .role-chips::-webkit-scrollbar { display: none; }
+  .search-page .role-chips .chip { flex: none; }
+  .search-page .role-row select {
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+  }
+  .search-page .near-pick {
+    min-width: 0;
+    justify-content: flex-end;
+  }
+  .search-page .near-pick select {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .search-page .trait-row {
+    flex-wrap: nowrap;
+    max-height: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 6px 10px;
+  }
+  .search-page .trait-row::-webkit-scrollbar { display: none; }
+  .search-page .trait-row .chip { flex: none; }
   .browse-page .browse-mast { gap: 8px; padding: 8px 12px; }
   .browse-page .browse-head {
     flex-direction: column;
@@ -1041,7 +1093,7 @@ button {
   }
   .browse-page .workspace {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(150px, 26dvh) minmax(0, 1fr);
+    grid-template-rows: minmax(140px, 22dvh) minmax(0, 1fr);
     gap: 8px;
     padding: 0 8px 6px;
   }
@@ -1821,6 +1873,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   padding: 10px 12px;
   border-bottom: 1px solid var(--line);
 }
+.role-chips { display: contents; }
 .role-row .chip,
 .trait-row .chip {
   background: var(--sand);
@@ -2070,5 +2123,53 @@ body.splitting { cursor: col-resize; user-select: none; }
   .site-head { padding-inline: 12px; }
   .site-head .brand { font-size: 1.15rem; }
   .site-nav a { padding: 6px 10px; }
-  .trip-actions h1 { font-size: 1.2rem; }
+  .library-wrap,
+  .library-page .colophon { width: min(760px, calc(100% - 16px)); }
+  .library-wrap { margin-top: 12px; }
+  .library-panel { padding: 16px 14px 4px; }
+  .album .actions { flex-wrap: wrap; gap: 4px 16px; }
+  .album .actions a,
+  .album .ghost { padding: 6px 0; }
+  .panel .trip-actions { padding: 8px 12px 6px; }
+  .trip-actions h1 { margin: 0 0 4px; font-size: 1.15rem; }
+  .trip-page .trip-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    border: 0;
+  }
+  .trip-page .from-search { margin: 0 12px 8px; padding: 7px 10px; }
+  .board-hint { display: none; }
+  .trip-page .section-label { margin-top: 8px; }
+  .trip-dates { flex-wrap: nowrap; gap: 8px; margin-top: 6px; }
+  .date-field { flex: 1 1 0; min-width: 0; }
+  .date-field input[type="date"] { width: 100%; min-width: 0; padding-inline: 6px; }
+  .day-block header { flex-wrap: nowrap; }
+  .day-block h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .block-num { width: 24px; height: 24px; font-size: 13px; }
+  .block-photo { width: 40px; height: 40px; }
+  .timeline li {
+    grid-template-columns: 5.6rem minmax(0, 1fr);
+    gap: 6px;
+  }
+  .timeline time {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+  }
+  .search-page .colophon,
+  .trip-page .colophon {
+    padding: 2px 12px 6px;
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
 }
