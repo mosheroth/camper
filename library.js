@@ -1,5 +1,4 @@
 const library = document.querySelector("#library");
-const COVERS = ["a", "b", "c"];
 
 let camps = [];
 let trails = [];
@@ -76,11 +75,6 @@ function shareText(trip) {
   });
 }
 
-function coverClass(id) {
-  const total = [...String(id)].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  return COVERS[total % COVERS.length];
-}
-
 function render() {
   const trips = window.CamperTrips.list();
   library.replaceChildren();
@@ -97,8 +91,7 @@ function render() {
   trips.forEach((trip) => {
     const camp = campById(trip.campId);
     const card = el("article", "album");
-    const cover = el("div", `cover ${coverClass(trip.id)}`, camp ? (camp.areaNames && camp.areaNames[0]) || "לילה" : "בלי לילה");
-    card.append(cover);
+    card.append(el("p", "status", trip.draft ? "טיוטה" : "שמור"));
     card.append(el("h2", null, trip.name));
     const names = (trip.trailIds || []).map(trailName).filter(Boolean);
     const extras = ((trip.place && trip.place.visit) || []).map(placeName)
@@ -108,7 +101,6 @@ function render() {
       dateRange(trip.place),
       camp ? camp.name : "עדיין בלי לילה",
       names.concat(extras).slice(0, 2).join(" · "),
-      trip.draft ? "טיוטה" : "שמור",
     ].filter(Boolean).join(" · ");
     card.append(el("p", null, meta));
     const actions = el("div", "actions");

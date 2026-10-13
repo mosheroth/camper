@@ -1721,14 +1721,19 @@ body.splitting { cursor: col-resize; user-select: none; }
   border-radius: 50%;
 }
 
-.site-bar {
+.site-head {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 16px;
   width: 100%;
-  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 10px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
 }
-.site-bar .brand {
+.site-head .brand {
   flex: none;
   color: var(--ink);
   font-family: "Frank Ruhl Libre", serif;
@@ -1737,32 +1742,37 @@ body.splitting { cursor: col-resize; user-select: none; }
   text-decoration: none;
   white-space: nowrap;
 }
-.site-nav { display: flex; gap: 6px; flex: none; }
+.site-nav { display: flex; gap: 4px; flex: none; }
 .site-nav a {
-  color: var(--ink);
+  color: var(--muted);
   font-weight: 700;
   text-decoration: none;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 7px 14px;
 }
+.site-nav a:hover { color: var(--ink); background: var(--sand); }
 .site-nav a.on { background: var(--green); color: #fff; }
-.site-search {
-  flex: 1;
-  min-width: 0;
+.panel-search {
+  flex: none;
   display: flex;
+  align-items: center;
+  margin: 10px 12px 0;
+  padding: 0 14px;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 8px 14px;
 }
-.site-search input {
+.panel-search input {
   width: 100%;
   border: 0;
   background: transparent;
+  padding: 8px 0;
   font: inherit;
   color: var(--ink);
   outline: none;
 }
+.browse-page .workspace,
+.trip-page .workspace { padding-top: 8px; }
 .search-page .browse-mast { padding: 10px 16px 8px; }
 .role-row {
   flex: none;
@@ -1885,26 +1895,13 @@ body.splitting { cursor: col-resize; user-select: none; }
   padding: 8px 2px 2px;
   cursor: pointer;
 }
-.editor-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 0 12px 8px;
-  padding: 10px 16px;
-  border-radius: 14px;
-  background: var(--green);
-  color: #fff;
-}
-.editor-bar a { color: #efe6d8; font-weight: 700; text-decoration: none; }
-.editor-bar h1 {
-  margin: 0;
-  min-width: 0;
-  color: #fff;
-  font-size: 1.35rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.trip-actions .step-kicker { margin: 0; }
+.trip-actions h1 {
+  margin: 2px 0 8px;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  white-space: normal;
+  overflow: visible;
 }
 .trip-page .from-search {
   display: block;
@@ -1915,50 +1912,82 @@ body.splitting { cursor: col-resize; user-select: none; }
   color: var(--green);
 }
 .library-page {
-  min-height: 100vh;
-  background: var(--sand);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(163, 71, 44, 0.08), transparent 28%),
+    radial-gradient(circle at 90% 0%, rgba(47, 106, 82, 0.12), transparent 32%),
+    var(--sand);
 }
-.library-page .browse-mast {
-  width: min(1080px, calc(100% - 32px));
-  padding: 16px 0 8px;
-}
+.library-page .site-head { width: 100%; max-width: none; }
 .library-wrap {
-  width: min(1080px, calc(100% - 32px));
-  margin: 8px auto 24px;
+  flex: 1;
+  width: min(760px, calc(100% - 32px));
+  margin: 20px auto 16px;
 }
-.library-wrap h1 { margin: 8px 0 0; }
-.library-wrap .lead { margin: 6px 0 18px; }
-.albums {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px;
+.library-page .colophon {
+  width: min(760px, calc(100% - 32px));
+  padding-bottom: 20px;
 }
-.album {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 12px;
+.library-panel {
   background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 20px 20px 6px;
+}
+.library-panel h1 {
+  margin: 0;
+  font-size: 1.85rem;
+  line-height: 1.15;
+}
+.library-panel .lead {
+  max-width: none;
+  margin: 6px 0 4px;
+  font-size: 0.98rem;
+}
+.library-panel .empty { margin: 12px 0 16px; }
+.albums { display: grid; }
+.album {
+  display: grid;
+  gap: 2px;
+  margin: 0 -8px;
+  padding: 14px 8px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
   cursor: pointer;
 }
-.album .cover {
-  height: 92px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: flex-end;
-  padding: 8px;
-  color: #fff;
+.album:hover { background: #fff6ee; }
+.album .status {
+  margin: 0;
+  color: var(--clay);
+  font-size: 0.75rem;
   font-weight: 700;
 }
-.album .cover.a { background: linear-gradient(145deg, #1c3f34, #6d8f62); }
-.album .cover.b { background: linear-gradient(145deg, #a3472c, #d7a15a); }
-.album .cover.c { background: linear-gradient(145deg, #2f6a52, #8eb4c9); }
-.album h2 { margin: 0; font-size: 1.25rem; }
-.album p { margin: 4px 0 0; color: var(--muted); }
-.album .actions { display: flex; gap: 12px; margin-top: 8px; }
+.album h2 {
+  margin: 0;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+.album p { margin: 2px 0 0; color: var(--muted); }
+.album .actions { display: flex; gap: 14px; margin-top: 6px; }
+.album .actions a,
+.album .ghost {
+  background: none;
+  color: var(--green);
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
 @media (max-width: 800px) {
-  .site-bar { flex-wrap: wrap; }
-  .site-search { flex-basis: 100%; }
-  .editor-bar { margin-inline: 8px; }
-  .editor-bar h1 { font-size: 1.05rem; }
+  .site-head { padding-inline: 12px; }
+  .site-head .brand { font-size: 1.15rem; }
+  .site-nav a { padding: 6px 10px; }
+  .trip-actions h1 { font-size: 1.2rem; }
 }
