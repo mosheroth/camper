@@ -1319,6 +1319,22 @@ body.splitting { cursor: col-resize; user-select: none; }
   gap: 8px;
   flex-wrap: wrap;
 }
+.block-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+.block-head h3 { min-width: 0; }
+.block-photo {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex: none;
+  background: var(--sand);
+}
 .day-block h3 {
   margin: 0;
   font-family: Heebo, sans-serif;

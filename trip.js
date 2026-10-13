@@ -1790,6 +1790,17 @@ Promise.all([
         const head = el("header");
         const titled = blockTitle(group);
         const heading = decorate(el("h3"), titled[0], titled[1]);
+        const titleWrap = el("div", "block-head");
+        const picture = blockPicture(group);
+        if (picture) {
+          const img = document.createElement("img");
+          img.className = "block-photo";
+          img.src = picture.src;
+          img.alt = "";
+          img.addEventListener("error", () => img.remove());
+          titleWrap.append(img);
+        }
+        titleWrap.append(heading);
         const coffeeStep = group.steps.find((step) => step.kind === "coffee");
         const visitStep = group.steps.find((step) => step.kind === "visit");
         const openStep = coffeeStep
@@ -1811,7 +1822,7 @@ Promise.all([
             openStep();
           });
         }
-        head.append(heading);
+        head.append(titleWrap);
         const token = blockToken(group.id);
         if (movable && token != null) {
           const moves = el("div", "block-moves");
@@ -2168,6 +2179,34 @@ Promise.all([
       bar.append(swatch, el("p", "meta", meta), actions);
       bar.dataset.id = id;
       return bar;
+    }
+
+    function pictureOf(source) {
+      if (!source) return null;
+      const photo = (source.photos || []).find((item) => item && item.src);
+      if (photo) return photo;
+      if (source.image) return { src: source.image };
+      return null;
+    }
+
+    function blockPicture(group) {
+      const token = blockToken(group.id);
+      if (group.id === "stay") return pictureOf(camp);
+      if (typeof token === "string" && token.startsWith("v:")) {
+        const placeId = window.CamperPlan.visitPlaceId(token);
+        const item = placeId ? visitNear.get(placeId) : null;
+        return item ? pictureOf(item.place) : null;
+      }
+      if (typeof token === "string" && token.startsWith("c:")) {
+        const placeId = window.CamperPlan.coffeePlaceId(token);
+        const item = placeId ? coffeeNear.get(placeId) : null;
+        return item ? pictureOf(item.place) : null;
+      }
+      if (typeof token === "number") {
+        const item = choiceFor(token);
+        return item && item.trail ? pictureOf(item.trail) : null;
+      }
+      return null;
     }
 
     function blockTitle(group) {
