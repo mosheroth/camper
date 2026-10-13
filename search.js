@@ -58,6 +58,8 @@ const TRAIT_MARK = {
 let role = "all";
 let region = "all";
 let near = null;
+let trails = [];
+let places = [];
 let pickedTraits = {};
 let home = "";
 let limit = PAGE;
@@ -260,6 +262,54 @@ function dropNear(draw) {
     limit = PAGE;
     render();
   }
+}
+
+function focusableTrips() {
+  if (!window.CamperTrips) return [];
+  return window.CamperTrips.list()
+    .map((trip) => ({ trip, focus: focusFor(trip, camps, trails, places) }))
+    .filter((entry) => entry.focus);
+}
+
+function pinTrip(id) {
+  const url = new URL(window.location.href);
+  if (id) {
+    url.searchParams.set("into", id);
+    url.searchParams.delete("wide");
+  } else if (url.searchParams.get("into")) url.searchParams.set("wide", "1");
+  window.history.replaceState(null, "", `${url.pathname}${url.search}`);
+}
+
+function nearControl() {
+  const choices = focusableTrips();
+  if (!choices.length) return null;
+  const wrap = el("label", near ? "near-pick on" : "near-pick");
+  wrap.append(document.createTextNode("סביב"));
+  const pick = document.createElement("select");
+  pick.setAttribute("aria-label", "הטיול שהחיפוש סביבו");
+  const off = el("option", null, near ? "כל הארץ" : "טיול");
+  off.value = "";
+  pick.append(off);
+  choices.forEach(({ trip, focus }) => {
+    const option = el("option", null, focus.label);
+    option.value = trip.id;
+    pick.append(option);
+  });
+  pick.value = near && choices.some((entry) => entry.trip.id === near.id) ? near.id : "";
+  pick.addEventListener("change", () => {
+    if (!pick.value) {
+      if (near) dropNear(true);
+      return;
+    }
+    const trip = window.CamperTrips.get(pick.value);
+    near = trip ? focusFor(trip, camps, trails, places) : null;
+    pinTrip(near ? trip.id : "");
+    limit = PAGE;
+    openKey = "";
+    render();
+  });
+  wrap.append(pick);
+  return wrap;
 }
 
 function paintTraits() {
@@ -507,13 +557,8 @@ function render() {
     render();
   });
   roles.append(regionPick);
-  if (near) {
-    const here = el("button", "chip on", "סביב הטיול");
-    here.type = "button";
-    here.title = near.label;
-    here.addEventListener("click", () => dropNear(true));
-    roles.append(here);
-  }
+  const around = nearControl();
+  if (around) roles.append(around);
   paintTraits();
 
   const rows = visible();
@@ -563,7 +608,8 @@ function render() {
 
 function boot(campData, trailData, placeData) {
   camps = campData;
-  const places = Array.isArray(placeData) ? placeData : [];
+  trails = trailData;
+  places = Array.isArray(placeData) ? placeData : [];
   catalog = [];
   trailData.forEach((trail) => {
     if (trail.lat == null) return;
@@ -711,6 +757,7 @@ function focusFor(trip, campData, trailData, placeData) {
   });
   const label = String(trip.name || (camp && camp.name) || "הטיול").trim();
   return {
+    id: trip.id,
     lat: anchor.lat,
     lng: anchor.lng,
     km: Math.min(80, Math.round(reach)),

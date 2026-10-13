@@ -1807,6 +1807,33 @@ body.splitting { cursor: col-resize; user-select: none; }
   margin-inline-start: auto;
   padding: 6px 8px;
 }
+.near-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--sand);
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.near-pick.on { background: var(--green); color: #fff; }
+.role-row .near-pick select {
+  width: auto;
+  max-width: 14rem;
+  margin: 0;
+  padding: 2px 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+}
+.near-pick select option { color: var(--ink); background: #fff; }
 .role-row .mark,
 .trait-row .mark { margin-inline-end: 4px; }
 .trait-row {
