@@ -152,7 +152,7 @@ function hikeAbout(trail) {
 function placeAbout(place) {
   const picture = cover(place);
   const points = [];
-  if (place.paid === true) points.push(place.priceFrom ? `בתשלום, מ־${place.priceFrom} ₪ למבוגר` : "בתשלום");
+  if (place.paid === true) points.push("בתשלום");
   else if (place.paid === false) points.push("בחינם");
   (place.tags || []).forEach((tag) => {
     if (tag && !points.includes(tag)) points.push(tag);
@@ -497,18 +497,6 @@ function chipList(parent, items) {
   parent.append(list);
 }
 
-function priceTable(parent, rows, note) {
-  if (!rows || !rows.length) return;
-  const table = el("table", "prices");
-  rows.forEach((row) => {
-    const tr = document.createElement("tr");
-    tr.append(el("td", null, cleanLine(row.label)), el("td", null, cleanLine(row.price)));
-    table.append(tr);
-  });
-  parent.append(table);
-  if (note) parent.append(el("p", "fine", note));
-}
-
 function gallery(parent, record) {
   const frames = (record.photos || []).filter((item) => item && item.src).map((item) => ({ ...item }));
   if (!frames.length && record.image) frames.push({ src: record.image, credit: "" });
@@ -656,8 +644,6 @@ function fillCamp(node, camp) {
     node.append(el("h3", null, "איך מגיעים"));
     node.append(el("p", null, cleanLine(details.arrival)));
   }
-  if (camp.prices && camp.prices.length) node.append(el("h3", null, "מחירון"));
-  priceTable(node, camp.prices, "המחיר הראשון למבוגר באוהל פרטי, לפני הנחות מנוי. יש לאמת במחירון העדכני.");
   if (camp.paid) node.append(el("p", null, "הכניסה עם כלבים אסורה."));
 }
 
@@ -667,10 +653,6 @@ function fillPlace(node, place) {
   if (blurb) node.append(el("p", "sheet-copy", blurb));
   const stored = (place.tags || []).map(cleanLine).filter(Boolean);
   chipList(node, stored.length ? stored : window.CamperPlan.placeTags(place));
-  if (place.prices && place.prices.length) {
-    node.append(el("h3", null, "דמי כניסה"));
-    priceTable(node, place.prices, "המחיר למבוגר לפי המחירון שפורסם. יש לאמת במחירון העדכני.");
-  }
   const arrival = cleanLine(place.arrival);
   if (arrival) {
     node.append(el("h3", null, "איך מגיעים"));
@@ -1098,7 +1080,7 @@ function placeLine(place, roleName) {
   if (roleName === "cart") bits.push("כחצי שעה");
   else if (roleName === "coffee") bits.push("🔭 מצפור", "כחצי שעה");
   else bits.push(`${(place.kind && TRAIT_MARK[KIND[place.kind]]) || "📍"} ${KIND[place.kind] || "נקודת עניין"}`);
-  if (place.paid === true) bits.push(place.priceFrom ? `מ־${place.priceFrom} ₪` : "בתשלום");
+  if (place.paid === true) bits.push("בתשלום");
   else if (place.paid === false) bits.push("בחינם");
   if (place.duration) bits.push(place.duration);
   if (place.accessible) bits.push("מונגש");

@@ -798,7 +798,7 @@ assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("עין קדם")),
 assert.strictEqual(onTheWay(northHome, carmelCamp, namedPlace("פארק הכרמל")), false);
 
 const carmelGlance = campGlance(carmelCamp);
-assert.strictEqual(carmelGlance.stay, "בתשלום, מ־64 ₪ למבוגר");
+assert.strictEqual(carmelGlance.stay, "בתשלום");
 assert.deepStrictEqual(carmelGlance.facilities.map((item) => item.id), ["water", "toilet", "shower", "kitchen", "fire", "family-tent"]);
 assert.ok(carmelGlance.photo.includes("parks.org.il"));
 assert.ok(carmelGlance.blurb.includes("כרמל"));

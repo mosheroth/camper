@@ -475,9 +475,6 @@ button {
 }
 .sheet h3 { font-size: 1.15rem; }
 .detail-list { margin: 0 0 8px; padding-inline-start: 1.2rem; }
-.prices { width: 100%; border-collapse: collapse; }
-.prices td { padding: 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-.prices td:last-child { white-space: nowrap; font-weight: 700; }
 .fine { color: var(--muted); font-size: 0.9rem; }
 
 @media (max-width: 700px) {

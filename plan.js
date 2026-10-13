@@ -69,9 +69,7 @@
     facilities.forEach((item) => {
       if (item && !FACILITY_ORDER.includes(item.id)) ordered.push(item);
     });
-    const stay = source.paid
-      ? (source.priceFrom ? `בתשלום, מ־${source.priceFrom} ₪ למבוגר` : "בתשלום")
-      : "בלי תשלום";
+    const stay = source.paid ? "בתשלום" : "בלי תשלום";
     const facts = [];
     if (source.places) facts.push(`${source.places} מקומות לינה`);
     if (source.access === "רכב פרטי" || source.access === "רכב 4×4") facts.push(`גישה ב${source.access}`);

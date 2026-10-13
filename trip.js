@@ -408,17 +408,6 @@ function campSheet(camp) {
       node.append(el("h3", null, "איך מגיעים"));
       node.append(el("p", null, details.arrival));
     }
-    if (camp.prices && camp.prices.length) {
-      node.append(el("h3", null, "מחירון"));
-      const table = el("table", "prices");
-      camp.prices.forEach((row) => {
-        const tr = document.createElement("tr");
-        tr.append(el("td", null, row.label), el("td", null, row.price));
-        table.append(tr);
-      });
-      node.append(table);
-      node.append(el("p", "fine", "המחיר הראשון למבוגר באוהל פרטי, לפני הנחות מנוי. יש לאמת במחירון העדכני."));
-    }
     if (camp.bookingUrl) {
       const booking = el("p", null, "צריך להזמין מקום מראש. ");
       booking.append(link(camp.bookingUrl, "להזמנת מקום"));
@@ -491,7 +480,7 @@ function visitSheet(place, km, way) {
     const bits = [kind];
     if (way) bits.push(way);
     if (km != null) bits.push(km < 0.4 ? "במקום" : `כ־${km} ק״מ מהחניון`);
-    if (place.paid === true) bits.push(place.priceFrom != null ? `בתשלום, מ־${place.priceFrom} ₪ למבוגר` : "בתשלום");
+    if (place.paid === true) bits.push("בתשלום");
     else if (place.paid === false) bits.push("בחינם");
     const officialPlace = place.source === "inpa" || /parks\.org\.il/.test(place.url || "");
     if (place.duration) bits.push(`משך הביקור: ${place.duration}`);
@@ -505,17 +494,6 @@ function visitSheet(place, km, way) {
       const lures = el("ul", "lures");
       tags.forEach((tag) => lures.append(tagItem(tag)));
       node.append(lures);
-    }
-    if (place.prices && place.prices.length) {
-      node.append(el("h3", null, "דמי כניסה"));
-      const table = el("table", "prices");
-      place.prices.forEach((row) => {
-        const tr = document.createElement("tr");
-        tr.append(el("td", null, row.label), el("td", null, row.price));
-        table.append(tr);
-      });
-      node.append(table);
-      node.append(el("p", "fine", "המחיר למבוגר לפי המחירון שפורסם. יש לאמת במחירון העדכני."));
     }
     if (place.arrival) node.append(el("p", null, place.arrival));
     if (!place.duration && (place.source === "inpa" || /parks\.org\.il/.test(place.url || ""))) {
