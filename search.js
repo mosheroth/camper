@@ -231,10 +231,17 @@ function chosenTraits() {
   return Object.keys(pickedTraits).filter((trait) => pickedTraits[trait]);
 }
 
+function hasTrait(item, trait) {
+  const traits = item.traits || [];
+  if (traits.includes(trait)) return true;
+  if (trait === "רטוב" && traits.includes("מעיין")) return true;
+  return false;
+}
+
 function matchesTraits(item) {
   const selected = chosenTraits();
   if (!selected.length) return true;
-  return selected.every((trait) => (item.traits || []).includes(trait));
+  return selected.every((trait) => hasTrait(item, trait));
 }
 
 function inNear(item) {
