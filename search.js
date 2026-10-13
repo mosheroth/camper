@@ -1,5 +1,6 @@
 const ISRAEL_BOUNDS = [[29.45, 34.22], [33.35, 35.92]];
 const PAGE = 24;
+const NEAR_KM = 25;
 const ROLE = {
   hike: ["טיול", "#a3472c"],
   camp: ["חניון", "#1c3f34"],
@@ -25,6 +26,7 @@ let catalog = [];
 let camps = [];
 let role = "all";
 let region = "all";
+let near = null;
 let home = "";
 let limit = PAGE;
 let menuFor = null;
@@ -86,6 +88,23 @@ function campMeta(camp) {
   return bits.join(" · ");
 }
 
+function kmBetween(from, to) {
+  if (!from || from.lat == null || from.lng == null || !to || to.lat == null || to.lng == null) return Infinity;
+  const rad = Math.PI / 180;
+  const dLat = (to.lat - from.lat) * rad;
+  const dLng = (to.lng - from.lng) * rad;
+  const lat1 = from.lat * rad;
+  const lat2 = to.lat * rad;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+
+function circleBounds(point) {
+  const latPad = point.km / 111;
+  const lngPad = latPad / Math.max(0.2, Math.cos(point.lat * Math.PI / 180));
+  return [[point.lat - latPad, point.lng - lngPad], [point.lat + latPad, point.lng + lngPad]];
+}
+
 function inRegion(item) {
   if (region === "all") return true;
   if (item.role === "hike" || item.role === "camp") return (item.regions || []).includes(region);
@@ -101,16 +120,22 @@ function matchesQuery(item, text) {
   return item.name.includes(text) || (item.area || "").includes(text);
 }
 
+function inNear(item) {
+  if (!near) return true;
+  return kmBetween(near, item) <= near.km;
+}
+
 function pool() {
   const text = queryBox.value.trim();
-  return catalog.filter((item) => inRegion(item) && matchesQuery(item, text));
+  return catalog.filter((item) => inRegion(item) && inNear(item) && matchesQuery(item, text));
 }
 
 function visible() {
   const text = queryBox.value.trim();
   const matched = pool().filter((item) => role === "all" || item.role === role);
-  matched.sort((left, right) => left.name.localeCompare(right.name, "he"));
-  if (!text && role === "all" && region === "all") {
+  if (near) matched.sort((left, right) => kmBetween(near, left) - kmBetween(near, right));
+  else matched.sort((left, right) => left.name.localeCompare(right.name, "he"));
+  if (!text && role === "all" && region === "all" && !near) {
     return matched.filter((item) => item.role === "camp").slice(0, limit);
   }
   return matched.slice(0, limit);
@@ -120,7 +145,7 @@ function counts() {
   const matched = pool();
   const tally = { all: matched.length, hike: 0, camp: 0, place: 0, coffee: 0 };
   matched.forEach((item) => { tally[item.role] += 1; });
-  if (!queryBox.value.trim() && region === "all") tally.all = catalog.filter((item) => item.role === "camp").length;
+  if (!queryBox.value.trim() && region === "all" && !near) tally.all = catalog.filter((item) => item.role === "camp").length;
   return tally;
 }
 
@@ -133,7 +158,7 @@ function ensureMap() {
   }).addTo(map);
   window.L.control.zoom({ position: "topleft", zoomInTitle: "התקרבות", zoomOutTitle: "התרחקות" }).addTo(map);
   markers = window.L.layerGroup().addTo(map);
-  map.fitBounds(ISRAEL_BOUNDS, { animate: false, padding: [20, 20] });
+  map.fitBounds(near ? circleBounds(near) : ISRAEL_BOUNDS, { animate: false, padding: [20, 20], maxZoom: near ? 13 : 17 });
   window.addEventListener("resize", () => map.invalidateSize());
 }
 
@@ -159,7 +184,8 @@ function drawMap(rows) {
       render();
     });
   });
-  if (points.length > 1) map.fitBounds(points, { padding: [28, 28], maxZoom: 11, animate: false });
+  if (near && !openKey) map.fitBounds(circleBounds(near), { padding: [28, 28], maxZoom: 13, animate: false });
+  else if (points.length > 1) map.fitBounds(points, { padding: [28, 28], maxZoom: 11, animate: false });
   else if (points.length === 1) map.setView(points[0], 12, { animate: false });
 }
 
@@ -169,6 +195,34 @@ function link(href, text) {
   node.target = "_blank";
   node.rel = "noopener noreferrer";
   return node;
+}
+
+function placeMeta(item) {
+  if (!near || item.lat == null) return item.meta;
+  const away = kmBetween(near, item);
+  const where = away < 0.4 ? "במקום" : `כ־${Math.max(1, Math.round(away))} ק״מ מהטיול`;
+  return [where, item.meta].filter(Boolean).join(" · ");
+}
+
+function dropNear(draw) {
+  near = null;
+  const url = new URL(window.location.href);
+  if (url.searchParams.get("into")) url.searchParams.set("wide", "1");
+  window.history.replaceState(null, "", `${url.pathname}${url.search}`);
+  if (draw) {
+    limit = PAGE;
+    render();
+  }
+}
+
+function nearNote() {
+  const note = el("p", "fine");
+  note.append(`סביב «${near.label}», עד כ־${near.km} ק״מ. `);
+  const widen = el("button", "widen", "כל הארץ");
+  widen.type = "button";
+  widen.addEventListener("click", () => dropNear(true));
+  note.append(widen);
+  return note;
 }
 
 function sheet(item) {
@@ -183,7 +237,8 @@ function sheet(item) {
   node.append(back);
   node.append(el("p", "kicker", ROLE[item.role][0]));
   node.append(el("h2", null, item.name));
-  if (item.meta) node.append(el("p", "meta", item.meta));
+  const meta = placeMeta(item);
+  if (meta) node.append(el("p", "meta", meta));
   if (item.blurb) node.append(el("p", null, item.blurb));
   if (item.booking) node.append(el("p", "booking", "צריך להזמין מקום מראש."));
   const links = el("div", "links");
@@ -207,7 +262,8 @@ function row(item) {
   node.append(el("span", `badge ${item.role}`, ROLE[item.role][0]));
   const copy = el("div");
   copy.append(el("h2", null, item.name));
-  if (item.meta) copy.append(el("p", "meta", item.meta));
+  const meta = placeMeta(item);
+  if (meta) copy.append(el("p", "meta", meta));
   node.append(copy);
   const add = el("button", "add", "הוספה לטיול");
   add.type = "button";
@@ -354,20 +410,32 @@ function render() {
   regionPick.value = region;
   regionPick.addEventListener("change", () => {
     region = regionPick.value;
+    dropNear(false);
     limit = PAGE;
     render();
   });
   roles.append(regionPick);
+  if (near) {
+    const here = el("button", "chip on", "סביב הטיול");
+    here.type = "button";
+    here.title = near.label;
+    here.addEventListener("click", () => dropNear(true));
+    roles.append(here);
+  }
 
   const rows = visible();
   const full = pool().filter((item) => role === "all" || item.role === role);
   results.replaceChildren();
   const opened = openKey ? catalog.find((item) => item.key === openKey) : null;
+  if (near && !opened) results.append(nearNote());
   if (opened) results.append(sheet(opened));
   else if (!rows.length) {
-    results.append(el("p", "empty", queryBox.value.trim() ? "אין תוצאה לשם הזה." : "אפשר לחפש שם, או לבחור סוג."));
+    const missing = queryBox.value.trim()
+      ? (near ? "אין תוצאה לשם הזה באזור הטיול." : "אין תוצאה לשם הזה.")
+      : "אפשר לחפש שם, או לבחור סוג.";
+    results.append(el("p", "empty", missing));
   } else {
-    if (!queryBox.value.trim() && role === "all" && region === "all") {
+    if (!near && !queryBox.value.trim() && role === "all" && region === "all") {
       results.append(el("p", "fine", "חניונים להתחלה. חיפוש או בחירת סוג מציגים גם מסלולים, נקודות ומצפורים."));
     }
     rows.forEach((item) => results.append(row(item)));
@@ -381,7 +449,8 @@ function render() {
       results.append(more);
     }
   }
-  drawMap(opened ? [opened] : rows);
+  const mapped = opened ? [opened] : full.filter((item) => item.lat != null).slice(0, 250);
+  drawMap(mapped);
   document.querySelectorAll(".add-menu").forEach((node) => node.remove());
   if (menuFor) {
     const item = catalog.find((entry) => entry.key === menuFor);
@@ -480,9 +549,51 @@ function boot(campData, trailData, placeData) {
       if (camp) item.meta = campMeta(camp);
     }
   });
-  const preset = new URLSearchParams(window.location.search).get("q") || "";
+  const params = new URLSearchParams(window.location.search);
+  const preset = params.get("q") || "";
   if (preset) queryBox.value = preset;
+  const into = params.get("into") || "";
+  if (into && params.get("wide") !== "1" && window.CamperTrips) {
+    near = focusFor(window.CamperTrips.get(into), campData, trailData, places);
+  }
   render();
+}
+
+function focusFor(trip, campData, trailData, placeData) {
+  if (!trip) return null;
+  const spots = [];
+  const camp = trip.campId != null ? campData.find((item) => item.id === Number(trip.campId)) : null;
+  if (camp && camp.lat != null) spots.push(camp);
+  (trip.trailIds || []).forEach((id) => {
+    const trail = trailData.find((item) => item.id === Number(id));
+    if (trail && trail.lat != null) spots.push(trail);
+  });
+  const places = Array.isArray(placeData) ? placeData : [];
+  []
+    .concat((trip.place && trip.place.coffee) || [])
+    .concat((trip.place && trip.place.visit) || [])
+    .forEach((id) => {
+      const place = places.find((item) => item.id === id);
+      if (place && place.lat != null) spots.push(place);
+    });
+  if (!spots.length) return null;
+  const anchor = camp && camp.lat != null
+    ? camp
+    : {
+      lat: spots.reduce((sum, spot) => sum + spot.lat, 0) / spots.length,
+      lng: spots.reduce((sum, spot) => sum + spot.lng, 0) / spots.length,
+    };
+  let reach = NEAR_KM;
+  spots.forEach((spot) => {
+    reach = Math.max(reach, kmBetween(anchor, spot) + 8);
+  });
+  const label = String(trip.name || (camp && camp.name) || "הטיול").trim();
+  return {
+    lat: anchor.lat,
+    lng: anchor.lng,
+    km: Math.min(80, Math.round(reach)),
+    label: label.length > 42 ? `${label.slice(0, 41)}…` : label,
+  };
 }
 
 queryBox.addEventListener("input", () => {

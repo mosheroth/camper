@@ -1780,6 +1780,16 @@ body.splitting { cursor: col-resize; user-select: none; }
   font-size: 0.85rem;
 }
 .role-row .chip.on { background: var(--green); color: #fff; }
+.search-page .fine .widen {
+  border: 0;
+  background: none;
+  color: var(--green);
+  font: inherit;
+  font-weight: 700;
+  font-size: inherit;
+  padding: 0;
+  cursor: pointer;
+}
 .role-row select {
   width: auto;
   margin-inline-start: auto;
