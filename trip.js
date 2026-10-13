@@ -63,6 +63,15 @@ const PLACE_COLOR = {
   reserve: "#1d6a4f",
   beach: "#1d4e89",
 };
+const CAMP_MARK = "#a3472c";
+
+function markerColor(stage, trailIds) {
+  if (!stage || stage.kind === "arrive") return CAMP_MARK;
+  if (stage.kind === "coffee") return PLACE_COLOR.viewpoint;
+  if (stage.kind === "visit") return PLACE_COLOR[stage.placeKind] || PLACE_COLOR.park;
+  const index = (trailIds || []).indexOf(Number(stage.trailId));
+  return COLORS[((index < 0 ? 0 : index) + 1) % COLORS.length];
+}
 const TIME_LABEL = {
   depart: "שעת יציאה",
   arrive: "שעת הגעה",
@@ -763,10 +772,7 @@ function showTrip() {
   }
 
   const story = window.CamperPlan.tripStages(camp, trails, order, coffeePlaces, visitPlaces);
-  const colorByTrail = new Map();
-  trails.forEach((trail, index) => {
-    colorByTrail.set(trail.id, COLORS[(index + 1) % COLORS.length]);
-  });
+  const trailIds = trails.map((trail) => trail.id);
 
   function stageCard(stage) {
     const photos = (stage.photos || []).map((photo) => (
@@ -799,10 +805,10 @@ function showTrip() {
       className: "camp-marker",
       html:
         '<div class="camp-pin">' +
-        `<span class="stage-badge">${arrive ? arrive.n : 1}</span>` +
+        `<span class="stage-badge" style="background:${CAMP_MARK}">${arrive ? arrive.n : 1}</span>` +
         '<span class="camp-pin-tag">חניון</span>' +
         '<svg viewBox="0 0 36 46" width="36" height="46" aria-hidden="true">' +
-        '<path d="M18 44.5C18 44.5 33 27.2 33 16.2A15 15 0 1 0 3 16.2C3 27.2 18 44.5 18 44.5Z" fill="#a3472c" stroke="#fffaf3" stroke-width="2.4"/>' +
+        `<path d="M18 44.5C18 44.5 33 27.2 33 16.2A15 15 0 1 0 3 16.2C3 27.2 18 44.5 18 44.5Z" fill="${CAMP_MARK}" stroke="#fffaf3" stroke-width="2.4"/>` +
         '<path d="M11 22.2 18 13.2 25 22.2Z" fill="none" stroke="#fffaf3" stroke-width="1.8" stroke-linejoin="round"/>' +
         '<path d="M18 13.6V22" stroke="#fffaf3" stroke-width="1.4"/>' +
         "</svg></div>",
@@ -843,7 +849,7 @@ function showTrip() {
   let drewLine = false;
   story.paths.forEach((path) => {
     const key = String(path.trailId);
-    const color = colorByTrail.get(path.trailId) || COLORS[1];
+    const color = markerColor({ kind: "hike", trailId: path.trailId }, trailIds);
     const entry = layerFor(key);
     const line = window.L.polyline(path.line, { color, weight: 5, opacity: 0.9 }).addTo(overlay);
     follow(line, key);
@@ -857,11 +863,7 @@ function showTrip() {
   story.stages.forEach((stage) => {
     if (stage.kind === "arrive") return;
     const key = stage.kind === "coffee" || stage.kind === "visit" ? `place-${stage.placeId}` : String(stage.trailId);
-    const color = stage.kind === "coffee"
-      ? PLACE_COLOR.viewpoint
-      : stage.kind === "visit"
-        ? (PLACE_COLOR[stage.placeKind] || PLACE_COLOR.park)
-        : (colorByTrail.get(stage.trailId) || COLORS[1]);
+    const color = markerColor(stage, trailIds);
     const marker = window.L.marker([stage.lat, stage.lng], {
       icon: window.L.divIcon({
         className: "stage-marker",
@@ -1792,6 +1794,8 @@ Promise.all([
         const titled = blockTitle(group);
         const heading = decorate(el("h3"), titled[0], titled[1]);
         const titleWrap = el("div", "block-head");
+        const marks = blockMarks(group, stages);
+        if (marks) titleWrap.append(marks);
         const picture = blockPicture(group);
         if (picture) {
           const img = document.createElement("img");
@@ -2076,6 +2080,32 @@ Promise.all([
       return button;
     }
 
+    function stageOwns(group, stage) {
+      if (group.id === "stay") return stage.kind === "arrive";
+      if (String(group.id).startsWith("hike:")) return Number(stage.trailId) === Number(String(group.id).slice(5));
+      if (String(group.id).startsWith("coffee:")) return stage.kind === "coffee" && stage.placeId === String(group.id).slice(7);
+      if (String(group.id).startsWith("visit:")) return stage.kind === "visit" && stage.placeId === String(group.id).slice(6);
+      return false;
+    }
+
+    function blockMarks(group, stages) {
+      const matched = (stages || []).filter((stage) => stageOwns(group, stage));
+      if (!matched.length) return null;
+      const row = el("div", "block-nums");
+      const labels = matched.map((stage) => String(stage.n));
+      row.setAttribute("aria-label", labels.length === 1
+        ? `סימון ${labels[0]} על המפה`
+        : `סימונים ${labels.join(", ")} על המפה`);
+      matched.forEach((stage) => {
+        const badge = el("span", "block-num", String(stage.n));
+        badge.style.setProperty("--mark", markerColor(stage, selected));
+        badge.title = `${stage.n}. ${stage.title}`;
+        badge.setAttribute("aria-hidden", "true");
+        row.append(badge);
+      });
+      return row;
+    }
+
     function blockIdentity(group) {
       const token = blockToken(group.id);
       let id = null;
@@ -2083,27 +2113,27 @@ Promise.all([
       let color = "";
       if (group.id === "stay") {
         id = "camp";
-        color = "#a3472c";
+        color = CAMP_MARK;
         meta = [camp.paid ? "בתשלום" : "בלי תשלום", camp.bookingUrl ? "בהזמנה מראש" : "", (camp.regions || []).map((region) => REGION_LABEL[region] || region).join(" · ")].filter(Boolean).join(" · ");
       } else if (typeof token === "string" && token.startsWith("v:")) {
         const placeId = window.CamperPlan.visitPlaceId(token);
         const item = placeId ? visitNear.get(placeId) : null;
         if (!item) return null;
         id = `place-${placeId}`;
-        color = PLACE_COLOR[item.place.kind] || PLACE_COLOR.park;
+        color = markerColor({ kind: "visit", placeKind: item.place.kind }, selected);
         meta = [item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ מהחניון`, visitFact(item.place)].filter(Boolean).join(" · ");
       } else if (typeof token === "string" && token.startsWith("c:")) {
         const placeId = window.CamperPlan.coffeePlaceId(token);
         const item = placeId ? coffeeNear.get(placeId) : null;
         if (!item) return null;
         id = `place-${placeId}`;
-        color = PLACE_COLOR.viewpoint;
+        color = markerColor({ kind: "coffee" }, selected);
         meta = [item.km < 0.4 ? "במקום" : `כ־${item.km} ק״מ מהחניון`, "כחצי שעה"].join(" · ");
       } else if (typeof token === "number") {
         const item = choiceFor(token);
         if (!item.trail) return null;
         id = String(token);
-        color = COLORS[(selected.indexOf(token) + 1) % COLORS.length];
+        color = markerColor({ kind: "hike", trailId: token }, selected);
         meta = [item.km == null ? "" : `כ־${item.km} ק״מ מהחניון`, trailFacts(item.trail)].filter(Boolean).join(" · ");
       }
       if (id == null) return null;
