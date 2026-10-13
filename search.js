@@ -454,10 +454,14 @@ function nextState(trip, item, on) {
 
 function applyToggle(trip, item, on) {
   const next = nextState(trip, item, on);
-  if (next.note) return next.note;
+  if (next.note) return { note: next.note, trip: null };
   const saved = window.CamperTrips.save(next.input);
   if (!saved && trip) window.CamperTrips.remove(trip.id);
-  return "";
+  return { note: "", trip: saved };
+}
+
+function openTrip(trip) {
+  if (trip) window.location.href = window.CamperTrips.editPath(trip);
 }
 
 function menu(item, anchor) {
@@ -484,10 +488,11 @@ function menu(item, anchor) {
     input.type = "checkbox";
     input.checked = contains(trip, item);
     input.addEventListener("change", () => {
-      const note = applyToggle(trip, item, input.checked);
+      const result = applyToggle(trip, item, input.checked);
       const status = box.querySelector(".fine");
-      if (status) status.textContent = note;
-      if (note) input.checked = contains(trip, item);
+      if (status) status.textContent = result.note;
+      if (result.note) input.checked = contains(trip, item);
+      else if (input.checked) openTrip(result.trip);
       else render();
     });
     const copy = el("span");
@@ -501,9 +506,12 @@ function menu(item, anchor) {
   const create = el("button", "fresh", "טיול חדש");
   create.type = "button";
   create.addEventListener("click", () => {
-    applyToggle(null, item, true);
-    menuFor = null;
-    render();
+    const result = applyToggle(null, item, true);
+    if (result.trip) openTrip(result.trip);
+    else {
+      menuFor = null;
+      render();
+    }
   });
   box.append(create);
   box.append(el("p", "fine", ""));
