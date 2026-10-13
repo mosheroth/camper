@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-13T19:56:43Z",
+  "fetchedAt": "2026-10-13T20:16:58Z",
   "source": "https://www.teva.org.il/tracks",
   "tracks": [
     {
@@ -19,7 +19,33 @@
       ],
       "circular": false,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/TAV05098-scaled-e1628147784615.jpg",
+          "credit": "מדריך וילדים מטיילים בנחל חווארים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/07/TAV05860-scaled-1024x683.jpg",
+          "credit": "טיול עששיות בנחל חווארים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/07/TAV04730-scaled-1024x683.jpg",
+          "credit": "מטיילים בנחל חווארים אחרי המדריך"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/TAV05232-scaled.jpg",
+          "credit": "מטיילים רואים יעל על הגבעה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/TAV05007-scaled.jpg",
+          "credit": "מטיילים צועדים בנחל חווארים, צילום מהגב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/TAV05211-scaled.jpg",
+          "credit": "יעל על גבעה, נחל חווארים"
+        }
+      ]
     },
     {
       "id": 659,
@@ -37,7 +63,29 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/עין-חרדלית-נחל-כזיב-אסנת-אל-עז-2.jpeg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/עין-חרדלית-נחל-כזיב-אסנת-אל-עז-3-1024x497.jpeg",
+          "credit": "ילדים מטיילים בנחל כזיב. צילום: אסנת אל עז"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/עין-חרדלית-נחל-כזיב-אסנת-אל-עז-4-1024x497.jpeg",
+          "credit": "עצים מעל המים בנחל כזיב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/נחל-כזיב-איריס-ארבל-576x1024.jpeg",
+          "credit": "מים זורמים בנחל כזיב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/נחל-כזיב-דניאלה-שפירא-1-768x1024.jpeg",
+          "credit": "נחל כזיב"
+        }
+      ]
     },
     {
       "id": 687,
@@ -55,7 +103,41 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/חוף-אכזיב-7-דב-גרינבלט-1024x768.jpg",
+          "credit": "חוף אכזיב ביום בהיר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/חוף-אכזיב-טלי-נעמן-5-e1628856194729.jpg",
+          "credit": "חוף אכזיב מהגובה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/חוף-אכזיב-1-דב-גרינבלט-1024x768.jpg",
+          "credit": "חוף אכזיב בשקיעה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/IMqfJ77s.jpeg",
+          "credit": "מטיילים בחוף אכזיב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/חוף-אכזיב-10-דב-גרינבלט-1024x768.jpg",
+          "credit": "חוף אכזיב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/Wt-hFI3I.jpeg",
+          "credit": "מטיילים בחוף אכזיב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/חוף-אכזיב-טלי-נעמן-6-1024x768.jpg",
+          "credit": "דייג דג בחוף אכזיב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/41BKKS9M.jpeg",
+          "credit": "מטיילים בחוף אכזיב"
+        }
+      ]
     },
     {
       "id": 702,
@@ -73,7 +155,41 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/PXL_20220322_105915942-scaled.jpg",
+          "credit": "צפרים בנחל סלוודורה. צילום: אורי גושן"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/PXL_20220322_093942308-1024x576.jpg",
+          "credit": "דרגיות במפלון בנחל סלוודורה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/PXL_20220322_100938749-1024x576.jpg",
+          "credit": "שיח הסלוודורה בנחל סלוודורה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/PXL_20220322_091035083-1024x576.jpg",
+          "credit": "2 טריסטרמיות מעל ים המלח"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/PXL_20220322_085943543-1-1024x576.jpg",
+          "credit": "תמרור בתחילת המסלול של נחל סלוודורה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/PXL_20220322_091658595-576x1024.jpg",
+          "credit": "שלט בתחילת נחל סלוודורה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/PXL_20220322_092721626-1024x576.jpg",
+          "credit": "דרגיות במפלון בנחל סלוודורה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/PXL_20220322_110449649-1024x576.jpg",
+          "credit": "מטיילים בנחל סלוודורה"
+        }
+      ]
     },
     {
       "id": 2282,
@@ -91,7 +207,41 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/פרסת-נקרות-ועין-סהרונים-אסנת-אל-עז-9-768x1024.jpg",
+          "credit": "פרסת נקרות בנחל נקרות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/פרסת-נקרות-ועין-סהרונים-אסנת-אל-עז-3-1024x768.jpg",
+          "credit": "ילד בנחל נקרות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/פרסת-נקרות-ועין-סהרונים-אסנת-אל-עז-6-1024x768.jpg",
+          "credit": "נחל נקרות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/פרסת-נקרות-ועין-סהרונים-אסנת-אל-עז-10-1024x768.jpg",
+          "credit": "פרסת נקרות בנחל נקרות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/פרסת-נקרות-ועין-סהרונים-אסנת-אל-עז-1-1024x576.jpg",
+          "credit": "פרסת נקרות בנחל נקרות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/פרסת-נקרות-ועין-סהרונים-אסנת-אל-עז-7.jpg",
+          "credit": "פרסת נקרות בנחל נקרות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/פרסת-נקרות-ועין-סהרונים-אסנת-אל-עז-8.jpg",
+          "credit": "פרסת נקרות בנחל נקרות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/פרסת-נקרות-ועין-סהרונים-אסנת-אל-עז-12.jpg",
+          "credit": "מטיילים בנחל נקרות"
+        }
+      ]
     },
     {
       "id": 7448,
@@ -109,7 +259,41 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/שלט-עין-ירקעם-1-1024x768.jpg",
+          "credit": "שלט עין ירקעם"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/מטיילים-2.png",
+          "credit": "קבוצת מטיילים בעין ירקעם"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/מבט-על-2-1.png",
+          "credit": "נחל חתירה במבט על"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/סרטון1-2.png",
+          "credit": "מבט על נחל חתירה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/נוף-2.png",
+          "credit": "נחל חתירה במבט על"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/קרקל-1-1024x683.jpg",
+          "credit": "צילום לילה של קרקל"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/עין-ירקעם.jpeg",
+          "credit": "עין ירקעם"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/תקריב-המדרגות-הרומיות-עין-ירקעם.jpeg",
+          "credit": "המדרגות הרומיות בעין ירקעם"
+        }
+      ]
     },
     {
       "id": 7488,
@@ -127,7 +311,37 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/הסכר-הבריטי-בנחל-ממשית-1-compressed-scaled.jpg",
+          "credit": "מבט מלמעלה על הסכר בריטי בנחל ממשית"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/נחלממשית-compressed-1024x576.jpg",
+          "credit": "הנוף של נחל ממשית מלמעלה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/הסכר-הבריטי-בנחל-ממשית-compressed-1024x576.jpg",
+          "credit": "מבט מלמעלה על הסכר בריטי בנחל ממשית"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/העיר-הנבטית-העתיקה-ממשית-3-compressed-1024x576.jpg",
+          "credit": "מבט מלמעלה על העיר הנבטית העתיקה ממשית"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/העיר-הנבטית-העתיקה-ממשית-4-compressed-1024x576.jpg",
+          "credit": "מבט מלמעלה על העיר הנבטית העתיקה ממשית"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/נוףרחבנחלממשית-compressed-1024x576.jpg",
+          "credit": "הנוף של נחל משית מלמעלה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/העיר-הנבטית-העתיקה-ממשית-1-compressed-scaled.jpg",
+          "credit": "מבט מלמעלה על העיר הנבטית העתיקה ממשית"
+        }
+      ]
     },
     {
       "id": 7878,
@@ -145,7 +359,37 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/מיצד-זוהר.jpg",
+          "credit": "נחל זוהר, נוף מהערוץ"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/נחלזוהרצמחייה238-compressed-1024x576.jpg",
+          "credit": "מבט על קניון מלא בצמחייה בערוץ נחל זוהר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/הכניסה-לנחל-זוהר-min-1-1024x576.jpg",
+          "credit": "שלט הכניסה לנחל זוהר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/מיצד-זוהר-תקריב-min-1-1024x768.jpg",
+          "credit": "תקריב של מיצד זוהר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/מיצד-זוהר-min-1-1024x576.jpg",
+          "credit": "מבט על של מיצד זוהר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/נחלזוהר1-compressed-1024x574.jpg",
+          "credit": "הצמחייה במיצד זוהר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/02/יםהמלחנחלזוהר-compressed.jpg",
+          "credit": "מבט על נחל זוהר ומאחוריו ים המלח"
+        }
+      ]
     },
     {
       "id": 8142,
@@ -163,7 +407,41 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/מבט-על-הכנרת-מדרום-1024x576.png",
+          "credit": "הכנרת במבט על מכיוון דרום"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/מבט-לקיבוץ-מעגן-1024x767.jpg",
+          "credit": "מבט על קיבוץ מעגן"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קנים-במים-1024x768.jpg",
+          "credit": "קנים במי הכנרת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/אנדרטת-מעגן-2-1024x767.jpg",
+          "credit": "אנדרטת מעגן מוקפת בצמחייה ליד הכנרת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/1-מבט-על-הכנרת-מהגולן-1024x540.png",
+          "credit": "מבט על הכנרת מהגולן"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/כתובת-אנושית-בשביל-הכנרת-2.jpg",
+          "credit": "צילום רחפן של כתובת אנושית - \"בשביל הכנרת\" על חוף הכינרת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/חוגי-הסיירות-פורצים-שביל.jpg",
+          "credit": "חניכי חוגי סיירות פורצים שביל בשביל הכנרת עם כלי עבודה בשטח"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/אנדרטת-מעגן-1.png",
+          "credit": "אנדרטת מעגן מוקפת בצמחייה ליד הכנרת"
+        }
+      ]
     },
     {
       "id": 8462,
@@ -181,7 +459,41 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/03/vlcsnap-2022-01-22-21h19m26s260-1024x540.png",
+          "credit": "נחל קדש"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/נחל-קדש-3-768x1024.jpg",
+          "credit": "זרימה בין סלעים בנחל קדש"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/נחל-קדש-2-1024x768.jpg",
+          "credit": "נחל קדש ומסביבו סלעים, עצים והרים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/השביל-לנחל-קדש-1024x768.jpg",
+          "credit": "שביל מוקף גדרות בין עצים וצמחייה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/תצפית-מצודת-כ״ח-1-1024x768.jpg",
+          "credit": "נוף של גבעות ירוקות נשקף מנקודת תצפית במצודת כ"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/נוף-ממצודת-כ״ח-אצבע-הגליל-והחרמון-1024x540.png",
+          "credit": "הנוף הנשקף ממצודת כ"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/מצודת-כ״ח.png",
+          "credit": "מבט על של מצודת כ\"ח"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/חורשת-כ״ח-2-scaled.jpg",
+          "credit": "שלטים עם שמות הנופלים בחורשת כ\"ח"
+        }
+      ]
     },
     {
       "id": 8628,
@@ -199,7 +511,41 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/שביל-החורש-שתולה-2-scaled.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/שביל-החורש-שתולה-6-1024x768.jpg",
+          "credit": "סלע ועליו סימון שביל בין עלים ועצים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/שביל-החורש-שתולה-5-1024x461.jpg",
+          "credit": "עלים יבשים מונחים על האדמה בין עצים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/שביל-החורש-שתולה-4-1024x461.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קירות-מדברים-1--1024x727.jpg",
+          "credit": "ציור על קיר בטון גדול"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קירות-מדברים-3-1024x540.png",
+          "credit": "ציור על קיר בטון גדול"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/חניון-הסרנים-1024x768.jpg",
+          "credit": "ספסלי פיקניק בין עצים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/שביל-הנפש-1024x768.jpg",
+          "credit": "שלט עם הכיתוב"
+        }
+      ]
     },
     {
       "id": 8673,
@@ -217,7 +563,29 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/נחל-הקיבוצים-1-1024x768.jpg",
+          "credit": "נחל הקיבוצים ומסביבו צמחייה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/נחל-הקיבוצים-3-1024x767.jpg",
+          "credit": "שביל בצמוד לנחל הקיבוצים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/בריכת-הקיבוצים-2-1024x768.jpg",
+          "credit": "מטיילים בבריכת הקיבוצים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/סרטן-נחלים-1024x611.jpg",
+          "credit": "סרטן נחלים עומד על סלע על שפת נחל הקיבוצים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/בריכת-הקיבוצים-3-1024x737.jpg",
+          "credit": "מבט מלמעלה על בריכת הקיבוצים"
+        }
+      ]
     },
     {
       "id": 9251,
@@ -235,7 +603,37 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קניון-שחורת-דב-גרינבלט-7-1024x768.jpg",
+          "credit": "מטיילים בקניון שחורת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קניון-שחורת-דב-גרינבלט-3-scaled.jpg",
+          "credit": "מטיילים בקניון שחורת. צילום: דב גרינבלט"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קניון-שחורת-דב-גרינבלט-5-1024x768.jpg",
+          "credit": "מטיילים בקניון שחורת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קניון-שחורת-דב-גרינבלט-12-1024x768.jpg",
+          "credit": "קניון שחורת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קניון-שחורת-דב-גרינבלט-11-1024x768.jpg",
+          "credit": "עץ בודד בקניון שחורת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קניון-שחורות-אוראל-רביבו-49-1024x768.jpg",
+          "credit": "קניון שחורת במבט על"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/קניון-שחורות-אוראל-רביבו-43-1024x768.jpg",
+          "credit": "קניון שחורת במבט על"
+        }
+      ]
     },
     {
       "id": 9304,
@@ -253,7 +651,25 @@
       ],
       "circular": false,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/נחל-אל-על-רמת-הגולן-3-דב-גרינבלט-scaled.jpg",
+          "credit": "נחל אל על. צילום: דב גרינבלט"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/10/המפל-השחור-אורית-שרייבר-768x1024.jpg",
+          "credit": "המפל השחור"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/10/נחל-אלעלאורית-שרייבר.jpg",
+          "credit": "נחל אל על"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2023/03/WhatsApp-Image-2023-03-06-at-14.55.14.jpeg",
+          "credit": "נחל דליות בגולן"
+        }
+      ]
     },
     {
       "id": 9755,
@@ -271,7 +687,29 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/הקניון-האדום-איתן-הרשקו-3-768x1024.jpg",
+          "credit": "הקניון האדום, קירות אבני חול אדומות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/הקניון-האדום-ונחל-שני-אוראל-רביבו-4-1-1024x768.jpg",
+          "credit": "בדרך לקניון האדום. הקניון האדום ונחל שני"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/הקניון-האדום-איתן-הרשקו-4-1024x768.jpg",
+          "credit": "הקניון האדום בשעת שקיעה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/הקניון-האדום-ונחל-שני-אוראל-רביבו-2-1-1024x576.jpg",
+          "credit": "הקניון האדום בשעת בוקר מוקדמת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/הקניון-האדום-איתן-הרשקו-2-768x1024.jpg",
+          "credit": "הקניון האדום עם מדריך"
+        }
+      ]
     },
     {
       "id": 9838,
@@ -289,7 +727,25 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/11/DSC5201m-1024x683.jpg",
+          "credit": "הנוף מבית ספר שדה אלון תבור. צילום: יוס סטייבל"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/04/שביל-הפסגה-בהר-תבור.-1024x768.jpg",
+          "credit": "חצי עמוד ועליו סימון של שביל. מאחוריו אדמה מוקפת עצים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/11/DSC5198m-1024x683.jpg",
+          "credit": "נוף להר תבור ומסביבו גבעות מלאות ירוק"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/11/DSC5208m-1024x683.jpg",
+          "credit": "נוף להר תבור ומסביבו גבעות מלאות ירוק"
+        }
+      ]
     },
     {
       "id": 9946,
@@ -307,7 +763,41 @@
       ],
       "circular": false,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/טיול-ומטיילים-חירות-לוביץ-1-1024x768.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_101644-1024x768.jpg",
+          "credit": "נחל מעפילים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_102142-1024x768.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_102933-1024x768.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_114122-1024x768.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/מחנה-עתלית-מרחפן-scaled.jpg",
+          "credit": "מחנה עתלית"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/שביל-ישראל-חניון-דרך-נוף-כרמל-scaled.jpg",
+          "credit": "חניון דרך נוף כרמל"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/שביל-ישראל-נחל-מעפילים-scaled.jpg",
+          "credit": "השביל המנדטורי נחל מעפילים"
+        }
+      ]
     },
     {
       "id": 9950,
@@ -325,7 +815,41 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_105213-1024x768.jpg",
+          "credit": "מנופי נחל יגור"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/IMG_20220130_110538-scaled.jpg",
+          "credit": "נחל יגור"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_105815-987x1024.jpg",
+          "credit": "נחל יגור"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_104651-1024x461.jpg",
+          "credit": "מנופי נחל יגור"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_092119-1024x768.jpg",
+          "credit": "האזור הפורח סביב נחל יגור"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_110040-1024x768.jpg",
+          "credit": "חלוקי נחל יגור"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/IMG_20220130_091927-1024x768.jpg",
+          "credit": "נקודה במסלול נחל יגור"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/05/DJI_0009-scaled.jpg",
+          "credit": "קיבוץ יגור"
+        }
+      ]
     },
     {
       "id": 10345,
@@ -343,7 +867,37 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/DJI_0083-1024x737.jpg",
+          "credit": "נחל כלח ושוויצריה הקטנה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/DJI_0049-1024x767.jpg",
+          "credit": "נחל כלח ושוויצריה הקטנה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/DJI_0073-1024x737.jpg",
+          "credit": "נחל כלח ושוויצריה הקטנה 2"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/IMG_20220130_132844-1024x461.jpg",
+          "credit": "נחל כלח ושוויצריה הקטנה 3"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/IMG_20220130_133029-1024x461.jpg",
+          "credit": "מפגש השבילים בנחל כלח"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/09/AlinaLiberman.jpeg",
+          "credit": "תקריב על סלמנדרה מצויה בצבע שחור עם נקודות צהובות על הגב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/20201024152114.jpg",
+          "credit": "צילום מאחור של יחמור פרסי המביט למצלמה בהרי ירושלים"
+        }
+      ]
     },
     {
       "id": 10400,
@@ -361,7 +915,41 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/מעגןן-מיכאל-גאסר-וחוף-הקשתות.00_02_38_05.Still036-1024x540.jpg",
+          "credit": "מג"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/מעגןן-מיכאל-גאסר-וחוף-הקשתות.00_07_59_07.Still015-scaled.jpg",
+          "credit": "מעגן מיכאל, ג'אסר וחוף הקשתות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/IMG_20220121_084255-1-1024x768.jpg",
+          "credit": "מג"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/מעגןן-מיכאל-גאסר-וחוף-הקשתות.00_14_16_11.Still044-1024x540.jpg",
+          "credit": "מעגן מיכאל, ג"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/מעגןן-מיכאל-גאסר-וחוף-הקשתות.00_01_13_08.Still031-1024x540.jpg",
+          "credit": "מעגן מיכאל, ג"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/IMG_20220111_103002-1024x768.jpg",
+          "credit": "מג"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/מעגןן-מיכאל-גאסר-וחוף-הקשתות.00_00_28_21.Still006-1024x540.jpg",
+          "credit": "מעגן מיכאל, ג"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/מעגןן-מיכאל-גאסר-וחוף-הקשתות.00_09_00_17.Still018-scaled.jpg",
+          "credit": "אמת בית חנניה"
+        }
+      ]
     },
     {
       "id": 14969,
@@ -379,7 +967,37 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/Untitled-46-1024x828.jpg",
+          "credit": "פתחת ניצנה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/DJI_0993-1024x767.jpg",
+          "credit": "פתחת ניצנה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/14_1_2022_Nitsana.00_07_03_03.Still009-2-1024x540.jpg",
+          "credit": "פתחת ניצנה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/14_1_2022_Nitsana.00_10_53_23.Still015-1024x540.jpg",
+          "credit": "פתחת ניצנה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/14_1_2022_Nitsana.00_08_26_02.Still010-1024x540.jpg",
+          "credit": "פתחת ניצנה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/Screenshot-2022-06-20-163336.png",
+          "credit": "חקלאות מדברית"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/06/גבול-scaled.jpg",
+          "credit": "גדר גבול"
+        }
+      ]
     },
     {
       "id": 15646,
@@ -397,7 +1015,41 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/DSC00484-1024x684.jpg",
+          "credit": "מערת אצבע. צילום: יובל דקס"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/DSC00483-1024x684.jpg",
+          "credit": "מערת אצבע"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/DJI_0117-1024x767.jpg",
+          "credit": "תצפית מרכס אצבע"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/DSC00464-1024x684.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/DSC00469-1024x684.jpg",
+          "credit": "מערת אצבע"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/DSC00472-1024x684.jpg",
+          "credit": "מערת אצבע"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/DSC00456-1024x684.jpg",
+          "credit": "רכס אצבע"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/DSC00459-1024x684.jpg",
+          "credit": "רכס אצבע"
+        }
+      ]
     },
     {
       "id": 16112,
@@ -415,7 +1067,17 @@
       ],
       "circular": true,
       "family": false,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/נחל-הזאכי.png",
+          "credit": "נחל הזאכי"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/07/נחל-זאכי-233-מוקד-טבע.jpg",
+          "credit": "נחל זאכי"
+        }
+      ]
     },
     {
       "id": 17470,
@@ -433,7 +1095,21 @@
       ],
       "circular": false,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/09/מים-ומורדים-בנחל-פרת-צילום-שאטרסטוק-1024x517.jpg",
+          "credit": "נחל פרת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/09/נחל-פרת-בפריחת-קיץ-שיח-אברהם-אבנר-רינות-1024x735.jpeg",
+          "credit": "נחל פרת בפריחת קיץ"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/09/עין-מבוע-ונחל-פרת-דב-גרינבלט-1024x768.jpg",
+          "credit": "עין מבוע"
+        }
+      ]
     },
     {
       "id": 17490,
@@ -451,7 +1127,21 @@
       ],
       "circular": false,
       "family": false,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/09/ואדי-קלט-בריכה-1024x685.jpg",
+          "credit": "בריכה בוואדי קלט"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/09/ואדי-קלט-1024x683.jpg",
+          "credit": "ואדי קלט"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/09/מים-ומורדים-בנחל-פרת-צילום-שאטרסטוק-1024x517.jpg",
+          "credit": "נחל פרת"
+        }
+      ]
     },
     {
       "id": 17757,
@@ -470,7 +1160,21 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/10/Screenshot-2022-10-16-172116.png",
+          "credit": "חווארי מצדה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/10/Screenshot-2022-10-16-172238.png",
+          "credit": "אדמת חווארי מצדה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/10/Screenshot-2022-10-16-172529.png",
+          "credit": "חווארי מצדה"
+        }
+      ]
     },
     {
       "id": 19122,
@@ -488,7 +1192,41 @@
       ],
       "circular": null,
       "family": false,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/Screen-Shot-2023-01-30-at-15.15.54.png",
+          "credit": "מסגד ביפו"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/כיכר-השעון-ביפו.jpg",
+          "credit": "כיכר השעון ביפו. צילום: דב גרינבלט"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/Screen-Shot-2023-01-30-at-15.16.04-1024x680.png",
+          "credit": "רצועת החוף מול יפו"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/יפו-העתיקה-4-דב-גרינבלט-1024x768-1.jpg",
+          "credit": "יפו העתיקה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/סיור-בחומות-יפו-1.jpg",
+          "credit": "סיור בחומות יפו"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/סיור-בחומות-יפו.jpg",
+          "credit": "סיור בחומות יפו"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/כנסיה.jpg",
+          "credit": "מבט על כנסית סנט פיטרוס מגן הפסגה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/יפו-העתיקה-4-דב-גרינבלט-scaled.jpg",
+          "credit": "נתיב המזלות"
+        }
+      ]
     },
     {
       "id": 25113,
@@ -506,7 +1244,29 @@
       ],
       "circular": false,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2023/03/shutterstock_719164924.jpg",
+          "credit": "הר בנטל והר אביטל ברמת הגולן. צילום: שאטרסטוק"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2023/03/עין-ג׳ואיזה.png",
+          "credit": "עין ג׳ואיזה בנחל חזקה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2023/03/רמת-הגולן-1-1-1024x768.jpg",
+          "credit": "נוף ברמת הגולן"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/11/DSC5580.jpg",
+          "credit": "חלמונית צהובה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2023/03/WhatsApp-Image-2023-03-06-at-14.56.00.jpeg",
+          "credit": "נוף בגולן"
+        }
+      ]
     },
     {
       "id": 833557,
@@ -524,7 +1284,33 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/12/דב-הר-חרת-26-1.jpg",
+          "credit": "מבט מלמעלה על הר חרת. המון עצים וצמחייה וכמה כבישים לתוך העיר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/11/הרי-ירושלים-נוף-מהסטף-3-1.jpg",
+          "credit": "הרי ירושלים, נוף מהסטף. צילום: דב גרינבלט"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2024/01/נחל-שורק-זורם-ליד-סטף-פזית-שביד-8.2.23.jpg",
+          "credit": "נחל שורק זורם ליד סטף"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/04/מעיין-סטף-1024x684.jpg",
+          "credit": "מעיין סטף עם מים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/04/עין-סטף-2-1024x549.jpg",
+          "credit": "מטיילים משתכשכים בעין סטף"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/04/מטיילים-בסטף-4-1024x768.jpg",
+          "credit": "מטיילים מטיילים בשביל בסטף"
+        }
+      ]
     },
     {
       "id": 836897,
@@ -542,7 +1328,33 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/זנבנים-צעירים-מטובעים-דורית-אביהר-1024x682.jpeg",
+          "credit": "זנבנים צעירים מטובעים, שמורת נחל שיזף"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/WhatsApp-Image-2025-09-10-at-14.01.52_bcdb733f-e1758027703590.jpg",
+          "credit": "שמורת נחל שיזף. צילום: דורית אביהר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/WhatsApp-Image-2025-09-10-at-14.26.57_a54bacf1-1024x770.jpg",
+          "credit": "שמורת נחל שיזף"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/WhatsApp-Image-2025-09-10-at-14.01.52_f7c0c951-1024x765.jpg",
+          "credit": "עצים ושיחים שמורת שיזף"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/babbler-e1758028439685.jpg",
+          "credit": "זנבן ציפור מדבר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/WhatsApp-Image-2025-09-10-at-14.26.56_a7ae046b-1024x768.jpg",
+          "credit": "שמורת נחל שיזף"
+        }
+      ]
     },
     {
       "id": 837101,
@@ -560,7 +1372,29 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/IMG_4087-ניקול-סקיר-נחל-צפית-תחתון-768x1024.jpg",
+          "credit": "נחל צפית תחתון"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/IMG_4101-ניקול-סקיר-נחל-צפית-תחתון-cropped-e1757249841923.jpg",
+          "credit": "נחל צפית תחתון. צילום: ניקול סקיר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/IMG_4119-ניקול-סקיר-נחל-צפית-תחתון-768x1024.jpg",
+          "credit": "נחל צפית תחתון"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/IMG_4096-ניקול-סקיר-נחל-צפית-תחתון-768x1024.jpg",
+          "credit": "נחל צפית תחתון"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/IMG_4088-ניקול-סקיר-נחל-צפית-תחתון-768x1024.jpg",
+          "credit": "נחל צפית תחתון"
+        }
+      ]
     },
     {
       "id": 837165,
@@ -578,7 +1412,33 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/IMG_20161224_103826-766x1024.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/DSC07554-2.jpg",
+          "credit": "קניון נחל ברק, גב מלא. צילום: שי פלדמן"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/קניון-ברק-עומר-מרקובסקי-מתוך-אתר-פיקיויקי-1024x683.jpg",
+          "credit": "קניון נחל ברק"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/DSC07486-2-1024x639.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/DSC07488-2-1024x592.jpg",
+          "credit": ""
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/DSC07511-1024x683.jpg",
+          "credit": ""
+        }
+      ]
     },
     {
       "id": 842016,
@@ -597,7 +1457,25 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2023/01/גב-פרס-תמר-שובל-omer-Time.jpg",
+          "credit": "גבי פרס במדבר יהודה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2024/01/גבי-פרס-מרים-בן-דב-scaled.jpg",
+          "credit": "גבי פרסץ. צילום: מרים בן-דב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2024/01/גבי-פרס-תמר-שובל-1024x1024.jpg",
+          "credit": "גבי פרס מלמעלה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2024/01/גבי-פרס-מלמעלה-תמר-שובל-1024x1024.jpg",
+          "credit": "גבי פרס מלמעלה"
+        }
+      ]
     },
     {
       "id": 842053,
@@ -615,7 +1493,21 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/כיפת-עשת-שקיעה-2-ענבר-כהנא.jpg",
+          "credit": "שקיעה בכיפת עשת. צילום: ענבר כהנא"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/תמונה-כיפת-עשת-1024x461.jpg",
+          "credit": "כיפת עשת"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/כיפת-עשת-נוף-מערבה-ענבר-כהנא-1024x768.jpg",
+          "credit": "כיפת עשת"
+        }
+      ]
     },
     {
       "id": 842231,
@@ -633,7 +1525,25 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/נחל-גוב-צילום-אור-רוזנבך-3.jpg",
+          "credit": "קניון נחל גוב עם אור שמש"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/נחל-גוב-צילום-אור-רוזנבך-1.jpg",
+          "credit": "נחל גוב. צילום: אור רוזנבך"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2023/01/נחל-גוב-דורית-אביהר.jpg",
+          "credit": "נחל גוב"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/נחל-גוב-צילום-אור-רוזנבך-4.jpg",
+          "credit": "נחל גוב"
+        }
+      ]
     },
     {
       "id": 842342,
@@ -651,7 +1561,41 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/דרך-השלום-בערבה-זאב-שטיין-מתוך-אתר-פיקיוויקי.jpg",
+          "credit": "דרך השלום בערבה. צילום: זאב שטיין, מתוך אתר פיקיוויקי"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/דרך-השלום-בערבה-אבישי-טייכר-מתוך-אתר-פיקיוויקי-1024x768.jpg",
+          "credit": "דרך השלום בערבה. צילום: אבישי טייכר, מתוך אתר פיקיוויקי"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/מדרך-השלום-למאגר-חצבה-אבישי-טייכר-מתוך-אתר-פיקיוויקי-1024x768.jpg",
+          "credit": "מדרך השלום למאגר חצבה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2021/08/TAV05211-scaled.jpg",
+          "credit": "יעל על גבעה, נחל חווארים"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/זנבנים-צעירים-מטובעים-דורית-אביהר.jpeg",
+          "credit": "זנבנים צעירים מטובעים, שמורת נחל שיזף"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/vaidor.jpg",
+          "credit": "מרכז מבקרים ויידור החווה הניסיונית בערבה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/מאגר-חצבה-ויקיפדיה.jpg",
+          "credit": "מאגר חצבה. צילום: ויקיפדיה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/גבעת-חצבה-עין-גדי-הדרכה.jpg",
+          "credit": "גבעת חצבה"
+        }
+      ]
     },
     {
       "id": 842704,
@@ -669,7 +1613,21 @@
       ],
       "circular": true,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2024/01/שמורת-פורה-109.png",
+          "credit": "שמורת פורה כלניות"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2024/01/שמורת-פורה-שרידי-הגשר-הטורקי-אודי-שטיינוול-מתוך-אתר-פיקיויקי-scaled.jpg",
+          "credit": "שמורת פורה, שרידי הגשר הטורקי. צילום: אודי שטיינוול, מתוך אתר פיקוויקי"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/שמורת-פורה-109-scaled-1-820x1024.jpg",
+          "credit": "פריחה שמורת פורה"
+        }
+      ]
     },
     {
       "id": 842801,
@@ -687,7 +1645,33 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2022/12/גבעת-חצבה-עין-גדי-הדרכה.jpg",
+          "credit": "גבעת חצבה. צילום: עין גדי הדרכה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2023/05/גבעת-חצבה-יונתן-נריסנה-Yonatan-Narisna-1024x770.jpg",
+          "credit": "מטיילים על גבעת חצבה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2024/12/גבעת-חצבה-1024x770.jpg",
+          "credit": "ילדים בגבעת חצבה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/09/זנבנים-צעירים-מטובעים-דורית-אביהר.jpeg",
+          "credit": "זנבנים צעירים מטובעים, שמורת נחל שיזף"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/vaidor.jpg",
+          "credit": "מרכז מבקרים ויידור החווה הניסיונית בערבה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/10/מצפה-השלום-צילום-דר-אבישי-טייכר.jpg",
+          "credit": "מצפה השלום בדרך השלום בערבה"
+        }
+      ]
     },
     {
       "id": 845453,
@@ -705,7 +1689,25 @@
       ],
       "circular": null,
       "family": true,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/04/יער-בן-שמן-דב-גרינבלט-1024x768.jpg",
+          "credit": "יער בן שמן"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/04/יער-בן-שמן-יניב-אלון-scaled.jpg",
+          "credit": "שביל ביער בן שמן. צילום: יניב אלון"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/04/6-1024x768.jpg",
+          "credit": "צילום רחפן של יער בן שמן מלמעלה"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/12/תל-גמזו.-דר-אבישי-טייכר-אתר-פיקיויקי.jpg",
+          "credit": "תל גמזו"
+        }
+      ]
     },
     {
       "id": 845473,
@@ -723,7 +1725,29 @@
       ],
       "circular": null,
       "family": false,
-      "accessible": false
+      "accessible": false,
+      "photos": [
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/11/גבעה-69-רחב.-סתיו-קונשטיק-מתוך-אתר-פיקיויקי.jpg",
+          "credit": "גבעה 69"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2024/02/ארמון-מורק-ניצנים-1-scaled.jpg",
+          "credit": "מבנה ה\"ארמון\" בניצנים. צילום: יהלי יגר"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/11/גשר-עד-הלום.-אילן-גיא-מתוך-אתר-פיקיוויקי.jpg",
+          "credit": "גשר עד הלום"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/11/גבעה-69.-סתיו-קונשטיק-מתוך-אתר-פיקיויקי.jpg",
+          "credit": "גבעה 69"
+        },
+        {
+          "src": "https://www.teva.org.il/app/uploads/2025/11/פסל-מרדכי-אנילביץ.-רוני-קניגסברג-מתוך-אתר-פיקיויקי-690x1024.jpg",
+          "credit": "פסל מרדכי אנילביץ יד מרדכי"
+        }
+      ]
     }
   ]
 }

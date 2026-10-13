@@ -4,6 +4,7 @@ from scripts.fetch_teva import clean_name, linked_track_ids, merge_teva, parse_t
 
 HAZAKA = """
 <meta property="og:title" content="מסלול טיול בתל חזקה | החברה להגנת הטבע">
+<meta property="og:image" content="https://www.teva.org.il/app/uploads/2023/03/shutterstock_719164924.jpg" />
 <ul class="trip-info">
 <li class="trip-aud"><div class="img-wrap"></div><div class="info-wrap"><span>למי</span><span>משפחות, חובבי לכת</span></div></li>
 <li class="trip-len"><div class="img-wrap"></div><div class="info-wrap"><span>אורך</span><span>4 ק״מ במסלול קווי עם הקפצת רכב</span></div></li>
@@ -11,6 +12,19 @@ HAZAKA = """
 <li class="trip-diff"><div class="img-wrap"></div><div class="info-wrap"><span>קושי</span><span>בינונית</span></div></li>
 </ul>
 <a href="https://waze.com/ul?ll=33.05387000%2C35.85036600&amp;navigate=yes">הר חוזק</a>
+<img class="brand__logo" src="https://www.teva.org.il/app/themes/teva/dist/images/icons/logo.svg" width="54" height="96" alt="החברה להגנת הטבע">
+<figure>
+<img src="https://www.teva.org.il/app/uploads/2023/03/shutterstock_719164924.jpg" alt="הר בנטל" width="1670" height="648">
+<figcaption>הר בנטל והר אביטל ברמת הגולן. צילום: שאטרסטוק</figcaption>
+</figure>
+<a class="gallery-img-holder" href="https://www.teva.org.il/app/uploads/2023/03/golan-scaled.jpg">
+<img class="gallery-img" width="1024" height="768" data-lazy-src="https://www.teva.org.il/app/uploads/2023/03/golan-1024x768.jpg" alt="נוף">
+</a>
+<img class="share-icon" width="24" height="24" src="https://www.teva.org.il/app/themes/teva/dist/images/icons/icon-facebook.svg">
+<img src="https://www.teva.org.il/app/uploads/2024/11/spni-icon-modals-1.svg" width="36" height="35" alt="">
+<section class="news-carousel">
+<img class="news-thumb" width="1920" height="1080" src="https://www.teva.org.il/app/uploads/2022/01/other-story.jpg" alt="כתבה אחרת">
+</section>
 """
 
 NO_PIN = """
@@ -43,12 +57,20 @@ class TevaParseTests(unittest.TestCase):
         self.assertIs(record["circular"], False)
         self.assertTrue(record["family"])
         self.assertNotIn("כתבה", record["name"])
+        self.assertEqual([photo["src"] for photo in record["photos"]], [
+            "https://www.teva.org.il/app/uploads/2023/03/shutterstock_719164924.jpg",
+            "https://www.teva.org.il/app/uploads/2023/03/golan-1024x768.jpg",
+        ])
+        self.assertIn("שאטרסטוק", record["photos"][0]["credit"])
+        self.assertTrue(record["photos"][0]["src"].startswith("https://"))
+        self.assertRegex(record["photos"][0]["src"], r"\.(?:jpe?g|png|webp)$")
 
     def test_a_page_without_a_pin_stays_unpinned(self):
         record = parse_track(NO_PIN, 9)
         self.assertIsNone(record["lat"])
         self.assertIsNone(record["lng"])
         self.assertEqual(record["name"], "נחל דמו")
+        self.assertEqual(record["photos"], [])
         self.assertIs(record["circular"], True)
         self.assertEqual(published_pin("<path d='M 32.1 35.2'/>"), None)
 
@@ -112,6 +134,10 @@ class TevaMergeTests(unittest.TestCase):
                 "circular": False,
                 "family": True,
                 "accessible": False,
+                "photos": [{
+                    "src": "https://www.teva.org.il/app/uploads/2023/03/shutterstock_719164924.jpg",
+                    "credit": "צילום: שאטרסטוק",
+                }],
             },
             {
                 "id": 9,
@@ -128,17 +154,24 @@ class TevaMergeTests(unittest.TestCase):
                 "circular": True,
                 "family": False,
                 "accessible": False,
+                "photos": [{
+                    "src": "https://www.teva.org.il/app/uploads/2021/08/demo.jpg",
+                    "credit": "",
+                }],
             },
         ]
         merged, updated_camps, stats = merge_teva(trails, camps, records)
         hazaka = next(trail for trail in merged if trail["id"] == 100)
         self.assertEqual(hazaka["tevaUrl"], "https://www.teva.org.il/tracks/25113")
+        self.assertEqual(hazaka["photos"][0]["src"], "https://www.teva.org.il/app/uploads/2023/03/shutterstock_719164924.jpg")
+        self.assertEqual(hazaka["image"], hazaka["photos"][0]["src"])
         demo = next(trail for trail in merged if trail["name"] == "נחל דמו")
         self.assertEqual(demo["id"], 20_000_009)
         self.assertIsNone(demo["lat"])
         self.assertEqual(demo["source"], "teva")
         self.assertEqual(demo["blurb"], "")
-        self.assertEqual(demo["photos"], [])
+        self.assertEqual(demo["photos"][0]["src"], "https://www.teva.org.il/app/uploads/2021/08/demo.jpg")
+        self.assertRegex(demo["photos"][0]["src"], r"^https://.+\.(?:jpe?g|png|webp)$")
         self.assertFalse(demo["hoursEstimated"])
         self.assertEqual(demo["hoursMax"], 2)
         self.assertEqual(stats["linkedTrails"], 1)
@@ -151,6 +184,8 @@ class TevaMergeTests(unittest.TestCase):
             "lng": 35.35738,
             "regions": ["south"],
             "areas": [],
+            "image": "https://www.parks.org.il/wp-content/uploads/zohar.jpg",
+            "photos": [{"src": "https://www.parks.org.il/wp-content/uploads/zohar.jpg", "credit": "צילום: רשות"}],
         }]
         comma = {
             "id": 7878,
@@ -167,11 +202,13 @@ class TevaMergeTests(unittest.TestCase):
             "circular": None,
             "family": False,
             "accessible": False,
+            "photos": [{"src": "https://www.teva.org.il/app/uploads/2023/03/zohar-teva.jpg", "credit": ""}],
         }
         again, _camps, stats = merge_teva(catalog, [], [comma])
         zohar = next(trail for trail in again if trail["name"] == "נחל זוהר")
         self.assertEqual(zohar["id"], 8000337)
         self.assertEqual(zohar["tevaUrl"], "https://www.teva.org.il/tracks/7878")
+        self.assertEqual(zohar["photos"][0]["src"], "https://www.parks.org.il/wp-content/uploads/zohar.jpg")
         self.assertEqual(zohar["lat"], 31.1544)
         self.assertEqual(zohar["lng"], 35.35738)
         self.assertEqual(stats["linkedTrails"], 1)

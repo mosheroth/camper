@@ -3,10 +3,11 @@
 The Society for the Protection of Nature lists its recommended walks at
 /tracks (the trip sitemap). Only structured facts are kept: name, length,
 duration, difficulty, shape, audience, the page URL, and a coordinate when
-that page itself publishes one. Articles and photos are not stored. A walk
-with no pin is still listed, without a made-up point. News posts, field
-schools and national-trail segments are not points: those pages do not
-publish a coordinate.
+that page itself publishes one. The article text is not stored. Photos the
+page itself publishes are kept as image URLs, the same shape as the rest of
+the catalog. A walk with no pin is still listed, without a made-up point.
+News posts, field schools and national-trail segments are not points: those
+pages do not publish a coordinate.
 """
 
 import html
@@ -19,12 +20,13 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import unquote
+from urllib.parse import unquote, urlparse
 
 from scripts.classify import is_hike, primary_difficulty, shape
 from scripts.fetch_tiuli import TEVA_BASE, _flags, _fmt_km, _hours, head_tokens, name_score
 from scripts.geo import region_from_lat
 from scripts.match import nearby_trails
+from scripts.photos import MAX_PHOTOS, clean_credit, image_key
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -43,6 +45,25 @@ _PIN = (
     re.compile(r"@([0-9]{2}\.[0-9]+),([0-9]{2}\.[0-9]+)"),
 )
 _TRACK = re.compile(r"(?<!news)/tracks/(\d+)")
+_IMG_TAG = re.compile(r"<img\b[^>]*>", re.I)
+_URL_ATTR = re.compile(r'(?:src|data-lazy-src|data-src|data-orig-src)\s*=\s*["\']([^"\']+)["\']', re.I)
+_SRCSET = re.compile(r'srcset\s*=\s*["\']([^"\']+)["\']', re.I)
+_OG_IMAGE = re.compile(r'<meta\b[^>]*property=["\']og:image["\'][^>]*>', re.I)
+_META_CONTENT = re.compile(r'content=["\']([^"\']+)["\']', re.I)
+_CLASS_ATTR = re.compile(r'class=["\']([^"\']*)["\']', re.I)
+_ALT_ATTR = re.compile(r'alt=["\']([^"\']*)["\']', re.I)
+_WIDTH_ATTR = re.compile(r'\bwidth\s*=\s*["\']?(\d+)', re.I)
+_HEIGHT_ATTR = re.compile(r'\bheight\s*=\s*["\']?(\d+)', re.I)
+_FILE_WIDTH = re.compile(r'-(\d+)x\d+(?=\.[a-z0-9]+$)', re.I)
+_UPLOAD = re.compile(r"^https://www\.teva\.org\.il/(?:app/uploads|wp-content/uploads)/", re.I)
+_CHROME = re.compile(r"logo|icon|sprite|favicon|pixel|spacer|emoji|tracking|beacon", re.I)
+_CHROME_CLASS = re.compile(r"logo|icon|sprite|share|brand|emoji|avatar", re.I)
+_PHOTO_EXT = re.compile(r"\.(jpe?g|png|webp)$", re.I)
+_CUT_SECTION = (
+    re.compile(r'<section\b[^>]*class="[^"]*\bshare\b', re.I),
+    re.compile(r'<section\b[^>]*class="[^"]*news-carousel', re.I),
+    re.compile(r'<section\b[^>]*class="[^"]*join-section', re.I),
+)
 
 
 def fetch_text(url, timeout=50):
@@ -141,6 +162,132 @@ def parse_levels(text):
     return levels
 
 
+def _article_html(page):
+    """The track body, without the share bar, the news carousel, or the footer."""
+    text = page or ""
+    start = text.find("<main")
+    if start < 0:
+        start = 0
+    end = text.find("<footer", start)
+    if end < 0:
+        end = len(text)
+    chunk = text[start:end]
+    cut = len(chunk)
+    for pattern in _CUT_SECTION:
+        match = pattern.search(chunk)
+        if match:
+            cut = min(cut, match.start())
+    return chunk[:cut]
+
+
+def _photo_url(raw):
+    url = html.unescape(raw or "").strip()
+    if not url or url.startswith("data:"):
+        return ""
+    if url.startswith("//"):
+        url = "https:" + url
+    elif url.startswith("/"):
+        url = "https://www.teva.org.il" + url
+    url = url.split("#", 1)[0].split("?", 1)[0]
+    if not _UPLOAD.match(url):
+        return ""
+    path = unquote(urlparse(url).path)
+    if not _PHOTO_EXT.search(path):
+        return ""
+    if _CHROME.search(path):
+        return ""
+    if any(word in path for word in ("מפה", "מפת")):
+        return ""
+    return url
+
+
+def _photo_score(url, width):
+    """Prefer a sharp mid-size file over a thumbnail or a huge original."""
+    named = _FILE_WIDTH.search(urlparse(url).path)
+    if named:
+        width = int(named.group(1))
+    if width is not None and width < 160:
+        return None
+    if width is None:
+        return 1100
+    if width < 480:
+        return width
+    return 3000 - abs(width - 1200)
+
+
+def page_photos(page):
+    """Photos this track page publishes: the social image and the article pictures.
+
+    Icons, logos, sprites, maps, and the news carousel are left out.
+    """
+    found = {}
+
+    def consider(url, credit, width, height, pos):
+        url = _photo_url(url)
+        if not url:
+            return
+        if width and height and width < 160 and height < 160:
+            return
+        score = _photo_score(url, width)
+        if score is None:
+            return
+        key = image_key(url)
+        if not key:
+            return
+        credit = clean_credit(credit or "")
+        current = found.get(key)
+        if current is None:
+            found[key] = {"src": url, "credit": credit, "score": score, "pos": pos}
+            return
+        if score > current["score"]:
+            current["src"] = url
+            current["score"] = score
+        if credit and not current["credit"]:
+            current["credit"] = credit
+        if pos < current["pos"]:
+            current["pos"] = pos
+
+    for match in _OG_IMAGE.finditer(page or ""):
+        content = _META_CONTENT.search(match.group(0))
+        if content:
+            consider(content.group(1), "", None, None, -1)
+
+    article = _article_html(page)
+    for match in _IMG_TAG.finditer(article):
+        tag = match.group(0)
+        kind = _CLASS_ATTR.search(tag)
+        if kind and _CHROME_CLASS.search(kind.group(1)):
+            continue
+        width_match = _WIDTH_ATTR.search(tag)
+        height_match = _HEIGHT_ATTR.search(tag)
+        width = int(width_match.group(1)) if width_match else None
+        height = int(height_match.group(1)) if height_match else None
+        alt = _ALT_ATTR.search(tag)
+        window = article[match.end():match.end() + 600]
+        caption = re.search(r"<figcaption[^>]*>(.*?)</figcaption>", window, re.S)
+        credit = caption.group(1) if caption else (alt.group(1) if alt else "")
+        urls = [(raw, width) for raw in _URL_ATTR.findall(tag)]
+        srcset = _SRCSET.search(tag)
+        if srcset:
+            for part in srcset.group(1).split(","):
+                bits = part.strip().split()
+                if not bits:
+                    continue
+                declared = None
+                if len(bits) > 1 and bits[-1].endswith("w") and bits[-1][:-1].isdigit():
+                    declared = int(bits[-1][:-1])
+                urls.append((bits[0], declared))
+        for raw, declared in urls:
+            consider(raw, credit, declared, height if declared in (None, width) else None, match.start())
+    for match in re.finditer(r'<a\b[^>]*class="[^"]*gallery[^"]*"[^>]*>', article, re.I):
+        href = re.search(r'href=["\']([^"\']+)["\']', match.group(0))
+        if href:
+            consider(href.group(1), "", None, None, match.start())
+
+    ranked = sorted(found.values(), key=lambda item: item["pos"])
+    return [{"src": item["src"], "credit": item["credit"]} for item in ranked[:MAX_PHOTOS]]
+
+
 def page_name(page):
     """The walk's name. The document title beats a social-preview sentence."""
     title = re.search(r"<title>([^<]+)", page or "")
@@ -177,6 +324,7 @@ def parse_track(page, track_id):
         "circular": shape(length, {}),
         "family": "משפח" in audience,
         "accessible": bool(re.search(r"מונגש|נגיש", audience)),
+        "photos": page_photos(page),
     }
 
 
@@ -208,6 +356,7 @@ def trail_from_teva(record):
     else:
         stats = f'אורך המסלול: {_fmt_km(km_min)} ק"מ'
     region = region_from_lat(record.get("lat"))
+    photos = record.get("photos") or []
     return {
         "id": TEVA_BASE + int(record["id"]),
         "name": record["name"],
@@ -232,8 +381,8 @@ def trail_from_teva(record):
         "family": bool(record.get("family")),
         "accessible": bool(record.get("accessible")),
         "blurb": "",
-        "image": None,
-        "photos": [],
+        "image": photos[0]["src"] if photos else None,
+        "photos": photos,
         "waze": None,
         "features": [],
         "details": {
@@ -279,6 +428,11 @@ def merge_teva(trails, camps, records):
         match = next((trail for trail in trails if _same_walk(record, trail)), None)
         if match:
             match["tevaUrl"] = record["url"]
+            photos = record.get("photos") or []
+            if photos and not match.get("photos"):
+                match["photos"] = photos
+                if not match.get("image"):
+                    match["image"] = photos[0]["src"]
             if match.get("lat") is None and record.get("lat") is not None:
                 match["lat"] = record["lat"]
                 match["lng"] = record["lng"]

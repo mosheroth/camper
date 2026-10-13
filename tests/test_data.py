@@ -82,8 +82,14 @@ class CatalogTests(unittest.TestCase):
         self.assertGreater(trails_with_photos, 200)
         for row in self.camps + self.trails:
             for photo in row.get("photos") or []:
-                self.assertTrue(photo["src"].startswith("https://www.parks.org.il/"))
-                self.assertNotIn("מפת", photo["src"])
+                src = photo["src"]
+                self.assertTrue(
+                    src.startswith("https://www.parks.org.il/") or src.startswith("https://www.teva.org.il/"),
+                    src,
+                )
+                self.assertRegex(src, r"\.(?:jpe?g|png|webp)(?:$|\?)", src)
+                self.assertIsInstance(photo.get("credit"), str)
+                self.assertNotIn("מפת", src)
 
     def test_places_are_named_points_near_israel(self):
         places = json.loads((ROOT / "data" / "places.json").read_text(encoding="utf-8"))
@@ -148,7 +154,11 @@ class CatalogTests(unittest.TestCase):
             self.assertTrue(trail["tiuliUrl"].startswith("https://www.tiuli.com/tracks/"), trail["name"])
             self.assertEqual(trail.get("url") or "", "")
             self.assertEqual(trail.get("blurb") or "", "")
-            self.assertFalse(trail.get("photos"))
+            if trail.get("tevaUrl"):
+                for photo in trail.get("photos") or []:
+                    self.assertRegex(photo["src"], r"^https://www\.teva\.org\.il/.+\.(?:jpe?g|png|webp)$")
+            else:
+                self.assertFalse(trail.get("photos"))
             self.assertGreaterEqual(trail["lat"], 29.4)
             self.assertLessEqual(trail["lat"], 33.4)
             self.assertNotIn("אופני", trail["name"])
@@ -159,6 +169,10 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("חזקה", hazaka["name"])
         self.assertEqual(hazaka["lat"], 33.05387)
         self.assertEqual(hazaka["lng"], 35.85037)
+        self.assertEqual(hazaka.get("blurb") or "", "")
+        self.assertGreaterEqual(len(hazaka.get("photos") or []), 1)
+        self.assertRegex(hazaka["photos"][0]["src"], r"^https://www\.teva\.org\.il/.+\.(?:jpe?g|png|webp)$")
+        self.assertIsInstance(hazaka["photos"][0].get("credit"), str)
         linked_teva = [trail for trail in self.trails if trail.get("tevaUrl")]
         self.assertGreaterEqual(len(linked_teva), len(added_teva))
         for trail in linked_teva:
@@ -166,7 +180,9 @@ class CatalogTests(unittest.TestCase):
         for trail in added_teva:
             self.assertEqual(trail.get("source"), "teva")
             self.assertEqual(trail.get("blurb") or "", "")
-            self.assertFalse(trail.get("photos"))
+            for photo in trail.get("photos") or []:
+                self.assertRegex(photo["src"], r"^https://www\.teva\.org\.il/.+\.(?:jpe?g|png|webp)$")
+                self.assertIsInstance(photo.get("credit"), str)
             if trail.get("lat") is not None:
                 self.assertGreaterEqual(trail["lat"], 29.4)
                 self.assertLessEqual(trail["lat"], 33.4)
