@@ -69,7 +69,7 @@ const TIME_LABEL = {
   dinner: "שעת ארוחת ערב",
   rise: "שעת קימה",
   breakfast: "שעת ארוחת בוקר",
-  start: "שעת יציאה למסלול",
+  start: "קמפינג",
   hike: "שעת המסלול",
   coffee: "שעת התצפית",
   visit: "שעת הביקור",
@@ -1573,6 +1573,7 @@ Promise.all([
       if (step.kind === "dinner") return "אוכלים בחניון.";
       if (step.kind === "rise") return "קמים בחניון.";
       if (step.kind === "breakfast") return "אוכלים ארוחת בוקר בחניון.";
+      if (step.kind === "start") return "קמפינג";
       if (step.kind === "need-hike") return "עדיין אין מסלול. מוסיפים אחד, ושעת החזרה נכנסת ללוז.";
       if (step.kind === "visit") {
         const name = shortName(step.name);
@@ -2465,7 +2466,7 @@ Promise.all([
 
     function stepPlace(step, stages) {
       const campStage = stages.find((stage) => stage.kind === "arrive");
-      if (step.kind === "arrive" || step.kind === "dinner" || step.kind === "rise" || step.kind === "breakfast" || step.kind === "lunch" || step.kind === "return") {
+      if (step.kind === "arrive" || step.kind === "dinner" || step.kind === "rise" || step.kind === "breakfast" || step.kind === "start" || step.kind === "lunch" || step.kind === "return") {
         return campStage || null;
       }
       if (step.kind === "coffee") {

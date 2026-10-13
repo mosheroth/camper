@@ -736,6 +736,10 @@
     steps.push({ kind: "dinner", block: "stay", part: "out", at: dinner });
     steps.push({ kind: "rise", block: "stay", part: "next", at: rise });
     steps.push({ kind: "breakfast", block: "stay", part: "next", at: breakfast });
+    if (after.length) {
+      const leaveCamp = clock.start == null ? 8 * 60 : minuteOf(clock.start);
+      steps.push({ kind: "start", block: "stay", part: "next", at: leaveCamp });
+    }
     if (!before.length && !after.length) steps.push({ kind: "need-hike", block: "stay", part: "next" });
     if (after.length) steps.push(...stepsAfterStay(after, { ...clock, place: camp }));
     const dates = tripDates(from, to, today);
@@ -824,7 +828,11 @@
       shiftAfter(0);
       if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
     } else if (step.kind === "breakfast") clock.breakfast = target;
-    else if (step.kind === "start" || (step.kind === "hike" && after[0] === step.trailId)) {
+    else if (step.kind === "start") {
+      clock.start = target;
+      shiftAfter(0);
+      if (clock.lunch != null) clock.lunch = minuteOf(clock.lunch + delta);
+    } else if (step.kind === "hike" && after[0] === step.trailId) {
       clock.start = target;
       if (after[0] != null) delete clock.hikes[after[0]];
       shiftAfter(1);
@@ -1172,6 +1180,7 @@
     if (step.kind === "dinner") return "ארוחת ערב בחניון";
     if (step.kind === "rise") return "קימה בחניון";
     if (step.kind === "breakfast") return "ארוחת בוקר בחניון";
+    if (step.kind === "start") return "קמפינג";
     if (step.kind === "lunch") return step.afterCoffee ? "ארוחת צהריים" : "ארוחת צהריים בחניון";
     if (step.kind === "return") return step.fromLookout ? "אחרי התצפית יוצאים הביתה" : "יוצאים הביתה";
     if (step.kind === "home") return "מגיעים הביתה";
