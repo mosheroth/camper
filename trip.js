@@ -200,7 +200,7 @@ function params() {
     back: readMinute(query.get("back")),
     coffee: readCoffee(query.get("coffee")),
     visit: readVisit(query.get("visit")),
-    spot: /^[or]\d+$/.test(query.get("spot") || "") ? query.get("spot") : "",
+    spot: window.CamperPlan.isPlaceId(query.get("spot") || "") ? query.get("spot") : "",
     stops: readStops(query.get("stops")),
   };
 }
@@ -237,7 +237,7 @@ function readVisit(value) {
   const ids = [];
   String(value || "").split(",").forEach((part) => {
     const id = part.trim();
-    if (/^[or]\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+    if (window.CamperPlan.isPlaceId(id) && !ids.includes(id)) ids.push(id);
   });
   return ids.slice(0, 2);
 }
@@ -257,7 +257,7 @@ function readCoffee(value) {
   const ids = [];
   String(value || "").split(",").forEach((part) => {
     const id = part.trim();
-    if (/^[or]\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+    if (window.CamperPlan.isPlaceId(id) && !ids.includes(id)) ids.push(id);
   });
   return ids.slice(0, 2);
 }
@@ -267,7 +267,7 @@ function readStops(value) {
   String(value || "").split(",").forEach((part) => {
     const [id, minutes] = part.split(":");
     const at = readMinute(minutes);
-    if (/^[or]\d+$/.test(id || "") && at != null) stops[id] = at;
+    if (window.CamperPlan.isPlaceId(id || "") && at != null) stops[id] = at;
   });
   return stops;
 }
@@ -994,7 +994,7 @@ Promise.all([
           }),
           ...query.visit.map((id) => {
             const place = catalogPlaces.find((item) => item.id === id);
-            return place ? `נקודת עניין · ${place.name}` : "";
+            return place ? `${PLACE_KIND[place.kind] || "נקודת עניין"} · ${place.name}` : "";
           }),
         ].filter(Boolean);
         const shelf = document.querySelector("#around");
@@ -1024,7 +1024,8 @@ Promise.all([
         }),
         ...((storedTrip.place && storedTrip.place.visit) || []).map((id) => {
           const place = catalogPlaces.find((item) => item.id === id);
-          return place ? { label: `נקודת עניין · ${place.name}`, lat: place.lat, lng: place.lng, color: "#2f6a52" } : null;
+          const label = place ? `${PLACE_KIND[place.kind] || "נקודת עניין"} · ${place.name}` : "";
+          return place ? { label, lat: place.lat, lng: place.lng, color: place.kind === "cart" ? "#6a4b16" : "#2f6a52" } : null;
         }),
       ].filter(Boolean);
       shelfItems.forEach((item) => shelf.append(el("p", "meta", item.label)));
@@ -1148,6 +1149,13 @@ Promise.all([
         .filter((item) => item.place.kind !== "viewpoint")
         .map((item) => [item.place.id, item]),
     );
+    query.visit.forEach((id) => {
+      if (visitNear.has(id)) return;
+      const place = places.find((item) => item && item.id === id);
+      if (!place || place.kind === "viewpoint" || place.lat == null || place.lng == null) return;
+      const km = Math.round(window.CamperPlan.haversineKm(camp, place) * 10) / 10;
+      visitNear.set(id, { place, km });
+    });
     const selectedVisits = query.visit.filter((id) => visitNear.has(id)).slice(0, 2);
     let revealCoffee = null;
     let focusPlace = (query.view === "visit" && visitNear.has(query.spot))
@@ -1781,7 +1789,7 @@ Promise.all([
     }
 
     function tokenFromMark(value) {
-      if (value === "stay" || /^[cv]:[or]\d+$/.test(value)) return value;
+      if (value === "stay" || window.CamperPlan.visitPlaceId(value) || window.CamperPlan.coffeePlaceId(value)) return value;
       const number = Number(value);
       return Number.isFinite(number) ? number : null;
     }

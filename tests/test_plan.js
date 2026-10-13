@@ -630,7 +630,11 @@ assert.strictEqual(timedVisit.find((step) => step.kind === "visit").estimated, f
 assert.deepStrictEqual(normalizeOrder(["v:r9", "stay", "c:o1"], [], ["o1"], ["r9"]), ["v:r9", "stay", "c:o1"]);
 assert.deepStrictEqual(normalizeOrder(["stay"], [], [], ["r9"]), ["stay", "v:r9"]);
 assert.strictEqual(visitPlaceId("v:o5"), "o5");
+assert.strictEqual(visitPlaceId("v:ct24273"), "ct24273");
+assert.strictEqual(visitPlaceId("v:c123"), null);
 assert.deepStrictEqual(normalizeOrder(["stay"], [], [], ["o5"]), ["stay", "v:o5"]);
+assert.deepStrictEqual(normalizeOrder(["stay"], [], [], ["ct24273"]), ["stay", "v:ct24273"]);
+assert.strictEqual(visitMinutes({ kind: "cart", name: "קפה דמו" }), 30);
 assert.strictEqual(visitMinutes({ kind: "spring", name: "עין אלון" }), 45);
 assert.strictEqual(visitMinutes({ kind: "waterfall", name: "מפל" }), 60);
 assert.strictEqual(visitMinutes({ kind: "peak", name: "הר" }), 30);
@@ -648,6 +652,28 @@ const springStop = springDay.find((step) => step.kind === "visit");
 assert.strictEqual(springStop.walk, 45);
 assert.strictEqual(springStop.official, false);
 assert.strictEqual(springStop.estimated, true);
+const cartDay = buildItinerary({
+  camp: lake,
+  trails: [],
+  visits: [{ id: "ct24273", name: "קפה דמו", kind: "cart", lat: 32.75, lng: 35.02 }],
+  arrivalMinutes: 17 * 60,
+  origin,
+});
+const cartStop = cartDay.find((step) => step.kind === "visit");
+assert.strictEqual(cartStop.placeId, "ct24273");
+assert.strictEqual(cartStop.placeKind, "cart");
+assert.strictEqual(cartStop.walk, 30);
+const cartShare = shareMessage({
+  camp: lake,
+  trails: [],
+  visits: [{ id: "ct24273", name: "קפה דמו", kind: "cart", lat: 32.75, lng: 35.02 }],
+  arrivalMinutes: 17 * 60,
+  origin,
+  from: "2026-10-16",
+  to: "2026-10-17",
+});
+assert.ok(cartShare.includes("עגלת קפה"));
+assert.ok(cartShare.includes("קפה דמו"));
 assert.strictEqual(springDay.find((step) => step.kind === "lunch").afterOfficial, false);
 const sharedVisit = shareMessage({
   camp: lake,

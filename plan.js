@@ -234,9 +234,13 @@
     return `c:${id}`;
   }
 
+  function isPlaceId(id) {
+    return /^(?:ct|[or])\d+$/.test(String(id || ""));
+  }
+
   function coffeePlaceId(token) {
-    const match = /^c:([or]\d+)$/.exec(String(token || ""));
-    return match ? match[1] : null;
+    const match = /^c:(.+)$/.exec(String(token || ""));
+    return match && isPlaceId(match[1]) ? match[1] : null;
   }
 
   function visitToken(id) {
@@ -244,8 +248,8 @@
   }
 
   function visitPlaceId(token) {
-    const match = /^v:([or]\d+)$/.exec(String(token || ""));
-    return match ? match[1] : null;
+    const match = /^v:(.+)$/.exec(String(token || ""));
+    return match && isPlaceId(match[1]) ? match[1] : null;
   }
 
   const POI_ESTIMATE = { spring: 45, waterfall: 60, peak: 30, cart: 30 };
@@ -283,7 +287,7 @@
     const ids = [];
     (places || []).forEach((place) => {
       const id = String(place && place.id != null ? place.id : place || "");
-      if (/^[or]\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+      if (isPlaceId(id) && !ids.includes(id)) ids.push(id);
     });
     return ids;
   }
@@ -661,7 +665,7 @@
     const byId = new Map();
     (places || []).forEach((place) => {
       const id = String(place && place.id != null ? place.id : "");
-      if (/^[or]\d+$/.test(id) && place.lat != null && place.lng != null) byId.set(id, place);
+      if (isPlaceId(id) && place.lat != null && place.lng != null) byId.set(id, place);
     });
     return byId;
   }
@@ -787,11 +791,11 @@
     });
     Object.keys((hours && hours.coffeeAt) || {}).forEach((id) => {
       const at = minuteOf(hours.coffeeAt[id]);
-      if (/^[or]\d+$/.test(id) && at != null) clock.coffeeAt[id] = at;
+      if (isPlaceId(id) && at != null) clock.coffeeAt[id] = at;
     });
     Object.keys((hours && hours.visitAt) || {}).forEach((id) => {
       const at = minuteOf(hours.visitAt[id]);
-      if (/^[or]\d+$/.test(id) && at != null) clock.visitAt[id] = at;
+      if (isPlaceId(id) && at != null) clock.visitAt[id] = at;
     });
     let nextArrival = minuteOf(arrival);
     if (nextArrival == null) nextArrival = 17 * 60;
@@ -1308,6 +1312,8 @@
     coffeePlaceId,
     visitToken,
     visitPlaceId,
+    isPlaceId,
+    haversineKm,
     visitMinutes,
     visitIsEstimate,
     placeTags,

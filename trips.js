@@ -209,7 +209,7 @@
       hikes: cleanHikes(source.hikes),
       coffee: cleanCoffee(source.coffee),
       visit: cleanVisit(source.visit),
-      spot: /^[or]\d+$/.test(source.spot || "") ? source.spot : "",
+      spot: placeId(source.spot) ? source.spot : "",
       stops: cleanStops(source.stops),
       radius: Number(source.radius) === 40 ? 40 : 20,
       order: cleanOrder(source.order),
@@ -259,14 +259,14 @@
         }
         return;
       }
-      const visit = /^v:([or]\d+)$/.exec(String(token || ""));
-      if (visit) {
+      const visit = /^v:(.+)$/.exec(String(token || ""));
+      if (visit && placeId(visit[1])) {
         const marker = `v:${visit[1]}`;
         if (!tokens.includes(marker)) tokens.push(marker);
         return;
       }
-      const marker = /^c:([or]\d+)$/.exec(String(token || ""));
-      if (marker) {
+      const marker = /^c:(.+)$/.exec(String(token || ""));
+      if (marker && placeId(marker[1])) {
         const coffee = `c:${marker[1]}`;
         if (!tokens.includes(coffee)) tokens.push(coffee);
         return;
@@ -278,12 +278,16 @@
     return tokens;
   }
 
+  function placeId(id) {
+    return /^(?:ct|[or])\d+$/.test(String(id || ""));
+  }
+
   function cleanVisit(value) {
     const ids = [];
     const parts = Array.isArray(value) ? value : String(value || "").split(",");
     parts.forEach((part) => {
       const id = String(part || "").trim();
-      if (/^[or]\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+      if (placeId(id) && !ids.includes(id)) ids.push(id);
     });
     return ids.slice(0, 2);
   }
@@ -293,7 +297,7 @@
     const parts = Array.isArray(value) ? value : String(value || "").split(",");
     parts.forEach((part) => {
       const id = String(part || "").trim();
-      if (/^[or]\d+$/.test(id) && !ids.includes(id)) ids.push(id);
+      if (placeId(id) && !ids.includes(id)) ids.push(id);
     });
     return ids.slice(0, 2);
   }
@@ -302,7 +306,7 @@
     const stops = {};
     if (!value || typeof value !== "object") return stops;
     Object.keys(value).forEach((id) => {
-      if (!/^[or]\d+$/.test(id)) return;
+      if (!placeId(id)) return;
       const at = cleanMinute(value[id], null);
       if (at != null) stops[id] = at;
     });

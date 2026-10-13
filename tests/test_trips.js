@@ -175,6 +175,33 @@ assert.deepStrictEqual(springStop.place.visit, ["o5"]);
 assert.strictEqual(springStop.place.spot, "o5");
 assert.deepStrictEqual(springStop.place.order, ["stay", "v:o5"]);
 assert.ok(trips.sharePath(springStop).includes("visit=o5"));
+const cartOnly = trips.save({
+  name: "עגלה",
+  campId: null,
+  trailIds: [],
+  place: {
+    visit: ["ct24273", "nope", "c123", "ct24273"],
+    view: "visit",
+    spot: "ct24273",
+    stops: { ct24273: 10 * 60, bad: 10 },
+    order: ["stay", "v:ct24273", "v:c123"],
+  },
+});
+assert.ok(cartOnly);
+assert.deepStrictEqual(cartOnly.place.visit, ["ct24273"]);
+assert.strictEqual(cartOnly.place.spot, "ct24273");
+assert.deepStrictEqual(cartOnly.place.stops, { ct24273: 10 * 60 });
+assert.deepStrictEqual(cartOnly.place.order, ["stay", "v:ct24273"]);
+assert.ok(trips.sharePath(cartOnly).includes("visit=ct24273"));
+const cartOnCamp = trips.save({
+  id: created.id,
+  name: "קסטל ועין חמד",
+  campId: 14987,
+  trailIds: [5532],
+  place: { visit: ["ct24273"], order: ["stay", "v:ct24273"] },
+});
+assert.deepStrictEqual(cartOnCamp.place.visit, ["ct24273"]);
+assert.ok(trips.sharePath(cartOnCamp).includes("visit=ct24273"));
 const swapped = trips.save({
   name: "הפוך",
   campId: 9,
@@ -186,7 +213,7 @@ assert.strictEqual(swapped.place.to, "2026-10-19");
 
 trips.remove(created.id);
 assert.strictEqual(trips.get(created.id), null);
-assert.strictEqual(trips.list().length, 10);
+assert.strictEqual(trips.list().length, 11);
 
 const broken = open({
   get: () => "{",
