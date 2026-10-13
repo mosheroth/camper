@@ -2057,6 +2057,11 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .album .ghost { background: transparent; color: var(--green); padding-inline: 0; }
 .album .danger { color: var(--clay); }
+.search-page .panel.sheet-open > .panel-search,
+.search-page .panel.sheet-open > .role-row,
+.search-page .panel.sheet-open > .trait-row {
+  display: none;
+}
 .search-sheet { display: grid; gap: 8px; padding: 8px 4px 16px; }
 .search-sheet h2 { margin: 0; font-size: 1.6rem; }
 .search-sheet h3 {

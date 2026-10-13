@@ -924,6 +924,8 @@ function render() {
   const full = pool().filter((item) => role === "all" || item.role === role);
   results.replaceChildren();
   const opened = openKey ? catalog.find((item) => item.key === openKey) : null;
+  const panel = results.closest(".panel");
+  if (panel) panel.classList.toggle("sheet-open", Boolean(opened));
   if (near && !opened) results.append(nearNote());
   if (opened) results.append(sheet(opened));
   else if (!rows.length) {
