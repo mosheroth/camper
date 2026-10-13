@@ -104,6 +104,9 @@ function hikeMeta(trail) {
     else bits.push(`כ־${trail.kmMax || trail.kmMin} ק״מ`);
   }
   if (trail.family) bits.push("למשפחות");
+  if (trail.accessible) bits.push("מונגש");
+  const area = (trail.areaNames || []).find((name) => String(name || "").trim());
+  if (area) bits.push(area);
   return bits.join(" · ");
 }
 
@@ -465,6 +468,224 @@ function nearNote() {
   return note;
 }
 
+function cleanLine(value) {
+  return String(value || "").replace(/\u200b/g, "").replace(/\s+/g, " ").trim();
+}
+
+function addList(parent, items) {
+  const lines = (items || []).map(cleanLine).filter(Boolean);
+  if (!lines.length) return;
+  const list = el("ul", "detail-list");
+  lines.forEach((line) => list.append(el("li", null, line)));
+  parent.append(list);
+}
+
+function chipList(parent, items) {
+  const lines = (items || []).map(cleanLine).filter(Boolean);
+  if (!lines.length) return;
+  const list = el("ul", "chips");
+  lines.forEach((point) => {
+    const chip = el("li");
+    if (TRAIT_MARK[point]) {
+      const mark = el("span", "mark", TRAIT_MARK[point]);
+      mark.setAttribute("aria-hidden", "true");
+      chip.append(mark);
+    }
+    chip.append(document.createTextNode(point));
+    list.append(chip);
+  });
+  parent.append(list);
+}
+
+function priceTable(parent, rows, note) {
+  if (!rows || !rows.length) return;
+  const table = el("table", "prices");
+  rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    tr.append(el("td", null, cleanLine(row.label)), el("td", null, cleanLine(row.price)));
+    table.append(tr);
+  });
+  parent.append(table);
+  if (note) parent.append(el("p", "fine", note));
+}
+
+function gallery(parent, record) {
+  const frames = (record.photos || []).filter((item) => item && item.src).map((item) => ({ ...item }));
+  if (!frames.length && record.image) frames.push({ src: record.image, credit: "" });
+  if (!frames.length) return;
+  const block = el("figure", "gallery");
+  const stage = el("div", "gallery-stage");
+  const image = document.createElement("img");
+  const meta = el("div", "gallery-meta");
+  const credit = el("span", null, "");
+  const count = el("span", "count", "");
+  meta.append(credit, count);
+  stage.append(image);
+  block.append(stage, meta);
+  let index = 0;
+  const thumbButtons = [];
+  function show(nextIndex) {
+    const alive = frames.filter((item) => !item.failed);
+    if (!alive.length) {
+      block.remove();
+      return;
+    }
+    index = (nextIndex + frames.length) % frames.length;
+    if (frames[index].failed) {
+      show(nextIndex + 1);
+      return;
+    }
+    const frame = frames[index];
+    image.src = frame.src;
+    image.alt = frame.credit || "תמונה מהשטח";
+    credit.textContent = frame.credit || "";
+    const position = alive.indexOf(frame) + 1;
+    count.textContent = alive.length > 1 ? `${position} מתוך ${alive.length}` : "";
+    meta.hidden = !credit.textContent && !count.textContent;
+    thumbButtons.forEach((button, buttonIndex) => {
+      button.hidden = Boolean(frames[buttonIndex].failed);
+      button.setAttribute("aria-current", buttonIndex === index ? "true" : "false");
+    });
+  }
+  image.addEventListener("error", () => {
+    if (frames[index]) frames[index].failed = true;
+    show(index + 1);
+  });
+  if (frames.length > 1) {
+    const previous = el("button", "gallery-nav prev", "‹");
+    previous.type = "button";
+    previous.setAttribute("aria-label", "התמונה הקודמת");
+    const next = el("button", "gallery-nav next", "›");
+    next.type = "button";
+    next.setAttribute("aria-label", "התמונה הבאה");
+    previous.addEventListener("click", () => show(index - 1));
+    next.addEventListener("click", () => show(index + 1));
+    image.addEventListener("click", () => show(index + 1));
+    stage.append(previous, next);
+    block.classList.add("has-nav");
+    const thumbs = el("div", "thumbs");
+    frames.forEach((frame, frameIndex) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("aria-label", frame.credit || `תמונה ${frameIndex + 1}`);
+      const thumb = document.createElement("img");
+      thumb.src = frame.src;
+      thumb.alt = "";
+      thumb.addEventListener("error", () => button.remove());
+      button.append(thumb);
+      button.addEventListener("click", () => show(frameIndex));
+      thumbs.append(button);
+      thumbButtons.push(button);
+    });
+    block.append(thumbs);
+  }
+  parent.append(block);
+  show(0);
+}
+
+function recordFor(item) {
+  if (item.role === "hike") return trails.find((trail) => trail.id === item.id) || null;
+  if (item.role === "camp") return camps.find((camp) => camp.id === item.id) || null;
+  return places.find((place) => place.id === item.id) || null;
+}
+
+function fillHike(node, trail) {
+  const details = trail.details || {};
+  gallery(node, trail);
+  const summary = cleanLine(details.summary || trail.blurb);
+  if (summary) node.append(el("p", "sheet-copy", summary));
+  const character = cleanLine(details.character);
+  if (character) node.append(el("p", null, character));
+  const stats = cleanLine(details.stats);
+  if (stats) node.append(el("p", null, stats));
+  const mapSheet = cleanLine(details.mapSheet);
+  if (mapSheet) node.append(el("p", "fine", mapSheet));
+  const highlights = (details.highlights || []).map(cleanLine).filter(Boolean);
+  if (highlights.length) {
+    node.append(el("h3", null, "בדרך"));
+    addList(node, highlights);
+  }
+  const extra = (trail.features || []).map(cleanLine).filter((feature) => feature && !highlights.includes(feature));
+  chipList(node, extra);
+  const snippet = cleanLine(details.snippet);
+  if (snippet) {
+    node.append(el("h3", null, "תקציר הדרך"));
+    node.append(el("p", "sheet-copy", snippet));
+  }
+  (details.sections || []).forEach((part) => {
+    const title = cleanLine(part.title);
+    if (title) node.append(el("h3", null, title));
+    const text = cleanLine(part.text);
+    if (text) node.append(el("p", null, text));
+    addList(node, part.items);
+  });
+  if (trail.routes && trail.routes.length) {
+    node.append(el("h3", null, "קווים במפה"));
+    addList(node, trail.routes.map((route) => route.name));
+  } else {
+    node.append(el("p", "fine", "לא נמצא קו שביל פתוח ששמו תואם למסלול הזה, אז המפה מסמנת את נקודת ההתחלה בלבד."));
+  }
+}
+
+function fillCamp(node, camp) {
+  const details = camp.details || {};
+  gallery(node, camp);
+  const summary = cleanLine(details.summary || camp.blurb);
+  if (summary) node.append(el("p", "sheet-copy", summary));
+  const blurb = cleanLine(camp.blurb);
+  if (blurb && blurb !== summary) node.append(el("p", null, blurb));
+  if (camp.places) node.append(el("p", null, `${camp.places} מקומות לינה`));
+  if (camp.access) node.append(el("p", null, `גישה: ${camp.access}`));
+  const facilities = (camp.facilities || []).map((item) => item && item.label).filter(Boolean);
+  if (facilities.length) {
+    node.append(el("h3", null, "מה יש בחניון"));
+    addList(node, facilities);
+  }
+  (details.sections || []).forEach((part) => {
+    const title = cleanLine(part.title);
+    if (title) node.append(el("h3", null, title));
+    const text = cleanLine(part.text);
+    if (text) node.append(el("p", null, text));
+    addList(node, part.items);
+  });
+  if (cleanLine(details.hours)) {
+    node.append(el("h3", null, "שעות"));
+    node.append(el("p", null, cleanLine(details.hours)));
+  }
+  if (cleanLine(details.arrival)) {
+    node.append(el("h3", null, "איך מגיעים"));
+    node.append(el("p", null, cleanLine(details.arrival)));
+  }
+  if (camp.prices && camp.prices.length) node.append(el("h3", null, "מחירון"));
+  priceTable(node, camp.prices, "המחיר הראשון למבוגר באוהל פרטי, לפני הנחות מנוי. יש לאמת במחירון העדכני.");
+  if (camp.paid) node.append(el("p", null, "הכניסה עם כלבים אסורה."));
+}
+
+function fillPlace(node, place) {
+  gallery(node, place);
+  const blurb = cleanLine(place.blurb);
+  if (blurb) node.append(el("p", "sheet-copy", blurb));
+  const stored = (place.tags || []).map(cleanLine).filter(Boolean);
+  chipList(node, stored.length ? stored : window.CamperPlan.placeTags(place));
+  if (place.prices && place.prices.length) {
+    node.append(el("h3", null, "דמי כניסה"));
+    priceTable(node, place.prices, "המחיר למבוגר לפי המחירון שפורסם. יש לאמת במחירון העדכני.");
+  }
+  const arrival = cleanLine(place.arrival);
+  if (arrival) {
+    node.append(el("h3", null, "איך מגיעים"));
+    node.append(el("p", null, arrival));
+  }
+  if (place.duration) node.append(el("p", null, `משך הביקור: ${place.duration}`));
+  else if (place.kind !== "viewpoint" && place.kind !== "cart") {
+    const official = place.source === "inpa" || /parks\.org\.il/.test(place.url || "");
+    const estimate = window.CamperPlan.shareDuration(window.CamperPlan.visitMinutes(place));
+    node.append(el("p", "fine", official
+      ? "משך הביקור לא מסומן בעמוד הרשות, אז הלוז שם הערכה. אפשר לשנות את השעה."
+      : `אין משך רשמי, אז הלוז שם הערכה של ${estimate}. אפשר לשנות את השעה.`));
+  }
+}
+
 function sheet(item) {
   const node = el("article", "search-sheet");
   node.dataset.key = item.key;
@@ -483,32 +704,10 @@ function sheet(item) {
   node.append(el("h2", null, item.name));
   const meta = placeMeta(item);
   if (meta) node.append(el("p", "meta", meta));
-  if (item.photo) {
-    const figure = el("figure", "sheet-photo");
-    const img = document.createElement("img");
-    img.src = item.photo;
-    img.alt = item.name;
-    img.addEventListener("error", () => figure.remove());
-    figure.append(img);
-    if (item.credit) figure.append(el("figcaption", null, item.credit));
-    node.append(figure);
-  }
-  if (item.text) node.append(el("p", "sheet-copy", item.text));
-  if (item.points && item.points.length) {
-    const list = el("ul", "chips");
-    item.points.forEach((point) => {
-      const chip = el("li");
-      if (TRAIT_MARK[point]) {
-        const mark = el("span", "mark", TRAIT_MARK[point]);
-        mark.setAttribute("aria-hidden", "true");
-        chip.append(mark);
-      }
-      chip.append(document.createTextNode(point));
-      list.append(chip);
-    });
-    node.append(list);
-  }
-  if (item.aside) node.append(el("p", "fine", item.aside));
+  const record = recordFor(item);
+  if (record && item.role === "hike") fillHike(node, record);
+  else if (record && item.role === "camp") fillCamp(node, record);
+  else if (record) fillPlace(node, record);
   if (item.booking) node.append(el("p", "booking", "צריך להזמין מקום מראש."));
   const links = el("div", "links");
   item.links.forEach((entry) => links.append(link(entry.href, entry.text)));
@@ -850,7 +1049,7 @@ function boot(campData, trailData, placeData) {
       lng: place.lng,
       regions: [],
       area: "",
-      meta: cart ? "כחצי שעה" : coffee ? "🔭 מצפור · כחצי שעה" : `${(place.kind && TRAIT_MARK[KIND[place.kind]]) || "📍"} ${KIND[place.kind] || "נקודת עניין"}`,
+      meta: placeLine(place, cart ? "cart" : coffee ? "coffee" : "place"),
       ...placeAbout(place),
       booking: false,
       traits: placeTraits(place, cart ? "cart" : coffee ? "coffee" : "place"),
@@ -884,6 +1083,7 @@ function hikeTraits(trail) {
   if (trail.difficulty === "easy") traits.push("קל");
   if (trail.family) traits.push("למשפחות");
   if (trail.circular === true) traits.push("מעגלי");
+  if (trail.accessible) traits.push("מונגש");
   const lures = window.CamperPlan.trailLures(trail);
   if (lures.includes("מוצל")) traits.push("מוצל");
   if (lures.includes("מסלול רטוב")) traits.push("רטוב");
@@ -893,11 +1093,26 @@ function hikeTraits(trail) {
   return traits;
 }
 
+function placeLine(place, roleName) {
+  const bits = [];
+  if (roleName === "cart") bits.push("כחצי שעה");
+  else if (roleName === "coffee") bits.push("🔭 מצפור", "כחצי שעה");
+  else bits.push(`${(place.kind && TRAIT_MARK[KIND[place.kind]]) || "📍"} ${KIND[place.kind] || "נקודת עניין"}`);
+  if (place.paid === true) bits.push(place.priceFrom ? `מ־${place.priceFrom} ₪` : "בתשלום");
+  else if (place.paid === false) bits.push("בחינם");
+  if (place.duration) bits.push(place.duration);
+  if (place.accessible) bits.push("מונגש");
+  if (place.booking) bits.push("בתיאום מראש");
+  return bits.join(" · ");
+}
+
 function placeTraits(place, roleName) {
   const traits = [];
   if (roleName === "coffee" || (place.hoursMax != null && place.hoursMax <= 3)) traits.push("עד 3 שעות");
   if (roleName === "coffee" || place.kind === "viewpoint") traits.push("תצפית");
   else if (place.kind !== "cart" && KIND[place.kind]) traits.push(KIND[place.kind]);
+  if (place.accessible) traits.push("מונגש");
+  if (place.booking) traits.push("בתיאום מראש");
   window.CamperPlan.placeTags(place).forEach((tag) => {
     if (!traits.includes(tag)) traits.push(tag);
   });
