@@ -506,6 +506,7 @@
       estimated: visitIsEstimate(place),
       official: placeOfficial(place),
       duration: place.duration || "",
+      placeKind: place.kind || "",
       beforeStay: Boolean(beforeStay),
       lastBefore: Boolean(lastBefore),
       firstOfDay: Boolean(firstOfDay),
@@ -1194,9 +1195,18 @@
       return `תצפית לקפה · ${name}`;
     }
     if (step.kind === "visit") {
-      const name = String(step.name || "ביקור").split(/\s+[–—-]\s+/)[0].trim();
-      if (step.walk == null) return `ביקור · ${name}`;
-      return `ביקור · ${name} · ${shareDuration(step.walk)}`;
+      const name = String(step.name || "נקודת עניין").split(/\s+[–—-]\s+/)[0].trim();
+      const kind = {
+        spring: "מעיין",
+        waterfall: "מפל",
+        viewpoint: "תצפית",
+        peak: "פסגה",
+        park: "גן לאומי",
+        reserve: "שמורה",
+        beach: "חוף",
+      }[step.placeKind] || "נקודת עניין";
+      if (step.walk == null) return `${kind} · ${name}`;
+      return `${kind} · ${name} · ${shareDuration(step.walk)}`;
     }
     return "";
   }

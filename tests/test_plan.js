@@ -649,7 +649,18 @@ const sharedVisit = shareMessage({
   to: "2026-10-17",
 });
 assert.ok(sharedVisit.startsWith("בניתי לנו מסלול עם קמפינג"));
-assert.ok(sharedVisit.includes("08:00  ביקור · שמורת טבע חי בר בכרמל · כשעה וחצי"));
+assert.ok(sharedVisit.includes("08:00  נקודת עניין · שמורת טבע חי בר בכרמל · כשעה וחצי"));
+const sharedSpring = shareMessage({
+  camp: lake,
+  trails: [],
+  visits: [{ id: "o5", name: "עין קדם", kind: "spring", lat: 32.75, lng: 35.02, url: "https://www.openstreetmap.org/node/5" }],
+  arrivalMinutes: 17 * 60,
+  origin,
+  from: "2026-10-16",
+  to: "2026-10-17",
+});
+assert.ok(sharedSpring.includes("08:00  מעיין · עין קדם · כ־45 דקות"));
+assert.ok(!sharedSpring.includes("ביקור · עין קדם"));
 assert.ok(sharedVisit.includes(haiBar.url));
 const visitStages = tripStages(lake, [], ["stay", "v:r1877"], [], [haiBar]);
 assert.strictEqual(visitStages.stages.find((stage) => stage.kind === "visit").title, "ביקור");
