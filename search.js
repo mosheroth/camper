@@ -190,7 +190,7 @@ function driveLabel(minutes) {
 function campMeta(camp) {
   const glance = window.CamperPlan.campGlance(camp);
   const regionName = { north: "צפון", center: "מרכז", south: "דרום", east: "יו״ש" }[(camp.regions || [])[0]] || "";
-  const bits = [regionName, glance.stay].filter(Boolean);
+  const bits = [regionName, glance.stay, glance.bookingUrl ? "בתיאום מראש" : ""].filter(Boolean);
   const origin = home ? window.CamperPlan.regionOrigin(camps, home) : null;
   if (origin && camp.lat != null) {
     const drive = window.CamperPlan.travelMinutes(camp, origin);
@@ -1009,7 +1009,7 @@ function boot(campData, trailData, placeData) {
       meta: campMeta(camp),
       ...campAbout(glance),
       booking: Boolean(glance.bookingUrl),
-      traits: [],
+      traits: glance.bookingUrl ? ["בתיאום מראש"] : [],
       links,
     });
   });
