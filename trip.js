@@ -2171,7 +2171,7 @@ Promise.all([
     }
 
     function blockTitle(group) {
-      if (group.id === "road") return ["🚗", "בדרך"];
+      if (group.id === "road") return ["🚗", "יוצאים לדרך"];
       if (group.id === "stay") return ["⛺", "לילה בחניון"];
       if (group.id === "return") return ["🏠", "חזרה הביתה"];
       const visit = group.steps.find((step) => step.kind === "visit");
