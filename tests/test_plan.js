@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, shareTitle, visitMinutes, visitPlaceId, placeTags, travelMinutes, onTheWay, campGlance } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, shareTitle, visitMinutes, visitPlaceId, placeTags, travelMinutes, onTheWay, campGlance, activitySchedule } = require("../plan.js");
 
 const trails = [
   {
@@ -840,5 +840,61 @@ const tiuliShare = shareMessage({
   to: "2026-10-17",
 });
 assert.ok(tiuliShare.includes("https://www.tiuli.com/tracks/24/-4"));
+
+const telDor = {
+  id: "r191275",
+  name: "גן לאומי תל דור",
+  kind: "park",
+  source: "inpa",
+  url: "https://www.parks.org.il/reserve-park/teldor/",
+  hoursMin: 1,
+  hoursMax: 2,
+  duration: "עד שעתיים",
+  lat: 32.62,
+  lng: 34.92,
+};
+const openPark = activitySchedule({ visits: [telDor] });
+assert.strictEqual(openPark.length, 1);
+assert.strictEqual(openPark[0].kind, "visit");
+assert.strictEqual(openPark[0].name, "גן לאומי תל דור");
+assert.strictEqual(openPark[0].placeKind, "park");
+assert.strictEqual(openPark[0].official, true);
+assert.strictEqual(openPark[0].walk, 90);
+assert.strictEqual(openPark[0].duration, "עד שעתיים");
+assert.strictEqual(openPark[0].estimated, false);
+const parkStages = tripStages(null, [], null, [], [telDor]);
+assert.strictEqual(parkStages.stages.length, 1);
+assert.strictEqual(parkStages.stages[0].kind, "visit");
+assert.strictEqual(parkStages.stages[0].lat, 32.62);
+const openHike = activitySchedule({
+  trails: [{ id: 8000287, name: "אבו כביר", hoursMin: 1, hoursMax: 1, hoursEstimated: true, lat: 32.05, lng: 34.77 }],
+});
+assert.strictEqual(openHike[0].kind, "hike");
+assert.strictEqual(openHike[0].walk, 60);
+assert.strictEqual(openHike[0].estimated, true);
+const noPoint = activitySchedule({
+  trails: [{ id: 2, name: "בלי נקודה", hoursMin: 1, hoursMax: 1 }],
+});
+assert.strictEqual(noPoint.length, 1);
+assert.strictEqual(noPoint[0].name, "בלי נקודה");
+assert.strictEqual(tripStages(null, [{ id: 2, name: "בלי נקודה" }], null, [], []).stages.length, 0);
+const openCup = activitySchedule({
+  coffees: [{ id: "o9", name: "מצפור רחוק", kind: "viewpoint", lat: 29.5, lng: 34.9 }],
+});
+assert.strictEqual(openCup[0].kind, "coffee");
+assert.strictEqual(openCup[0].walk, 30);
+const openCart = activitySchedule({
+  visits: [{ id: "ct24273", name: "עגלה בדרך", kind: "cart", lat: 32.1, lng: 34.8 }],
+});
+assert.strictEqual(openCart[0].kind, "visit");
+assert.strictEqual(openCart[0].placeKind, "cart");
+assert.strictEqual(openCart[0].walk, 30);
+const orderedOpen = activitySchedule({
+  trails: [{ id: 1, name: "א", hoursMin: 1, hoursMax: 1 }],
+  coffees: [{ id: "o2", name: "מצפור", lat: 32, lng: 35 }],
+  order: ["c:o2", 1],
+});
+assert.deepStrictEqual(orderedOpen.map((step) => step.kind), ["coffee", "hike"]);
+assert.deepStrictEqual(activitySchedule({}), []);
 
 console.log(`plan filters ok (${open.length} open weekends, ${familyEasy.length} family)`);

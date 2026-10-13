@@ -952,36 +952,285 @@ Promise.all([
       const saveNote = document.querySelector("#save-note");
       const menuButton = document.querySelector("#trip-menu");
       const menuPanel = document.querySelector("#trip-menu-panel");
+      const catalogPlaces = Array.isArray(placeCatalog) ? placeCatalog : [];
+      let openMap = null;
+
+      function openPieces(record) {
+        const place = (record && record.place) || {};
+        const trailList = [];
+        (record && record.trailIds || []).forEach((id) => {
+          const trail = trails.find((item) => item.id === Number(id));
+          if (trail) trailList.push(trail);
+        });
+        const coffeeList = [];
+        (place.coffee || []).forEach((id) => {
+          const item = catalogPlaces.find((entry) => entry.id === id);
+          if (item) coffeeList.push(item);
+        });
+        const visitList = [];
+        (place.visit || []).forEach((id) => {
+          const item = catalogPlaces.find((entry) => entry.id === id);
+          if (item) visitList.push(item);
+        });
+        const steps = window.CamperPlan.activitySchedule({
+          trails: trailList,
+          coffees: coffeeList,
+          visits: visitList,
+          order: place.order,
+        });
+        const story = window.CamperPlan.tripStages(null, trailList, place.order, coffeeList, visitList);
+        return { steps, story, trailIds: trailList.map((trail) => trail.id) };
+      }
+
+      function activitySource(step) {
+        if (step.kind === "hike") return trails.find((item) => item.id === Number(step.trailId)) || null;
+        return catalogPlaces.find((item) => item.id === step.placeId) || null;
+      }
+
+      function stagesFor(step, stages) {
+        if (step.kind === "hike") return (stages || []).filter((stage) => Number(stage.trailId) === Number(step.trailId));
+        if (step.kind === "coffee") return (stages || []).filter((stage) => stage.kind === "coffee" && stage.placeId === String(step.placeId));
+        if (step.kind === "visit") return (stages || []).filter((stage) => stage.kind === "visit" && stage.placeId === String(step.placeId));
+        return [];
+      }
+
+      function openTitle(step, source) {
+        if (step.kind === "coffee") return ["☕", `תצפית לקפה · ${shortName(step.name)}`];
+        if (step.kind === "visit") {
+          const official = source && (source.source === "inpa" || /parks\.org\.il/.test(source.url || ""));
+          const label = official ? "ביקור" : (PLACE_KIND[step.placeKind] || "נקודת עניין");
+          const mark = (source && PLACE_MARK[source.kind]) || PLACE_MARK[step.placeKind] || "📍";
+          return [mark, `${label} · ${shortName(step.name)}`];
+        }
+        return ["🥾", `המסלול · ${shortName(step.name)}`];
+      }
+
+      function openMeta(step, source) {
+        const facts = step.kind === "hike"
+          ? (source ? trailFacts(source) : "")
+          : step.kind === "coffee"
+            ? "כחצי שעה"
+            : (source ? visitFact(source) : "");
+        return ["בטיול", facts].filter(Boolean).join(" · ");
+      }
+
+      function openCopy(step) {
+        const name = shortName(step.name);
+        if (step.kind === "coffee") return `${name} בטיול. תצפית לקפה, כחצי שעה.`;
+        if (step.kind === "visit") {
+          const length = step.walk != null ? window.CamperPlan.shareDuration(step.walk) : "";
+          const noun = step.official ? "ביקור" : "עצירה";
+          const official = step.duration ? ` בעמוד הרשות: ${step.duration}.` : "";
+          const estimate = step.estimated
+            ? (step.official ? " זו הערכה, משך הביקור לא מסומן בעמוד." : " זו הערכה.")
+            : official;
+          const timed = length ? `${noun} של ${length}.` : `${noun}.`;
+          return `${name} בטיול. ${timed}${estimate}`;
+        }
+        if (step.walk == null) return `${name} בטיול. אין משך הליכה.`;
+        const estimate = step.estimated ? " זו הערכה לפי האורך, כי בעמוד לא רשום משך." : "";
+        return `${name} בטיול. הליכה של ${window.CamperPlan.shareDuration(step.walk)}.${estimate}`;
+      }
+
+      function openWhen(step) {
+        if (step.kind === "coffee") return "כחצי שעה";
+        if (step.walk == null) return "משך גמיש";
+        return window.CamperPlan.shareDuration(step.walk);
+      }
+
+      function pictureSource(source) {
+        if (!source) return "";
+        const photo = (source.photos || []).find((item) => item && item.src);
+        if (photo) return photo.src;
+        return source.image || "";
+      }
+
+      function activityLink(step, source) {
+        if (!source) return null;
+        const official = source.source === "inpa" || /parks\.org\.il/.test(source.url || "");
+        if (source.url && official) return { href: source.url, text: "באתר הרשות" };
+        if (step.kind === "coffee" && source.url) {
+          return { href: source.url, text: String(source.url).includes("coffeetrail.co.il") ? "בקופיטרייל" : "במפה" };
+        }
+        if (step.kind === "hike" && source.tiuliUrl) return { href: source.tiuliUrl, text: "בטיולי" };
+        if (source.url) return { href: source.url, text: "במפה" };
+        if (source.tiuliUrl) return { href: source.tiuliUrl, text: "בטיולי" };
+        return null;
+      }
+
+      function openBlock(step, stages, trailIds, onRemove) {
+        const source = activitySource(step);
+        const card = el("section", "day-block");
+        const head = el("header");
+        const titleWrap = el("div", "block-head");
+        const matched = stagesFor(step, stages);
+        if (matched.length) {
+          const row = el("div", "block-nums");
+          const labels = matched.map((stage) => String(stage.n));
+          row.setAttribute("aria-label", labels.length === 1
+            ? `סימון ${labels[0]} על המפה`
+            : `סימונים ${labels.join(", ")} על המפה`);
+          matched.forEach((stage) => {
+            const badge = el("span", "block-num", String(stage.n));
+            badge.style.setProperty("--mark", markerColor(stage, trailIds));
+            badge.title = `${stage.n}. ${stage.title}`;
+            row.append(badge);
+          });
+          titleWrap.append(row);
+        }
+        const photo = pictureSource(source);
+        if (photo) {
+          const img = document.createElement("img");
+          img.className = "block-photo";
+          img.src = photo;
+          img.alt = "";
+          img.addEventListener("error", () => img.remove());
+          titleWrap.append(img);
+        }
+        const titled = openTitle(step, source);
+        titleWrap.append(decorate(el("h3"), titled[0], titled[1]));
+        head.append(titleWrap);
+        card.append(head);
+        const bar = el("div", "block-identity");
+        const swatch = el("i", "swatch");
+        const colorStage = matched[0] || {
+          kind: step.kind,
+          trailId: step.trailId,
+          placeKind: step.placeKind,
+        };
+        swatch.style.background = markerColor(colorStage, trailIds);
+        const actions = el("div", "block-actions");
+        const outward = activityLink(step, source);
+        if (outward) {
+          const node = link(outward.href, outward.text);
+          node.className = "text-link";
+          actions.append(node);
+        }
+        if (onRemove) {
+          const remove = el("button", "remove", "הסרה");
+          remove.type = "button";
+          remove.addEventListener("click", (event) => {
+            event.stopPropagation();
+            onRemove(step);
+          });
+          actions.append(remove);
+        }
+        bar.append(swatch, el("p", "meta", openMeta(step, source)), actions);
+        card.append(bar);
+        const tags = source
+          ? (step.kind === "hike" ? window.CamperPlan.trailLures(source) : window.CamperPlan.placeTags(source))
+          : [];
+        if (tags.length) {
+          const lures = el("ul", "lures");
+          tags.forEach((tag) => lures.append(tagItem(tag)));
+          card.append(lures);
+        }
+        const list = el("ol", "timeline");
+        const item = el("li");
+        const when = el("time");
+        when.append(el("span", null, openWhen(step)));
+        item.append(when, el("p", null, openCopy(step)));
+        const pin = matched.find((stage) => stage.lat != null && stage.lng != null);
+        if (pin) {
+          item.addEventListener("click", () => {
+            if (!openMap) return;
+            openMap.setView([pin.lat, pin.lng], Math.max(openMap.getZoom(), 13));
+          });
+        }
+        list.append(item);
+        card.append(list);
+        return card;
+      }
+
+      function drawOpenMap(story, trailIds) {
+        if (typeof window.L === "undefined") return;
+        if (openMap) {
+          openMap.remove();
+          openMap = null;
+        }
+        openMap = window.L.map("map", { zoomControl: false, scrollWheelZoom: true });
+        window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 17,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }).addTo(openMap);
+        const points = [];
+        (story.paths || []).forEach((path) => {
+          if (!path.line || path.line.length < 2) return;
+          const color = markerColor({ kind: "hike", trailId: path.trailId }, trailIds);
+          window.L.polyline(path.line, { color, weight: 5, opacity: 0.9 }).addTo(openMap);
+          points.push(...path.line);
+        });
+        (story.stages || []).forEach((stage) => {
+          if (stage.lat == null || stage.lng == null) return;
+          points.push([stage.lat, stage.lng]);
+          const color = markerColor(stage, trailIds);
+          const marker = window.L.marker([stage.lat, stage.lng], {
+            icon: window.L.divIcon({
+              className: "stage-marker",
+              html: `<div class="stage-num" style="background:${color}">${stage.n}</div>`,
+              iconSize: [28, 28],
+              iconAnchor: [14, 14],
+            }),
+            title: `${stage.n}. ${stage.title}`,
+            keyboard: false,
+          }).addTo(openMap);
+          marker.bindTooltip(`${stage.n}. ${escapeHtml(stage.title)} · ${escapeHtml(stage.text)}`, {
+            direction: "auto",
+            opacity: 0.95,
+          });
+        });
+        if (points.length > 1) openMap.fitBounds(points, { padding: [28, 28], maxZoom: 14 });
+        else if (points.length === 1) openMap.setView(points[0], 13);
+        else openMap.fitBounds([[29.45, 34.22], [33.35, 35.92]]);
+        window.setTimeout(() => openMap.invalidateSize(), 0);
+      }
+
+      function paintOpen(record, onRemove, emptyLead) {
+        const shelf = document.querySelector("#around");
+        const note = document.querySelector("#map-note");
+        shelf.replaceChildren();
+        const pieces = openPieces(record);
+        if (!pieces.steps.length) {
+          lead.textContent = emptyLead || "הלוז נבנה כשיש חניון ללילה.";
+          shelf.append(el("p", null, "מוסיפים חניון מהחיפוש, ואז אפשר לערוך כאן את השעות והסדר."));
+          if (note) note.textContent = "";
+          drawOpenMap(pieces.story, pieces.trailIds);
+          return;
+        }
+        lead.textContent = "הפעילויות בטיול. חניון לילה אפשר להוסיף מהחיפוש.";
+        const block = el("section", "itinerary");
+        block.append(decorate(el("h2", "section-label"), "🗓️", "לוז"));
+        block.append(el("p", "itinerary-lead", "כל פעילות כאן חלק מהטיול. אחרי שמוסיפים חניון, נפתח לוח שעות מלא."));
+        pieces.steps.forEach((step) => block.append(openBlock(step, pieces.story.stages, pieces.trailIds, onRemove)));
+        block.append(el("p", "fine", "מוסיפים חניון מהחיפוש, ואז אפשר לערוך כאן את השעות והסדר."));
+        shelf.append(block);
+        const missingPin = pieces.steps.some((step) => {
+          const source = activitySource(step);
+          return !source || source.lat == null;
+        });
+        if (note) note.textContent = missingPin ? "לחלק מהפעילויות אין נקודה מסומנת, אז הן לא על המפה." : "";
+        try {
+          drawOpenMap(pieces.story, pieces.trailIds);
+        } catch (_error) {
+          if (note) note.textContent = "המפה לא התעדכנה. הפעילויות כן.";
+        }
+      }
+
       if (!storedTrip) {
         title.textContent = query.name || "הטיול לא נמצא";
-        lead.textContent = query.name
-          ? "הלוז נבנה כשיש חניון ללילה. אפשר להוסיף את הפעילויות לטיול מהחיפוש."
-          : "אפשר לחזור לחיפוש ולהוסיף פעילות לטיול.";
         if (addLink) addLink.href = "index.html";
         if (saveButton) saveButton.hidden = true;
         if (deleteButton) deleteButton.hidden = true;
-        const catalogPlaces = Array.isArray(placeCatalog) ? placeCatalog : [];
-        const shared = [
-          ...query.trailIds.map((id) => {
-            const trail = trails.find((item) => item.id === Number(id));
-            return trail ? `טיול · ${trail.name}` : "";
-          }),
-          ...query.coffee.map((id) => {
-            const place = catalogPlaces.find((item) => item.id === id);
-            return place ? `קפה · ${place.name}` : "";
-          }),
-          ...query.visit.map((id) => {
-            const place = catalogPlaces.find((item) => item.id === id);
-            return place ? `${PLACE_KIND[place.kind] || "נקודת עניין"} · ${place.name}` : "";
-          }),
-        ].filter(Boolean);
-        const shelf = document.querySelector("#around");
-        shared.forEach((text) => shelf.append(el("p", "meta", text)));
+        paintOpen({
+          trailIds: query.trailIds,
+          place: { coffee: query.coffee, visit: query.visit, order: query.order },
+        }, null, query.name
+          ? "הלוז נבנה כשיש חניון ללילה. אפשר להוסיף את הפעילויות לטיול מהחיפוש."
+          : "אפשר לחזור לחיפוש ולהוסיף פעילות לטיול.");
         return;
       }
       title.textContent = storedTrip.name;
       document.title = `${storedTrip.name} — סופ״ש בטבע`;
-      lead.textContent = "הלוז נבנה כשיש חניון ללילה.";
       if (addLink) addLink.href = `index.html?into=${encodeURIComponent(storedTrip.id)}`;
       if (nameInput) nameInput.value = storedTrip.name;
       if (deleteButton) {
@@ -989,48 +1238,6 @@ Promise.all([
         deleteButton.textContent = "מחיקה";
       }
       if (saveButton) saveButton.textContent = storedTrip.draft ? "צור טיול" : "שמירה";
-      const shelf = document.querySelector("#around");
-      const catalogPlaces = Array.isArray(placeCatalog) ? placeCatalog : [];
-      const shelfItems = [
-        ...(storedTrip.trailIds || []).map((id) => {
-          const trail = trails.find((item) => item.id === Number(id));
-          return trail ? { label: `טיול · ${trail.name}`, lat: trail.lat, lng: trail.lng, color: "#a3472c" } : null;
-        }),
-        ...((storedTrip.place && storedTrip.place.coffee) || []).map((id) => {
-          const place = catalogPlaces.find((item) => item.id === id);
-          return place ? { label: `קפה · ${place.name}`, lat: place.lat, lng: place.lng, color: "#6a4b16" } : null;
-        }),
-        ...((storedTrip.place && storedTrip.place.visit) || []).map((id) => {
-          const place = catalogPlaces.find((item) => item.id === id);
-          const label = place ? `${PLACE_KIND[place.kind] || "נקודת עניין"} · ${place.name}` : "";
-          return place ? { label, lat: place.lat, lng: place.lng, color: place.kind === "cart" ? "#6a4b16" : "#2f6a52" } : null;
-        }),
-      ].filter(Boolean);
-      shelfItems.forEach((item) => shelf.append(el("p", "meta", item.label)));
-      shelf.append(el("p", null, "מוסיפים חניון מהחיפוש, ואז אפשר לערוך כאן את השעות והסדר."));
-      if (typeof window.L !== "undefined") {
-        const shelfMap = window.L.map("map", { zoomControl: false, scrollWheelZoom: true });
-        window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          maxZoom: 17,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        }).addTo(shelfMap);
-        const points = [];
-        shelfItems.forEach((item) => {
-          if (item.lat == null) return;
-          points.push([item.lat, item.lng]);
-          window.L.circleMarker([item.lat, item.lng], {
-            radius: 7,
-            color: "#fffaf3",
-            weight: 2,
-            fillColor: item.color,
-            fillOpacity: 1,
-          }).addTo(shelfMap).bindTooltip(item.label, { direction: "auto", opacity: 0.95 });
-        });
-        if (points.length > 1) shelfMap.fitBounds(points, { padding: [28, 28], maxZoom: 12 });
-        else if (points.length === 1) shelfMap.setView(points[0], 12);
-        else shelfMap.fitBounds([[29.45, 34.22], [33.35, 35.92]]);
-        window.setTimeout(() => shelfMap.invalidateSize(), 0);
-      }
       function closeShelfMenu() {
         if (!menuPanel || menuPanel.hidden) return;
         menuPanel.hidden = true;
@@ -1109,6 +1316,26 @@ Promise.all([
           window.location.href = "trips.html";
         });
       }
+      function dropActivity(step) {
+        if (step.kind === "hike") {
+          storedTrip.trailIds = (storedTrip.trailIds || []).filter((id) => Number(id) !== Number(step.trailId));
+        } else {
+          const place = Object.assign({}, storedTrip.place || {});
+          const key = step.kind === "coffee" ? "coffee" : "visit";
+          place[key] = (place[key] || []).filter((id) => id !== step.placeId);
+          storedTrip.place = place;
+        }
+        const saved = rememberShelf();
+        if (!saved) {
+          if (window.CamperTrips) window.CamperTrips.remove(storedTrip.id);
+          window.location.href = "trips.html";
+          return;
+        }
+        storedTrip.trailIds = saved.trailIds;
+        storedTrip.place = saved.place;
+        paintOpen(saved, dropActivity);
+      }
+      paintOpen(storedTrip, dropActivity);
       return;
     }
     const byId = new Map(trails.map((trail) => [trail.id, trail]));
@@ -1121,6 +1348,13 @@ Promise.all([
       window.CamperPlan.nearbyPlaces(camp, places, { maxKm: 15, kind: "viewpoint", varied: false })
         .map((item) => [item.place.id, item]),
     );
+    query.coffee.forEach((id) => {
+      if (coffeeNear.has(id)) return;
+      const place = places.find((item) => item && item.id === id);
+      if (!place || place.lat == null || place.lng == null) return;
+      const km = Math.round(window.CamperPlan.haversineKm(camp, place) * 10) / 10;
+      coffeeNear.set(id, { place, km });
+    });
     const selectedCoffee = query.coffee.filter((id) => coffeeNear.has(id)).slice(0, 2);
     const visitNear = new Map(
       window.CamperPlan.nearbyPlaces(camp, places, { maxKm: 15, varied: false })

@@ -1288,6 +1288,38 @@
     return lines.join("\n");
   }
 
+  // A trip can be saved before it has a night camp. These are the activities
+  // themselves, in order, with a duration and no invented campsite.
+  function activitySchedule({ trails, coffees, visits, order }) {
+    const byId = new Map();
+    const loose = [];
+    (trails || []).forEach((trail) => {
+      if (trail && Number.isFinite(Number(trail.id))) byId.set(Number(trail.id), trail);
+      else if (trail) loose.push(trail);
+    });
+    const placesById = new Map();
+    [].concat(coffees || [], visits || []).forEach((place) => {
+      const id = String(place && place.id != null ? place.id : "");
+      if (isPlaceId(id)) placesById.set(id, place);
+    });
+    const sequence = normalizeOrder(
+      order,
+      [...byId.keys()],
+      coffeeIdsOf(coffees),
+      coffeeIdsOf(visits),
+    ).filter((token) => token !== "stay");
+    const activities = sequence
+      .map((token) => activityFor(token, byId, placesById))
+      .filter(Boolean)
+      .concat(loose.map((trail) => ({ type: "hike", trail })));
+    return activities.map((activity) => activityStep(activity, {
+      part: "out",
+      at: null,
+      walk: activityMinutes(activity),
+      back: null,
+    }));
+  }
+
   return {
     buildPlans,
     trailMatches,
@@ -1326,5 +1358,6 @@
     trailLures,
     shareMessage,
     shareTitle,
+    activitySchedule,
   };
 });
