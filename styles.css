@@ -1336,6 +1336,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 .weather-retry {
   color: var(--green-mid);
 }
+.weather .fine a { white-space: nowrap; }
 .weather-retry {
   border: 0;
   background: none;
