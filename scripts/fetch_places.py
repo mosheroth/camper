@@ -9,6 +9,7 @@ Writes data/places.json. Re-running is safe; the raw Overpass reply is cached
 in data/.osm-places-cache.json.
 """
 
+import html
 import json
 import re
 import sys
@@ -30,6 +31,8 @@ from scripts.photos import _from_image_dict, merge_photos, photos_from_media  # 
 
 CACHE = ROOT / "data" / ".osm-places-cache.json"
 CART_CACHE = ROOT / "data" / ".osm-carts-cache.json"
+TRAIL_CACHE = ROOT / "data" / ".coffeetrail-cache.json"
+TRAIL_PAGE = "https://coffeetrail.co.il/map-explore/?type=cc&pg={page}"
 _CART_NAME = re.compile(r"עגלת[\s\-]*קפה|עגלות[\s\-]*קפה|עגלה\s+של\s+קפה")
 FACT_CACHE = ROOT / "data" / ".inpa-place-cache.json"
 PHOTO_CACHE = ROOT / "data" / ".osm-photo-cache.json"
@@ -234,6 +237,87 @@ def cart_places(elements):
         found.append(place)
     found.sort(key=lambda place: place["name"])
     return found
+
+
+def carts_from_explore_html(page):
+    """Name and pin from a public Coffee Trail map page. Listings without a pin are skipped."""
+    found = []
+    seen = set()
+    for chunk in page.split('<div class="lf-item-container listing-preview')[1:]:
+        head = chunk[:8000]
+        id_match = re.search(r'data-id="listing-id-(\d+)"', head)
+        loc_match = re.search(r'data-locations="([^"]+)"', head)
+        link_match = re.search(r'href="(https://coffeetrail.co.il/coffeecart/[^"]+)"', head)
+        title_match = re.search(r'listing-preview-title">(.*?)</h4>', head, re.S)
+        if not (id_match and loc_match and link_match and title_match):
+            continue
+        listing_id = int(id_match.group(1))
+        if listing_id in seen:
+            continue
+        name = re.sub(r"<[^>]+>", "", title_match.group(1))
+        name = re.sub(r"\s+", " ", html.unescape(name)).strip()
+        try:
+            locations = json.loads(html.unescape(loc_match.group(1)))
+            lat = float(locations[0]["lat"])
+            lng = float(locations[0]["lng"])
+        except (IndexError, KeyError, TypeError, ValueError, json.JSONDecodeError):
+            continue
+        if not name or not (29.4 <= lat <= 33.4 and 34.2 <= lng <= 35.95):
+            continue
+        seen.add(listing_id)
+        found.append({
+            "id": f"ct{listing_id}",
+            "name": name,
+            "kind": "cart",
+            "lat": round(lat, 5),
+            "lng": round(lng, 5),
+            "url": link_match.group(1),
+            "source": "coffeetrail",
+        })
+    return found
+
+
+def fetch_coffeetrail_carts():
+    """Public coffee-cart pins from coffeetrail.co.il. Descriptions and photos stay on their site."""
+    if TRAIL_CACHE.exists() and "--refresh-carts" not in sys.argv:
+        return json.loads(TRAIL_CACHE.read_text(encoding="utf-8"))
+    found = {}
+    for page in range(1, 8):
+        request = urllib.request.Request(
+            TRAIL_PAGE.format(page=page),
+            headers={"User-Agent": OSM_UA, "Accept": "text/html"},
+        )
+        with urllib.request.urlopen(request, timeout=60) as response:
+            batch = carts_from_explore_html(response.read().decode("utf-8", "replace"))
+        fresh = [cart for cart in batch if cart["id"] not in found]
+        if not fresh:
+            break
+        for cart in fresh:
+            found[cart["id"]] = cart
+        time.sleep(0.4)
+    carts = sorted(found.values(), key=lambda place: place["name"])
+    TRAIL_CACHE.write_text(json.dumps(carts, ensure_ascii=False), encoding="utf-8")
+    return carts
+
+
+def drop_carts_near(carts, kept, km=0.1):
+    """Skip a pin that sits on a cart we already kept."""
+    fresh = []
+    for cart in carts:
+        if any(
+            other.get("kind") == "cart"
+            and haversine_km(other["lat"], other["lng"], cart["lat"], cart["lng"]) <= km
+            for other in kept
+        ):
+            continue
+        fresh.append(cart)
+    return fresh
+
+
+def collect_carts():
+    trail = fetch_coffeetrail_carts()
+    osm = drop_carts_near(cart_places(fetch_cart_elements()), trail)
+    return trail + osm
 
 
 def merge_carts(places, carts):
@@ -709,7 +793,7 @@ def main():
     camps = json.loads((ROOT / "data" / "camps.json").read_text(encoding="utf-8"))
     places = near_any_camp(parks + osm, camps)
     print("fetching coffee carts…")
-    places = merge_carts(places, cart_places(fetch_cart_elements()))
+    places = merge_carts(places, collect_carts())
     print("reading visit facts…")
     fact_cache = load_fact_cache()
     enrich_inpa_places(places, fact_cache)
@@ -748,8 +832,7 @@ if __name__ == "__main__":
         print(json.dumps({"photographed": done, "linked": linked}, ensure_ascii=False))
     elif "--carts" in sys.argv:
         loaded = json.loads(OUT.read_text(encoding="utf-8"))
-        carts = cart_places(fetch_cart_elements())
-        merged = merge_carts([place for place in loaded if place.get("kind") != "cart"], carts)
+        merged = merge_carts([place for place in loaded if place.get("kind") != "cart"], collect_carts())
         write_places(merged)
         print(json.dumps({"carts": sum(1 for place in merged if place.get("kind") == "cart")}, ensure_ascii=False))
     elif "--facts" in sys.argv:

@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.fetch_places import cart_name, entrance_paid, hebrew_name, osm_kind, park_kind, visit_span, visit_tags
+from scripts.fetch_places import cart_name, carts_from_explore_html, entrance_paid, hebrew_name, osm_kind, park_kind, visit_span, visit_tags
 from scripts.classify import (
     difficulties,
     is_family,
@@ -93,6 +93,30 @@ class ClassifyTests(unittest.TestCase):
         self.assertIsNone(cart_name({"name": "קפה גרג"}))
         self.assertIsNone(cart_name({"name": "Alfred coffee cart"}))
         self.assertEqual(cart_name({"name": "Alfred coffee cart", "name:he": "אלפרד עגלת קפה"}), "אלפרד עגלת קפה")
+        page = """
+        <div class="lf-item-container listing-preview type-cc" data-id="listing-id-42"
+          data-locations="[{&quot;address&quot;:&quot;x&quot;,&quot;lat&quot;:&quot;32.10000&quot;,&quot;lng&quot;:&quot;35.10000&quot;}]">
+          <a href="https://coffeetrail.co.il/coffeecart/demo/">
+          <h4 class="case27-primary-text listing-preview-title"> קפה דמו <img alt="Verified listing"> </h4>
+        </div>
+        <div class="lf-item-container listing-preview type-cc" data-id="listing-id-7"
+          data-locations="[]">
+          <a href="https://coffeetrail.co.il/coffeecart/empty/">
+          <h4 class="listing-preview-title">בלי נקודה</h4>
+        </div>
+        <div class="lf-item-container listing-preview type-cc" data-id="listing-id-9"
+          data-locations="[{&quot;lat&quot;:&quot;40.0&quot;,&quot;lng&quot;:&quot;35.1&quot;}]">
+          <a href="https://coffeetrail.co.il/coffeecart/far/">
+          <h4 class="listing-preview-title">רחוק</h4>
+        </div>
+        """
+        parsed = carts_from_explore_html(page)
+        self.assertEqual(len(parsed), 1)
+        self.assertEqual(parsed[0]["id"], "ct42")
+        self.assertEqual(parsed[0]["name"], "קפה דמו")
+        self.assertEqual(parsed[0]["source"], "coffeetrail")
+        self.assertEqual(parsed[0]["lat"], 32.1)
+        self.assertEqual(parsed[0]["lng"], 35.1)
         self.assertEqual(park_kind("גן לאומי כורסי", {"National_Park_s": True}), "park")
         self.assertEqual(park_kind("שמורת טבע נחל עמוד", {}), "reserve")
         self.assertEqual(park_kind("חוף פלמחים", {"Beach_s": True}), "beach")

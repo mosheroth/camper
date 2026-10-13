@@ -962,7 +962,7 @@ function render() {
       results.append(more);
     }
   }
-  const mapped = opened ? [opened] : full.filter((item) => item.lat != null).slice(0, 250);
+  const mapped = opened ? [opened] : full.filter((item) => item.lat != null).slice(0, 500);
   drawMap(mapped);
   document.querySelectorAll(".add-menu").forEach((node) => node.remove());
   if (menuFor) {
@@ -1039,7 +1039,7 @@ function boot(campData, trailData, placeData) {
     if (place.tiuliUrl) links.push({ href: place.tiuliUrl, text: "העמוד בטיולי" });
     if (place.wiki) links.push({ href: place.wiki, text: "הערך בוויקיפדיה" });
     if (place.site) links.push({ href: place.site, text: "האתר" });
-    if (place.url) links.push({ href: place.url, text: "הנקודה במפה" });
+    if (place.url) links.push({ href: place.url, text: place.url.includes("coffeetrail.co.il") ? "העמוד בקופיטרייל" : "הנקודה במפה" });
     catalog.push({
       key: `${cart ? "cart" : coffee ? "coffee" : "place"}-${place.id}`,
       role: cart ? "cart" : coffee ? "coffee" : "place",

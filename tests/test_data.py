@@ -99,7 +99,7 @@ class CatalogTests(unittest.TestCase):
         seen = set()
         for place in places:
             self.assertIn(place["kind"], kinds)
-            self.assertIn(place["source"], {"inpa", "osm"})
+            self.assertIn(place["source"], {"inpa", "osm", "coffeetrail"})
             self.assertGreaterEqual(place["lat"], 29.4)
             self.assertLessEqual(place["lat"], 33.4)
             self.assertGreaterEqual(place["lng"], 34.2)
@@ -109,15 +109,19 @@ class CatalogTests(unittest.TestCase):
             seen.add(place["id"])
             if place["source"] == "inpa":
                 self.assertIn("parks.org.il", place["url"])
+            elif place["source"] == "coffeetrail":
+                self.assertIn("coffeetrail.co.il/coffeecart/", place["url"])
             else:
                 self.assertIn("openstreetmap.org", place["url"])
         self.assertIn("spring", {place["kind"] for place in places})
         self.assertIn("park", {place["kind"] for place in places})
         carts = [place for place in places if place["kind"] == "cart"]
-        self.assertGreaterEqual(len(carts), 8)
-        for cart in carts:
+        trail = [cart for cart in carts if cart["source"] == "coffeetrail"]
+        osm_carts = [cart for cart in carts if cart["source"] == "osm"]
+        self.assertGreaterEqual(len(trail), 300)
+        self.assertGreaterEqual(len(osm_carts), 1)
+        for cart in osm_carts:
             self.assertIn("עגל", cart["name"])
-            self.assertIn("openstreetmap.org", cart["url"])
         hai = next(place for place in places if place["id"] == "r1877")
         self.assertTrue(hai["paid"])
         self.assertEqual(hai["priceFrom"], 24)

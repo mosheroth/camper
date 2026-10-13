@@ -527,7 +527,10 @@ function visitSheet(place, km, way) {
     if (place.tiuliUrl) links.append(link(place.tiuliUrl, "העמוד בטיולי"));
     if (place.wiki) links.append(link(place.wiki, "הערך בוויקיפדיה"));
     if (place.site) links.append(link(place.site, "האתר"));
-    if (place.url) links.append(link(place.url, officialPlace ? "העמוד המלא ברשות הטבע והגנים" : "הנקודה במפה"));
+    if (place.url) {
+      const trailPage = String(place.url).includes("coffeetrail.co.il");
+      links.append(link(place.url, officialPlace ? "העמוד המלא ברשות הטבע והגנים" : trailPage ? "העמוד בקופיטרייל" : "הנקודה במפה"));
+    }
     if (place.lat != null) {
       links.append(link(`https://www.waze.com/ul?ll=${place.lat},${place.lng}&navigate=yes`, officialPlace ? "ניווט לכניסה" : "ניווט לנקודה"));
     }
