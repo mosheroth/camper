@@ -20,13 +20,45 @@ const DIFFICULTY = { easy: "קלה", moderate: "בינונית", challenging: "�
 
 const results = document.querySelector("#results");
 const roles = document.querySelector("#roles");
+const traitsBox = document.querySelector("#traits");
 const queryBox = document.querySelector("#query");
 
 let catalog = [];
 let camps = [];
+const ROLE_MARK = { hike: "🥾", camp: "⛺", place: "📍", coffee: "☕" };
+const TRAIT_ORDER = ["עד 3 שעות", "קל", "למשפחות", "מעגלי", "מוצל", "רטוב", "תצפית", "מעיין", "מפל", "פסגה", "גן לאומי", "שמורה", "חוף", "מים", "מערות", "מונגש", "חיות בר", "פריחה", "ארכיאולוגיה", "עגלה", "מטמון", "כלבים", "בתיאום מראש"];
+const TRAIT_MARK = {
+  "עד 3 שעות": "⏱️",
+  "למשפחות": "👨‍👩‍👧",
+  "מעגלי": "🔁",
+  "רטוב": "💦",
+  "מעיין": "💧",
+  "מפל": "💦",
+  "פסגה": "⛰️",
+  "גן לאומי": "🏞️",
+  "שמורה": "🌿",
+  "חוף": "🏖️",
+  "לילדים": "🧒",
+  "מוצל": "🌳",
+  "מסלול רטוב": "💦",
+  "נוף מהמם": "🔭",
+  "תצפית": "🔭",
+  "חיות בר": "🦌",
+  "מים": "💧",
+  "ארכיאולוגיה": "🏺",
+  "פריחה": "🌸",
+  "עגלה": "🛒",
+  "מטמון": "💎",
+  "קל": "🙂",
+  "מערות": "🕳️",
+  "כלבים": "🐕",
+  "מונגש": "♿",
+  "בתיאום מראש": "📅",
+};
 let role = "all";
 let region = "all";
 let near = null;
+let pickedTraits = {};
 let home = "";
 let limit = PAGE;
 let menuFor = null;
@@ -117,7 +149,18 @@ function inRegion(item) {
 
 function matchesQuery(item, text) {
   if (!text) return true;
-  return item.name.includes(text) || (item.area || "").includes(text);
+  if (item.name.includes(text) || (item.area || "").includes(text)) return true;
+  return (item.traits || []).some((trait) => trait.includes(text));
+}
+
+function chosenTraits() {
+  return Object.keys(pickedTraits).filter((trait) => pickedTraits[trait]);
+}
+
+function matchesTraits(item) {
+  const selected = chosenTraits();
+  if (!selected.length) return true;
+  return selected.every((trait) => (item.traits || []).includes(trait));
 }
 
 function inNear(item) {
@@ -125,9 +168,13 @@ function inNear(item) {
   return kmBetween(near, item) <= near.km;
 }
 
-function pool() {
+function basePool() {
   const text = queryBox.value.trim();
   return catalog.filter((item) => inRegion(item) && inNear(item) && matchesQuery(item, text));
+}
+
+function pool() {
+  return basePool().filter(matchesTraits);
 }
 
 function visible() {
@@ -135,7 +182,7 @@ function visible() {
   const matched = pool().filter((item) => role === "all" || item.role === role);
   if (near) matched.sort((left, right) => kmBetween(near, left) - kmBetween(near, right));
   else matched.sort((left, right) => left.name.localeCompare(right.name, "he"));
-  if (!text && role === "all" && region === "all" && !near) {
+  if (!text && role === "all" && region === "all" && !near && !chosenTraits().length) {
     return matched.filter((item) => item.role === "camp").slice(0, limit);
   }
   return matched.slice(0, limit);
@@ -145,7 +192,7 @@ function counts() {
   const matched = pool();
   const tally = { all: matched.length, hike: 0, camp: 0, place: 0, coffee: 0 };
   matched.forEach((item) => { tally[item.role] += 1; });
-  if (!queryBox.value.trim() && region === "all" && !near) tally.all = catalog.filter((item) => item.role === "camp").length;
+  if (!queryBox.value.trim() && region === "all" && !near && !chosenTraits().length) tally.all = catalog.filter((item) => item.role === "camp").length;
   return tally;
 }
 
@@ -213,6 +260,39 @@ function dropNear(draw) {
     limit = PAGE;
     render();
   }
+}
+
+function paintTraits() {
+  const present = new Set();
+  basePool().filter((item) => role === "all" || item.role === role).forEach((item) => {
+    (item.traits || []).forEach((trait) => present.add(trait));
+  });
+  Object.keys(pickedTraits).forEach((trait) => {
+    if (!present.has(trait)) delete pickedTraits[trait];
+  });
+  const traits = TRAIT_ORDER.filter((trait) => present.has(trait));
+  [...present].filter((trait) => !TRAIT_ORDER.includes(trait)).sort((left, right) => left.localeCompare(right, "he")).forEach((trait) => traits.push(trait));
+  traitsBox.replaceChildren();
+  traits.forEach((trait) => {
+    const button = el("button", pickedTraits[trait] ? "chip on" : "chip");
+    button.type = "button";
+    button.setAttribute("aria-pressed", pickedTraits[trait] ? "true" : "false");
+    const emoji = TRAIT_MARK[trait];
+    if (emoji) {
+      const mark = el("span", "mark", emoji);
+      mark.setAttribute("aria-hidden", "true");
+      button.append(mark);
+    }
+    button.append(document.createTextNode(trait));
+    button.addEventListener("click", () => {
+      pickedTraits[trait] = !pickedTraits[trait];
+      if (!pickedTraits[trait]) delete pickedTraits[trait];
+      limit = PAGE;
+      openKey = "";
+      render();
+    });
+    traitsBox.append(button);
+  });
 }
 
 function nearNote() {
@@ -389,9 +469,15 @@ function menu(item, anchor) {
 function render() {
   const tally = counts();
   roles.replaceChildren();
-  [["all", "הכל"], ["hike", "טיול"], ["camp", "חניון"], ["place", "נקודת עניין"], ["coffee", "קפה"]].forEach(([key, label]) => {
-    const button = el("button", key === role ? "chip on" : "chip", `${label} ${tally[key]}`);
+  [["all", "הכל", ""], ["hike", "טיול", ROLE_MARK.hike], ["camp", "חניון", ROLE_MARK.camp], ["place", "נקודת עניין", ROLE_MARK.place], ["coffee", "קפה", ROLE_MARK.coffee]].forEach(([key, label, emoji]) => {
+    const button = el("button", key === role ? "chip on" : "chip");
     button.type = "button";
+    if (emoji) {
+      const mark = el("span", "mark", emoji);
+      mark.setAttribute("aria-hidden", "true");
+      button.append(mark);
+    }
+    button.append(document.createTextNode(`${label} ${tally[key]}`));
     button.addEventListener("click", () => {
       role = key;
       limit = PAGE;
@@ -422,6 +508,7 @@ function render() {
     here.addEventListener("click", () => dropNear(true));
     roles.append(here);
   }
+  paintTraits();
 
   const rows = visible();
   const full = pool().filter((item) => role === "all" || item.role === role);
@@ -435,7 +522,7 @@ function render() {
       : "אפשר לחפש שם, או לבחור סוג.";
     results.append(el("p", "empty", missing));
   } else {
-    if (!near && !queryBox.value.trim() && role === "all" && region === "all") {
+    if (!near && !chosenTraits().length && !queryBox.value.trim() && role === "all" && region === "all") {
       results.append(el("p", "fine", "חניונים להתחלה. חיפוש או בחירת סוג מציגים גם מסלולים, נקודות ומצפורים."));
     }
     rows.forEach((item) => results.append(row(item)));
@@ -491,6 +578,7 @@ function boot(campData, trailData, placeData) {
       meta: hikeMeta(trail),
       blurb: "",
       booking: false,
+      traits: hikeTraits(trail),
       links,
     });
   });
@@ -512,6 +600,7 @@ function boot(campData, trailData, placeData) {
       meta: campMeta(camp),
       blurb: glance.blurb || "",
       booking: Boolean(glance.bookingUrl),
+      traits: [],
       links,
     });
   });
@@ -535,6 +624,7 @@ function boot(campData, trailData, placeData) {
       meta: coffee ? "מצפור · כחצי שעה" : (KIND[place.kind] || "נקודת עניין"),
       blurb: "",
       booking: false,
+      traits: placeTraits(place, coffee ? "coffee" : "place"),
       links,
     });
   });
@@ -557,6 +647,32 @@ function boot(campData, trailData, placeData) {
     near = focusFor(window.CamperTrips.get(into), campData, trailData, places);
   }
   render();
+}
+
+function hikeTraits(trail) {
+  const traits = [];
+  if (trail.hoursMax != null && trail.hoursMax <= 3) traits.push("עד 3 שעות");
+  if (trail.difficulty === "easy") traits.push("קל");
+  if (trail.family) traits.push("למשפחות");
+  if (trail.circular === true) traits.push("מעגלי");
+  const lures = window.CamperPlan.trailLures(trail);
+  if (lures.includes("מוצל")) traits.push("מוצל");
+  if (lures.includes("מסלול רטוב")) traits.push("רטוב");
+  if (lures.includes("נוף מהמם")) traits.push("תצפית");
+  if (lures.includes("פריחה")) traits.push("פריחה");
+  if (lures.includes("כלבים")) traits.push("כלבים");
+  return traits;
+}
+
+function placeTraits(place, roleName) {
+  const traits = [];
+  if (roleName === "coffee" || (place.hoursMax != null && place.hoursMax <= 3)) traits.push("עד 3 שעות");
+  if (roleName === "coffee" || place.kind === "viewpoint") traits.push("תצפית");
+  else if (KIND[place.kind]) traits.push(KIND[place.kind]);
+  window.CamperPlan.placeTags(place).forEach((tag) => {
+    if (!traits.includes(tag)) traits.push(tag);
+  });
+  return traits;
 }
 
 function focusFor(trip, campData, trailData, placeData) {

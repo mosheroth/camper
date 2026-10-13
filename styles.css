@@ -1773,13 +1773,15 @@ body.splitting { cursor: col-resize; user-select: none; }
   padding: 10px 12px;
   border-bottom: 1px solid var(--line);
 }
-.role-row .chip {
+.role-row .chip,
+.trait-row .chip {
   background: var(--sand);
   color: var(--ink);
   padding: 6px 12px;
   font-size: 0.85rem;
 }
-.role-row .chip.on { background: var(--green); color: #fff; }
+.role-row .chip.on,
+.trait-row .chip.on { background: var(--green); color: #fff; }
 .search-page .fine .widen {
   border: 0;
   background: none;
@@ -1795,6 +1797,20 @@ body.splitting { cursor: col-resize; user-select: none; }
   margin-inline-start: auto;
   padding: 6px 8px;
 }
+.role-row .mark,
+.trait-row .mark { margin-inline-end: 4px; }
+.trait-row {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: min(148px, 36%);
+  overflow: auto;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.trait-row:empty { display: none; padding: 0; border: 0; }
+.trait-row .chip { padding: 4px 10px; font-size: 0.8rem; }
 .hit {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
