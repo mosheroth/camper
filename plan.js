@@ -1180,7 +1180,7 @@
     if (step.kind === "dinner") return "ארוחת ערב בחניון";
     if (step.kind === "rise") return "קימה בחניון";
     if (step.kind === "breakfast") return "ארוחת בוקר בחניון";
-    if (step.kind === "start") return "קמפינג";
+    if (step.kind === "start") return "יוצאים מהקמפינג";
     if (step.kind === "lunch") return step.afterCoffee ? "ארוחת צהריים" : "ארוחת צהריים בחניון";
     if (step.kind === "return") return step.fromLookout ? "אחרי התצפית יוצאים הביתה" : "יוצאים הביתה";
     if (step.kind === "home") return "מגיעים הביתה";

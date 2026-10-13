@@ -501,6 +501,8 @@ assert.strictEqual(shared.split("סופ״ש בכרמל").length, 2);
 assert.ok(shared.includes("חניון לילה הקסטל\nhttps://www.parks.org.il/camp"));
 assert.ok(shared.includes("לוז"));
 assert.ok(shared.includes("17:00  מגיעים לחניון"));
+assert.ok(shared.includes("08:00  יוצאים מהקמפינג"));
+assert.ok(!shared.includes("  קמפינג\n"));
 assert.ok(shared.includes("עין חמד\nhttps://www.parks.org.il/trail") || shared.includes("עין חמד · הליכה כשעתיים\nhttps://www.parks.org.il/trail"));
 assert.ok(shared.includes("הטיול במפה: https://example.com/trip.html?camp=1"));
 assert.ok(shared.indexOf("https://www.parks.org.il/camp") < shared.indexOf("לוז"));

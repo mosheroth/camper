@@ -1575,7 +1575,7 @@ Promise.all([
       if (step.kind === "dinner") return "אוכלים בחניון.";
       if (step.kind === "rise") return "קמים בחניון.";
       if (step.kind === "breakfast") return "אוכלים ארוחת בוקר בחניון.";
-      if (step.kind === "start") return "קמפינג";
+      if (step.kind === "start") return "יוצאים מהקמפינג.";
       if (step.kind === "need-hike") return "עדיין אין מסלול. מוסיפים אחד, ושעת החזרה נכנסת ללוז.";
       if (step.kind === "visit") {
         const name = shortName(step.name);
