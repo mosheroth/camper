@@ -9,8 +9,11 @@
     });
     trips.send = async function send(trip, text) {
       const url = new URL(trips.sharePath(trip), window.location.href).href;
-      const body = text || `${trip.name || "טיול"}\n${url}`;
-      const payload = { title: "בניתי לנו מסלול עם קמפינג", text: body, url };
+      const title = root.CamperPlan && root.CamperPlan.shareTitle
+        ? root.CamperPlan.shareTitle(trip && trip.name)
+        : String((trip && trip.name) || "").trim() || "בניתי לנו מסלול עם קמפינג";
+      const body = text || `${title}\n${url}`;
+      const payload = { title, text: body, url };
       if (navigator.share) {
         try {
           await navigator.share(payload);

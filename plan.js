@@ -1201,6 +1201,12 @@
     return "";
   }
 
+  function shareTitle(name) {
+    const text = String(name || "").trim();
+    if (!text || text === "טיול בלי שם") return "בניתי לנו מסלול עם קמפינג";
+    return text;
+  }
+
   function shareMessage(options) {
     const settings = options || {};
     const camp = settings.camp || {};
@@ -1219,9 +1225,7 @@
       from: settings.from,
       to: settings.to,
     });
-    const lines = ["בניתי לנו מסלול עם קמפינג"];
-    const name = String(settings.name || "").trim();
-    if (name && name !== "טיול בלי שם" && name !== camp.name) lines.push(name);
+    const lines = [shareTitle(settings.name)];
     const dates = tripDates(settings.from, settings.to);
     lines.push(`${dayLabel(dates.from)} עד ${dayLabel(dates.to)}`);
     lines.push("");
@@ -1301,5 +1305,6 @@
     storyPath,
     trailLures,
     shareMessage,
+    shareTitle,
   };
 });

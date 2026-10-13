@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, visitMinutes, visitPlaceId, placeTags, travelMinutes, onTheWay, campGlance } = require("../plan.js");
+const { buildPlans, nearbyChoices, aroundCount, planUrl, lengthIsUsable, buildItinerary, retimedHours, centerOrigin, regionOrigin, tripStages, trailLures, comingWeekend, tripDates, moveTripDates, moveOrder, normalizeOrder, storyPath, nearbyList, nearbyPlaces, shareMessage, shareTitle, visitMinutes, visitPlaceId, placeTags, travelMinutes, onTheWay, campGlance } = require("../plan.js");
 
 const trails = [
   {
@@ -492,8 +492,12 @@ const shared = shareMessage({
   to: "2026-10-17",
   url: "https://example.com/trip.html?camp=1",
 });
-assert.ok(shared.startsWith("בניתי לנו מסלול עם קמפינג\n"));
-assert.ok(shared.includes("סופ״ש בכרמל"));
+assert.strictEqual(shareTitle("סופ״ש בכרמל"), "סופ״ש בכרמל");
+assert.strictEqual(shareTitle("  טיול בכרמל  "), "טיול בכרמל");
+assert.strictEqual(shareTitle(""), "בניתי לנו מסלול עם קמפינג");
+assert.strictEqual(shareTitle("טיול בלי שם"), "בניתי לנו מסלול עם קמפינג");
+assert.ok(shared.startsWith("סופ״ש בכרמל\n"));
+assert.strictEqual(shared.split("סופ״ש בכרמל").length, 2);
 assert.ok(shared.includes("חניון לילה הקסטל\nhttps://www.parks.org.il/camp"));
 assert.ok(shared.includes("לוז"));
 assert.ok(shared.includes("17:00  מגיעים לחניון"));
