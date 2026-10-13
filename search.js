@@ -2,11 +2,11 @@ const ISRAEL_BOUNDS = [[29.45, 34.22], [33.35, 35.92]];
 const PAGE = 24;
 const NEAR_KM = 5;
 const ROLE = {
-  hike: ["טיול רגלי", "#a3472c"],
-  camp: ["קמפינג", "#1c3f34"],
-  place: ["נקודת עניין", "#2f6a52"],
-  coffee: ["תצפית", "#6a4b16"],
-  cart: ["עגלת קפה", "#8a3e2a"],
+  hike: ["טיול רגלי", "#3f3125"],
+  camp: ["קמפינג", "#209c62"],
+  place: ["נקודת עניין", "#534741"],
+  coffee: ["תצפית", "#c9a227"],
+  cart: ["עגלת קפה", "#912121"],
 };
 const KIND = {
   spring: "מעיין",
@@ -322,7 +322,7 @@ function drawMap(rows) {
     points.push([item.lat, item.lng]);
     const marker = window.L.circleMarker([item.lat, item.lng], {
       radius: openKey === item.key ? 9 : 6,
-      color: "#fffaf3",
+      color: "#ffffff",
       weight: 2,
       fillColor: ROLE[item.role][1],
       fillOpacity: 1,

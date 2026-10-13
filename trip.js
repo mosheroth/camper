@@ -1,4 +1,4 @@
-const COLORS = ["#a3472c", "#1d6a4f", "#1d4e89", "#8a5a00", "#6b3fa0"];
+const COLORS = ["#209c62", "#3f3125", "#1d4e89", "#c9a227", "#6b3fa0"];
 const PLACE_KIND = {
   spring: "מעיין",
   waterfall: "מפל",
@@ -59,14 +59,14 @@ const TRAIT_MARK = Object.assign({
 const PLACE_COLOR = {
   spring: "#1d6a8a",
   waterfall: "#0b6e8a",
-  viewpoint: "#8a5a00",
+  viewpoint: "#c9a227",
   peak: "#4d5a32",
   park: "#1d6a4f",
   reserve: "#1d6a4f",
   beach: "#1d4e89",
-  cart: "#8a3e2a",
+  cart: "#912121",
 };
-const CAMP_MARK = "#a3472c";
+const CAMP_MARK = "#209c62";
 
 function markerColor(stage, trailIds) {
   if (!stage || stage.kind === "arrive") return CAMP_MARK;
@@ -795,9 +795,9 @@ function showTrip() {
         `<span class="stage-badge" style="background:${CAMP_MARK}">${arrive ? arrive.n : 1}</span>` +
         '<span class="camp-pin-tag">חניון</span>' +
         '<svg viewBox="0 0 36 46" width="36" height="46" aria-hidden="true">' +
-        `<path d="M18 44.5C18 44.5 33 27.2 33 16.2A15 15 0 1 0 3 16.2C3 27.2 18 44.5 18 44.5Z" fill="${CAMP_MARK}" stroke="#fffaf3" stroke-width="2.4"/>` +
-        '<path d="M11 22.2 18 13.2 25 22.2Z" fill="none" stroke="#fffaf3" stroke-width="1.8" stroke-linejoin="round"/>' +
-        '<path d="M18 13.6V22" stroke="#fffaf3" stroke-width="1.4"/>' +
+        `<path d="M18 44.5C18 44.5 33 27.2 33 16.2A15 15 0 1 0 3 16.2C3 27.2 18 44.5 18 44.5Z" fill="${CAMP_MARK}" stroke="#ffffff" stroke-width="2.4"/>` +
+        '<path d="M11 22.2 18 13.2 25 22.2Z" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>' +
+        '<path d="M18 13.6V22" stroke="#ffffff" stroke-width="1.4"/>' +
         "</svg></div>",
       iconSize: [36, 46],
       iconAnchor: [18, 44],
@@ -876,7 +876,7 @@ function showTrip() {
       radius: 6,
       color: "#6d6256",
       weight: 2,
-      fillColor: "#fffaf3",
+      fillColor: "#ffffff",
       fillOpacity: 1,
     }).addTo(overlay);
     const distance = item.km == null ? "" : `<br>כ־${item.km} ק״מ מהחניון`;
@@ -897,7 +897,7 @@ function showTrip() {
       radius: 5,
       color,
       weight: 2,
-      fillColor: "#fffaf3",
+      fillColor: "#ffffff",
       fillOpacity: 1,
     }).addTo(overlay);
     const kind = PLACE_KIND[place.kind] || "";
@@ -1832,8 +1832,8 @@ Promise.all([
         const line = window.CamperPlan.storyPath(trail, camp);
         if (line.length > 1) {
           previewLine = window.L.featureGroup([
-            window.L.polyline(line, { color: "#fffaf3", weight: 10, opacity: 0.95, interactive: false }),
-            window.L.polyline(line, { color: "#a3472c", weight: 5, opacity: 1, interactive: false }),
+            window.L.polyline(line, { color: "#ffffff", weight: 10, opacity: 0.95, interactive: false }),
+            window.L.polyline(line, { color: "#209c62", weight: 5, opacity: 1, interactive: false }),
           ]).addTo(sharedMap);
           previewLine.bringToFront();
           points = line;
