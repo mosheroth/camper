@@ -2042,6 +2042,12 @@ body.splitting { cursor: col-resize; user-select: none; }
 .album .danger { color: var(--clay); }
 .search-sheet { display: grid; gap: 8px; padding: 8px 4px 16px; }
 .search-sheet h2 { margin: 0; font-size: 1.6rem; }
+.search-sheet h3 {
+  margin: 4px 0 0;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 1.15rem;
+}
+.search-sheet p { margin: 0; }
 .search-sheet .sheet-photo { margin: 0; }
 .search-sheet .sheet-photo img {
   display: block;
@@ -2252,4 +2258,5 @@ body.splitting { cursor: col-resize; user-select: none; }
     gap: 0;
   }
   .colophon { display: none; }
+  .search-page .gallery-stage { height: 168px; }
 }
