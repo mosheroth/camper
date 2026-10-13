@@ -248,7 +248,7 @@
     return match ? match[1] : null;
   }
 
-  const POI_ESTIMATE = { spring: 45, waterfall: 60, peak: 30 };
+  const POI_ESTIMATE = { spring: 45, waterfall: 60, peak: 30, cart: 30 };
 
   function visitMinutes(place) {
     const walked = walkMinutes(place);
@@ -1204,6 +1204,7 @@
         park: "גן לאומי",
         reserve: "שמורה",
         beach: "חוף",
+        cart: "עגלת קפה",
       }[step.placeKind] || "נקודת עניין";
       if (step.walk == null) return `${kind} · ${name}`;
       return `${kind} · ${name} · ${shareDuration(step.walk)}`;

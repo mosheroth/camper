@@ -29,6 +29,8 @@ from scripts.osm_routes import OVERPASS, specific_tokens  # noqa: E402
 from scripts.photos import _from_image_dict, merge_photos, photos_from_media  # noqa: E402
 
 CACHE = ROOT / "data" / ".osm-places-cache.json"
+CART_CACHE = ROOT / "data" / ".osm-carts-cache.json"
+_CART_NAME = re.compile(r"עגלת[\s\-]*קפה|עגלות[\s\-]*קפה|עגלה\s+של\s+קפה")
 FACT_CACHE = ROOT / "data" / ".inpa-place-cache.json"
 PHOTO_CACHE = ROOT / "data" / ".osm-photo-cache.json"
 VISIT_BUCKETS = (
@@ -84,6 +86,18 @@ def osm_kind(tags):
     if tags.get("natural") == "peak":
         return "peak"
     return None
+
+
+def cart_name(tags):
+    """Hebrew name of a coffee cart, or None when the node is some other place."""
+    tags = tags or {}
+    preferred = plain_text(tags.get("name:he") or "")
+    fallback = plain_text(tags.get("name") or "")
+    chosen = preferred if _HEBREW.search(preferred) else fallback
+    chosen = chosen.strip()
+    if not _CART_NAME.search(chosen):
+        return None
+    return chosen
 
 
 def park_kind(name, acf):
@@ -158,6 +172,85 @@ out;
     elements = payload.get("elements") or []
     CACHE.write_text(json.dumps(elements, ensure_ascii=False), encoding="utf-8")
     return elements
+
+
+def fetch_cart_elements():
+    if CART_CACHE.exists() and "--refresh-carts" not in sys.argv:
+        return json.loads(CART_CACHE.read_text(encoding="utf-8"))
+    query = """
+[out:json][timeout:60];
+(
+  nwr["name"~"עגלת קפה|עגלות קפה|עגלה של קפה|עגלת-קפה"](29.45,34.22,33.40,35.95);
+  nwr["name:he"~"עגלת קפה|עגלות קפה|עגלה של קפה|עגלת-קפה"](29.45,34.22,33.40,35.95);
+);
+out center;
+""".strip()
+    request = urllib.request.Request(
+        OVERPASS,
+        data=query.encode("utf-8"),
+        headers={"User-Agent": OSM_UA, "Accept": "application/json"},
+    )
+    with urllib.request.urlopen(request, timeout=90) as response:
+        payload = json.load(response)
+    elements = payload.get("elements") or []
+    CART_CACHE.write_text(json.dumps(elements, ensure_ascii=False), encoding="utf-8")
+    return elements
+
+
+def cart_places(elements):
+    """Named coffee carts. A way uses its center, which Overpass computed from the outline."""
+    found = []
+    seen = set()
+    for element in elements or []:
+        if element.get("type") not in {"node", "way"}:
+            continue
+        element_id = element.get("id")
+        if element_id in seen:
+            continue
+        tags = element.get("tags") or {}
+        name = cart_name(tags)
+        center = element.get("center") or {}
+        lat = element.get("lat", center.get("lat"))
+        lng = element.get("lon", center.get("lon"))
+        if not name or lat is None or lng is None:
+            continue
+        lat = float(lat)
+        lng = float(lng)
+        if not (29.4 <= lat <= 33.4 and 34.2 <= lng <= 35.95):
+            continue
+        seen.add(element_id)
+        place = {
+            "id": f"o{element_id}",
+            "name": name,
+            "kind": "cart",
+            "lat": round(lat, 5),
+            "lng": round(lng, 5),
+            "url": f"https://www.openstreetmap.org/{element['type']}/{element_id}",
+            "source": "osm",
+        }
+        site = plain_text(tags.get("website") or tags.get("contact:website") or "")
+        if site.startswith("http"):
+            place["site"] = site
+        found.append(place)
+    found.sort(key=lambda place: place["name"])
+    return found
+
+
+def merge_carts(places, carts):
+    ids = {place["id"] for place in places}
+    merged = list(places)
+    for cart in carts:
+        if cart["id"] in ids:
+            continue
+        if any(
+            other["name"] == cart["name"]
+            and haversine_km(other["lat"], other["lng"], cart["lat"], cart["lng"]) <= 0.12
+            for other in merged
+        ):
+            continue
+        merged.append(cart)
+        ids.add(cart["id"])
+    return merged
 
 
 def osm_places(elements):
@@ -615,6 +708,8 @@ def main():
     osm = drop_osm_covered_by_parks(parks, osm_places(fetch_osm_elements()))
     camps = json.loads((ROOT / "data" / "camps.json").read_text(encoding="utf-8"))
     places = near_any_camp(parks + osm, camps)
+    print("fetching coffee carts…")
+    places = merge_carts(places, cart_places(fetch_cart_elements()))
     print("reading visit facts…")
     fact_cache = load_fact_cache()
     enrich_inpa_places(places, fact_cache)
@@ -651,6 +746,12 @@ if __name__ == "__main__":
         write_places(loaded)
         linked = sum(1 for place in loaded if place.get("source") == "osm" and (place.get("site") or place.get("wiki") or place.get("url")))
         print(json.dumps({"photographed": done, "linked": linked}, ensure_ascii=False))
+    elif "--carts" in sys.argv:
+        loaded = json.loads(OUT.read_text(encoding="utf-8"))
+        carts = cart_places(fetch_cart_elements())
+        merged = merge_carts([place for place in loaded if place.get("kind") != "cart"], carts)
+        write_places(merged)
+        print(json.dumps({"carts": sum(1 for place in merged if place.get("kind") == "cart")}, ensure_ascii=False))
     elif "--facts" in sys.argv:
         loaded = json.loads(OUT.read_text(encoding="utf-8"))
         cached = load_fact_cache()

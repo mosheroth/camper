@@ -7,6 +7,7 @@ const PLACE_KIND = {
   park: "גן לאומי",
   reserve: "שמורה",
   beach: "חוף",
+  cart: "עגלת קפה",
 };
 const PLACE_MARK = {
   spring: "💧",
@@ -16,6 +17,7 @@ const PLACE_MARK = {
   park: "🏞️",
   reserve: "🌿",
   beach: "🏖️",
+  cart: "☕",
 };
 const CATALOG_ROLE = {
   hike: ["🥾", "טיול"],
@@ -62,6 +64,7 @@ const PLACE_COLOR = {
   park: "#1d6a4f",
   reserve: "#1d6a4f",
   beach: "#1d4e89",
+  cart: "#8a3e2a",
 };
 const CAMP_MARK = "#a3472c";
 

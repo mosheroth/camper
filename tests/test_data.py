@@ -94,7 +94,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_places_are_named_points_near_israel(self):
         places = json.loads((ROOT / "data" / "places.json").read_text(encoding="utf-8"))
-        kinds = {"spring", "waterfall", "viewpoint", "peak", "park", "reserve", "beach"}
+        kinds = {"spring", "waterfall", "viewpoint", "peak", "park", "reserve", "beach", "cart"}
         self.assertGreater(len(places), 100)
         seen = set()
         for place in places:
@@ -113,6 +113,11 @@ class CatalogTests(unittest.TestCase):
                 self.assertIn("openstreetmap.org", place["url"])
         self.assertIn("spring", {place["kind"] for place in places})
         self.assertIn("park", {place["kind"] for place in places})
+        carts = [place for place in places if place["kind"] == "cart"]
+        self.assertGreaterEqual(len(carts), 8)
+        for cart in carts:
+            self.assertIn("עגל", cart["name"])
+            self.assertIn("openstreetmap.org", cart["url"])
         hai = next(place for place in places if place["id"] == "r1877")
         self.assertTrue(hai["paid"])
         self.assertEqual(hai["priceFrom"], 24)

@@ -44,7 +44,10 @@ function tripPicture(trip) {
   if (trail) return { src: photoOf(trail), mark: "🥾" };
   const ids = ((trip.place && trip.place.visit) || []).concat((trip.place && trip.place.coffee) || []);
   const place = ids.map((id) => places.find((item) => item.id === id)).find((item) => photoOf(item));
-  if (place) return { src: photoOf(place), mark: place.kind === "viewpoint" ? "🔭" : "📍" };
+  if (place) {
+    const mark = place.kind === "viewpoint" ? "🔭" : place.kind === "cart" ? "☕" : "📍";
+    return { src: photoOf(place), mark };
+  }
   if (camp) return { src: "", mark: "⛺" };
   if ((trip.trailIds || []).length) return { src: "", mark: "🥾" };
   if ((trip.place && trip.place.coffee || []).length) return { src: "", mark: "🔭" };

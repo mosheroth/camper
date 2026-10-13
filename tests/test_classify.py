@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.fetch_places import entrance_paid, hebrew_name, osm_kind, park_kind, visit_span, visit_tags
+from scripts.fetch_places import cart_name, entrance_paid, hebrew_name, osm_kind, park_kind, visit_span, visit_tags
 from scripts.classify import (
     difficulties,
     is_family,
@@ -88,6 +88,11 @@ class ClassifyTests(unittest.TestCase):
         self.assertEqual(osm_kind({"natural": "spring", "tourism": "viewpoint"}), "spring")
         self.assertEqual(osm_kind({"waterway": "waterfall"}), "waterfall")
         self.assertEqual(osm_kind({"natural": "peak"}), "peak")
+        self.assertEqual(cart_name({"name": "פזיקפה - עגלת קפה"}), "פזיקפה - עגלת קפה")
+        self.assertEqual(cart_name({"name": "עגלה של קפה"}), "עגלה של קפה")
+        self.assertIsNone(cart_name({"name": "קפה גרג"}))
+        self.assertIsNone(cart_name({"name": "Alfred coffee cart"}))
+        self.assertEqual(cart_name({"name": "Alfred coffee cart", "name:he": "אלפרד עגלת קפה"}), "אלפרד עגלת קפה")
         self.assertEqual(park_kind("גן לאומי כורסי", {"National_Park_s": True}), "park")
         self.assertEqual(park_kind("שמורת טבע נחל עמוד", {}), "reserve")
         self.assertEqual(park_kind("חוף פלמחים", {"Beach_s": True}), "beach")

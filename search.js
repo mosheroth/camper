@@ -6,6 +6,7 @@ const ROLE = {
   camp: ["קמפינג", "#1c3f34"],
   place: ["נקודת עניין", "#2f6a52"],
   coffee: ["תצפית", "#6a4b16"],
+  cart: ["עגלת קפה", "#8a3e2a"],
 };
 const KIND = {
   spring: "מעיין",
@@ -15,6 +16,7 @@ const KIND = {
   park: "גן לאומי",
   reserve: "שמורה",
   beach: "חוף",
+  cart: "עגלת קפה",
 };
 const DIFFICULTY = { easy: "קלה", moderate: "בינונית", challenging: "מאתגרת" };
 
@@ -25,7 +27,7 @@ const queryBox = document.querySelector("#query");
 
 let catalog = [];
 let camps = [];
-const ROLE_MARK = { hike: "🥾", camp: "⛺", place: "📍", coffee: "🔭" };
+const ROLE_MARK = { hike: "🥾", camp: "⛺", place: "📍", coffee: "🔭", cart: "☕" };
 const TRAIT_ORDER = ["עד 3 שעות", "קל", "למשפחות", "מעגלי", "מוצל", "רטוב", "תצפית", "מעיין", "מפל", "פסגה", "גן לאומי", "שמורה", "חוף", "מים", "מערות", "מונגש", "חיות בר", "פריחה", "ארכיאולוגיה", "עגלה", "מטמון", "כלבים", "בתיאום מראש"];
 const TRAIT_MARK = {
   "עד 3 שעות": "⏱️",
@@ -288,7 +290,7 @@ function visible() {
 
 function counts() {
   const matched = pool();
-  const tally = { all: matched.length, hike: 0, camp: 0, place: 0, coffee: 0 };
+  const tally = { all: matched.length, hike: 0, camp: 0, place: 0, coffee: 0, cart: 0 };
   matched.forEach((item) => { tally[item.role] += 1; });
   if (!queryBox.value.trim() && region === "all" && !near && !chosenTraits().length) tally.all = catalog.filter((item) => item.role === "camp").length;
   return tally;
@@ -527,6 +529,7 @@ function itemMark(item) {
   if (item.role === "hike") return ROLE_MARK.hike;
   if (item.role === "camp") return ROLE_MARK.camp;
   if (item.role === "coffee") return ROLE_MARK.coffee;
+  if (item.role === "cart") return ROLE_MARK.cart;
   const kindName = (item.traits || []).find((trait) => ["מעיין", "מפל", "פסגה", "גן לאומי", "שמורה", "חוף"].includes(trait));
   return (kindName && TRAIT_MARK[kindName]) || ROLE_MARK.place;
 }
@@ -711,6 +714,7 @@ function render() {
     ["camp", ROLE.camp[0], ROLE_MARK.camp],
     ["hike", ROLE.hike[0], ROLE_MARK.hike],
     ["coffee", ROLE.coffee[0], ROLE_MARK.coffee],
+    ["cart", ROLE.cart[0], ROLE_MARK.cart],
     ["place", ROLE.place[0], ROLE_MARK.place],
   ].forEach(([key, label, emoji]) => {
     const button = el("button", key === role ? "chip on" : "chip");
@@ -831,24 +835,25 @@ function boot(campData, trailData, placeData) {
   places.forEach((place) => {
     if (place.lat == null || !place.name) return;
     const coffee = place.kind === "viewpoint";
+    const cart = place.kind === "cart";
     const links = [];
     if (place.tiuliUrl) links.push({ href: place.tiuliUrl, text: "העמוד בטיולי" });
     if (place.wiki) links.push({ href: place.wiki, text: "הערך בוויקיפדיה" });
     if (place.site) links.push({ href: place.site, text: "האתר" });
     if (place.url) links.push({ href: place.url, text: "הנקודה במפה" });
     catalog.push({
-      key: `${coffee ? "coffee" : "place"}-${place.id}`,
-      role: coffee ? "coffee" : "place",
+      key: `${cart ? "cart" : coffee ? "coffee" : "place"}-${place.id}`,
+      role: cart ? "cart" : coffee ? "coffee" : "place",
       id: place.id,
       name: place.name,
       lat: place.lat,
       lng: place.lng,
       regions: [],
       area: "",
-      meta: coffee ? "🔭 מצפור · כחצי שעה" : `${(place.kind && TRAIT_MARK[KIND[place.kind]]) || "📍"} ${KIND[place.kind] || "נקודת עניין"}`,
+      meta: cart ? "כחצי שעה" : coffee ? "🔭 מצפור · כחצי שעה" : `${(place.kind && TRAIT_MARK[KIND[place.kind]]) || "📍"} ${KIND[place.kind] || "נקודת עניין"}`,
       ...placeAbout(place),
       booking: false,
-      traits: placeTraits(place, coffee ? "coffee" : "place"),
+      traits: placeTraits(place, cart ? "cart" : coffee ? "coffee" : "place"),
       links,
     });
   });
@@ -892,7 +897,7 @@ function placeTraits(place, roleName) {
   const traits = [];
   if (roleName === "coffee" || (place.hoursMax != null && place.hoursMax <= 3)) traits.push("עד 3 שעות");
   if (roleName === "coffee" || place.kind === "viewpoint") traits.push("תצפית");
-  else if (KIND[place.kind]) traits.push(KIND[place.kind]);
+  else if (place.kind !== "cart" && KIND[place.kind]) traits.push(KIND[place.kind]);
   window.CamperPlan.placeTags(place).forEach((tag) => {
     if (!traits.includes(tag)) traits.push(tag);
   });
