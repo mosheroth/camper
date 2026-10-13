@@ -444,7 +444,11 @@ function sheet(item) {
     render();
   });
   node.append(back);
-  node.append(el("p", "kicker", ROLE[item.role][0]));
+  const kicker = el("p", "kicker");
+  const kickerMark = el("span", "mark", ROLE_MARK[item.role] || "📍");
+  kickerMark.setAttribute("aria-hidden", "true");
+  kicker.append(kickerMark, document.createTextNode(ROLE[item.role][0]));
+  node.append(kicker);
   node.append(el("h2", null, item.name));
   const meta = placeMeta(item);
   if (meta) node.append(el("p", "meta", meta));
@@ -461,7 +465,16 @@ function sheet(item) {
   if (item.text) node.append(el("p", "sheet-copy", item.text));
   if (item.points && item.points.length) {
     const list = el("ul", "chips");
-    item.points.forEach((point) => list.append(el("li", null, point)));
+    item.points.forEach((point) => {
+      const chip = el("li");
+      if (TRAIT_MARK[point]) {
+        const mark = el("span", "mark", TRAIT_MARK[point]);
+        mark.setAttribute("aria-hidden", "true");
+        chip.append(mark);
+      }
+      chip.append(document.createTextNode(point));
+      list.append(chip);
+    });
     node.append(list);
   }
   if (item.aside) node.append(el("p", "fine", item.aside));
@@ -481,11 +494,52 @@ function sheet(item) {
   return node;
 }
 
+function itemMark(item) {
+  if (item.role === "hike") return ROLE_MARK.hike;
+  if (item.role === "camp") return ROLE_MARK.camp;
+  if (item.role === "coffee") return ROLE_MARK.coffee;
+  const kindName = (item.traits || []).find((trait) => ["מעיין", "מפל", "פסגה", "גן לאומי", "שמורה", "חוף"].includes(trait));
+  return (kindName && TRAIT_MARK[kindName]) || ROLE_MARK.place;
+}
+
+function thumb(item) {
+  const node = el("span", "hit-thumb");
+  node.setAttribute("aria-hidden", "true");
+  const paint = () => {
+    node.textContent = itemMark(item);
+    node.classList.add("empty");
+  };
+  if (!item.photo) {
+    paint();
+    return node;
+  }
+  const img = document.createElement("img");
+  img.src = item.photo;
+  img.alt = "";
+  img.loading = "lazy";
+  img.decoding = "async";
+  img.addEventListener("error", () => {
+    img.remove();
+    paint();
+  });
+  node.append(img);
+  return node;
+}
+
+function roleBadge(item) {
+  const node = el("span", `badge ${item.role}`);
+  const mark = el("span", "mark", ROLE_MARK[item.role] || "📍");
+  mark.setAttribute("aria-hidden", "true");
+  node.append(mark, document.createTextNode(ROLE[item.role][0]));
+  return node;
+}
+
 function row(item) {
   const node = el("article", openKey === item.key ? "hit open" : "hit");
   node.dataset.key = item.key;
-  node.append(el("span", `badge ${item.role}`, ROLE[item.role][0]));
-  const copy = el("div");
+  node.append(thumb(item));
+  const copy = el("div", "hit-copy");
+  copy.append(roleBadge(item));
   copy.append(el("h2", null, item.name));
   const meta = placeMeta(item);
   if (meta) copy.append(el("p", "meta", meta));
@@ -593,12 +647,12 @@ function menu(item, anchor) {
     const copy = el("span");
     copy.append(document.createTextNode(trip.name));
     const hasNight = trip.campId != null && Number.isFinite(Number(trip.campId));
-    const detail = el("small", null, trip.id === into ? "הטיול שנפתח מעריכת הלוז" : (hasNight ? "יש לילה" : "עדיין בלי לילה"));
+    const detail = el("small", null, trip.id === into ? "הטיול שנפתח מעריכת הלוז" : (hasNight ? "⛺ יש לילה" : "🥾 עדיין בלי לילה"));
     copy.append(detail);
     label.append(input, copy);
     box.append(label);
   });
-  const create = el("button", "fresh", "טיול חדש");
+  const create = el("button", "fresh", "✨ טיול חדש");
   create.type = "button";
   create.addEventListener("click", () => {
     const result = applyToggle(null, item, true);
@@ -778,7 +832,7 @@ function boot(campData, trailData, placeData) {
       lng: place.lng,
       regions: [],
       area: "",
-      meta: coffee ? "מצפור · כחצי שעה" : (KIND[place.kind] || "נקודת עניין"),
+      meta: coffee ? "🔭 מצפור · כחצי שעה" : `${(place.kind && TRAIT_MARK[KIND[place.kind]]) || "📍"} ${KIND[place.kind] || "נקודת עניין"}`,
       ...placeAbout(place),
       booking: false,
       traits: placeTraits(place, coffee ? "coffee" : "place"),

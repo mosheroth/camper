@@ -25,6 +25,57 @@ function placeName(id) {
   return place ? place.name : "";
 }
 
+function photoOf(source) {
+  if (!source) return "";
+  const photo = (source.photos || []).find((item) => item && item.src);
+  if (photo) return photo.src;
+  return source.image || "";
+}
+
+function tripPicture(trip) {
+  const camp = campById(trip.campId);
+  if (camp) {
+    const glance = window.CamperPlan.campGlance(camp);
+    if (glance.photo) return { src: glance.photo, mark: "⛺" };
+  }
+  const trail = (trip.trailIds || [])
+    .map((id) => trails.find((item) => item.id === Number(id)))
+    .find((item) => photoOf(item));
+  if (trail) return { src: photoOf(trail), mark: "🥾" };
+  const ids = ((trip.place && trip.place.visit) || []).concat((trip.place && trip.place.coffee) || []);
+  const place = ids.map((id) => places.find((item) => item.id === id)).find((item) => photoOf(item));
+  if (place) return { src: photoOf(place), mark: place.kind === "viewpoint" ? "🔭" : "📍" };
+  if (camp) return { src: "", mark: "⛺" };
+  if ((trip.trailIds || []).length) return { src: "", mark: "🥾" };
+  if ((trip.place && trip.place.coffee || []).length) return { src: "", mark: "🔭" };
+  return { src: "", mark: "📍" };
+}
+
+function tripThumb(trip) {
+  const picture = tripPicture(trip);
+  const node = el("span", "album-thumb");
+  node.setAttribute("aria-hidden", "true");
+  const paint = () => {
+    node.textContent = picture.mark;
+    node.classList.add("empty");
+  };
+  if (!picture.src) {
+    paint();
+    return node;
+  }
+  const img = document.createElement("img");
+  img.src = picture.src;
+  img.alt = "";
+  img.loading = "lazy";
+  img.decoding = "async";
+  img.addEventListener("error", () => {
+    img.remove();
+    paint();
+  });
+  node.append(img);
+  return node;
+}
+
 function dateRange(place) {
   if (!place || !place.from || !place.to) return "";
   const show = (iso) => `${iso.slice(8, 10)}.${iso.slice(5, 7)}`;
@@ -91,8 +142,10 @@ function render() {
   trips.forEach((trip) => {
     const camp = campById(trip.campId);
     const card = el("article", "album");
-    card.append(el("p", "status", trip.draft ? "טיוטה" : "שמור"));
-    card.append(el("h2", null, trip.name));
+    card.append(tripThumb(trip));
+    const body = el("div", "album-body");
+    body.append(el("p", "status", trip.draft ? "📝 טיוטה" : "✅ שמור"));
+    body.append(el("h2", null, trip.name));
     const names = (trip.trailIds || []).map(trailName).filter(Boolean);
     const extras = ((trip.place && trip.place.visit) || []).map(placeName)
       .concat(((trip.place && trip.place.coffee) || []).map(placeName))
@@ -102,11 +155,11 @@ function render() {
       camp ? camp.name : "עדיין בלי לילה",
       names.concat(extras).slice(0, 2).join(" · "),
     ].filter(Boolean).join(" · ");
-    card.append(el("p", null, meta));
+    body.append(el("p", null, meta));
     const actions = el("div", "actions");
-    const edit = el("a", null, "עריכת לוז");
+    const edit = el("a", null, "✏️ עריכת לוז");
     edit.href = window.CamperTrips.editPath(trip);
-    const share = el("button", "ghost", "שליחה");
+    const share = el("button", "ghost", "📤 שליחה");
     share.type = "button";
     share.addEventListener("click", async (event) => {
       event.preventDefault();
@@ -116,7 +169,7 @@ function render() {
       let status = card.querySelector(".share-note");
       if (!status) {
         status = el("p", "fine share-note");
-        card.append(status);
+        body.append(status);
       }
       if (result.copied) status.textContent = "ההודעה הועתקה, עם הלוז והקישורים.";
       else if (result.shared) status.textContent = "אפשר לשלוח את הטיול.";
@@ -136,7 +189,8 @@ function render() {
       render();
     });
     actions.append(edit, share, remove);
-    card.append(actions);
+    body.append(actions);
+    card.append(body);
     card.addEventListener("click", () => {
       window.location.href = window.CamperTrips.editPath(trip);
     });
