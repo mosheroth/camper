@@ -259,24 +259,6 @@ def paid_prices(acf):
     return rows
 
 
-def price_from(rows):
-    """First regular adult tent price, before subscriber or extra-person rows."""
-    for row in rows:
-        label = row["label"]
-        if "תוספת" in label or "מטמון" in label or "מנוי" in label:
-            continue
-        if "מבוגר" not in label:
-            continue
-        if "אוהל" not in label and "לינת שטח" not in label:
-            continue
-        match = re.search(r"(\d+(?:\.\d+)?)", row["price"].replace(",", ""))
-        if not match:
-            continue
-        amount = float(match.group(1))
-        return int(amount) if amount.is_integer() else amount
-    return None
-
-
 def paid_facilities(acf):
     flags = acf.get("map_filters_camping_facilities") or {}
     items = []
@@ -380,8 +362,6 @@ def normalize_paid(item, areas):
         "facilities": paid_facilities(acf),
         "access": None,
         "places": None,
-        "priceFrom": price_from(paid_prices(acf)),
-        "prices": paid_prices(acf)[:8],
         "blurb": clip(blurb),
         "image": (photos[0]["src"] if photos else first_image(acf)),
         "photos": photos,
@@ -417,8 +397,6 @@ def normalize_free(item, areas):
         "facilities": free_facilities(acf),
         "access": free_access(acf),
         "places": places(acf.get("num_of_places_to_stay")),
-        "priceFrom": 0,
-        "prices": [],
         "blurb": clip(acf.get("map_description") or acf.get("arrival_instructions") or ""),
         "image": (photos[0]["src"] if photos else first_image(acf) or content_image(content)),
         "photos": photos,

@@ -1,4 +1,4 @@
-"""Factual sections from an INPA page: prices, hours, amenities, trail stats."""
+"""Factual sections from an INPA page: hours, amenities, trail stats."""
 
 import re
 

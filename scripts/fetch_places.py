@@ -417,27 +417,13 @@ def visit_span(acf):
     return low, high, label
 
 
-def entrance_price(rows):
-    """Adult entrance price, skipping group and subscriber rows."""
-    for row in rows or []:
-        label = (row.get("label") or "").strip()
-        if label != "מבוגר":
-            continue
-        match = re.search(r"(\d+(?:\.\d+)?)", str(row.get("price") or "").replace(",", ""))
-        if not match:
-            continue
-        amount = float(match.group(1))
-        return int(amount) if amount.is_integer() else amount
-    return None
-
-
-def entrance_paid(acf, price):
+def entrance_paid(acf):
     """True, False, or None when the page doesn't say if entry costs money."""
     acf = acf or {}
     if acf.get("No_Charge_s"):
         return False
     payment = acf.get("map_filters_payment") or {}
-    if payment.get("paid_f") or acf.get("Entrance_Fee_Map_s") or price is not None:
+    if payment.get("paid_f") or acf.get("Entrance_Fee_Map_s") or paid_prices(acf):
         return True
     if payment.get("not_paid_f"):
         return False
@@ -499,13 +485,8 @@ def place_photos(acf, media):
 
 
 def visit_facts(acf, media=None):
-    """Facts a visit card can show: fee, length, tags, photos, and the short map line."""
+    """Facts a visit card can show: whether entry is paid, length, tags, photos, and the short map line."""
     acf = acf or {}
-    prices = [
-        {"label": row["label"], "price": row["price"]}
-        for row in paid_prices(acf)[:6]
-    ]
-    price = entrance_price(prices)
     low, high, duration = visit_span(acf)
     photos = place_photos(acf, media)
     arrival = ""
@@ -517,9 +498,7 @@ def visit_facts(acf, media=None):
                 chunks.append(row.get("rp_info_arriveDesc") or "")
         arrival = clip(" ".join(chunks), 160)
     return {
-        "paid": entrance_paid(acf, price),
-        "priceFrom": price,
-        "prices": prices,
+        "paid": entrance_paid(acf),
         "hoursMin": low,
         "hoursMax": high,
         "duration": duration,

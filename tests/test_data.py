@@ -36,18 +36,11 @@ class CatalogTests(unittest.TestCase):
                 linked += 1
         self.assertGreater(linked, 100)
 
-    def test_paid_price_is_the_adult_tent_on_the_card(self):
-        for camp in self.camps:
-            if not camp["paid"] or camp["priceFrom"] is None:
-                continue
-            adults = [
-                row for row in camp["prices"]
-                if "מבוגר" in row["label"] and "תוספת" not in row["label"] and "מטמון" not in row["label"]
-            ]
-            if not adults:
-                continue
-            amount = int(float(adults[0]["price"].split()[0]))
-            self.assertEqual(camp["priceFrom"], amount, camp["name"])
+    def test_catalog_does_not_store_a_price(self):
+        places = json.loads((ROOT / "data" / "places.json").read_text(encoding="utf-8"))
+        for row in self.camps + self.trails + places:
+            self.assertNotIn("prices", row, row.get("name"))
+            self.assertNotIn("priceFrom", row, row.get("name"))
 
     def test_day_hike_lines_stay_a_walkable_length(self):
         from scripts.osm_routes import route_length_km
@@ -124,7 +117,6 @@ class CatalogTests(unittest.TestCase):
             self.assertIn("עגל", cart["name"])
         hai = next(place for place in places if place["id"] == "r1877")
         self.assertTrue(hai["paid"])
-        self.assertEqual(hai["priceFrom"], 24)
         self.assertIn("חיות בר", hai["tags"])
         self.assertTrue(hai["booking"])
         self.assertGreaterEqual(len(hai["photos"]), 1)

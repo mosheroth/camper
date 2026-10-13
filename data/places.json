@@ -3653,33 +3653,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%90%d7%aa%d7%a8-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%94%d7%a7%d7%a1%d7%98%d7%9c/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -3730,33 +3703,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%90%d7%9b%d7%96%d7%99%d7%91-%d7%95%d7%97%d7%95%d7%a3-%d7%90%d7%9b%d7%96%d7%99%d7%91/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 40,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "40.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "25.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "21.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "30.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -3791,33 +3737,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%90%d7%a4%d7%95%d7%9c%d7%95%d7%a0%d7%99%d7%94-%d7%aa%d7%9c-%d7%90%d7%a8%d7%a9%d7%a3/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -3864,33 +3783,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%99%d7%aa-%d7%90%d7%9c%d7%a4%d7%90/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -3933,33 +3825,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%99%d7%aa-%d7%a9%d7%90%d7%9f/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -3990,33 +3855,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%99%d7%aa-%d7%a9%d7%a2%d7%a8%d7%99%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -4047,33 +3885,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%a8%d7%a2%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 16,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "7.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "6.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "12.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -4099,33 +3910,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%92%d7%9f-%d7%94%d7%a9%d7%9c%d7%95%d7%a9%d7%94-%d7%94%d7%a1%d7%97%d7%a0%d7%94/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 46,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "46.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "27.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "39.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "23.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "39.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "35.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -4156,33 +3940,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%94%d7%91%d7%a9%d7%95%d7%a8-%d7%a4%d7%90%d7%a8%d7%a7-%d7%90%d7%a9%d7%9b%d7%95%d7%9c/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -4208,33 +3965,6 @@
     "url": "https://www.parks.org.il/reserve-park/arbel/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -4269,8 +3999,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%97%d7%95%d7%a3-%d7%94%d7%a9%d7%a8%d7%95%d7%9f/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -4309,33 +4037,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%97%d7%95%d7%a3-%d7%a4%d7%9c%d7%9e%d7%97%d7%99%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": null,
-    "prices": [
-      {
-        "label": "רכב פרטי ביום חול",
-        "price": "30.00 ₪"
-      },
-      {
-        "label": "רכב פרטי בסופ\"ש וחג",
-        "price": "35.00 ₪"
-      },
-      {
-        "label": "משרת מילואים פעיל (בהצדעה) ביום חול",
-        "price": "23.00 ₪"
-      },
-      {
-        "label": "משרת מילואים פעיל (בהצדעה) סופ\"ש וחג",
-        "price": "25.00 ₪"
-      },
-      {
-        "label": "מנוי מטמון ביום חול",
-        "price": "15.00 ₪"
-      },
-      {
-        "label": "מנוי מטמון בסופ\"ש וחג",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 2.0,
     "hoursMax": 4.0,
     "duration": "שעתיים עד ארבע או יותר",
@@ -4387,33 +4088,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%97%d7%95%d7%a8%d7%a9%d7%aa-%d7%98%d7%9c/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 46,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "46.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "27.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "39.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "23.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "39.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "35.00 ₪"
-      }
-    ],
     "hoursMin": 6.0,
     "hoursMax": 8.0,
     "duration": "יום",
@@ -4457,33 +4131,6 @@
     "url": "https://www.parks.org.il/reserve-park/yarkon/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "חייל",
-        "price": "16.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -4526,33 +4173,6 @@
     "url": "https://www.parks.org.il/reserve-park/yarkon-2/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -4578,33 +4198,6 @@
     "url": "https://www.parks.org.il/reserve-park/yarkon-3/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -4635,33 +4228,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9b%d7%95%d7%9b%d7%91-%d7%94%d7%99%d7%a8%d7%93%d7%9f/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -4696,33 +4262,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9b%d7%95%d7%a8%d7%a1%d7%99/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 16,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "7.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "6.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "12.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -4748,8 +4287,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9b%d7%a4%d7%a8-%d7%a0%d7%97%d7%95%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -4792,33 +4329,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%91%d7%a6%d7%a8-%d7%99%d7%97%d7%99%d7%a2%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 16,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "7.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "6.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "12.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -4857,33 +4367,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%91%d7%a6%d7%a8-%d7%a0%d7%9e%d7%a8%d7%95%d7%93-%d7%a7%d7%9c%d7%a2%d7%aa-%d7%a0%d7%9e%d7%a8%d7%95%d7%93/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "חייל",
-        "price": "ללא תשלום"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -4918,33 +4401,6 @@
     "url": "https://www.parks.org.il/reserve-park/migdal-tzedek/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים",
@@ -4995,33 +4451,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%9e%d7%a9%d7%99%d7%aa/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -5064,33 +4493,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%a6%d7%93%d7%94/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 37,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "₪ 37.00"
-      },
-      {
-        "label": "ילד",
-        "price": "₪ 21.00"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "₪ 31.00"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "₪ 18.00"
-      },
-      {
-        "label": "סטודנט",
-        "price": "₪ 31.00"
-      },
-      {
-        "label": "מילואים",
-        "price": "₪ 28.00"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -5141,8 +4543,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%97%d7%9c-%d7%a6%d7%9c%d7%9e%d7%95%d7%9f/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -5176,8 +4576,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%97%d7%9c-%d7%a8%d7%a4%d7%90%d7%99%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -5214,8 +4612,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%99%d7%a6%d7%a0%d7%94/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -5241,8 +4637,6 @@
     "url": "https://www.parks.org.il/reserve-park/jerusalem-walls-national-park/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -5293,33 +4687,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%91%d7%93%d7%aa/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -5345,33 +4712,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%9f-%d7%97%d7%9e%d7%93/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -5411,8 +4751,6 @@
     "url": "https://www.parks.org.il/reserve-park/en-judah/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -5455,8 +4793,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%9f-%d7%9b%d7%a8%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -5484,33 +4820,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%9f-%d7%a2%d7%91%d7%93%d7%aa/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -5562,8 +4871,6 @@
     "url": "https://www.parks.org.il/reserve-park/telem/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים",
@@ -5610,8 +4917,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%9e%d7%a7-%d7%a6%d7%95%d7%a8%d7%99%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -5660,8 +4965,6 @@
     "url": "https://www.parks.org.il/reserve-park/ramon/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -5686,8 +4989,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a7%d7%91%d7%a8-%d7%91%d7%9f-%d7%92%d7%95%d7%a8%d7%99%d7%95%d7%9f/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -5723,8 +5024,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a9%d7%93%d7%94-%d7%a2%d7%9e%d7%95%d7%93%d7%99%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -5749,33 +5048,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%90%d7%a9%d7%a7%d7%9c%d7%95%d7%9f/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -5827,8 +5099,6 @@
     "url": "https://www.parks.org.il/reserve-park/teldor/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים",
@@ -5880,33 +5150,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%aa%d7%9c-%d7%97%d7%a6%d7%95%d7%a8/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -5937,33 +5180,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%aa%d7%9c-%d7%9e%d7%92%d7%99%d7%93%d7%95/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -5994,33 +5210,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%aa%d7%9c-%d7%a2%d7%a8%d7%93/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 16,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "7.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "6.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "12.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -6052,33 +5241,6 @@
     "url": "https://www.parks.org.il/reserve-park/enchinya-2/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 16,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "7.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "6.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "12.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים",
@@ -6130,33 +5292,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%a8-%d7%93%d7%95%d7%93/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 2.0,
     "hoursMax": 4.0,
     "duration": "שעתיים עד ארבע או יותר",
@@ -6195,33 +5330,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%94%d7%a8%d7%95%d7%93%d7%99%d7%95%d7%9f/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -6272,8 +5380,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%91%d7%99-%d7%a1%d7%9e%d7%95%d7%90%d7%9c/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -6299,33 +5405,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a7%d7%95%d7%9e%d7%a8%d7%90%d7%9f/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -6351,8 +5430,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%94%d7%9b%d7%a8%d7%9e%d7%9c/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -6383,33 +5460,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%99-%d7%91%d7%a8-%d7%99%d7%95%d7%98%d7%91%d7%aa%d7%94-2/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -12895,33 +11945,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9b%d7%95%d7%a8%d7%96%d7%99%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -12952,8 +11975,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%91%d7%a6%d7%a8-%d7%9e%d7%95%d7%a0%d7%a4%d7%95%d7%a8/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -12982,33 +12003,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%a2%d7%99%d7%99%d7%9f-%d7%97%d7%a8%d7%95%d7%93/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 40,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "40.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "25.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "21.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "30.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום או יותר",
@@ -13034,33 +12028,6 @@
     "url": "https://www.parks.org.il/reserve-park/engedi/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 16,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "7.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "6.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "12.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13111,8 +12078,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a9%d7%91%d7%98%d7%94/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -13143,21 +12108,6 @@
     "url": "https://www.parks.org.il/reserve-park/masada-orkol/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [
-      {
-        "label": "מבוגר/ילד",
-        "price": "45 ₪"
-      },
-      {
-        "label": "מנוי מטמון מבוגר/ילד",
-        "price": "35 ₪"
-      },
-      {
-        "label": "לנים בחניון לילה מבוגר/ילד",
-        "price": "35 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13193,33 +12143,6 @@
     "url": "https://www.parks.org.il/reserve-park/gay-2/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13271,8 +12194,6 @@
     "url": "https://www.parks.org.il/reserve-park/chay-ramon/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13295,8 +12216,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%9e%d7%99%d7%a9%d7%95%d7%a8-%d7%99%d7%9e%d7%99%d7%9f/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13322,8 +12241,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%9e%d7%a8%d7%97%d7%91-%d7%93%d7%95%d7%9c%d7%91/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13358,33 +12275,6 @@
     "url": "https://www.parks.org.il/reserve-park/ramon-mm/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -13435,8 +12325,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%9e%d7%a2%d7%a8%d7%9b%d7%aa-%d7%94%d7%a8%d7%99%d7%a9%d7%95%d7%9d-%d7%9c%d7%a0%d7%97%d7%9c-%d7%93%d7%a8%d7%92%d7%94/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13482,8 +12370,6 @@
     "url": "https://www.parks.org.il/reserve-park/en-bokek/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -13530,8 +12416,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%94%d7%9e%d7%a2%d7%99%d7%99%d7%a0%d7%95%d7%aa/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13573,8 +12457,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%94-%d7%99%d7%9e%d7%99%d7%aa-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%a2%d7%95%d7%9c%d7%9d-%d7%a7%d7%a1%d7%95%d7%9d-%d7%a9%d7%9c-%d7%9e%d7%99%d7%9d-%d7%9e%d7%aa%d7%95/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13603,8 +12485,6 @@
     "url": "https://www.parks.org.il/reserve-park/dor-michael/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13644,33 +12524,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a4%d7%a8%d7%aa-%d7%95%d7%90%d7%93%d7%99-%d7%a7%d7%9c%d7%98/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -13705,8 +12558,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%90%d7%99%d7%a8%d7%95%d7%a1-%d7%99%d7%a8%d7%95%d7%97%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -13733,8 +12584,6 @@
     "url": "https://www.parks.org.il/reserve-park/eiris/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים",
@@ -13773,8 +12622,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%90%d7%9c%d7%95%d7%aa-%d7%a1%d7%99%d7%a8%d7%99%d7%9f/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -13805,8 +12652,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%91%d7%a0%d7%99-%d7%a6%d7%99%d7%95%d7%9f/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13841,8 +12686,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%92%d7%9c%d7%91%d7%95%d7%a2/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13877,33 +12720,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%92%d7%9e%d7%9c%d7%90/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 2.0,
     "hoursMax": 4.0,
     "duration": "שעתיים עד ארבע",
@@ -13935,33 +12751,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%97%d7%95%d7%9c%d7%94/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 40,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "40.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "25.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "21.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "30.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -13992,8 +12781,6 @@
     "url": "https://www.parks.org.il/reserve-park/yam-dromi/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14027,8 +12814,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%99%d7%a2%d7%a8-%d7%94%d7%9b%d7%a4%d7%99%d7%a8%d7%94/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14071,8 +12856,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%9e%d7%9b%d7%aa%d7%a9-%d7%94%d7%92%d7%93%d7%95%d7%9c/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -14103,8 +12886,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%9e%d7%a1%d7%a8%d7%a7/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים",
@@ -14139,8 +12920,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%a8-%d7%94%d7%a0%d7%92%d7%91/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -14171,8 +12950,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%a8-%d7%98%d7%99%d7%99%d7%a1%d7%99%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14214,8 +12991,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%a8-%d7%9e%d7%99%d7%a8%d7%95%d7%9f/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים",
@@ -14241,8 +13016,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%95%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%94%d7%a8-%d7%aa%d7%91%d7%95%d7%a8/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14281,8 +13054,6 @@
     "url": "https://www.parks.org.il/reserve-park/zikim/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -14329,8 +13100,6 @@
     "url": "https://www.parks.org.il/reserve-park/yavne/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14356,8 +13125,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%95%d7%9c%d7%95%d7%aa-%d7%a0%d7%99%d7%a6%d7%a0%d7%99%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -14401,33 +13168,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%95%d7%a3-%d7%93%d7%95%d7%a8-%d7%94%d7%91%d7%95%d7%a0%d7%99%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14478,33 +13218,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%95%d7%a3-%d7%94%d7%90%d7%9c%d7%9e%d7%95%d7%92%d7%99%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 40,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "40.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "25.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "21.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "30.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -14540,8 +13253,6 @@
     "url": "https://www.parks.org.il/reserve-park/kursi-beach/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -14580,33 +13291,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%99-%d7%91%d7%a8-%d7%91%d7%9b%d7%a8%d7%9e%d7%9c/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14641,8 +13325,6 @@
     "url": "https://www.parks.org.il/reserve-park/sternbergia-nature-reserve-boker-ridge-and-nahal-hashour-gap/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14673,8 +13355,6 @@
     "url": "https://www.parks.org.il/reserve-park/trashey-tzfat/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14700,33 +13380,6 @@
     "url": "https://www.parks.org.il/reserve-park/yahudiya/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -14769,8 +13422,6 @@
     "url": "https://www.parks.org.il/reserve-park/yam-almogim/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14796,8 +13447,6 @@
     "url": "https://www.parks.org.il/reserve-park/lifta/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14848,33 +13497,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%9e%d7%92%d7%a8%d7%a1%d7%94-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%91%d7%a7%d7%a2%d7%aa-%d7%91%d7%99%d7%aa-%d7%a6%d7%99%d7%99/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -14900,8 +13522,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%93%d7%91%d7%a8-%d7%99%d7%94%d7%95%d7%93%d7%94/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 16.0,
     "hoursMax": 32.0,
     "duration": "יומיים",
@@ -14952,8 +13572,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%95%d7%a8%d7%93%d7%95%d7%aa-%d7%94%d7%92%d7%95%d7%9c%d7%9f/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -14994,8 +13612,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%9b%d7%aa%d7%a9%d7%99%d7%9d-%d7%a2%d7%99%d7%9f-%d7%99%d7%94%d7%91/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15034,8 +13650,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%a1%d7%99%d7%91-%d7%94%d7%a8%d7%99-%d7%90%d7%99%d7%9c%d7%aa/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15061,8 +13675,6 @@
     "url": "https://www.parks.org.il/reserve-park/m-gibton/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים",
@@ -15112,33 +13724,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%a2%d7%a8%d7%aa-%d7%94%d7%a0%d7%98%d7%99%d7%a4%d7%99%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15174,8 +13759,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%a6%d7%95%d7%a7-%d7%94%d7%94%d7%a2%d7%aa%d7%a7%d7%99%d7%9d-%d7%a0%d7%97%d7%9c-%d7%93%d7%a8%d7%92%d7%94/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -15206,8 +13789,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%90%d7%9c-%d7%a2%d7%9c/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15231,33 +13812,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%94%d7%9e%d7%a2%d7%a8%d7%95%d7%aa/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 2.0,
     "hoursMax": 4.0,
     "duration": "שעתיים עד ארבע",
@@ -15293,33 +13847,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%94%d7%9e%d7%a9%d7%95%d7%a9%d7%99%d7%9d/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -15350,33 +13877,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%97%d7%a8%d7%9e%d7%95%d7%9f-%d7%91%d7%a0%d7%99%d7%90%d7%a1/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -15407,33 +13907,6 @@
     "url": "https://www.parks.org.il/reserve-park/banias/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 28,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "28.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה",
-        "price": "12.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "חייל",
-        "price": "14.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15459,33 +13932,6 @@
     "url": "https://www.parks.org.il/reserve-park/banias-mapal/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 28,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "28.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה",
-        "price": "12.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "חייל",
-        "price": "14.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15516,8 +13962,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%9b%d7%96%d7%99%d7%91/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15547,33 +13991,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a2%d7%99%d7%95%d7%9f-%d7%94%d7%aa%d7%a0%d7%95%d7%a8/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -15608,33 +14025,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a2%d7%9e%d7%95%d7%93/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 2.0,
     "hoursMax": 4.0,
     "duration": "שעתיים עד ארבע",
@@ -15665,8 +14055,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a2%d7%a9%d7%95%d7%a9/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15701,33 +14089,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a4%d7%a8%d7%aa-%d7%a2%d7%99%d7%9f-%d7%a4%d7%a8%d7%aa/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -15762,8 +14123,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a9%d7%99%d7%96%d7%a3/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -15789,33 +14148,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a9%d7%a0%d7%99%d7%a8-%d7%97%d7%a6%d7%91%d7%90%d7%a0%d7%99/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -15850,8 +14182,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%aa%d7%91%d7%95%d7%a8/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -15893,8 +14223,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%aa%d7%a7%d7%95%d7%a2/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -15925,8 +14253,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a2%d7%91%d7%a8%d7%95%d7%a0%d7%94/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 2.0,
     "hoursMax": 4.0,
     "duration": "שעתיים עד ארבע",
@@ -15961,33 +14287,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a2%d7%99%d7%99%d7%a0%d7%95%d7%aa-%d7%a6%d7%95%d7%a7%d7%99%d7%9d-%d7%a2%d7%99%d7%9f-%d7%a4%d7%a9%d7%97%d7%94/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 40,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "40.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "25.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "21.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "34.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "30.00 ₪"
-      }
-    ],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -16034,33 +14333,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a2%d7%99%d7%9f-%d7%90%d7%a4%d7%a7/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 24,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "24.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "10.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "9.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "20.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "18.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16095,33 +14367,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a2%d7%99%d7%9f-%d7%92%d7%93%d7%99/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "₪ 31.00"
-      },
-      {
-        "label": "ילד",
-        "price": "₪ 16.00"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "₪ 26.00"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "₪ 14.00"
-      },
-      {
-        "label": "סטודנט",
-        "price": "₪ 26.00"
-      },
-      {
-        "label": "מילואים",
-        "price": "₪ 23.00"
-      }
-    ],
     "hoursMin": 6.0,
     "hoursMax": 8.0,
     "duration": "יום",
@@ -16160,33 +14405,6 @@
     "url": "https://www.parks.org.il/reserve-park/david/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -16211,33 +14429,6 @@
     "url": "https://www.parks.org.il/reserve-park/arugot/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה",
-        "price": "14.00"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": 4.0,
     "hoursMax": 5.0,
     "duration": "חצי יום",
@@ -16268,8 +14459,6 @@
     "url": "https://www.parks.org.il/reserve-park/aynot-fakhum/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 1.0,
     "hoursMax": 2.0,
     "duration": "עד שעתיים או יותר",
@@ -16320,8 +14509,6 @@
     "url": "https://www.parks.org.il/reserve-park/park-hayarden/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16350,8 +14537,6 @@
     "url": "https://www.parks.org.il/reserve-park/shita-malbina-ashdod/",
     "source": "inpa",
     "paid": null,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": 2.0,
     "hoursMax": 4.0,
     "duration": "שעתיים עד ארבע",
@@ -16391,33 +14576,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%aa%d7%9c-%d7%93%d7%9f/",
     "source": "inpa",
     "paid": true,
-    "priceFrom": 31,
-    "prices": [
-      {
-        "label": "מבוגר",
-        "price": "31.00 ₪"
-      },
-      {
-        "label": "ילד",
-        "price": "16.00 ₪"
-      },
-      {
-        "label": "מבוגר בקבוצה (מעל 30 איש)",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "ילד בקבוצה (מעל 30 איש)",
-        "price": "14.00 ₪"
-      },
-      {
-        "label": "סטודנט",
-        "price": "26.00 ₪"
-      },
-      {
-        "label": "מילואים",
-        "price": "23.00 ₪"
-      }
-    ],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16449,8 +14607,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%99%d7%9d-%d7%93%d7%95%d7%a8-%d7%94%d7%91%d7%95%d7%a0%d7%99%d7%9d/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16490,8 +14646,6 @@
     "url": "https://www.parks.org.il/reserve-park/avtach/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16531,8 +14685,6 @@
     "url": "https://www.parks.org.il/reserve-park/nikra/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16568,8 +14720,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%99%d7%9d-%d7%a8%d7%90%d7%a9-%d7%9b%d7%a8%d7%9e%d7%9c/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16605,8 +14755,6 @@
     "url": "https://www.parks.org.il/reserve-park/shikma/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16642,8 +14790,6 @@
     "url": "https://www.parks.org.il/reserve-park/shikmona/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",
@@ -16683,8 +14829,6 @@
     "url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%a0%d7%97%d7%9c-%d7%a9%d7%99%d7%9c%d7%94-%d7%a2%d7%99%d7%9c%d7%99/",
     "source": "inpa",
     "paid": false,
-    "priceFrom": null,
-    "prices": [],
     "hoursMin": null,
     "hoursMax": null,
     "duration": "",

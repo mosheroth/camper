@@ -11,7 +11,6 @@ from scripts.classify import (
     primary_difficulty,
     shape,
 )
-from scripts.fetch_inpa import price_from
 from scripts.geo import haversine_km, itm_to_wgs84, region_from_lat
 from scripts.match import nearby_trails
 
@@ -62,14 +61,6 @@ class ClassifyTests(unittest.TestCase):
         self.assertTrue(is_family([], "מסלול משפחתי מפתיע"))
         self.assertFalse(is_family([4403], "מסלול ארוך למיטיבי לכת"))
         self.assertFalse(is_family([4438], "מסלול ארוך"))
-
-    def test_price_from_uses_the_regular_adult_tent(self):
-        rows = [
-            {"label": "לינת שטח באוהלים פרטיים - מבוגר", "price": "64.00 ₪"},
-            {"label": "לינת שטח באוהלים פרטיים - ילד", "price": "47.00 ₪"},
-            {"label": "לינת שטח - מבוגר מטמון", "price": "48.00 ₪"},
-        ]
-        self.assertEqual(price_from(rows), 64)
 
     def test_vehicle_routes_are_not_hikes(self):
         self.assertFalse(is_hike("מסלול טיול באופניים לאורך הירקון"))
@@ -155,8 +146,9 @@ class ClassifyTests(unittest.TestCase):
         }
         self.assertEqual(visit_tags(acf), ["חיות בר", "בתיאום מראש", "מונגש", "עגלה"])
         self.assertEqual(visit_span(acf), (1.0, 2.0, "עד שעתיים או יותר"))
-        self.assertTrue(entrance_paid(acf, 24))
-        self.assertFalse(entrance_paid({"No_Charge_s": True}, None))
+        self.assertTrue(entrance_paid(acf))
+        self.assertFalse(entrance_paid({"No_Charge_s": True}))
+        self.assertTrue(entrance_paid({"rp_sales_table": [{"table": [{"type": "מבוגר", "price": "24.00 ₪"}]}]}))
         self.assertEqual(visit_span({}), (None, None, ""))
 
 
