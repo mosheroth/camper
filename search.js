@@ -2,10 +2,10 @@ const ISRAEL_BOUNDS = [[29.45, 34.22], [33.35, 35.92]];
 const PAGE = 24;
 const NEAR_KM = 25;
 const ROLE = {
-  hike: ["טיול", "#a3472c"],
-  camp: ["חניון", "#1c3f34"],
+  hike: ["טיול רגלי", "#a3472c"],
+  camp: ["קמפינג", "#1c3f34"],
   place: ["נקודת עניין", "#2f6a52"],
-  coffee: ["קפה", "#6a4b16"],
+  coffee: ["תצפית", "#6a4b16"],
 };
 const KIND = {
   spring: "מעיין",
@@ -25,7 +25,7 @@ const queryBox = document.querySelector("#query");
 
 let catalog = [];
 let camps = [];
-const ROLE_MARK = { hike: "🥾", camp: "⛺", place: "📍", coffee: "☕" };
+const ROLE_MARK = { hike: "🥾", camp: "⛺", place: "📍", coffee: "🔭" };
 const TRAIT_ORDER = ["עד 3 שעות", "קל", "למשפחות", "מעגלי", "מוצל", "רטוב", "תצפית", "מעיין", "מפל", "פסגה", "גן לאומי", "שמורה", "חוף", "מים", "מערות", "מונגש", "חיות בר", "פריחה", "ארכיאולוגיה", "עגלה", "מטמון", "כלבים", "בתיאום מראש"];
 const TRAIT_MARK = {
   "עד 3 שעות": "⏱️",
@@ -469,7 +469,13 @@ function menu(item, anchor) {
 function render() {
   const tally = counts();
   roles.replaceChildren();
-  [["all", "הכל", ""], ["hike", "טיול", ROLE_MARK.hike], ["camp", "חניון", ROLE_MARK.camp], ["place", "נקודת עניין", ROLE_MARK.place], ["coffee", "קפה", ROLE_MARK.coffee]].forEach(([key, label, emoji]) => {
+  [
+    ["all", "הכל", ""],
+    ["camp", ROLE.camp[0], ROLE_MARK.camp],
+    ["hike", ROLE.hike[0], ROLE_MARK.hike],
+    ["coffee", ROLE.coffee[0], ROLE_MARK.coffee],
+    ["place", ROLE.place[0], ROLE_MARK.place],
+  ].forEach(([key, label, emoji]) => {
     const button = el("button", key === role ? "chip on" : "chip");
     button.type = "button";
     if (emoji) {
