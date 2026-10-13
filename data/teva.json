@@ -1,0 +1,729 @@
+{
+  "fetchedAt": "2026-10-13T19:56:43Z",
+  "source": "https://www.teva.org.il/tracks",
+  "tracks": [
+    {
+      "id": 512,
+      "name": "נחל חווארים",
+      "url": "https://www.teva.org.il/tracks/512",
+      "lat": 30.84774,
+      "lng": 34.75407,
+      "kmMin": 4.0,
+      "kmMax": 4.0,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate",
+        "easy"
+      ],
+      "circular": false,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 659,
+      "name": "מים כל השנה בנחל כזיב",
+      "url": "https://www.teva.org.il/tracks/659",
+      "lat": 33.04813,
+      "lng": 35.22137,
+      "kmMin": 6.0,
+      "kmMax": 6.0,
+      "hoursMin": 5.0,
+      "hoursMax": 6.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 687,
+      "name": "מחוף אכזיב לחוף בצת",
+      "url": "https://www.teva.org.il/tracks/687",
+      "lat": null,
+      "lng": null,
+      "kmMin": 3.5,
+      "kmMax": 3.5,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 702,
+      "name": "נחל סלוודורה",
+      "url": "https://www.teva.org.il/tracks/702",
+      "lat": 31.52463,
+      "lng": 35.39194,
+      "kmMin": 2.0,
+      "kmMax": 2.0,
+      "hoursMin": 1.0,
+      "hoursMax": 2.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 2282,
+      "name": "נחל נקרות ועין סהרונים",
+      "url": "https://www.teva.org.il/tracks/2282",
+      "lat": null,
+      "lng": null,
+      "kmMin": 6.0,
+      "kmMax": 6.0,
+      "hoursMin": 3.0,
+      "hoursMax": 4.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 7448,
+      "name": "עין ירקעם: נווה מדבר שופע מים בחורף",
+      "url": "https://www.teva.org.il/tracks/7448",
+      "lat": 30.93983,
+      "lng": 35.03659,
+      "kmMin": 2.0,
+      "kmMax": 2.0,
+      "hoursMin": 2.0,
+      "hoursMax": 2.0,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 7488,
+      "name": "נחל ממשית",
+      "url": "https://www.teva.org.il/tracks/7488",
+      "lat": null,
+      "lng": null,
+      "kmMin": 2.5,
+      "kmMax": 2.5,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 7878,
+      "name": "נחל זוהר, קניון ליד ים המלח",
+      "url": "https://www.teva.org.il/tracks/7878",
+      "lat": null,
+      "lng": null,
+      "kmMin": 2.0,
+      "kmMax": 2.0,
+      "hoursMin": 2.0,
+      "hoursMax": 2.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 8142,
+      "name": "סובב כנרת בין האון למעגן",
+      "url": "https://www.teva.org.il/tracks/8142",
+      "lat": null,
+      "lng": null,
+      "kmMin": 3.0,
+      "kmMax": 3.0,
+      "hoursMin": 1.5,
+      "hoursMax": 1.5,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 8462,
+      "name": "נחל קדש",
+      "url": "https://www.teva.org.il/tracks/8462",
+      "lat": null,
+      "lng": null,
+      "kmMin": 2.0,
+      "kmMax": 2.0,
+      "hoursMin": 2.0,
+      "hoursMax": 2.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 8628,
+      "name": "שביל החורש שתולה",
+      "url": "https://www.teva.org.il/tracks/8628",
+      "lat": 33.07863,
+      "lng": 35.31555,
+      "kmMin": 1.0,
+      "kmMax": 2.0,
+      "hoursMin": 2.0,
+      "hoursMax": 2.0,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 8673,
+      "name": "נחל הקיבוצים",
+      "url": "https://www.teva.org.il/tracks/8673",
+      "lat": null,
+      "lng": null,
+      "kmMin": 1.5,
+      "kmMax": 1.5,
+      "hoursMin": null,
+      "hoursMax": null,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 9251,
+      "name": "קניון שחורת",
+      "url": "https://www.teva.org.il/tracks/9251",
+      "lat": 29.62256,
+      "lng": 34.9436,
+      "kmMin": 4.0,
+      "kmMax": 4.0,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 9304,
+      "name": "נחל אל על",
+      "url": "https://www.teva.org.il/tracks/9304",
+      "lat": 32.8076,
+      "lng": 35.74194,
+      "kmMin": 4.5,
+      "kmMax": 4.5,
+      "hoursMin": 3.0,
+      "hoursMax": 4.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": false,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 9755,
+      "name": "הקניון האדום: קסם שהמים עיצבו",
+      "url": "https://www.teva.org.il/tracks/9755",
+      "lat": 29.66934,
+      "lng": 34.87086,
+      "kmMin": 5.0,
+      "kmMax": 5.0,
+      "hoursMin": 4.0,
+      "hoursMax": 5.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 9838,
+      "name": "שביל הפסגה בהר תבור",
+      "url": "https://www.teva.org.il/tracks/9838",
+      "lat": null,
+      "lng": null,
+      "kmMin": 2.0,
+      "kmMax": 2.0,
+      "hoursMin": 1.0,
+      "hoursMax": 1.5,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 9946,
+      "name": "נחל מעפילים",
+      "url": "https://www.teva.org.il/tracks/9946",
+      "lat": 32.75151,
+      "lng": 35.04761,
+      "kmMin": 4.0,
+      "kmMax": 4.0,
+      "hoursMin": 2.0,
+      "hoursMax": 2.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": false,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 9950,
+      "name": "נחל יגור: אתגר בין קיבוץ לכפר",
+      "url": "https://www.teva.org.il/tracks/9950",
+      "lat": null,
+      "lng": null,
+      "kmMin": 4.0,
+      "kmMax": 4.0,
+      "hoursMin": 2.0,
+      "hoursMax": 4.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 10345,
+      "name": "נחל כלח ושוויצריה הקטנה",
+      "url": "https://www.teva.org.il/tracks/10345",
+      "lat": null,
+      "lng": null,
+      "kmMin": 2.5,
+      "kmMax": 2.5,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 10400,
+      "name": "מג'יסר א-זרקא לקיסריה",
+      "url": "https://www.teva.org.il/tracks/10400",
+      "lat": null,
+      "lng": null,
+      "kmMin": 3.0,
+      "kmMax": 3.0,
+      "hoursMin": 2.0,
+      "hoursMax": 1.0,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 14969,
+      "name": "פתחת ניצנה",
+      "url": "https://www.teva.org.il/tracks/14969",
+      "lat": null,
+      "lng": null,
+      "kmMin": 1.0,
+      "kmMax": 1.0,
+      "hoursMin": null,
+      "hoursMax": null,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 15646,
+      "name": "רכס אצבע: מערה מרשימה בכרמל",
+      "url": "https://www.teva.org.il/tracks/15646",
+      "lat": null,
+      "lng": null,
+      "kmMin": 3.0,
+      "kmMax": 3.0,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 16112,
+      "name": "נחל זאכי",
+      "url": "https://www.teva.org.il/tracks/16112",
+      "lat": null,
+      "lng": null,
+      "kmMin": 3.0,
+      "kmMax": 3.0,
+      "hoursMin": 3.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": true,
+      "family": false,
+      "accessible": false
+    },
+    {
+      "id": 17470,
+      "name": "בין עין פרת לעין מבוע",
+      "url": "https://www.teva.org.il/tracks/17470",
+      "lat": null,
+      "lng": null,
+      "kmMin": 7.0,
+      "kmMax": 7.0,
+      "hoursMin": 5.0,
+      "hoursMax": 5.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": false,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 17490,
+      "name": "נחל פרת - ממנזר סנט ג׳ורג׳ לעין קלט",
+      "url": "https://www.teva.org.il/tracks/17490",
+      "lat": 31.84357,
+      "lng": 35.4149,
+      "kmMin": 5.0,
+      "kmMax": 5.0,
+      "hoursMin": 3.0,
+      "hoursMax": 4.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": false,
+      "family": false,
+      "accessible": false
+    },
+    {
+      "id": 17757,
+      "name": "חווארי מצדה",
+      "url": "https://www.teva.org.il/tracks/17757",
+      "lat": null,
+      "lng": null,
+      "kmMin": 1.5,
+      "kmMax": 1.5,
+      "hoursMin": 1.5,
+      "hoursMax": 1.5,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate",
+        "easy"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 19122,
+      "name": "יפו העתיקה",
+      "url": "https://www.teva.org.il/tracks/19122",
+      "lat": null,
+      "lng": null,
+      "kmMin": null,
+      "kmMax": null,
+      "hoursMin": null,
+      "hoursMax": null,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": false,
+      "accessible": false
+    },
+    {
+      "id": 25113,
+      "name": "תל חזקה",
+      "url": "https://www.teva.org.il/tracks/25113",
+      "lat": 33.05387,
+      "lng": 35.85037,
+      "kmMin": 4.0,
+      "kmMax": 4.0,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": false,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 833557,
+      "name": "סטף והר איתן",
+      "url": "https://www.teva.org.il/tracks/833557",
+      "lat": null,
+      "lng": null,
+      "kmMin": null,
+      "kmMax": null,
+      "hoursMin": null,
+      "hoursMax": null,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 836897,
+      "name": "שמורת נחל שיזף",
+      "url": "https://www.teva.org.il/tracks/836897",
+      "lat": null,
+      "lng": null,
+      "kmMin": 1.0,
+      "kmMax": 1.0,
+      "hoursMin": null,
+      "hoursMax": null,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 837101,
+      "name": "נחל צפית תחתון",
+      "url": "https://www.teva.org.il/tracks/837101",
+      "lat": null,
+      "lng": null,
+      "kmMin": 5.0,
+      "kmMax": 5.0,
+      "hoursMin": 2.0,
+      "hoursMax": 4.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 837165,
+      "name": "קניון נחל ברק",
+      "url": "https://www.teva.org.il/tracks/837165",
+      "lat": null,
+      "lng": null,
+      "kmMin": 1.0,
+      "kmMax": 1.0,
+      "hoursMin": 3.0,
+      "hoursMax": 5.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 842016,
+      "name": "גבי פרס: בריכות יפהפיות בסלע הלבן",
+      "url": "https://www.teva.org.il/tracks/842016",
+      "lat": null,
+      "lng": null,
+      "kmMin": 4.0,
+      "kmMax": 4.0,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate",
+        "easy"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 842053,
+      "name": "כיפת עשת: תצפית על הערבה והרי אדום",
+      "url": "https://www.teva.org.il/tracks/842053",
+      "lat": null,
+      "lng": null,
+      "kmMin": 2.0,
+      "kmMax": 7.0,
+      "hoursMin": 2.0,
+      "hoursMax": 5.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 842231,
+      "name": "נחל גוב: אתגר לכל רמה",
+      "url": "https://www.teva.org.il/tracks/842231",
+      "lat": null,
+      "lng": null,
+      "kmMin": 4.0,
+      "kmMax": 4.0,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "moderate",
+      "difficulties": [
+        "moderate"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 842342,
+      "name": "דרך השלום בערבה",
+      "url": "https://www.teva.org.il/tracks/842342",
+      "lat": null,
+      "lng": null,
+      "kmMin": 4.0,
+      "kmMax": 4.0,
+      "hoursMin": 2.0,
+      "hoursMax": 3.0,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 842704,
+      "name": "שמורת פורה",
+      "url": "https://www.teva.org.il/tracks/842704",
+      "lat": null,
+      "lng": null,
+      "kmMin": 3.0,
+      "kmMax": 3.0,
+      "hoursMin": 1.5,
+      "hoursMax": 1.5,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": true,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 842801,
+      "name": "גבעת חצבה ותמר המקראית",
+      "url": "https://www.teva.org.il/tracks/842801",
+      "lat": null,
+      "lng": null,
+      "kmMin": 2.0,
+      "kmMax": 2.0,
+      "hoursMin": 1.5,
+      "hoursMax": 1.5,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 845453,
+      "name": "בן שמן וסביבתה",
+      "url": "https://www.teva.org.il/tracks/845453",
+      "lat": null,
+      "lng": null,
+      "kmMin": null,
+      "kmMax": null,
+      "hoursMin": 1.0,
+      "hoursMax": 3.0,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": true,
+      "accessible": false
+    },
+    {
+      "id": 845473,
+      "name": "דרום מישור החוף: בעקבות לוחמי תש\"ח",
+      "url": "https://www.teva.org.il/tracks/845473",
+      "lat": null,
+      "lng": null,
+      "kmMin": null,
+      "kmMax": null,
+      "hoursMin": null,
+      "hoursMax": null,
+      "difficulty": "easy",
+      "difficulties": [
+        "easy"
+      ],
+      "circular": null,
+      "family": false,
+      "accessible": false
+    }
+  ]
+}

@@ -562,12 +562,15 @@ function trailSheet(trail) {
     if (trail.routes && trail.routes.length) {
       node.append(el("h3", null, "קווים במפה"));
       addList(node, trail.routes.map((route) => route.name).filter(Boolean));
+    } else if (trail.lat == null) {
+      node.append(el("p", "fine", "לעמוד הזה אין נקודה מסומנת, אז המפה לא מציגה אותו."));
     } else {
       node.append(el("p", "fine", "לא נמצא קו שביל פתוח ששמו תואם למסלול הזה, אז המפה מסמנת את נקודת ההתחלה בלבד."));
     }
     const links = el("div", "links");
     if (trail.url) links.append(link(trail.url, "העמוד המלא ברשות הטבע והגנים"));
     if (trail.tiuliUrl) links.append(link(trail.tiuliUrl, "העמוד בטיולי"));
+    if (trail.tevaUrl) links.append(link(trail.tevaUrl, "העמוד בחברה להגנת הטבע"));
     if (trail.waze) {
       links.append(link(`https://www.waze.com/ul?q=${encodeURIComponent(trail.waze)}&navigate=yes`, "ניווט לתחילת המסלול"));
     } else if (trail.lat != null) {

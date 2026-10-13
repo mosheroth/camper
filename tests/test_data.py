@@ -140,7 +140,7 @@ class CatalogTests(unittest.TestCase):
         self.assertTrue({295240, 147488, 6070}.issubset(ids))
 
     def test_tiuli_facts_join_the_inpa_catalog(self):
-        added = [trail for trail in self.trails if int(trail["id"]) >= 8_000_000]
+        added = [trail for trail in self.trails if 8_000_000 <= int(trail["id"]) < 20_000_000]
         linked = [trail for trail in self.trails if trail.get("tiuliUrl") and int(trail["id"]) < 8_000_000]
         self.assertGreaterEqual(len(added), 150)
         self.assertGreaterEqual(len(linked), 30)
@@ -153,6 +153,25 @@ class CatalogTests(unittest.TestCase):
             self.assertLessEqual(trail["lat"], 33.4)
             self.assertNotIn("אופני", trail["name"])
             self.assertNotRegex(trail["name"], r"ג['׳]יפ|4\s*[xX×]\s*4")
+        added_teva = [trail for trail in self.trails if int(trail["id"]) >= 20_000_000]
+        self.assertGreaterEqual(len(added_teva), 30)
+        hazaka = next(trail for trail in self.trails if str(trail.get("tevaUrl") or "").endswith("/tracks/25113"))
+        self.assertIn("חזקה", hazaka["name"])
+        self.assertEqual(hazaka["lat"], 33.05387)
+        self.assertEqual(hazaka["lng"], 35.85037)
+        linked_teva = [trail for trail in self.trails if trail.get("tevaUrl")]
+        self.assertGreaterEqual(len(linked_teva), len(added_teva))
+        for trail in linked_teva:
+            self.assertTrue(trail["tevaUrl"].startswith("https://www.teva.org.il/tracks/"), trail["name"])
+        for trail in added_teva:
+            self.assertEqual(trail.get("source"), "teva")
+            self.assertEqual(trail.get("blurb") or "", "")
+            self.assertFalse(trail.get("photos"))
+            if trail.get("lat") is not None:
+                self.assertGreaterEqual(trail["lat"], 29.4)
+                self.assertLessEqual(trail["lat"], 33.4)
+                self.assertGreaterEqual(trail["lng"], 34.2)
+                self.assertLessEqual(trail["lng"], 35.95)
         swiss = next(trail for trail in self.trails if trail["id"] == 62571)
         self.assertTrue(swiss["tiuliUrl"].startswith("https://www.tiuli.com/tracks/24/"))
         linked_camps = [camp for camp in self.camps if camp.get("tiuliUrl")]

@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 CACHE = DATA / ".tiuli-html"
 TIULI_BASE = 8_000_000
+TEVA_BASE = 20_000_000
 UA = "Mozilla/5.0 (compatible; CamperWeekendBot/0.1; +https://github.com/mosheroth/camper)"
 SITEMAPS = ("tracks", "camping", "points-of-interest", "attractions")
 
@@ -517,7 +518,10 @@ def _prefixed(rows, prefix):
 
 def merge_catalog(trails, camps, places, payload):
     """Attach tiuli links and append hikes that are not already in the catalog."""
-    trails = [trail for trail in trails if int(trail.get("id") or 0) < TIULI_BASE]
+    trails = [
+        trail for trail in trails
+        if int(trail.get("id") or 0) < TIULI_BASE or int(trail.get("id") or 0) >= TEVA_BASE
+    ]
     for trail in trails:
         trail.pop("tiuliUrl", None)
         trail.pop("features", None)

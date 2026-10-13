@@ -1276,6 +1276,7 @@
         const trail = byTrail.get(step.trailId);
         if (trail && trail.url) lines.push(trail.url);
         if (trail && trail.tiuliUrl) lines.push(trail.tiuliUrl);
+        if (trail && trail.tevaUrl) lines.push(trail.tevaUrl);
       }
       if (step.kind === "coffee" && step.url) lines.push(step.url);
       if (step.kind === "visit" && step.url) lines.push(step.url);

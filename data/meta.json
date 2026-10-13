@@ -4,9 +4,9 @@
   "counts": {
     "paid": 18,
     "free": 108,
-    "trails": 462,
-    "family": 221,
-    "circular": 193,
+    "trails": 496,
+    "family": 251,
+    "circular": 206,
     "routes": 118,
     "places": 2387
   },
@@ -18,5 +18,11 @@
     "addedTrails": 180,
     "linkedCamps": 66,
     "linkedPlaces": 71
+  },
+  "teva": {
+    "fetchedAt": "2026-10-13T19:56:43Z",
+    "tracks": 40,
+    "linkedTrails": 6,
+    "addedTrails": 34
   }
 }

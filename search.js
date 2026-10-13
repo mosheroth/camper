@@ -610,6 +610,8 @@ function fillHike(node, trail) {
   if (trail.routes && trail.routes.length) {
     node.append(el("h3", null, "קווים במפה"));
     addList(node, trail.routes.map((route) => route.name));
+  } else if (trail.lat == null) {
+    node.append(el("p", "fine", "לעמוד הזה אין נקודה מסומנת, אז המפה לא מציגה אותו."));
   } else {
     node.append(el("p", "fine", "לא נמצא קו שביל פתוח ששמו תואם למסלול הזה, אז המפה מסמנת את נקודת ההתחלה בלבד."));
   }
@@ -969,12 +971,12 @@ function boot(campData, trailData, placeData) {
   places = Array.isArray(placeData) ? placeData : [];
   catalog = [];
   trailData.forEach((trail) => {
-    if (trail.lat == null) return;
     const links = [];
     if (trail.url) links.push({ href: trail.url, text: "העמוד ברשות הטבע והגנים" });
     if (trail.tiuliUrl) links.push({ href: trail.tiuliUrl, text: "העמוד בטיולי" });
+    if (trail.tevaUrl) links.push({ href: trail.tevaUrl, text: "העמוד בחברה להגנת הטבע" });
     if (trail.waze) links.push({ href: `https://www.waze.com/ul?q=${encodeURIComponent(trail.waze)}&navigate=yes`, text: "ניווט לתחילת המסלול" });
-    else links.push({ href: `https://www.waze.com/ul?ll=${trail.lat},${trail.lng}&navigate=yes`, text: "ניווט לתחילת המסלול" });
+    else if (trail.lat != null) links.push({ href: `https://www.waze.com/ul?ll=${trail.lat},${trail.lng}&navigate=yes`, text: "ניווט לתחילת המסלול" });
     catalog.push({
       key: `hike-${trail.id}`,
       role: "hike",
