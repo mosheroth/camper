@@ -1,0 +1,515 @@
+const ISRAEL_BOUNDS = [[29.45, 34.22], [33.35, 35.92]];
+const PAGE = 24;
+const ROLE = {
+  hike: ["טיול", "#a3472c"],
+  camp: ["חניון", "#1c3f34"],
+  place: ["נקודת עניין", "#2f6a52"],
+  coffee: ["קפה", "#6a4b16"],
+};
+const KIND = {
+  spring: "מעיין",
+  waterfall: "מפל",
+  viewpoint: "מצפור",
+  peak: "פסגה",
+  park: "גן לאומי",
+  reserve: "שמורה",
+  beach: "חוף",
+};
+const DIFFICULTY = { easy: "קלה", moderate: "בינונית", challenging: "מאתגרת" };
+
+const results = document.querySelector("#results");
+const roles = document.querySelector("#roles");
+const queryBox = document.querySelector("#query");
+
+let catalog = [];
+let camps = [];
+let role = "all";
+let region = "all";
+let home = "";
+let limit = PAGE;
+let menuFor = null;
+let menuQuery = "";
+let menuFocus = false;
+let openKey = "";
+let map = null;
+let markers = null;
+
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text != null) node.textContent = text;
+  return node;
+}
+
+function hourPhrase(hours) {
+  const whole = Math.floor(hours);
+  const half = Math.abs(hours - whole - 0.5) < 0.01;
+  if (half && whole === 0) return "כחצי שעה";
+  const head = whole === 1 ? "כשעה" : whole === 2 ? "כשעתיים" : `כ־${whole} שעות`;
+  if (half) return `${head} וחצי`;
+  if (whole === hours) return head;
+  return `כ־${hours} שעות`;
+}
+
+function hikeMeta(trail) {
+  const bits = [];
+  if (DIFFICULTY[trail.difficulty]) bits.push(DIFFICULTY[trail.difficulty]);
+  if (trail.hoursMax && trail.hoursMax <= 16) {
+    const estimated = trail.hoursEstimated ? "הערכה של " : "";
+    bits.push(`${estimated}${hourPhrase(trail.hoursMax)}`);
+  }
+  if (window.CamperPlan.lengthIsUsable(trail)) bits.push(`כ־${trail.kmMax || trail.kmMin} ק״מ`);
+  if (trail.family) bits.push("למשפחות");
+  return bits.join(" · ");
+}
+
+function driveLabel(minutes) {
+  if (minutes === 0) return "בלי נסיעה מהבית";
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (!hours) return `נסיעה של כ־${minutes} דקות`;
+  const head = hours === 1 ? "כשעה" : hours === 2 ? "כשעתיים" : `כ־${hours} שעות`;
+  if (!mins) return `נסיעה של ${head}`;
+  if (mins === 30) return `נסיעה של ${head} וחצי`;
+  return `נסיעה של ${head} ו־${mins} דקות`;
+}
+
+function campMeta(camp) {
+  const glance = window.CamperPlan.campGlance(camp);
+  const regionName = { north: "צפון", center: "מרכז", south: "דרום", east: "יו״ש" }[(camp.regions || [])[0]] || "";
+  const bits = [regionName, glance.stay].filter(Boolean);
+  const origin = home ? window.CamperPlan.regionOrigin(camps, home) : null;
+  if (origin && camp.lat != null) {
+    const drive = window.CamperPlan.travelMinutes(camp, origin);
+    if (drive != null) bits.push(driveLabel(drive));
+  }
+  return bits.join(" · ");
+}
+
+function inRegion(item) {
+  if (region === "all") return true;
+  if (item.role === "hike" || item.role === "camp") return (item.regions || []).includes(region);
+  if (item.lat == null) return false;
+  if (region === "north") return item.lat >= 32.45;
+  if (region === "center") return item.lat >= 31.55 && item.lat < 32.45;
+  if (region === "south") return item.lat < 31.55;
+  return item.lng > 35.05 && item.lat > 31.2 && item.lat < 32.6;
+}
+
+function matchesQuery(item, text) {
+  if (!text) return true;
+  return item.name.includes(text) || (item.area || "").includes(text);
+}
+
+function pool() {
+  const text = queryBox.value.trim();
+  return catalog.filter((item) => inRegion(item) && matchesQuery(item, text));
+}
+
+function visible() {
+  const text = queryBox.value.trim();
+  const matched = pool().filter((item) => role === "all" || item.role === role);
+  matched.sort((left, right) => left.name.localeCompare(right.name, "he"));
+  if (!text && role === "all" && region === "all") {
+    return matched.filter((item) => item.role === "camp").slice(0, limit);
+  }
+  return matched.slice(0, limit);
+}
+
+function counts() {
+  const matched = pool();
+  const tally = { all: matched.length, hike: 0, camp: 0, place: 0, coffee: 0 };
+  matched.forEach((item) => { tally[item.role] += 1; });
+  if (!queryBox.value.trim() && region === "all") tally.all = catalog.filter((item) => item.role === "camp").length;
+  return tally;
+}
+
+function ensureMap() {
+  if (map || typeof window.L === "undefined") return;
+  map = window.L.map("browse-map", { zoomControl: false, scrollWheelZoom: true });
+  window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 17,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+  window.L.control.zoom({ position: "topleft", zoomInTitle: "התקרבות", zoomOutTitle: "התרחקות" }).addTo(map);
+  markers = window.L.layerGroup().addTo(map);
+  map.fitBounds(ISRAEL_BOUNDS, { animate: false, padding: [20, 20] });
+  window.addEventListener("resize", () => map.invalidateSize());
+}
+
+function drawMap(rows) {
+  ensureMap();
+  if (!markers) return;
+  markers.clearLayers();
+  const points = [];
+  rows.forEach((item) => {
+    if (item.lat == null) return;
+    points.push([item.lat, item.lng]);
+    const marker = window.L.circleMarker([item.lat, item.lng], {
+      radius: openKey === item.key ? 9 : 6,
+      color: "#fffaf3",
+      weight: 2,
+      fillColor: ROLE[item.role][1],
+      fillOpacity: 1,
+    }).addTo(markers);
+    marker.bindTooltip(item.name, { direction: "auto", opacity: 0.95 });
+    marker.on("click", () => {
+      openKey = item.key;
+      menuFor = null;
+      render();
+    });
+  });
+  if (points.length > 1) map.fitBounds(points, { padding: [28, 28], maxZoom: 11, animate: false });
+  else if (points.length === 1) map.setView(points[0], 12, { animate: false });
+}
+
+function link(href, text) {
+  const node = el("a", null, text);
+  node.href = href;
+  node.target = "_blank";
+  node.rel = "noopener noreferrer";
+  return node;
+}
+
+function sheet(item) {
+  const node = el("article", "search-sheet");
+  node.dataset.key = item.key;
+  const back = el("button", "text-back", "חזרה לחיפוש");
+  back.type = "button";
+  back.addEventListener("click", () => {
+    openKey = "";
+    render();
+  });
+  node.append(back);
+  node.append(el("p", "kicker", ROLE[item.role][0]));
+  node.append(el("h2", null, item.name));
+  if (item.meta) node.append(el("p", "meta", item.meta));
+  if (item.blurb) node.append(el("p", null, item.blurb));
+  if (item.booking) node.append(el("p", "booking", "צריך להזמין מקום מראש."));
+  const links = el("div", "links");
+  item.links.forEach((entry) => links.append(link(entry.href, entry.text)));
+  if (links.childNodes.length) node.append(links);
+  const add = el("button", "add", "הוספה לטיול");
+  add.type = "button";
+  add.addEventListener("click", (event) => {
+    event.stopPropagation();
+    menuFor = menuFor === item.key ? null : item.key;
+    menuQuery = "";
+    render();
+  });
+  node.append(add);
+  return node;
+}
+
+function row(item) {
+  const node = el("article", openKey === item.key ? "hit open" : "hit");
+  node.dataset.key = item.key;
+  node.append(el("span", `badge ${item.role}`, ROLE[item.role][0]));
+  const copy = el("div");
+  copy.append(el("h2", null, item.name));
+  if (item.meta) copy.append(el("p", "meta", item.meta));
+  node.append(copy);
+  const add = el("button", "add", "הוספה לטיול");
+  add.type = "button";
+  add.addEventListener("click", (event) => {
+    event.stopPropagation();
+    menuFor = menuFor === item.key ? null : item.key;
+    menuQuery = "";
+    render();
+  });
+  node.append(add);
+  node.addEventListener("click", () => {
+    openKey = item.key;
+    menuFor = null;
+    render();
+    if (item.lat != null && map) map.flyTo([item.lat, item.lng], 13, { duration: 0.35 });
+  });
+  return node;
+}
+
+function contains(trip, item) {
+  if (item.role === "camp") return Number(trip.campId) === item.id;
+  if (item.role === "hike") return (trip.trailIds || []).map(Number).includes(item.id);
+  const place = trip.place || {};
+  const list = item.role === "coffee" ? place.coffee : place.visit;
+  return (list || []).includes(item.id);
+}
+
+function nextState(trip, item, on) {
+  const place = { ...(trip ? trip.place : {}) };
+  let campId = trip ? trip.campId : null;
+  let trailIds = trip ? (trip.trailIds || []).slice() : [];
+  let coffee = (place.coffee || []).slice();
+  let visit = (place.visit || []).slice();
+  let note = "";
+  if (item.role === "camp") campId = on ? item.id : null;
+  else if (item.role === "hike") {
+    if (on && !trailIds.map(Number).includes(item.id) && trailIds.length >= 4) note = "אפשר עד ארבעה מסלולים בטיול.";
+    else trailIds = on ? trailIds.concat(item.id) : trailIds.filter((id) => Number(id) !== item.id);
+  } else if (item.role === "coffee") {
+    if (on && !coffee.includes(item.id) && coffee.length >= 2) note = "אפשר עד שתי תצפיות קפה בטיול.";
+    else coffee = on ? coffee.concat(item.id) : coffee.filter((id) => id !== item.id);
+  } else if (on && !visit.includes(item.id) && visit.length >= 2) note = "אפשר עד שתי נקודות עניין בטיול.";
+  else visit = on ? visit.concat(item.id) : visit.filter((id) => id !== item.id);
+  place.coffee = coffee;
+  place.visit = visit;
+  return {
+    note,
+    input: {
+      id: trip && trip.id,
+      name: trip ? trip.name : item.name,
+      campId,
+      trailIds,
+      draft: trip ? trip.draft : true,
+      place,
+    },
+  };
+}
+
+function applyToggle(trip, item, on) {
+  const next = nextState(trip, item, on);
+  if (next.note) return next.note;
+  const saved = window.CamperTrips.save(next.input);
+  if (!saved && trip) window.CamperTrips.remove(trip.id);
+  return "";
+}
+
+function menu(item, anchor) {
+  const box = el("div", "add-menu");
+  box.setAttribute("role", "dialog");
+  box.append(el("h3", null, "הוספה לטיול"));
+  const filter = document.createElement("input");
+  filter.type = "search";
+  filter.placeholder = "חיפוש טיול";
+  filter.value = menuQuery;
+  filter.addEventListener("input", () => {
+    menuQuery = filter.value;
+    menuFocus = true;
+    render();
+  });
+  box.append(filter);
+  const into = new URLSearchParams(window.location.search).get("into") || "";
+  let trips = window.CamperTrips.list();
+  if (into) trips = trips.slice().sort((left, right) => (left.id === into ? -1 : right.id === into ? 1 : 0));
+  const text = menuQuery.trim();
+  trips.filter((trip) => !text || trip.name.includes(text)).forEach((trip) => {
+    const label = el("label");
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = contains(trip, item);
+    input.addEventListener("change", () => {
+      const note = applyToggle(trip, item, input.checked);
+      const status = box.querySelector(".fine");
+      if (status) status.textContent = note;
+      if (note) input.checked = contains(trip, item);
+      else render();
+    });
+    const copy = el("span");
+    copy.append(document.createTextNode(trip.name));
+    const hasNight = trip.campId != null && Number.isFinite(Number(trip.campId));
+    const detail = el("small", null, trip.id === into ? "הטיול שנפתח מעריכת הלוז" : (hasNight ? "יש לילה" : "עדיין בלי לילה"));
+    copy.append(detail);
+    label.append(input, copy);
+    box.append(label);
+  });
+  const create = el("button", "fresh", "טיול חדש");
+  create.type = "button";
+  create.addEventListener("click", () => {
+    applyToggle(null, item, true);
+    menuFor = null;
+    render();
+  });
+  box.append(create);
+  box.append(el("p", "fine", ""));
+  const rect = anchor.getBoundingClientRect();
+  const width = Math.min(320, window.innerWidth - 24);
+  const top = Math.max(12, Math.min(rect.bottom + 6, window.innerHeight - 280));
+  const left = Math.max(12, Math.min(rect.left - 40, window.innerWidth - width - 12));
+  box.style.top = `${top}px`;
+  box.style.left = `${left}px`;
+  return box;
+}
+
+function render() {
+  const tally = counts();
+  roles.replaceChildren();
+  [["all", "הכל"], ["hike", "טיול"], ["camp", "חניון"], ["place", "נקודת עניין"], ["coffee", "קפה"]].forEach(([key, label]) => {
+    const button = el("button", key === role ? "chip on" : "chip", `${label} ${tally[key]}`);
+    button.type = "button";
+    button.addEventListener("click", () => {
+      role = key;
+      limit = PAGE;
+      openKey = "";
+      render();
+    });
+    roles.append(button);
+  });
+  const regionPick = document.createElement("select");
+  regionPick.setAttribute("aria-label", "אזור");
+  [["all", "כל הארץ"], ["north", "צפון"], ["center", "מרכז"], ["south", "דרום"], ["east", "יו״ש"]].forEach(([value, label]) => {
+    const option = el("option", null, label);
+    option.value = value;
+    regionPick.append(option);
+  });
+  regionPick.value = region;
+  regionPick.addEventListener("change", () => {
+    region = regionPick.value;
+    limit = PAGE;
+    render();
+  });
+  roles.append(regionPick);
+
+  const rows = visible();
+  const full = pool().filter((item) => role === "all" || item.role === role);
+  results.replaceChildren();
+  const opened = openKey ? catalog.find((item) => item.key === openKey) : null;
+  if (opened) results.append(sheet(opened));
+  else if (!rows.length) {
+    results.append(el("p", "empty", queryBox.value.trim() ? "אין תוצאה לשם הזה." : "אפשר לחפש שם, או לבחור סוג."));
+  } else {
+    if (!queryBox.value.trim() && role === "all" && region === "all") {
+      results.append(el("p", "fine", "חניונים להתחלה. חיפוש או בחירת סוג מציגים גם מסלולים, נקודות ומצפורים."));
+    }
+    rows.forEach((item) => results.append(row(item)));
+    if (full.length > rows.length) {
+      const more = el("button", "chip", "עוד תוצאות");
+      more.type = "button";
+      more.addEventListener("click", () => {
+        limit += PAGE;
+        render();
+      });
+      results.append(more);
+    }
+  }
+  drawMap(opened ? [opened] : rows);
+  document.querySelectorAll(".add-menu").forEach((node) => node.remove());
+  if (menuFor) {
+    const item = catalog.find((entry) => entry.key === menuFor);
+    const anchor = results.querySelector(`[data-key="${item.key}"] .add`);
+    if (item && anchor) document.body.append(menu(item, anchor));
+    if (menuFocus) {
+      menuFocus = false;
+      const field = document.querySelector(".add-menu input");
+      if (field) {
+        field.focus();
+        const end = field.value.length;
+        if (typeof field.setSelectionRange === "function") field.setSelectionRange(end, end);
+      }
+    }
+  }
+}
+
+function boot(campData, trailData, placeData) {
+  camps = campData;
+  const places = Array.isArray(placeData) ? placeData : [];
+  catalog = [];
+  trailData.forEach((trail) => {
+    if (trail.lat == null) return;
+    const links = [];
+    if (trail.url) links.push({ href: trail.url, text: "העמוד ברשות הטבע והגנים" });
+    if (trail.tiuliUrl) links.push({ href: trail.tiuliUrl, text: "העמוד בטיולי" });
+    if (trail.waze) links.push({ href: `https://www.waze.com/ul?q=${encodeURIComponent(trail.waze)}&navigate=yes`, text: "ניווט לתחילת המסלול" });
+    else links.push({ href: `https://www.waze.com/ul?ll=${trail.lat},${trail.lng}&navigate=yes`, text: "ניווט לתחילת המסלול" });
+    catalog.push({
+      key: `hike-${trail.id}`,
+      role: "hike",
+      id: trail.id,
+      name: trail.name,
+      lat: trail.lat,
+      lng: trail.lng,
+      regions: trail.regions || [],
+      area: (trail.areaNames || []).join(" "),
+      meta: hikeMeta(trail),
+      blurb: "",
+      booking: false,
+      links,
+    });
+  });
+  campData.forEach((camp) => {
+    const glance = window.CamperPlan.campGlance(camp);
+    const links = [];
+    if (glance.bookingUrl) links.push({ href: glance.bookingUrl, text: "להזמנת מקום" });
+    if (camp.url) links.push({ href: camp.url, text: "העמוד ברשות הטבע והגנים" });
+    if (camp.tiuliUrl) links.push({ href: camp.tiuliUrl, text: "העמוד בטיולי" });
+    catalog.push({
+      key: `camp-${camp.id}`,
+      role: "camp",
+      id: camp.id,
+      name: camp.name,
+      lat: camp.lat,
+      lng: camp.lng,
+      regions: camp.regions || [],
+      area: (camp.areaNames || []).join(" "),
+      meta: campMeta(camp),
+      blurb: glance.blurb || "",
+      booking: Boolean(glance.bookingUrl),
+      links,
+    });
+  });
+  places.forEach((place) => {
+    if (place.lat == null || !place.name) return;
+    const coffee = place.kind === "viewpoint";
+    const links = [];
+    if (place.tiuliUrl) links.push({ href: place.tiuliUrl, text: "העמוד בטיולי" });
+    if (place.wiki) links.push({ href: place.wiki, text: "הערך בוויקיפדיה" });
+    if (place.site) links.push({ href: place.site, text: "האתר" });
+    if (place.url) links.push({ href: place.url, text: "הנקודה במפה" });
+    catalog.push({
+      key: `${coffee ? "coffee" : "place"}-${place.id}`,
+      role: coffee ? "coffee" : "place",
+      id: place.id,
+      name: place.name,
+      lat: place.lat,
+      lng: place.lng,
+      regions: [],
+      area: "",
+      meta: coffee ? "מצפור · כחצי שעה" : (KIND[place.kind] || "נקודת עניין"),
+      blurb: "",
+      booking: false,
+      links,
+    });
+  });
+  try {
+    home = localStorage.getItem("camper-home") || "";
+  } catch (_error) {
+    home = "";
+  }
+  catalog.forEach((item) => {
+    if (item.role === "camp") {
+      const camp = campData.find((entry) => entry.id === item.id);
+      if (camp) item.meta = campMeta(camp);
+    }
+  });
+  const preset = new URLSearchParams(window.location.search).get("q") || "";
+  if (preset) queryBox.value = preset;
+  render();
+}
+
+queryBox.addEventListener("input", () => {
+  limit = PAGE;
+  openKey = "";
+  menuFor = null;
+  render();
+});
+document.addEventListener("pointerdown", (event) => {
+  if (!menuFor) return;
+  if (event.target.closest(".add-menu, .add")) return;
+  menuFor = null;
+  render();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && menuFor) {
+    menuFor = null;
+    render();
+  }
+});
+
+Promise.all([
+  fetch("data/camps.json").then((response) => response.json()),
+  fetch("data/trails.json").then((response) => response.json()),
+  fetch("data/places.json").then((response) => (response.ok ? response.json() : [])).catch(() => []),
+]).then(([campData, trailData, placeData]) => {
+  boot(campData, trailData, placeData);
+}).catch(() => {
+  results.replaceChildren(el("p", "empty", "לא הצלחנו לטעון את המאגר."));
+});

@@ -957,8 +957,171 @@ Promise.all([
     const { campId, trailIds } = query;
     const camp = camps.find((item) => item.id === campId);
     if (!camp) {
-      title.textContent = "הסופ״ש לא נמצא";
-      lead.textContent = "אפשר לחזור לרשימה ולבחור הצעה אחרת.";
+      const storedTrip = query.tripId && window.CamperTrips ? window.CamperTrips.get(query.tripId) : null;
+      const addLink = document.querySelector("#add-from-search");
+      const nameInput = document.querySelector("#trip-name");
+      const saveButton = document.querySelector("#save-trip");
+      const shareButton = document.querySelector("#share-trip");
+      const deleteButton = document.querySelector("#delete-trip");
+      const saveNote = document.querySelector("#save-note");
+      const menuButton = document.querySelector("#trip-menu");
+      const menuPanel = document.querySelector("#trip-menu-panel");
+      if (!storedTrip) {
+        title.textContent = query.name || "הטיול לא נמצא";
+        lead.textContent = query.name
+          ? "הלוז נבנה כשיש חניון ללילה. אפשר להוסיף את הפעילויות לטיול מהחיפוש."
+          : "אפשר לחזור לחיפוש ולהוסיף פעילות לטיול.";
+        if (addLink) addLink.href = "index.html";
+        if (saveButton) saveButton.hidden = true;
+        if (deleteButton) deleteButton.hidden = true;
+        const catalogPlaces = Array.isArray(placeCatalog) ? placeCatalog : [];
+        const shared = [
+          ...query.trailIds.map((id) => {
+            const trail = trails.find((item) => item.id === Number(id));
+            return trail ? `טיול · ${trail.name}` : "";
+          }),
+          ...query.coffee.map((id) => {
+            const place = catalogPlaces.find((item) => item.id === id);
+            return place ? `קפה · ${place.name}` : "";
+          }),
+          ...query.visit.map((id) => {
+            const place = catalogPlaces.find((item) => item.id === id);
+            return place ? `נקודת עניין · ${place.name}` : "";
+          }),
+        ].filter(Boolean);
+        const shelf = document.querySelector("#around");
+        shared.forEach((text) => shelf.append(el("p", "meta", text)));
+        return;
+      }
+      title.textContent = storedTrip.name;
+      document.title = `${storedTrip.name} — סופ״ש בטבע`;
+      lead.textContent = "הלוז נבנה כשיש חניון ללילה.";
+      if (addLink) addLink.href = `index.html?into=${encodeURIComponent(storedTrip.id)}`;
+      if (nameInput) nameInput.value = storedTrip.name;
+      if (deleteButton) {
+        deleteButton.hidden = false;
+        deleteButton.textContent = "מחיקה";
+      }
+      if (saveButton) saveButton.textContent = storedTrip.draft ? "צור טיול" : "שמירה";
+      const shelf = document.querySelector("#around");
+      const catalogPlaces = Array.isArray(placeCatalog) ? placeCatalog : [];
+      const shelfItems = [
+        ...(storedTrip.trailIds || []).map((id) => {
+          const trail = trails.find((item) => item.id === Number(id));
+          return trail ? { label: `טיול · ${trail.name}`, lat: trail.lat, lng: trail.lng, color: "#a3472c" } : null;
+        }),
+        ...((storedTrip.place && storedTrip.place.coffee) || []).map((id) => {
+          const place = catalogPlaces.find((item) => item.id === id);
+          return place ? { label: `קפה · ${place.name}`, lat: place.lat, lng: place.lng, color: "#6a4b16" } : null;
+        }),
+        ...((storedTrip.place && storedTrip.place.visit) || []).map((id) => {
+          const place = catalogPlaces.find((item) => item.id === id);
+          return place ? { label: `נקודת עניין · ${place.name}`, lat: place.lat, lng: place.lng, color: "#2f6a52" } : null;
+        }),
+      ].filter(Boolean);
+      shelfItems.forEach((item) => shelf.append(el("p", "meta", item.label)));
+      shelf.append(el("p", null, "מוסיפים חניון מהחיפוש, ואז אפשר לערוך כאן את השעות והסדר."));
+      if (typeof window.L !== "undefined") {
+        const shelfMap = window.L.map("map", { zoomControl: false, scrollWheelZoom: true });
+        window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 17,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }).addTo(shelfMap);
+        const points = [];
+        shelfItems.forEach((item) => {
+          if (item.lat == null) return;
+          points.push([item.lat, item.lng]);
+          window.L.circleMarker([item.lat, item.lng], {
+            radius: 7,
+            color: "#fffaf3",
+            weight: 2,
+            fillColor: item.color,
+            fillOpacity: 1,
+          }).addTo(shelfMap).bindTooltip(item.label, { direction: "auto", opacity: 0.95 });
+        });
+        if (points.length > 1) shelfMap.fitBounds(points, { padding: [28, 28], maxZoom: 12 });
+        else if (points.length === 1) shelfMap.setView(points[0], 12);
+        else shelfMap.fitBounds([[29.45, 34.22], [33.35, 35.92]]);
+        window.setTimeout(() => shelfMap.invalidateSize(), 0);
+      }
+      function closeShelfMenu() {
+        if (!menuPanel || menuPanel.hidden) return;
+        menuPanel.hidden = true;
+        if (menuButton) menuButton.setAttribute("aria-expanded", "false");
+      }
+      function shelfRecord(draft) {
+        return {
+          id: storedTrip.id,
+          name: (nameInput && nameInput.value.trim()) || storedTrip.name,
+          campId: storedTrip.campId != null ? storedTrip.campId : null,
+          trailIds: storedTrip.trailIds || [],
+          draft: draft == null ? Boolean(storedTrip.draft) : draft,
+          place: storedTrip.place || {},
+        };
+      }
+      function rememberShelf(draft) {
+        if (!window.CamperTrips) return null;
+        const saved = window.CamperTrips.save(shelfRecord(draft));
+        if (!saved) {
+          if (saveNote) saveNote.textContent = "לא הצלחנו לשמור בדפדפן הזה.";
+          return null;
+        }
+        storedTrip.name = saved.name;
+        storedTrip.draft = saved.draft;
+        title.textContent = saved.name;
+        document.title = `${saved.name} — סופ״ש בטבע`;
+        if (saveButton) saveButton.textContent = saved.draft ? "צור טיול" : "שמירה";
+        return saved;
+      }
+      if (menuButton && menuPanel) {
+        menuButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const open = menuPanel.hidden;
+          menuPanel.hidden = !open;
+          menuButton.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        document.addEventListener("pointerdown", (event) => {
+          if (!menuPanel || menuPanel.hidden) return;
+          if (menuPanel.contains(event.target) || menuButton.contains(event.target)) return;
+          closeShelfMenu();
+        });
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") closeShelfMenu();
+        });
+      }
+      if (nameInput) nameInput.addEventListener("change", () => { rememberShelf(); });
+      if (saveButton) {
+        saveButton.addEventListener("click", () => {
+          const saved = rememberShelf(false);
+          closeShelfMenu();
+          if (saved && saveNote) saveNote.textContent = "הטיול נשמר אצלך, גם אחרי רענון.";
+        });
+      }
+      if (shareButton) {
+        shareButton.addEventListener("click", async () => {
+          closeShelfMenu();
+          const saved = rememberShelf() || storedTrip;
+          const url = new URL(window.CamperTrips.sharePath(saved), window.location.href).href;
+          const text = `${saved.name}\n${url}`;
+          const result = await window.CamperTrips.send(saved, text);
+          if (result.aborted) return;
+          if (!saveNote) return;
+          if (result.copied) saveNote.textContent = "ההודעה הועתקה.";
+          else if (result.shared) saveNote.textContent = "אפשר לשלוח את הטיול.";
+          else saveNote.textContent = text;
+        });
+      }
+      if (deleteButton) {
+        deleteButton.addEventListener("click", () => {
+          if (deleteButton.dataset.confirm !== "yes") {
+            deleteButton.dataset.confirm = "yes";
+            deleteButton.textContent = "לאשר מחיקה";
+            return;
+          }
+          window.CamperTrips.remove(storedTrip.id);
+          window.location.href = "trips.html";
+        });
+      }
       return;
     }
     const byId = new Map(trails.map((trail) => [trail.id, trail]));
@@ -1067,7 +1230,7 @@ Promise.all([
     let tripDepth = window.history.state && window.history.state.camperTrip ? window.history.state.depth || 0 : 0;
 
     document.title = `${nameInput.value} — סופ״ש בטבע`;
-    title.textContent = camp.name;
+    title.textContent = nameInput.value;
     const back = el("button", "text-back", "חזרה לבניית הטיול");
     back.type = "button";
     back.addEventListener("click", () => {
@@ -2610,6 +2773,8 @@ Promise.all([
           ? `${chosen.length} מסלולים במפה`
           : "בלי מסלול במפה";
       lead.textContent = tripId ? `${count}${draft ? " · טיוטה" : " · שמור"}` : count;
+      const addLink = document.querySelector("#add-from-search");
+      if (addLink) addLink.href = tripId ? `index.html?into=${encodeURIComponent(tripId)}` : "index.html";
       saveButton.textContent = tripId && !draft ? "שמירה" : "צור טיול";
       renderAround();
       renderDetail();

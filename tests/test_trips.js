@@ -37,6 +37,11 @@ assert.strictEqual(other.name, "טיול בלי שם");
 assert.strictEqual(trips.list()[0].id, other.id);
 
 assert.strictEqual(trips.save({ name: "בלי חניון", trailIds: [] }), null);
+const hikeOnly = trips.save({ name: "רק מסלול", campId: null, trailIds: [24], draft: true });
+assert.strictEqual(hikeOnly.campId, null);
+assert.deepStrictEqual(hikeOnly.trailIds, [24]);
+assert.ok(!trips.editPath(hikeOnly).includes("camp="));
+assert.ok(trips.editPath(hikeOnly).includes(`trip=${hikeOnly.id}`));
 assert.strictEqual(trips.get(created.id).name, "קסטל ועין חמד");
 
 const path = trips.sharePath(updated);
@@ -181,7 +186,7 @@ assert.strictEqual(swapped.place.to, "2026-10-19");
 
 trips.remove(created.id);
 assert.strictEqual(trips.get(created.id), null);
-assert.strictEqual(trips.list().length, 9);
+assert.strictEqual(trips.list().length, 10);
 
 const broken = open({
   get: () => "{",

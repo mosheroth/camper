@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>בוחרים איפה הקמפינג — סופ״ש בטבע</title>
+    <title>חיפוש — סופ״ש בטבע</title>
     <meta
       name="description"
-      content="תכנון סופ״ש של חניון לילה ומסלול הליכה לפי אזור, משפחות, זמן, קושי ומסלול מעגלי. הנתונים מאתר רשות הטבע והגנים."
+      content="חיפוש חניוני לילה, מסלולי הליכה, נקודות עניין ומצפורים, ואז הוספה לטיול."
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,126 +23,44 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="browse-page">
+  <body class="browse-page search-page">
     <header class="mast browse-mast">
-      <p class="eyebrow"><a href="trips.html">הטיולים שלי</a></p>
-      <div class="browse-head">
-        <div class="step-title">
-          <p class="step-kicker">שלב 1</p>
-          <h1>בוחרים איפה הקמפינג</h1>
-        </div>
-        <p class="lead">חניון אחד ללילה. אחר כך בונים את הטיול סביבו.</p>
+      <div class="site-bar">
+        <a class="brand" href="index.html">סופ״ש בטבע</a>
+        <nav class="site-nav" aria-label="אזורים">
+          <a class="on" href="index.html">חיפוש</a>
+          <a href="trips.html">הטיולים שלי</a>
+        </nav>
+        <label class="site-search">
+          <input id="query" type="search" placeholder="חניון, מסלול, מצפור" autocomplete="off" />
+        </label>
       </div>
     </header>
-
     <main class="workspace">
-      <aside class="panel" aria-label="בחירת חניון הקמפינג">
-      <form id="filters" class="filters">
-        <div class="field">
-          <label for="home">גרים ב</label>
-          <select id="home" name="home">
-            <option value="">לא משנה</option>
-            <option value="north">צפון</option>
-            <option value="center">מרכז</option>
-            <option value="south">דרום</option>
-            <option value="east">יו״ש</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="region">אזור הלינה</label>
-          <select id="region" name="region">
-            <option value="all">כל הארץ</option>
-            <option value="north">צפון</option>
-            <option value="center">מרכז</option>
-            <option value="south">דרום</option>
-            <option value="east">יו״ש</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="lodging">לינה</label>
-          <select id="lodging" name="lodging">
-            <option value="all">הכל</option>
-            <option value="paid">בתשלום, בהזמנה</option>
-            <option value="free">בלי תשלום</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="difficulty">קושי</label>
-          <select id="difficulty" name="difficulty">
-            <option value="all">כל הרמות</option>
-            <option value="easy">קל</option>
-            <option value="moderate">בינוני</option>
-            <option value="challenging">מאתגר</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="time">זמן הליכה</label>
-          <select id="time" name="time">
-            <option value="all">לא משנה</option>
-            <option value="h3">עד 3 שעות</option>
-            <option value="half">עד חצי יום</option>
-            <option value="day">יום מלא</option>
-          </select>
-        </div>
-        <div class="field grow">
-          <label for="query">חיפוש</label>
-          <input id="query" name="query" type="search" placeholder="שם חניון או מסלול" />
-        </div>
-        <fieldset class="checks">
-          <legend>מסלול ליד החניון</legend>
-          <label><input type="checkbox" name="family" /> למשפחות</label>
-          <label><input type="checkbox" name="circular" /> מעגלי</label>
-          <label title="מסלול מוצל בטווח 20 ק״מ"><input type="checkbox" name="shade" /> מוצל</label>
-          <label title="הליכה במים, מעיין או מפל, בטווח 20 ק״מ"><input type="checkbox" name="wet" /> מסלול רטוב</label>
-          <label title="תצפית בטווח 20 ק״מ"><input type="checkbox" name="view" /> תצפית</label>
-          <label title="מסלול בטווח 5 ק״מ, בלי נסיעה ארוכה בבוקר"><input type="checkbox" name="close" /> ליד החניון</label>
-        </fieldset>
-        <fieldset class="checks">
-          <legend>בחניון</legend>
-          <label><input type="checkbox" name="water" /> מים</label>
-          <label><input type="checkbox" name="toilet" /> שירותים</label>
-          <label><input type="checkbox" name="shower" /> מקלחת</label>
-          <label><input type="checkbox" name="fire" /> מדורה</label>
-        </fieldset>
-      </form>
-
-        <div class="panel-body" id="panel-body">
-          <p id="summary" class="summary" aria-live="polite">טוען חניונים ומסלולים…</p>
-          <div id="results" class="results" role="radiogroup" aria-label="איפה הקמפינג"></div>
-        </div>
-        <div class="step-next">
-          <p id="chosen-camp" class="fine">בוחרים חניון אחד.</p>
-          <a id="continue-step" class="next-step" aria-disabled="true">ממשיכים לבניית הטיול</a>
-        </div>
+      <aside class="panel" aria-label="תוצאות חיפוש">
+        <div class="role-row" id="roles" role="group" aria-label="סוג"></div>
+        <div class="panel-body" id="results"></div>
       </aside>
       <div class="splitter" role="separator" aria-orientation="vertical" aria-label="שינוי גודל המפה" aria-valuemin="28" aria-valuemax="78" aria-valuenow="50" tabindex="0"></div>
       <section class="stage">
-        <div id="browse-map" class="trip-map" role="region" aria-label="מפת ישראל עם הצעות לסופ״ש"></div>
-        <ul id="legend" class="legend">
-          <li><i class="swatch paid-swatch"></i> בתשלום</li>
-          <li><i class="swatch free-swatch"></i> בלי תשלום</li>
-          <li><i class="swatch camp-swatch"></i> החניון שנבחר</li>
-        </ul>
+        <div id="browse-map" class="trip-map" role="region" aria-label="מפת החיפוש"></div>
       </section>
     </main>
-
     <footer class="colophon">
       <p>
-        הנתונים נסרקו מאתר
-        <a href="https://www.parks.org.il/">רשות הטבע והגנים</a>
-        בתאריך <time id="fetched" datetime="">—</time>.
+        חניונים ומסלולים מרשות הטבע והגנים ומטיולי. נקודות המצפור ממפת
+        <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.
         לפני יציאה צריך לבדוק באתר הרשמי אם המסלול פתוח, אם החניון פנוי, ומה המחיר העדכני.
       </p>
-      <p>בחניוני הלילה בתשלום הכניסה עם כלבים אסורה, והלינה בהזמנה מראש.</p>
     </footer>
-
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
     <script src="plan.js"></script>
+    <script src="trips.js"></script>
     <script src="split.js"></script>
-    <script src="app.js"></script>
+    <script src="search.js"></script>
   </body>
 </html>

@@ -11,44 +11,28 @@
       href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@600;700&family=Heebo:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="browse-page">
+  <body class="library-page">
     <header class="mast browse-mast">
-      <p class="eyebrow"><a href="index.html">חזרה לרשימה</a></p>
-      <div class="browse-head">
-        <h1>הטיולים שלי</h1>
-        <p class="lead">טיוטה נשמרת לבד. עריכה חוזרת לאותה נקודה, ואפשר לשלוח את הלוז.</p>
+      <div class="site-bar">
+        <a class="brand" href="index.html">סופ״ש בטבע</a>
+        <nav class="site-nav" aria-label="אזורים">
+          <a href="index.html">חיפוש</a>
+          <a class="on" href="trips.html">הטיולים שלי</a>
+        </nav>
       </div>
     </header>
-    <main class="workspace">
-      <aside class="panel" aria-label="הטיולים השמורים">
-        <div class="panel-body" id="library">
-          <p class="summary">טוען את הטיולים…</p>
-        </div>
-      </aside>
-      <div class="splitter" role="separator" aria-orientation="vertical" aria-label="שינוי גודל המפה" aria-valuemin="28" aria-valuemax="78" aria-valuenow="50" tabindex="0"></div>
-      <section class="stage">
-        <div id="library-map" class="trip-map" role="region" aria-label="מפת הטיולים השמורים"></div>
-      </section>
+    <main class="library-wrap">
+      <h1>הטיולים שלי</h1>
+      <p class="lead">כל טיול הוא אוסף פעילויות. עורכים את הלוז רק אחרי שנכנסים אליו.</p>
+      <div id="library"></div>
     </main>
     <footer class="colophon">
       <p>הטיולים נשמרים במכשיר הזה בלבד. מי שמקבל קישור רואה את הטיול, בלי להיכנס לאזור שלך.</p>
     </footer>
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
     <script src="plan.js"></script>
     <script src="trips.js"></script>
-    <script src="split.js"></script>
     <script src="library.js"></script>
   </body>
 </html>

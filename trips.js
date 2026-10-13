@@ -55,19 +55,21 @@
     function save(input) {
       const listNow = read();
       const name = cleanName(input && input.name);
-      const campId = Number(input && input.campId);
-      const trailIds = cleanTrails(input && input.trailIds);
-      if (!Number.isFinite(campId)) return null;
       const now = new Date().toISOString();
       const id = input && input.id;
       const index = id ? listNow.findIndex((trip) => trip.id === id) : -1;
       const previous = index >= 0 ? listNow[index] : null;
+      const campId = input && Object.prototype.hasOwnProperty.call(input, "campId")
+        ? cleanCampId(input.campId)
+        : previous ? cleanCampId(previous.campId) : null;
+      const trailIds = cleanTrails(input && input.trailIds);
       const draft = input && Object.prototype.hasOwnProperty.call(input, "draft")
         ? Boolean(input.draft)
         : previous ? Boolean(previous.draft) : false;
       const place = input && input.place
         ? cleanPlace(input.place)
         : previous && previous.place ? cleanPlace(previous.place) : cleanPlace(null);
+      if (campId == null && !trailIds.length && !place.coffee.length && !place.visit.length) return null;
       if (previous) {
         const next = {
           ...previous,
@@ -111,7 +113,7 @@
 
     function tripPath(trip, withId) {
       const params = new URLSearchParams();
-      params.set("camp", String(trip.campId));
+      if (trip.campId != null) params.set("camp", String(trip.campId));
       params.set("trails", (trip.trailIds || []).join(","));
       if (trip.name) params.set("name", trip.name);
       const place = trip.place || {};
@@ -149,7 +151,19 @@
   }
 
   function valid(trip) {
-    return Boolean(trip && typeof trip.id === "string" && Number.isFinite(Number(trip.campId)));
+    if (!trip || typeof trip.id !== "string") return false;
+    if (trip.campId != null && !Number.isFinite(Number(trip.campId))) return false;
+    const place = trip.place || {};
+    const activities = (trip.trailIds && trip.trailIds.length)
+      || (place.coffee && place.coffee.length)
+      || (place.visit && place.visit.length);
+    return trip.campId != null || Boolean(activities);
+  }
+
+  function cleanCampId(value) {
+    if (value == null || value === "") return null;
+    const number = Number(value);
+    return Number.isFinite(number) ? number : null;
   }
 
   function cleanName(name) {

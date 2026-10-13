@@ -21,11 +21,17 @@
   </head>
   <body class="trip-page">
     <header class="mast trip-mast">
-      <p class="eyebrow"><a href="index.html">לבחירת הקמפינג</a> · <a href="trips.html">הטיולים שלי</a></p>
-      <div class="trip-head">
-        <p class="step-kicker">שלב 2</p>
-        <h1 id="title">טוען את הסופ״ש…</h1>
-        <p id="lead" class="lead"></p>
+      <div class="site-bar">
+        <a class="brand" href="index.html">סופ״ש בטבע</a>
+        <nav class="site-nav" aria-label="אזורים">
+          <a href="index.html">חיפוש</a>
+          <a class="on" href="trips.html">הטיולים שלי</a>
+        </nav>
+      </div>
+      <div class="editor-bar">
+        <a href="trips.html">הטיולים שלי</a>
+        <h1 id="title">טוען את הטיול…</h1>
+        <span>עריכת לוז</span>
       </div>
     </header>
     <main class="workspace">
@@ -49,8 +55,10 @@
               </div>
             </div>
           </div>
+          <p id="lead" class="lead"></p>
           <p id="save-note" class="fine" role="status"></p>
         </div>
+        <a id="add-from-search" class="from-search" href="index.html">הוספת פעילות מהחיפוש</a>
         <div class="panel-body" id="panel-body">
           <p id="map-note" class="map-note"></p>
           <section id="around" class="around"></section>
