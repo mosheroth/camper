@@ -90,13 +90,85 @@ function hourPhrase(hours) {
 function hikeMeta(trail) {
   const bits = [];
   if (DIFFICULTY[trail.difficulty]) bits.push(DIFFICULTY[trail.difficulty]);
+  if (trail.circular === true) bits.push("מעגלי");
+  else if (trail.circular === "partial") bits.push("מעגלי חלקית");
   if (trail.hoursMax && trail.hoursMax <= 16) {
     const estimated = trail.hoursEstimated ? "הערכה של " : "";
-    bits.push(`${estimated}${hourPhrase(trail.hoursMax)}`);
+    if (trail.hoursMin && trail.hoursMin !== trail.hoursMax) bits.push(`${estimated}${trail.hoursMin}–${trail.hoursMax} שעות`);
+    else bits.push(`${estimated}${hourPhrase(trail.hoursMax)}`);
   }
-  if (window.CamperPlan.lengthIsUsable(trail)) bits.push(`כ־${trail.kmMax || trail.kmMin} ק״מ`);
+  if (window.CamperPlan.lengthIsUsable(trail)) {
+    if (trail.kmMin && trail.kmMax && trail.kmMin !== trail.kmMax) bits.push(`${trail.kmMin}–${trail.kmMax} ק״מ`);
+    else bits.push(`כ־${trail.kmMax || trail.kmMin} ק״מ`);
+  }
   if (trail.family) bits.push("למשפחות");
   return bits.join(" · ");
+}
+
+function clipText(text, limit) {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  if (clean.length <= limit) return clean;
+  const cut = clean.slice(0, limit);
+  const space = cut.lastIndexOf(" ");
+  const head = space > limit * 0.6 ? cut.slice(0, space) : cut;
+  return `${head.trim()}…`;
+}
+
+function cover(source) {
+  const photo = (source.photos || []).find((item) => item && item.src);
+  if (photo) return photo;
+  if (source.image) return { src: source.image, credit: "" };
+  return null;
+}
+
+function hikeAbout(trail) {
+  const details = trail.details || {};
+  const picture = cover(trail);
+  const points = [];
+  (details.highlights || []).forEach((item) => {
+    const text = String(item || "").replace(/\s+/g, " ").trim();
+    if (text && !points.includes(text)) points.push(text);
+  });
+  if (!points.length) {
+    (trail.features || []).forEach((item) => {
+      const text = String(item || "").replace(/\s+/g, " ").trim();
+      if (text && text !== "מעגלי" && !points.includes(text)) points.push(text);
+    });
+  }
+  return {
+    photo: picture ? picture.src : "",
+    credit: picture && picture.credit ? picture.credit : "",
+    text: clipText(details.summary || trail.blurb || "", 420),
+    points: points.slice(0, 8),
+    aside: details.mapSheet || "",
+  };
+}
+
+function placeAbout(place) {
+  const picture = cover(place);
+  const points = [];
+  if (place.paid === true) points.push(place.priceFrom ? `בתשלום, מ־${place.priceFrom} ₪ למבוגר` : "בתשלום");
+  else if (place.paid === false) points.push("בחינם");
+  (place.tags || []).forEach((tag) => {
+    if (tag && !points.includes(tag)) points.push(tag);
+  });
+  return {
+    photo: picture ? picture.src : "",
+    credit: picture && picture.credit ? picture.credit : "",
+    text: clipText(place.blurb || "", 220),
+    points: points.slice(0, 6),
+    aside: "",
+  };
+}
+
+function campAbout(glance) {
+  return {
+    photo: glance.photo || "",
+    credit: glance.credit || "",
+    text: clipText([glance.blurb, glance.note].filter(Boolean).join(" "), 420),
+    points: glance.facilities.map((item) => item.label).concat(glance.facts).slice(0, 8),
+    aside: "",
+  };
 }
 
 function driveLabel(minutes) {
@@ -369,7 +441,23 @@ function sheet(item) {
   node.append(el("h2", null, item.name));
   const meta = placeMeta(item);
   if (meta) node.append(el("p", "meta", meta));
-  if (item.blurb) node.append(el("p", null, item.blurb));
+  if (item.photo) {
+    const figure = el("figure", "sheet-photo");
+    const img = document.createElement("img");
+    img.src = item.photo;
+    img.alt = item.name;
+    img.addEventListener("error", () => figure.remove());
+    figure.append(img);
+    if (item.credit) figure.append(el("figcaption", null, item.credit));
+    node.append(figure);
+  }
+  if (item.text) node.append(el("p", "sheet-copy", item.text));
+  if (item.points && item.points.length) {
+    const list = el("ul", "chips");
+    item.points.forEach((point) => list.append(el("li", null, point)));
+    node.append(list);
+  }
+  if (item.aside) node.append(el("p", "fine", item.aside));
   if (item.booking) node.append(el("p", "booking", "צריך להזמין מקום מראש."));
   const links = el("div", "links");
   item.links.forEach((entry) => links.append(link(entry.href, entry.text)));
@@ -636,7 +724,7 @@ function boot(campData, trailData, placeData) {
       regions: trail.regions || [],
       area: (trail.areaNames || []).join(" "),
       meta: hikeMeta(trail),
-      blurb: "",
+      ...hikeAbout(trail),
       booking: false,
       traits: hikeTraits(trail),
       links,
@@ -658,7 +746,7 @@ function boot(campData, trailData, placeData) {
       regions: camp.regions || [],
       area: (camp.areaNames || []).join(" "),
       meta: campMeta(camp),
-      blurb: glance.blurb || "",
+      ...campAbout(glance),
       booking: Boolean(glance.bookingUrl),
       traits: [],
       links,
@@ -682,7 +770,7 @@ function boot(campData, trailData, placeData) {
       regions: [],
       area: "",
       meta: coffee ? "מצפור · כחצי שעה" : (KIND[place.kind] || "נקודת עניין"),
-      blurb: "",
+      ...placeAbout(place),
       booking: false,
       traits: placeTraits(place, coffee ? "coffee" : "place"),
       links,
