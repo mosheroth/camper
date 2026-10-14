@@ -1,4 +1,4 @@
-const COLORS = ["#209c62", "#3f3125", "#1d4e89", "#c9a227", "#6b3fa0"];
+const COLORS = ["#27a29f", "#444444", "#1d4e89", "#73c187", "#6b3fa0"];
 const PLACE_KIND = {
   spring: "מעיין",
   waterfall: "מפל",
@@ -66,7 +66,7 @@ const PLACE_COLOR = {
   beach: "#1d4e89",
   cart: "#912121",
 };
-const CAMP_MARK = "#209c62";
+const CAMP_MARK = "#27a29f";
 
 function markerColor(stage, trailIds) {
   if (!stage || stage.kind === "arrive") return CAMP_MARK;
@@ -1833,7 +1833,7 @@ Promise.all([
         if (line.length > 1) {
           previewLine = window.L.featureGroup([
             window.L.polyline(line, { color: "#ffffff", weight: 10, opacity: 0.95, interactive: false }),
-            window.L.polyline(line, { color: "#209c62", weight: 5, opacity: 1, interactive: false }),
+            window.L.polyline(line, { color: "#27a29f", weight: 5, opacity: 1, interactive: false }),
           ]).addTo(sharedMap);
           previewLine.bringToFront();
           points = line;

@@ -1,4 +1,4 @@
-const TRAIL_COLORS = ["#209c62", "#3f3125", "#1d4e89", "#c9a227"];
+const TRAIL_COLORS = ["#27a29f", "#444444", "#1d4e89", "#73c187"];
 const ISRAEL_BOUNDS = [[29.45, 34.22], [33.35, 35.92]];
 const REGION_LABEL = {
   north: "צפון",
@@ -135,7 +135,7 @@ function campPin() {
       '<div class="camp-pin">' +
       '<span class="camp-pin-tag">חניון</span>' +
       '<svg viewBox="0 0 36 46" width="36" height="46" aria-hidden="true">' +
-      '<path d="M18 44.5C18 44.5 33 27.2 33 16.2A15 15 0 1 0 3 16.2C3 27.2 18 44.5 18 44.5Z" fill="#209c62" stroke="#ffffff" stroke-width="2.4"/>' +
+      '<path d="M18 44.5C18 44.5 33 27.2 33 16.2A15 15 0 1 0 3 16.2C3 27.2 18 44.5 18 44.5Z" fill="#27a29f" stroke="#ffffff" stroke-width="2.4"/>' +
       '<path d="M11 22.2 18 13.2 25 22.2Z" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>' +
       '<path d="M18 13.6V22" stroke="#ffffff" stroke-width="1.4"/>' +
       "</svg></div>",
@@ -171,9 +171,9 @@ function drawMarkers() {
     const paid = Boolean(camp.paid);
     const marker = window.L.circleMarker([camp.lat, camp.lng], {
       radius: 6,
-      color: paid ? "#3f3125" : "#209c62",
+      color: paid ? "#444444" : "#27a29f",
       weight: 2,
-      fillColor: paid ? "#3f3125" : "#209c62",
+      fillColor: paid ? "#444444" : "#27a29f",
       fillOpacity: 0.9,
     }).addTo(markerLayer);
     markersByCamp.set(camp.id, marker);
