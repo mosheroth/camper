@@ -1,14 +1,19 @@
 :root {
-  --sand: #f4ecdf;
-  --sand-deep: #e6d9c4;
-  --ink: #231c16;
-  --muted: #5e5348;
-  --green: #1c3f34;
-  --green-mid: #2f6a52;
-  --clay: #a3472c;
-  --line: #ddcfbb;
-  --card: #fffaf3;
-  --shadow: 0 16px 40px rgba(58, 38, 18, 0.08);
+  /* Measured from coffeetrail.co.il: body #f4f4f4 / #242429, accent #209c62,
+     kit text #363636, secondary #534741, yellow #ffcd2e, brown #3f3125, cream #fff9f4. */
+  --sand: #f4f4f4;
+  --sand-deep: #f1f1f1;
+  --ink: #242429;
+  --muted: #534741;
+  --green: #209c62;
+  --green-mid: #219156;
+  --clay: #3f3125;
+  --gold: #ffcd2e;
+  --cream: #fff9f4;
+  --line: #dadada;
+  --card: #ffffff;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  --header-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
   color-scheme: light;
 }
 
@@ -18,13 +23,11 @@
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 12% 8%, rgba(163, 71, 44, 0.08), transparent 28%),
-    radial-gradient(circle at 90% 0%, rgba(47, 106, 82, 0.12), transparent 32%),
-    var(--sand);
+  background: var(--sand);
   color: var(--ink);
-  font-family: "Heebo", sans-serif;
-  line-height: 1.5;
+  font-family: "Rubik", sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
 }
 
 .mast, main, .colophon {
@@ -41,9 +44,12 @@ body {
   letter-spacing: 0.01em;
 }
 
+h1, h2, h3 {
+  font-family: "Alef", "Rubik", sans-serif;
+}
+
 h1 {
   margin: 0;
-  font-family: "Frank Ruhl Libre", serif;
   font-size: clamp(40px, 7vw, 68px);
   font-weight: 700;
   line-height: 1.05;
@@ -64,7 +70,7 @@ h1 {
   padding: 16px;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   box-shadow: var(--shadow);
 }
 
@@ -76,13 +82,13 @@ label, legend {
   font-weight: 700;
 }
 
-select, input[type="search"] {
+select, input[type="search"], input[type="text"] {
   width: 100%;
-  border: 1px solid var(--line);
-  background: #fff;
+  border: 0;
+  background: var(--sand-deep);
   color: var(--ink);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 25px;
+  padding: 10px 16px;
   font: inherit;
 }
 
@@ -121,7 +127,7 @@ select, input[type="search"] {
   flex-direction: column;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   overflow: hidden;
   box-shadow: var(--shadow);
 }
@@ -148,7 +154,7 @@ select, input[type="search"] {
 
 .plan h2, .plan h3 {
   margin: 0 0 8px;
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -174,15 +180,15 @@ select, input[type="search"] {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: var(--sand);
+  padding: 3px 10px;
+  border-radius: 25px;
+  background: var(--sand-deep);
   font-size: 0.85rem;
 }
 .chips li .mark, .facts li .mark { margin: 0; }
 
-.chips li.family { background: #e7f0d8; }
-.chips li.hard { background: #f8e4d8; }
+.chips li.family { background: #e5f6ee; color: var(--green); }
+.chips li.hard { background: #fff4cc; color: var(--clay); }
 
 .links { display: flex; flex-wrap: wrap; gap: 10px 14px; }
 .links a {
@@ -211,9 +217,9 @@ button {
   background: var(--green);
   color: #fff;
   font: inherit;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 10px 18px;
+  font-weight: 500;
+  border-radius: 25px;
+  padding: 12px 24px;
   cursor: pointer;
 }
 
@@ -245,7 +251,7 @@ button {
   height: 460px;
   margin-top: 18px;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   background: var(--sand-deep);
 }
 /* Leaflet places a label from its left edge. On a right-to-left page that edge
@@ -294,28 +300,28 @@ button {
   right: -8px;
   width: 20px;
   height: 20px;
-  border: 2px solid #fffaf3;
+  border: 2px solid #fff;
   border-radius: 50%;
-  background: #a3472c;
-  color: #fffaf3;
-  font: 700 12px/16px Heebo, sans-serif;
+  background: var(--green);
+  color: #fff;
+  font: 700 12px/16px Rubik, sans-serif;
   text-align: center;
 }
 .stage-marker { background: none; border: 0; }
 .stage-num {
   width: 28px;
   height: 28px;
-  border: 2px solid #fffaf3;
+  border: 2px solid #fff;
   border-radius: 50%;
-  color: #fffaf3;
+  color: #fff;
   box-shadow: 0 2px 6px rgba(35, 28, 22, 0.35);
-  font: 700 14px/24px Heebo, sans-serif;
+  font: 700 14px/24px Rubik, sans-serif;
   text-align: center;
 }
 .leaflet-tooltip.stage-tip {
-  background: #fffaf3;
-  color: #231c16;
-  border: 1px solid #ddcfbb;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--line);
   border-radius: 12px;
   box-shadow: 0 10px 24px rgba(35, 28, 22, 0.16);
   padding: 8px 10px;
@@ -344,7 +350,7 @@ button {
   border-radius: 999px;
   background: var(--card);
   color: var(--ink);
-  font-family: Heebo, sans-serif;
+  font-family: Rubik, sans-serif;
   font-size: 13px;
   font-weight: 700;
   line-height: 1.35;
@@ -357,11 +363,11 @@ button {
   padding: 16px 18px 8px;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
 }
 .around h2 {
   margin: 0 0 6px;
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   font-size: 1.7rem;
 }
 .around-lead { margin: 0 0 12px; color: var(--muted); }
@@ -398,11 +404,11 @@ button {
 .sheet {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   padding: 18px;
 }
 .sheet h2, .sheet h3 {
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   margin: 14px 0 6px;
 }
 .sheet h2 { margin-top: 0; font-size: 1.7rem; }
@@ -555,7 +561,7 @@ button {
   flex-direction: column;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   overflow: hidden;
 }
 .panel-tabs {
@@ -627,14 +633,14 @@ button {
   border-radius: 999px;
   background: var(--sand-deep);
   color: var(--ink);
-  font-family: Heebo, sans-serif;
+  font-family: Rubik, sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.45;
 }
-.spot .role-hike { background: #f0d8cc; }
-.spot .role-coffee { background: #f3e2c4; }
-.spot .role-place { background: #dce8e1; }
+.spot .role-hike { background: #fff4cc; color: var(--clay); }
+.spot .role-coffee { background: #fff4cc; color: var(--clay); }
+.spot .role-place { background: #e5f6ee; color: var(--green); }
 .place-search {
   display: flex;
   align-items: center;
@@ -648,11 +654,11 @@ button {
   flex: 1;
   min-width: 0;
   width: auto;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: #fff;
+  border: 0;
+  border-radius: 25px;
+  background: var(--sand-deep);
   color: var(--ink);
-  font: 700 0.88rem Heebo, sans-serif;
+  font: 700 0.88rem Rubik, sans-serif;
   padding: 6px 12px;
 }
 .picked-strip {
@@ -704,7 +710,7 @@ button {
   justify-self: stretch;
   background: none;
   color: inherit;
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   font-weight: 700;
   font-size: 1.02rem;
   line-height: 1.25;
@@ -740,8 +746,8 @@ button {
 .add-effect {
   margin: 0 0 12px;
   padding: 10px 12px;
-  background: #f6f0e6;
-  border-radius: 12px;
+  background: var(--cream);
+  border-radius: 25px;
 }
 .trip-page .dossier { margin: 0; gap: 0; }
 .trip-page .sheet {
@@ -757,7 +763,7 @@ button {
   min-height: 0;
   height: 100%;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   overflow: hidden;
   background: var(--sand-deep);
 }
@@ -808,9 +814,10 @@ button {
 .browse-page .browse-mast {
   flex: none;
   display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 16px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
 }
 .browse-page .eyebrow { margin: 0; flex: none; }
 .browse-page .browse-head {
@@ -868,7 +875,7 @@ button {
   flex-direction: column;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   overflow: hidden;
 }
 .browse-page .filters {
@@ -914,9 +921,9 @@ button {
   text-decoration: none;
   background: var(--green);
   color: #fff;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 10px 18px;
+  font-weight: 500;
+  border-radius: 25px;
+  padding: 12px 24px;
 }
 .next-step[aria-disabled="true"] {
   background: var(--sand-deep);
@@ -974,17 +981,17 @@ button {
   text-decoration: none;
 }
 .browse-page .plan.selected {
-  border-color: var(--clay);
-  background: #fff6ee;
+  border-color: var(--green);
+  background: var(--cream);
 }
-.browse-page .plan.selected .hike { background: #f8efe4; }
+.browse-page .plan.selected .hike { background: var(--cream); }
 .browse-page .stage {
   position: relative;
   min-width: 0;
   min-height: 0;
   height: 100%;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   overflow: hidden;
   background: var(--sand-deep);
 }
@@ -1007,10 +1014,10 @@ button {
 }
 .browse-page .legend li {
   pointer-events: auto;
-  background: rgba(255, 250, 243, 0.94);
+  background: rgba(255, 255, 255, 0.94);
 }
-.paid-swatch { background: #a3472c; }
-.free-swatch { background: #1c3f34; }
+.paid-swatch { background: var(--clay); }
+.free-swatch { background: var(--green); }
 .browse-page .colophon {
   flex: none;
   padding: 0 16px 8px;
@@ -1146,11 +1153,11 @@ body.splitting { cursor: col-resize; user-select: none; }
   flex: 1;
   min-width: 0;
   width: 100%;
-  border: 1px solid var(--line);
-  background: #fff;
+  border: 0;
+  background: var(--sand-deep);
   color: var(--ink);
-  border-radius: 10px;
-  padding: 8px 12px;
+  border-radius: 25px;
+  padding: 10px 16px;
   font: inherit;
   font-weight: 500;
 }
@@ -1218,7 +1225,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .saved h2 {
   margin: 0 0 4px;
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   font-size: 1.3rem;
 }
 .saved .meta { margin: 0; color: var(--muted); font-size: 0.9rem; }
@@ -1228,12 +1235,12 @@ body.splitting { cursor: col-resize; user-select: none; }
   align-items: center;
   padding: 8px 14px;
   border: 1px solid var(--green);
-  border-radius: 999px;
+  border-radius: 25px;
   color: var(--green);
   font-weight: 700;
   text-decoration: none;
 }
-.saved.selected { background: #fff6ee; border-radius: 12px; padding-inline: 8px; }
+.saved.selected { background: var(--cream); border-radius: 25px; padding-inline: 8px; }
 .library-empty a,
 #library .empty a { color: var(--green); font-weight: 700; }
 
@@ -1252,7 +1259,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 
 .trip-page .section-label {
   margin: 18px 0 2px;
-  font-family: Heebo, sans-serif;
+  font-family: Rubik, sans-serif;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -1288,12 +1295,12 @@ body.splitting { cursor: col-resize; user-select: none; }
   margin-top: 12px;
   padding: 10px 12px 8px;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   background: #fffdf8;
 }
 .weather h3 {
   margin: 0;
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   font-size: 1.15rem;
 }
 .weather-read {
@@ -1335,7 +1342,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   border-radius: 999px;
   background: var(--sand);
   color: var(--ink);
-  font: 700 0.92rem Heebo, sans-serif;
+  font: 700 0.92rem Rubik, sans-serif;
   padding: 6px 10px;
 }
 .time-value {
@@ -1370,7 +1377,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   color: var(--ink);
   border-radius: 8px;
   padding: 6px 0;
-  font: 700 0.95rem Heebo, sans-serif;
+  font: 700 0.95rem Rubik, sans-serif;
   cursor: pointer;
 }
 .time-option[aria-selected="true"] {
@@ -1429,12 +1436,12 @@ body.splitting { cursor: col-resize; user-select: none; }
   height: 28px;
   border-radius: 50%;
   background: var(--mark, #1d4e89);
-  color: #fffaf3;
+  color: #fff;
   box-shadow:
     0 0 0 2px #fff,
     0 0 0 3.5px var(--mark, #1d4e89),
     0 2px 6px rgba(35, 28, 22, 0.32);
-  font: 700 14px/1 Heebo, sans-serif;
+  font: 700 14px/1 Rubik, sans-serif;
 }
 .block-photo {
   width: 48px;
@@ -1446,7 +1453,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .day-block h3 {
   margin: 0;
-  font-family: Heebo, sans-serif;
+  font-family: Rubik, sans-serif;
   font-size: 0.92rem;
   font-weight: 700;
 }
@@ -1477,7 +1484,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 .day-block.dragging header { cursor: grabbing; }
 .day-block.drop-before { box-shadow: inset 0 3px 0 var(--green); }
 .day-block.drop-after { box-shadow: inset 0 -3px 0 var(--green); }
-.day-block.linked { background: #f3e6d4; }
+.day-block.linked { background: var(--cream); }
 .day-block .lures {
   display: flex;
   flex-wrap: wrap;
@@ -1490,7 +1497,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #e7f0d8;
+  background: #e5f6ee;
   color: var(--green);
   border-radius: 999px;
   padding: 2px 9px;
@@ -1559,17 +1566,17 @@ body.splitting { cursor: col-resize; user-select: none; }
   border-radius: 10px;
   cursor: pointer;
 }
-.timeline li.here { background: #f3e6d4; }
+.timeline li.here { background: #e5f6ee; }
 .here-marker { background: none; border: 0; }
 .here-pin { position: relative; width: 18px; height: 18px; }
 .here-pin i {
   display: block;
   width: 16px;
   height: 16px;
-  border: 3px solid #1c3f34;
+  border: 3px solid var(--green);
   border-radius: 50%;
-  background: #fffaf3;
-  box-shadow: 0 0 0 7px rgba(28, 63, 52, 0.28);
+  background: #fff;
+  box-shadow: 0 0 0 7px rgba(32, 156, 98, 0.28);
 }
 .here-pin span {
   position: absolute;
@@ -1577,10 +1584,10 @@ body.splitting { cursor: col-resize; user-select: none; }
   left: 50%;
   transform: translateX(-50%);
   padding: 2px 8px;
-  border-radius: 999px;
-  background: #1c3f34;
-  color: #fffaf3;
-  font: 700 13px/1.4 Heebo, sans-serif;
+  border-radius: 25px;
+  background: var(--green);
+  color: #fff;
+  font: 700 13px/1.4 Rubik, sans-serif;
   white-space: nowrap;
   box-shadow: 0 2px 6px rgba(35, 28, 22, 0.3);
 }
@@ -1642,7 +1649,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   border-radius: 999px;
   background: #fff;
   color: var(--ink);
-  font: 700 0.88rem Heebo, sans-serif;
+  font: 700 0.88rem Rubik, sans-serif;
   padding: 6px 12px;
 }
 .near-filters { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -1673,7 +1680,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .spot h3 {
   margin: 0;
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   font-size: 1.08rem;
   line-height: 1.25;
 }
@@ -1703,7 +1710,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 .text-back {
   display: inline-block;
   margin: 12px 0 4px;
-  color: var(--clay);
+  color: var(--green);
   font-size: 0.92rem;
 }
 .spot .remove,
@@ -1724,9 +1731,9 @@ body.splitting { cursor: col-resize; user-select: none; }
   list-style: none;
 }
 .spot .lures li {
-  background: #e7f0d8;
+  background: #e5f6ee;
   color: var(--green);
-  border-radius: 999px;
+  border-radius: 25px;
   padding: 2px 9px;
   font-size: 0.75rem;
   font-weight: 700;
@@ -1798,8 +1805,8 @@ body.splitting { cursor: col-resize; user-select: none; }
   box-shadow: inset -3px 0 0 var(--clay);
 }
 .browse-page .plan.index-card.selected {
-  border-color: var(--clay);
-  background: #fff6ee;
+  border-color: var(--green);
+  background: var(--cream);
 }
 .browse-page .index-card h2 {
   margin: 0;
@@ -1824,7 +1831,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #e7f0d8;
+  background: #e5f6ee;
   color: var(--green);
   border-radius: 999px;
   padding: 2px 9px;
@@ -1868,44 +1875,71 @@ body.splitting { cursor: col-resize; user-select: none; }
 
 .site-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 10px 16px;
-  background: var(--card);
-  border-bottom: 1px solid var(--line);
+  padding: 0;
+  background: #fff;
+  border-bottom: 0;
+  box-shadow: var(--header-shadow);
+  position: relative;
+  z-index: 500;
+}
+.site-topline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 36px;
+  padding: 0 8px;
+  background: var(--green);
+}
+.site-brandbar {
+  display: flex;
+  align-items: center;
+  min-height: 72px;
+  padding: 0 22px;
+  background: #fff;
 }
 .site-head .brand {
   flex: none;
-  color: var(--ink);
-  font-family: "Frank Ruhl Libre", serif;
-  font-size: 1.35rem;
-  font-weight: 700;
+  color: var(--green);
+  font-family: "Suez One", "Alef", sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
   text-decoration: none;
   white-space: nowrap;
 }
-.site-nav { display: flex; gap: 4px; flex: none; }
+.site-nav { display: flex; align-items: center; gap: 0; flex: none; }
 .site-nav a {
-  color: var(--muted);
-  font-weight: 700;
+  color: #fff;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
   text-decoration: none;
-  border-radius: 999px;
-  padding: 7px 14px;
+  border-radius: 0;
+  padding: 8px 15px;
 }
-.site-nav a:hover { color: var(--ink); background: var(--sand); }
-.site-nav a.on { background: var(--green); color: #fff; }
+.site-nav a:hover { color: #fff; background: rgba(255, 255, 255, 0.14); }
+.site-nav a.on {
+  background: transparent;
+  color: #fff;
+  font-weight: 500;
+  box-shadow: inset 0 -2px 0 #fff;
+}
 .panel-search {
   flex: none;
   display: flex;
   align-items: center;
-  margin: 10px 12px 0;
-  padding: 0 14px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  margin: 12px 12px 0;
+  padding: 0 16px;
+  background: var(--sand-deep);
+  border: 0;
+  border-radius: 25px;
 }
 .panel-search input {
   width: 100%;
@@ -1918,7 +1952,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .browse-page .workspace,
 .trip-page .workspace { padding-top: 8px; }
-.search-page .browse-mast { padding: 10px 16px 8px; }
+.search-page .browse-mast { padding: 0; }
 .role-row {
   flex: none;
   display: flex;
@@ -1931,10 +1965,12 @@ body.splitting { cursor: col-resize; user-select: none; }
 .role-chips { display: contents; }
 .role-row .chip,
 .trait-row .chip {
-  background: var(--sand);
+  background: var(--sand-deep);
   color: var(--ink);
-  padding: 6px 12px;
+  padding: 6px 14px;
   font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 25px;
 }
 .role-row .chip.on,
 .trait-row .chip.on { background: var(--green); color: #fff; }
@@ -2022,7 +2058,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .hit-copy { min-width: 0; display: grid; gap: 2px; justify-items: start; }
 .hit.open,
-.hit:hover { background: #fff6ee; }
+.hit:hover { background: var(--cream); }
 .hit h2 { margin: 0; font-size: 1.05rem; }
 .hit .meta { margin: 0; }
 .badge {
@@ -2034,13 +2070,13 @@ body.splitting { cursor: col-resize; user-select: none; }
   border-radius: 999px;
   padding: 2px 8px;
   white-space: nowrap;
-  background: #f8e4d8;
+  background: #fff4cc;
   color: var(--clay);
 }
 .badge .mark { margin: 0; }
-.badge.camp { background: #efe6d8; color: var(--green); }
-.badge.place { background: #e7f0d8; color: var(--green); }
-.badge.coffee { background: #f3ead2; color: #6a4b16; }
+.badge.camp { background: #e5f6ee; color: var(--green); }
+.badge.place { background: #e5f6ee; color: var(--green); }
+.badge.coffee { background: #fff4cc; color: var(--clay); }
 .search-page .add,
 .from-search,
 .album .ghost {
@@ -2048,10 +2084,10 @@ body.splitting { cursor: col-resize; user-select: none; }
   background: var(--green);
   color: #fff;
   font: inherit;
-  font-weight: 700;
-  font-size: 0.78rem;
-  border-radius: 999px;
-  padding: 7px 12px;
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: 25px;
+  padding: 8px 16px;
   cursor: pointer;
   text-decoration: none;
 }
@@ -2066,7 +2102,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 .search-sheet h2 { margin: 0; font-size: 1.6rem; }
 .search-sheet h3 {
   margin: 4px 0 0;
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   font-size: 1.15rem;
 }
 .search-sheet p { margin: 0; }
@@ -2138,10 +2174,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(circle at 12% 8%, rgba(163, 71, 44, 0.08), transparent 28%),
-    radial-gradient(circle at 90% 0%, rgba(47, 106, 82, 0.12), transparent 32%),
-    var(--sand);
+  background: var(--sand);
 }
 .library-page .site-head { width: 100%; max-width: none; }
 .library-wrap {
@@ -2156,7 +2189,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 .library-panel {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 25px;
   box-shadow: var(--shadow);
   padding: 20px 20px 6px;
 }
@@ -2203,7 +2236,7 @@ body.splitting { cursor: col-resize; user-select: none; }
   display: block;
 }
 .album-body { min-width: 0; display: grid; gap: 2px; }
-.album:hover { background: #fff6ee; }
+.album:hover { background: var(--cream); }
 .album .status {
   margin: 0;
   color: var(--clay);
@@ -2212,7 +2245,7 @@ body.splitting { cursor: col-resize; user-select: none; }
 }
 .album h2 {
   margin: 0;
-  font-family: "Frank Ruhl Libre", serif;
+  font-family: "Alef", "Rubik", sans-serif;
   font-size: 1.35rem;
   line-height: 1.25;
 }
@@ -2229,9 +2262,41 @@ body.splitting { cursor: col-resize; user-select: none; }
   text-decoration: none;
 }
 @media (max-width: 800px) {
-  .site-head { padding-inline: 12px; }
-  .site-head .brand { font-size: 1.15rem; }
-  .site-nav a { padding: 6px 10px; }
+  .site-head,
+  .browse-page .browse-mast,
+  .search-page .browse-mast {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-inline: 12px;
+    background: #fff;
+  }
+  .site-topline {
+    order: 2;
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+  }
+  .site-brandbar {
+    order: 1;
+    min-height: 0;
+    padding: 0;
+  }
+  .site-head .brand { font-size: 1.35rem; }
+  .site-nav a {
+    color: #33373d;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 10px;
+  }
+  .site-nav a:hover { color: var(--green); background: transparent; }
+  .site-nav a.on {
+    color: var(--green);
+    font-weight: 500;
+    background: transparent;
+    box-shadow: inset 0 -3px 0 var(--green);
+  }
   .library-wrap,
   .library-page .colophon { width: min(760px, calc(100% - 16px)); }
   .library-wrap { margin-top: 12px; }
